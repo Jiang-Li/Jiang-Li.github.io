@@ -1,18 +1,344 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Dynatic Data]]></title><description><![CDATA[Take notes of the fun and useful stuff.]]></description><link>https://jiang-li.github.io/</link><generator>RSS for Node</generator><lastBuildDate>Sun, 21 Jul 2019 03:12:05 GMT</lastBuildDate><item><title><![CDATA[Blogging by Gastby]]></title><description><![CDATA[Previously I used R’s BlogDown. But recently I used Python more and would like to switch a more general tool. The static site built by…]]></description><link>https://jiang-li.github.io//blogging_by_gastby/</link><guid isPermaLink="false">https://jiang-li.github.io//blogging_by_gastby/</guid><pubDate>Sat, 20 Jul 2019 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Previously I used R’s BlogDown. But recently I used Python more and would like to switch a more general tool. The static site built by Gastby, which is powered by React, is pretty fast. So I decided to give a try. Here is the workflow of blogging:&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Dynatic Data]]></title><description><![CDATA[Take notes of the fun and useful stuff.]]></description><link>https://jiang-li.github.io/</link><generator>RSS for Node</generator><lastBuildDate>Sun, 21 Jul 2019 03:45:58 GMT</lastBuildDate><item><title><![CDATA[Blogging by Gastby]]></title><description><![CDATA[Previously I was blogging using R’s BlogDown, which is pretty cool. But recently I used Python more and more and would 
+like to switch a…]]></description><link>https://jiang-li.github.io//blogging_by_gastby/</link><guid isPermaLink="false">https://jiang-li.github.io//blogging_by_gastby/</guid><pubDate>Sat, 20 Jul 2019 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Previously I was blogging using R’s BlogDown, which is pretty cool. But recently I used Python more and more and would
+like to switch a more general tool. The static site built by Gastby, which is powered by React, is pretty fast. So I
+decided to give a try. Here is the workflow of blogging:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;In the project folder, enter:
 &lt;code class=&quot;language-text&quot;&gt;gatsby develop&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;Add new markdown file in the content/blog. I will prefer to build folder for each post, and compose a index.md inside the folder.&lt;/li&gt;
-&lt;li&gt;To deploy, run &lt;code class=&quot;language-text&quot;&gt;npm run deploy&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;To deploy, build the side using &lt;code class=&quot;language-text&quot;&gt;gatsby build&lt;/code&gt; and push the &lt;code class=&quot;language-text&quot;&gt;public&lt;/code&gt; folder to git hub page repo. &lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;Notes:&lt;/p&gt;
-&lt;p&gt;The blog is build based on Gatsby’s blog starter. &lt;/p&gt;
-&lt;p&gt;To create the template
-&lt;code class=&quot;language-text&quot;&gt;gatsby new my-blog-starter https://github.com/gatsbyjs/gatsby-starter-blog&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;I added code highlighting and modified the bio. I also want Table of Contents, and will add it later.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[MOE for ACS Estimate]]></title><description><![CDATA[$a^2 + b^2 = c^2$ There is a moe column in the census data pulled using the
+&lt;ul&gt;
+&lt;li&gt;The blog is build based on Gatsby’s blog starter. &lt;/li&gt;
+&lt;li&gt;To create the template
+&lt;code class=&quot;language-text&quot;&gt;gatsby new my-blog-starter https://github.com/gatsbyjs/gatsby-starter-blog&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;I added code highlighting and modified the bio. I also want the supports of TOC and math formula, and will add it later.&lt;/li&gt;
+&lt;li&gt;Although gatsby has
+&lt;code class=&quot;language-text&quot;&gt;gh-pages&lt;/code&gt; package to publish the site automatically. But I found somehow the github’s project page, which is in the
+&lt;code class=&quot;language-text&quot;&gt;gh-pages&lt;/code&gt; branch, takes a very long time to update. Thus, I still prefer to push the site directly to a repo of page.  &lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Jupyter Notebook in RStudio Connect]]></title><description><![CDATA[The RStudio Connect is a
+handy tool to publish a report online and share with the team. Usually,
+the Markdown, R Markdown, or R Notebook…]]></description><link>https://jiang-li.github.io//jupyter_rsconnect/</link><guid isPermaLink="false">https://jiang-li.github.io//jupyter_rsconnect/</guid><pubDate>Fri, 15 Jun 2018 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;The &lt;a href=&quot;https://www.rstudio.com/products/connect/&quot;&gt;RStudio Connect&lt;/a&gt; is a
+handy tool to publish a report online and share with the team. Usually,
+the Markdown, R Markdown, or R Notebook documents can be easily
+previewed and published in RStudio. However, what if I want to publish a
+report composed by Jupyter Notebook?&lt;/p&gt;
+&lt;p&gt;The idea is to convert the Jupyter Notebook to Markdown. Here is how:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Given a sample.ipynb, convert it to markdown file by:
+&lt;code class=&quot;language-text&quot;&gt;jupyter nbconvert --to markdown sample.ipynb&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Remove the leading spaces by &lt;code class=&quot;language-text&quot;&gt;sed &amp;quot;s/^[ \t]*//&amp;quot; -i sample.md&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Load the markdown fine in RStudio, Preview, and publish it.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;That’s it!&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Workflow of Building R Package]]></title><description><![CDATA[Thanks to RStudio and the usethis and ROxygen packages, the building
+of a R package is much convenient. Here is a typical workflow…]]></description><link>https://jiang-li.github.io//R_package/</link><guid isPermaLink="false">https://jiang-li.github.io//R_package/</guid><pubDate>Fri, 15 Jun 2018 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Thanks to RStudio and the &lt;em&gt;usethis&lt;/em&gt; and &lt;em&gt;ROxygen&lt;/em&gt; packages, the building
+of a R package is much convenient. Here is a typical workflow:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Initialize the project of package&lt;/li&gt;
+&lt;/ol&gt;
+&lt;!-- --&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;usethis::create_package(&amp;quot;...&amp;quot;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;ol&gt;
+&lt;li&gt;Modify the description&lt;/li&gt;
+&lt;li&gt;Copy and save R code in the /R folder&lt;/li&gt;
+&lt;li&gt;Build -&gt; Load All&lt;/li&gt;
+&lt;li&gt;Remove the library(…) in the code, and add the packages by&lt;/li&gt;
+&lt;/ol&gt;
+&lt;!-- --&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;usethis::use_package(&amp;quot;...&amp;quot;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;ol&gt;
+&lt;li&gt;Build -&gt; Check&lt;/li&gt;
+&lt;li&gt;Write help for each function: Code -&gt; Insert ROxygen Skeleton&lt;/li&gt;
+&lt;li&gt;Assign the other packages’ functions using in the code&lt;/li&gt;
+&lt;/ol&gt;
+&lt;!-- --&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;  @importFrom package function1, function2...&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;ol&gt;
+&lt;li&gt;Build -&gt; Documents&lt;/li&gt;
+&lt;li&gt;usethis::use_readme_md()&lt;/li&gt;
+&lt;li&gt;Build -&gt; build binary&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Done!&lt;/p&gt;</content:encoded></item><item><title><![CDATA[R + H2O for Insurance Rating]]></title><description><![CDATA[Insurance rating models predict risk, which is usually represented by
+pure premium; i.e., the loss normalized by the covered time (exposure…]]></description><link>https://jiang-li.github.io//insurance_pricing/</link><guid isPermaLink="false">https://jiang-li.github.io//insurance_pricing/</guid><pubDate>Sun, 25 Feb 2018 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Insurance rating models predict risk, which is usually represented by
+pure premium; i.e., the loss normalized by the covered time (exposure)
+$\frac {loss}{exposure}$. GLM (Generalized Linear Model) is the major
+method using in industry. Insurance data are highly imbalanced. When the
+data are not credible enough, pure premium is predicted by frequency
+$\frac {claimCount}{coveredTime}$ and severity
+$\frac {loss}{claimCount}$, respectively, because the frequency is more
+credible.&lt;/p&gt;
+&lt;p&gt;Here I would like to show how to predict pure premium using frequency
+and severity in R and H2O - transitioning away from the industry
+standard of SAS without any loss in model accuracy.&lt;/p&gt;
+&lt;h2&gt;Data and Methods&lt;/h2&gt;
+&lt;p&gt;The data set is the dataCar in insuranceDate library. I used the
+following explanatory variables:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;variables&lt;/th&gt;
+&lt;th&gt;note&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;veh_value&lt;/td&gt;
+&lt;td&gt;in $10k unit; an approximation of vehicle symbol&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;exposure&lt;/td&gt;
+&lt;td&gt;in 0~1; probably earned car year&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;numclaims&lt;/td&gt;
+&lt;td&gt;claim count&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;claimcst0&lt;/td&gt;
+&lt;td&gt;loss amount&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;veh_body&lt;/td&gt;
+&lt;td&gt;body type, a categorical variable&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;veh_age&lt;/td&gt;
+&lt;td&gt;age of vehicle&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;gender&lt;/td&gt;
+&lt;td&gt;a categorical veritable&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;area&lt;/td&gt;
+&lt;td&gt;a categorical variable; an approximation of the territory agecat&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;r&quot;&gt;&lt;pre class=&quot;language-r&quot;&gt;&lt;code class=&quot;language-r&quot;&gt;str&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;dataCar&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;## &amp;#39;data.frame&amp;#39;:    67856 obs. of  11 variables:
+##  $ veh_value: num  1.06 1.03 3.26 4.14 0.72 2.01 1.6 1.47 0.52 0.38 ...
+##  $ exposure : num  0.304 0.649 0.569 0.318 0.649 ...
+##  $ clm      : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ numclaims: int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ claimcst0: num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ veh_body : Factor w/ 13 levels &amp;quot;BUS&amp;quot;,&amp;quot;CONVT&amp;quot;,..: 4 4 13 11 4 5 8 4 4 4 ...
+##  $ veh_age  : int  3 2 2 2 4 3 3 2 4 4 ...
+##  $ gender   : Factor w/ 2 levels &amp;quot;F&amp;quot;,&amp;quot;M&amp;quot;: 1 1 1 1 1 2 2 2 1 1 ...
+##  $ area     : Factor w/ 6 levels &amp;quot;A&amp;quot;,&amp;quot;B&amp;quot;,&amp;quot;C&amp;quot;,&amp;quot;D&amp;quot;,..: 3 1 5 4 3 3 1 2 1 2 ...
+##  $ agecat   : int  2 4 2 2 2 4 4 6 3 4 ...
+##  $ X_OBSTAT_: Factor w/ 1 level &amp;quot;01101    0    0    0&amp;quot;: 1 1 1 1 1 1 1 1 1 1 ...&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;Modeling&lt;/h2&gt;
+&lt;p&gt;Usually the insurance data set is big. To make the the code to be easily
+scaled up, I used the H2O.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;r&quot;&gt;&lt;pre class=&quot;language-r&quot;&gt;&lt;code class=&quot;language-r&quot;&gt;library&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;h2o&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+h2o.init&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+  nthreads &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  max_mem_size &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;4G&quot;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;## 
+## H2O is not running yet, starting it now...
+## 
+## Note:  In case of errors look at the following log files:
+##     /var/folders/v9/8nb0m5bd77n3l_yp73p7fcz00000gn/T//RtmpgcRE3P/h2o_jli_started_from_r.out
+##     /var/folders/v9/8nb0m5bd77n3l_yp73p7fcz00000gn/T//RtmpgcRE3P/h2o_jli_started_from_r.err
+## 
+## 
+## Starting H2O JVM and connecting: .. Connection successful!
+## 
+## R is connected to the H2O cluster: 
+##     H2O cluster uptime:         1 seconds 773 milliseconds 
+##     H2O cluster timezone:       America/New_York 
+##     H2O data parsing timezone:  UTC 
+##     H2O cluster version:        3.24.0.3 
+##     H2O cluster version age:    2 months and 13 days  
+##     H2O cluster name:           H2O_started_from_R_jli_kbx801 
+##     H2O cluster total nodes:    1 
+##     H2O cluster total memory:   4.00 GB 
+##     H2O cluster total cores:    12 
+##     H2O cluster allowed cores:  12 
+##     H2O cluster healthy:        TRUE 
+##     H2O Connection ip:          localhost 
+##     H2O Connection port:        54321 
+##     H2O Connection proxy:       NA 
+##     H2O Internal Security:      FALSE 
+##     H2O API Extensions:         Amazon S3, XGBoost, Algos, AutoML, Core V3, Core V4 
+##     R Version:                  R version 3.6.0 (2019-04-26)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;r&quot;&gt;&lt;pre class=&quot;language-r&quot;&gt;&lt;code class=&quot;language-r&quot;&gt;h2o.no_progress&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+df &lt;span class=&quot;token operator&quot;&gt;&amp;lt;-&lt;/span&gt; as.h2o&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;dataCar&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;r&quot;&gt;&lt;pre class=&quot;language-r&quot;&gt;&lt;code class=&quot;language-r&quot;&gt;varList &lt;span class=&quot;token operator&quot;&gt;&amp;lt;-&lt;/span&gt; c&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+  &lt;span class=&quot;token string&quot;&gt;&quot;veh_value&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token string&quot;&gt;&quot;exposure&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token string&quot;&gt;&quot;numclaims&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token string&quot;&gt;&quot;claimcst0&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token string&quot;&gt;&quot;veh_body&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token string&quot;&gt;&quot;veh_age&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token string&quot;&gt;&quot;gender&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token string&quot;&gt;&quot;area&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token string&quot;&gt;&quot;agecat&quot;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+df &lt;span class=&quot;token operator&quot;&gt;&amp;lt;-&lt;/span&gt; df&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; varList&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+df&lt;span class=&quot;token operator&quot;&gt;$&lt;/span&gt;PP &lt;span class=&quot;token operator&quot;&gt;&amp;lt;-&lt;/span&gt; df&lt;span class=&quot;token operator&quot;&gt;$&lt;/span&gt;claimcst0 &lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt; df&lt;span class=&quot;token operator&quot;&gt;$&lt;/span&gt;exposure
+
+&lt;span class=&quot;token comment&quot;&gt;# the features used in modeling&lt;/span&gt;
+varModel &lt;span class=&quot;token operator&quot;&gt;&amp;lt;-&lt;/span&gt; c&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+  &lt;span class=&quot;token string&quot;&gt;&quot;veh_value&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token string&quot;&gt;&quot;veh_body&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token string&quot;&gt;&quot;veh_age&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token string&quot;&gt;&quot;gender&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token string&quot;&gt;&quot;area&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token string&quot;&gt;&quot;agecat&quot;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+df&lt;span class=&quot;token operator&quot;&gt;$&lt;/span&gt;frequency &lt;span class=&quot;token operator&quot;&gt;&amp;lt;-&lt;/span&gt; df&lt;span class=&quot;token operator&quot;&gt;$&lt;/span&gt;numclaims &lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt; df&lt;span class=&quot;token operator&quot;&gt;$&lt;/span&gt;exposure
+df&lt;span class=&quot;token operator&quot;&gt;$&lt;/span&gt;severity &lt;span class=&quot;token operator&quot;&gt;&amp;lt;-&lt;/span&gt; df&lt;span class=&quot;token operator&quot;&gt;$&lt;/span&gt;claimcst0 &lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt; df&lt;span class=&quot;token operator&quot;&gt;$&lt;/span&gt;numclaims
+
+print&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Percentage of missing values in frequency and severity:&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;## [1] &amp;quot;Percentage of missing values in frequency and severity:&amp;quot;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;r&quot;&gt;&lt;pre class=&quot;language-r&quot;&gt;&lt;code class=&quot;language-r&quot;&gt;percent&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;h2o.sum&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;is.na&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;df&lt;span class=&quot;token operator&quot;&gt;$&lt;/span&gt;frequency&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt; nrow&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;df&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;## [1] &amp;quot;0%&amp;quot;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;r&quot;&gt;&lt;pre class=&quot;language-r&quot;&gt;&lt;code class=&quot;language-r&quot;&gt;percent&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;h2o.sum&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;is.na&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;df&lt;span class=&quot;token operator&quot;&gt;$&lt;/span&gt;severity&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt; nrow&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;df&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;## [1] &amp;quot;93.2%&amp;quot;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;r&quot;&gt;&lt;pre class=&quot;language-r&quot;&gt;&lt;code class=&quot;language-r&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# The sample data set is too small. I did not split them to train and test.&lt;/span&gt;
+train &lt;span class=&quot;token operator&quot;&gt;&amp;lt;-&lt;/span&gt; df
+test &lt;span class=&quot;token operator&quot;&gt;&amp;lt;-&lt;/span&gt; df&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;First, frequency is modeled. Please note that the Poisson distribution
+requires a whole number as the response variable, so exposure, the
+denominator of frequency, is treated by the offset.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;r&quot;&gt;&lt;pre class=&quot;language-r&quot;&gt;&lt;code class=&quot;language-r&quot;&gt;train&lt;span class=&quot;token operator&quot;&gt;$&lt;/span&gt;logExp &lt;span class=&quot;token operator&quot;&gt;&amp;lt;-&lt;/span&gt; h2o.log&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;train&lt;span class=&quot;token operator&quot;&gt;$&lt;/span&gt;exposure&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;# offset&lt;/span&gt;
+
+freqFit &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; h2o.glm&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;y &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;numclaims&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+                  x &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; varModel&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+                  training_frame &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; train&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+                  offset_column &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;logExp&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+                  family &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;poisson&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+                  link &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;log&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+                  missing_values_handling &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Skip&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+                  solver &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;IRLSM&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+                  lambda &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+                  remove_collinear_columns &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; T&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+                  compute_p_values &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; T
+&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Then, severity is modeled.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;r&quot;&gt;&lt;pre class=&quot;language-r&quot;&gt;&lt;code class=&quot;language-r&quot;&gt;sevFit &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; h2o.glm&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;y &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;severity&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+                 x &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; varModel&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+                 training_frame &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; train&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+                 family &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;gamma&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+                 link &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;log&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+                 missing_values_handling &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Skip&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+                 solver &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;IRLSM&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+                 lambda &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+                 remove_collinear_columns &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; T&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+                 compute_p_values &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; T
+&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;Output&lt;/h2&gt;
+&lt;p&gt;The predicted pure premium was calculated using the frequency and
+severity factors.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;r&quot;&gt;&lt;pre class=&quot;language-r&quot;&gt;&lt;code class=&quot;language-r&quot;&gt;library&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;dplyr&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;## 
+## Attaching package: &amp;#39;dplyr&amp;#39;
+
+## The following objects are masked from &amp;#39;package:stats&amp;#39;:
+## 
+##     filter, lag
+
+## The following objects are masked from &amp;#39;package:base&amp;#39;:
+## 
+##     intersect, setdiff, setequal, union&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;r&quot;&gt;&lt;pre class=&quot;language-r&quot;&gt;&lt;code class=&quot;language-r&quot;&gt;summaryFactorGLM &lt;span class=&quot;token operator&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;fitModles&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token comment&quot;&gt;# Summarize the factors.&lt;/span&gt;
+  &lt;span class=&quot;token comment&quot;&gt;#&lt;/span&gt;
+  &lt;span class=&quot;token comment&quot;&gt;# Args:&lt;/span&gt;
+  &lt;span class=&quot;token comment&quot;&gt;#  fitModles: list of h2o modles: frequency and severity&lt;/span&gt;
+  &lt;span class=&quot;token comment&quot;&gt;#&lt;/span&gt;
+  &lt;span class=&quot;token comment&quot;&gt;# Returns:&lt;/span&gt;
+  &lt;span class=&quot;token comment&quot;&gt;#   A data frame of the combined factor table.&lt;/span&gt;
+
+  freqFit &lt;span class=&quot;token operator&quot;&gt;&amp;lt;-&lt;/span&gt; fitModles&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;frequency&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+  sevFit &lt;span class=&quot;token operator&quot;&gt;&amp;lt;-&lt;/span&gt; fitModles&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;severity&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+
+  freqCoef &lt;span class=&quot;token operator&quot;&gt;&amp;lt;-&lt;/span&gt; as.data.frame&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;freqFit&lt;span class=&quot;token operator&quot;&gt;@&lt;/span&gt;model&lt;span class=&quot;token operator&quot;&gt;$&lt;/span&gt;coefficients_table&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  freqCoef&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;freqCoef&lt;span class=&quot;token operator&quot;&gt;$&lt;/span&gt;names &lt;span class=&quot;token operator&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Intercept&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;names&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;freqIntercept&quot;&lt;/span&gt;
+
+  freqCoef &lt;span class=&quot;token operator&quot;&gt;&amp;lt;-&lt;/span&gt; freqCoef &lt;span class=&quot;token percent-operator operator&quot;&gt;%&gt;%&lt;/span&gt;
+    mutate&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+      frequencyFactor &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; exp&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;coefficients&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token percent-operator operator&quot;&gt;%&gt;%&lt;/span&gt;
+    select&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+      names&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      frequencyFactor&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      frequencyEstimate &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; coefficients
+    &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+  sevCoef &lt;span class=&quot;token operator&quot;&gt;&amp;lt;-&lt;/span&gt; sevFit&lt;span class=&quot;token operator&quot;&gt;@&lt;/span&gt;model&lt;span class=&quot;token operator&quot;&gt;$&lt;/span&gt;coefficients_table
+
+  sevCoef&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;sevCoef&lt;span class=&quot;token operator&quot;&gt;$&lt;/span&gt;names &lt;span class=&quot;token operator&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Intercept&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;names&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;sevIntercept&quot;&lt;/span&gt;
+
+  sevCoef &lt;span class=&quot;token operator&quot;&gt;&amp;lt;-&lt;/span&gt; sevCoef &lt;span class=&quot;token percent-operator operator&quot;&gt;%&gt;%&lt;/span&gt;
+    mutate&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+      severityFactor &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; exp&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;coefficients&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token percent-operator operator&quot;&gt;%&gt;%&lt;/span&gt;
+    select&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+      names&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      severityFactor&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      severityEstimate &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; coefficients
+    &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+  &lt;span class=&quot;token comment&quot;&gt;# pure premium&lt;/span&gt;
+  ppCoef &lt;span class=&quot;token operator&quot;&gt;&amp;lt;-&lt;/span&gt; full_join&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;freqCoef&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; sevCoef&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; by &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;names&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+  ppCoef&lt;span class=&quot;token operator&quot;&gt;$&lt;/span&gt;factor &lt;span class=&quot;token operator&quot;&gt;&amp;lt;-&lt;/span&gt; ppCoef&lt;span class=&quot;token operator&quot;&gt;$&lt;/span&gt;frequencyFactor &lt;span class=&quot;token operator&quot;&gt;*&lt;/span&gt; ppCoef&lt;span class=&quot;token operator&quot;&gt;$&lt;/span&gt;severityFactor
+
+  &lt;span class=&quot;token comment&quot;&gt;# assign the factor of intercept&lt;/span&gt;
+  ppCoef&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;ppCoef&lt;span class=&quot;token operator&quot;&gt;$&lt;/span&gt;names &lt;span class=&quot;token operator&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;sevIntercept&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;factor&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;&amp;lt;-&lt;/span&gt;
+    ppCoef&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;ppCoef&lt;span class=&quot;token operator&quot;&gt;$&lt;/span&gt;names &lt;span class=&quot;token operator&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;sevIntercept&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;severityFactor&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+  ppCoef&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;ppCoef&lt;span class=&quot;token operator&quot;&gt;$&lt;/span&gt;names &lt;span class=&quot;token operator&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;freqIntercept&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;factor&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;&amp;lt;-&lt;/span&gt;
+    ppCoef&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;ppCoef&lt;span class=&quot;token operator&quot;&gt;$&lt;/span&gt;names &lt;span class=&quot;token operator&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;freqIntercept&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;frequencyFactor&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+
+  &lt;span class=&quot;token comment&quot;&gt;# seperate the parameter and level, remove the intercept&lt;/span&gt;
+  ppCoef&lt;span class=&quot;token operator&quot;&gt;$&lt;/span&gt;parameter &lt;span class=&quot;token operator&quot;&gt;&amp;lt;-&lt;/span&gt; sapply&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;strsplit&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;ppCoef&lt;span class=&quot;token operator&quot;&gt;$&lt;/span&gt;names&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;\\.&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;[&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  ppCoef&lt;span class=&quot;token operator&quot;&gt;$&lt;/span&gt;level &lt;span class=&quot;token operator&quot;&gt;&amp;lt;-&lt;/span&gt; sapply&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;strsplit&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;ppCoef&lt;span class=&quot;token operator&quot;&gt;$&lt;/span&gt;names&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;\\.&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;[&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  ppCoef&lt;span class=&quot;token operator&quot;&gt;$&lt;/span&gt;names &lt;span class=&quot;token operator&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;NULL&lt;/span&gt;
+
+
+  return&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;ppCoef&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+
+factorDF &lt;span class=&quot;token operator&quot;&gt;&amp;lt;-&lt;/span&gt;
+  summaryFactorGLM&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;list&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;frequency &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; freqFit&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; severity &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; sevFit&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token percent-operator operator&quot;&gt;%&gt;%&lt;/span&gt; 
+  select&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;parameter&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; level&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; factor&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+factorDF&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;##        parameter level      factor
+## 1  freqIntercept  &amp;lt;NA&amp;gt;   0.5876642
+## 2       veh_body CONVT   0.3806982
+## 3       veh_body COUPE   1.2143005
+## 4       veh_body HBACK   0.6928246
+## 5       veh_body HDTOP   0.7027602
+## 6       veh_body MCARA   0.3644400
+## 7       veh_body MIBUS   0.8020327
+## 8       veh_body PANVN   0.7423515
+## 9       veh_body RDSTR   0.2057272
+## 10      veh_body SEDAN   0.6260212
+## 11      veh_body STNWG   0.6034189
+## 12      veh_body TRUCK   0.7260584
+## 13      veh_body   UTE   0.5364956
+## 14          area     B   1.0274201
+## 15          area     C   1.1034716
+## 16          area     D   0.8772347
+## 17          area     E   1.1580586
+## 18          area     F   1.5895192
+## 19        gender     M   1.1775373
+## 20     veh_value  &amp;lt;NA&amp;gt;   1.0521231
+## 21       veh_age  &amp;lt;NA&amp;gt;   1.0121147
+## 22        agecat  &amp;lt;NA&amp;gt;   0.8625939
+## 23  sevIntercept  &amp;lt;NA&amp;gt; 986.5646388&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content:encoded></item><item><title><![CDATA[MOE for ACS Estimate]]></title><description><![CDATA[There is a moe column in the census data pulled using the
 tidycensus. After doing a mini
-research on it, I learned that…]]></description><link>https://jiang-li.github.io//MOE_for_ACS_Estimate/</link><guid isPermaLink="false">https://jiang-li.github.io//MOE_for_ACS_Estimate/</guid><pubDate>Sun, 18 Feb 2018 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;$a^2 + b^2 = c^2$&lt;/p&gt;
-&lt;p&gt;There is a moe column in the census data pulled using the
+research on it, I learned that actually this…]]></description><link>https://jiang-li.github.io//MOE_for_ACS_Estimate/</link><guid isPermaLink="false">https://jiang-li.github.io//MOE_for_ACS_Estimate/</guid><pubDate>Sun, 18 Feb 2018 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;There is a moe column in the census data pulled using the
 &lt;a href=&quot;https://walkerke.github.io/tidycensus/&quot;&gt;tidycensus&lt;/a&gt;. After doing a mini
 research on it, I learned that actually this variable is the 90%
 confidence interval for the population mean. Yihui said “Listen / read /
@@ -44,7 +370,28 @@ interval.&lt;/p&gt;
 example, the 95% MOE can be derived using 90% MOE times 1.96/1.645.&lt;/p&gt;
 &lt;p&gt;To get more details, please reference &lt;a href=&quot;https://www.census.gov/programs-surveys/acs/guidance/training-presentations/acs-moe.html&quot;&gt;Using American Community Survey
 (ACS) Estimates and Margins of
-Error&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Often-used Scripts]]></title><description><![CDATA[I often use R, Python, SAS, SQL, and Bash in different
+Error&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Know More about the Place You Live Using Census Data]]></title><description><![CDATA[Where the story is from Until 2018 I have lived in Columbus Metropolitan area for more than ten years. How time flies! In these years I feel…]]></description><link>https://jiang-li.github.io//US_Census/</link><guid isPermaLink="false">https://jiang-li.github.io//US_Census/</guid><pubDate>Sun, 11 Feb 2018 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;Where the story is from&lt;/h2&gt;
+&lt;p&gt;Until 2018 I have lived in Columbus Metropolitan area for more than ten years. How time flies! In these years I feel more and more vehicles on the road. No doubt this area is growing fast. However, almost all my quantitative understanding of Columbus is from Wiki…It is not bad, but what if I want to know more? &lt;/p&gt;
+&lt;p&gt;When I was in the 2018 RStudio Conference (a very good meeting in the R field, highly recommended), an elegant lady, who is a senior data scientist working for US government, told me that census data can be easily consumed using R. Then, why not use R to know more about the place I live?&lt;/p&gt;
+&lt;h2&gt;How to get Census data&lt;/h2&gt;
+&lt;p&gt;First, get US Cencus key: &lt;a href=&quot;https://api.census.gov/data/key_signup.html&quot;&gt;https://api.census.gov/data/key_signup.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Then, load packages and set the option.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;r&quot;&gt;&lt;pre class=&quot;language-r&quot;&gt;&lt;code class=&quot;language-r&quot;&gt;library&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;tidycensus&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+library&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;mapview&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+options&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;tigris_use_cache &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;TRUE&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;After that, active the key by&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;r&quot;&gt;&lt;pre class=&quot;language-r&quot;&gt;&lt;code class=&quot;language-r&quot;&gt;census_api_key&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;your key&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; install &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; T&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; overwrite &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; T&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;r&quot;&gt;&lt;pre class=&quot;language-r&quot;&gt;&lt;code class=&quot;language-r&quot;&gt;census_api_key&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;37c38f3d2e15304bd682b2fb6da6dd87df896430&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+               install &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; T&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+               overwrite &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; T&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;How about the household income?&lt;/h3&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;r&quot;&gt;&lt;pre class=&quot;language-r&quot;&gt;&lt;code class=&quot;language-r&quot;&gt;df &lt;span class=&quot;token operator&quot;&gt;&amp;lt;-&lt;/span&gt; get_acs&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;geography &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;tract&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+              variables &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;B19013_001&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+              state &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;OH&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+              county &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Franklin&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+              geometry &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;TRUE&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;r&quot;&gt;&lt;pre class=&quot;language-r&quot;&gt;&lt;code class=&quot;language-r&quot;&gt;mapview&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;df&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; zcol &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;estimate&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; legend &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;TRUE&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content:encoded></item><item><title><![CDATA[Often-used Scripts]]></title><description><![CDATA[I often use R, Python, SAS, SQL, and Bash in different
 tasks at the same time. To make the switch between different languages easier, I…]]></description><link>https://jiang-li.github.io//commonly-used_scripts/</link><guid isPermaLink="false">https://jiang-li.github.io//commonly-used_scripts/</guid><pubDate>Tue, 06 Feb 2018 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;I often use R, Python, SAS, SQL, and Bash in different
 tasks at the same time. To make the switch between different languages easier, I built a list of the commonly-used script for a quick reference.&lt;/p&gt;
 &lt;p&gt;A simulated sample data set with missing values and duplicated values was used. &lt;/p&gt;
