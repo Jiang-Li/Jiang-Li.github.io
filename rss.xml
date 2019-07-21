@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Dynatic Data]]></title><description><![CDATA[Take notes of the fun and useful stuff.]]></description><link>https://jiang-li.github.io/</link><generator>RSS for Node</generator><lastBuildDate>Sun, 21 Jul 2019 03:45:58 GMT</lastBuildDate><item><title><![CDATA[Blogging by Gastby]]></title><description><![CDATA[Previously I was blogging using R’s BlogDown, which is pretty cool. But recently I used Python more and more and would 
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Dynamic Data]]></title><description><![CDATA[Take notes of the fun and useful stuff.]]></description><link>https://jiang-li.github.io/</link><generator>RSS for Node</generator><lastBuildDate>Sun, 21 Jul 2019 19:55:44 GMT</lastBuildDate><item><title><![CDATA[Blogging by Gastby]]></title><description><![CDATA[Previously I was blogging using R’s BlogDown, which is pretty cool. But recently I used Python more and more and would 
 like to switch a…]]></description><link>https://jiang-li.github.io//blogging_by_gastby/</link><guid isPermaLink="false">https://jiang-li.github.io//blogging_by_gastby/</guid><pubDate>Sat, 20 Jul 2019 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Previously I was blogging using R’s BlogDown, which is pretty cool. But recently I used Python more and more and would
 like to switch a more general tool. The static site built by Gastby, which is powered by React, is pretty fast. So I
 decided to give a try. Here is the workflow of blogging:&lt;/p&gt;
@@ -17,21 +17,7 @@ decided to give a try. Here is the workflow of blogging:&lt;/p&gt;
 &lt;li&gt;Although gatsby has
 &lt;code class=&quot;language-text&quot;&gt;gh-pages&lt;/code&gt; package to publish the site automatically. But I found somehow the github’s project page, which is in the
 &lt;code class=&quot;language-text&quot;&gt;gh-pages&lt;/code&gt; branch, takes a very long time to update. Thus, I still prefer to push the site directly to a repo of page.  &lt;/li&gt;
-&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Jupyter Notebook in RStudio Connect]]></title><description><![CDATA[The RStudio Connect is a
-handy tool to publish a report online and share with the team. Usually,
-the Markdown, R Markdown, or R Notebook…]]></description><link>https://jiang-li.github.io//jupyter_rsconnect/</link><guid isPermaLink="false">https://jiang-li.github.io//jupyter_rsconnect/</guid><pubDate>Fri, 15 Jun 2018 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;The &lt;a href=&quot;https://www.rstudio.com/products/connect/&quot;&gt;RStudio Connect&lt;/a&gt; is a
-handy tool to publish a report online and share with the team. Usually,
-the Markdown, R Markdown, or R Notebook documents can be easily
-previewed and published in RStudio. However, what if I want to publish a
-report composed by Jupyter Notebook?&lt;/p&gt;
-&lt;p&gt;The idea is to convert the Jupyter Notebook to Markdown. Here is how:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Given a sample.ipynb, convert it to markdown file by:
-&lt;code class=&quot;language-text&quot;&gt;jupyter nbconvert --to markdown sample.ipynb&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Remove the leading spaces by &lt;code class=&quot;language-text&quot;&gt;sed &amp;quot;s/^[ \t]*//&amp;quot; -i sample.md&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Load the markdown fine in RStudio, Preview, and publish it.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;That’s it!&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Workflow of Building R Package]]></title><description><![CDATA[Thanks to RStudio and the usethis and ROxygen packages, the building
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Workflow of Building R Package]]></title><description><![CDATA[Thanks to RStudio and the usethis and ROxygen packages, the building
 of a R package is much convenient. Here is a typical workflow…]]></description><link>https://jiang-li.github.io//R_package/</link><guid isPermaLink="false">https://jiang-li.github.io//R_package/</guid><pubDate>Fri, 15 Jun 2018 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Thanks to RStudio and the &lt;em&gt;usethis&lt;/em&gt; and &lt;em&gt;ROxygen&lt;/em&gt; packages, the building
 of a R package is much convenient. Here is a typical workflow:&lt;/p&gt;
 &lt;ol&gt;
@@ -59,7 +45,21 @@ of a R package is much convenient. Here is a typical workflow:&lt;/p&gt;
 &lt;li&gt;usethis::use_readme_md()&lt;/li&gt;
 &lt;li&gt;Build -&gt; build binary&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;Done!&lt;/p&gt;</content:encoded></item><item><title><![CDATA[R + H2O for Insurance Rating]]></title><description><![CDATA[Insurance rating models predict risk, which is usually represented by
+&lt;p&gt;Done!&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Jupyter Notebook in RStudio Connect]]></title><description><![CDATA[The RStudio Connect is a
+handy tool to publish a report online and share with the team. Usually,
+the Markdown, R Markdown, or R Notebook…]]></description><link>https://jiang-li.github.io//jupyter_rsconnect/</link><guid isPermaLink="false">https://jiang-li.github.io//jupyter_rsconnect/</guid><pubDate>Fri, 15 Jun 2018 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;The &lt;a href=&quot;https://www.rstudio.com/products/connect/&quot;&gt;RStudio Connect&lt;/a&gt; is a
+handy tool to publish a report online and share with the team. Usually,
+the Markdown, R Markdown, or R Notebook documents can be easily
+previewed and published in RStudio. However, what if I want to publish a
+report composed by Jupyter Notebook?&lt;/p&gt;
+&lt;p&gt;The idea is to convert the Jupyter Notebook to Markdown. Here is how:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Given a sample.ipynb, convert it to markdown file by:
+&lt;code class=&quot;language-text&quot;&gt;jupyter nbconvert --to markdown sample.ipynb&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Remove the leading spaces by &lt;code class=&quot;language-text&quot;&gt;sed &amp;quot;s/^[ \t]*//&amp;quot; -i sample.md&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Load the markdown fine in RStudio, Preview, and publish it.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;That’s it!&lt;/p&gt;</content:encoded></item><item><title><![CDATA[R + H2O for Insurance Rating]]></title><description><![CDATA[Insurance rating models predict risk, which is usually represented by
 pure premium; i.e., the loss normalized by the covered time (exposure…]]></description><link>https://jiang-li.github.io//insurance_pricing/</link><guid isPermaLink="false">https://jiang-li.github.io//insurance_pricing/</guid><pubDate>Sun, 25 Feb 2018 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Insurance rating models predict risk, which is usually represented by
 pure premium; i.e., the loss normalized by the covered time (exposure)
 $\frac {loss}{exposure}$. GLM (Generalized Linear Model) is the major
