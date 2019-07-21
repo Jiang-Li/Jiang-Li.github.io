@@ -1,0 +1,394 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="ie=edge"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><style id="typography.js">html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,details,figcaption,figure,footer,header,main,menu,nav,section,summary{display:block}audio,canvas,progress,video{display:inline-block}audio:not([controls]){display:none;height:0}progress{vertical-align:baseline}[hidden],template{display:none}a{background-color:transparent;-webkit-text-decoration-skip:objects}a:active,a:hover{outline-width:0}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:inherit;font-weight:bolder}dfn{font-style:italic}h1{font-size:2em;margin:.67em 0}mark{background-color:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}img{border-style:none}svg:not(:root){overflow:hidden}code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em}figure{margin:1em 40px}hr{box-sizing:content-box;height:0;overflow:visible}button,input,optgroup,select,textarea{font:inherit;margin:0}optgroup{font-weight:700}button,input{overflow:visible}button,select{text-transform:none}[type=reset],[type=submit],button,html [type=button]{-webkit-appearance:button}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:none;padding:0}[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:1px dotted ButtonText}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}textarea{overflow:auto}[type=checkbox],[type=radio]{box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-cancel-button,[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-input-placeholder{color:inherit;opacity:.54}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}html{font:100%/1.75 'Merriweather','Georgia',serif;box-sizing:border-box;overflow-y:scroll;}*{box-sizing:inherit;}*:before{box-sizing:inherit;}*:after{box-sizing:inherit;}body{color:hsla(0,0%,0%,0.9);font-family:'Merriweather','Georgia',serif;font-weight:400;word-wrap:break-word;font-kerning:normal;-moz-font-feature-settings:"kern", "liga", "clig", "calt";-ms-font-feature-settings:"kern", "liga", "clig", "calt";-webkit-font-feature-settings:"kern", "liga", "clig", "calt";font-feature-settings:"kern", "liga", "clig", "calt";}img{max-width:100%;margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}h1{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;color:inherit;font-family:Montserrat,sans-serif;font-weight:900;text-rendering:optimizeLegibility;font-size:2.5rem;line-height:1.1;}h2{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;color:inherit;font-family:'Merriweather','Georgia',serif;font-weight:900;text-rendering:optimizeLegibility;font-size:1.73286rem;line-height:1.1;}h3{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;color:inherit;font-family:'Merriweather','Georgia',serif;font-weight:900;text-rendering:optimizeLegibility;font-size:1.4427rem;line-height:1.1;}h4{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;color:inherit;font-family:'Merriweather','Georgia',serif;font-weight:900;text-rendering:optimizeLegibility;font-size:1rem;line-height:1.1;letter-spacing:0.140625em;text-transform:uppercase;}h5{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;color:inherit;font-family:'Merriweather','Georgia',serif;font-weight:900;text-rendering:optimizeLegibility;font-size:0.83255rem;line-height:1.1;}h6{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;color:inherit;font-family:'Merriweather','Georgia',serif;font-weight:900;text-rendering:optimizeLegibility;font-size:0.75966rem;line-height:1.1;font-style:italic;}hgroup{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}ul{margin-left:1.75rem;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;list-style-position:outside;list-style-image:none;list-style:disc;}ol{margin-left:1.75rem;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;list-style-position:outside;list-style-image:none;}dl{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}dd{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}p{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}figure{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}pre{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;font-size:0.85rem;line-height:1.75rem;}table{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;font-size:1rem;line-height:1.75rem;border-collapse:collapse;width:100%;}fieldset{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}blockquote{margin-left:-1.75rem;margin-right:1.75rem;margin-top:0;padding-bottom:0;padding-left:1.42188rem;padding-right:0;padding-top:0;margin-bottom:1.75rem;font-size:1.20112rem;line-height:1.75rem;color:hsla(0,0%,0%,0.59);font-style:italic;border-left:0.32813rem solid hsla(0,0%,0%,0.9);}form{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}noscript{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}iframe{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}hr{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:calc(1.75rem - 1px);background:hsla(0,0%,0%,0.2);border:none;height:1px;}address{margin-left:0;margin-right:0;margin-top:0;padding-bottom:0;padding-left:0;padding-right:0;padding-top:0;margin-bottom:1.75rem;}b{font-weight:700;}strong{font-weight:700;}dt{font-weight:700;}th{font-weight:700;}li{margin-bottom:calc(1.75rem / 2);}ol li{padding-left:0;}ul li{padding-left:0;}li > ol{margin-left:1.75rem;margin-bottom:calc(1.75rem / 2);margin-top:calc(1.75rem / 2);}li > ul{margin-left:1.75rem;margin-bottom:calc(1.75rem / 2);margin-top:calc(1.75rem / 2);}blockquote *:last-child{margin-bottom:0;}li *:last-child{margin-bottom:0;}p *:last-child{margin-bottom:0;}li > p{margin-bottom:calc(1.75rem / 2);}code{font-size:0.85rem;line-height:1.75rem;}kbd{font-size:0.85rem;line-height:1.75rem;}samp{font-size:0.85rem;line-height:1.75rem;}abbr{border-bottom:1px dotted hsla(0,0%,0%,0.5);cursor:help;}acronym{border-bottom:1px dotted hsla(0,0%,0%,0.5);cursor:help;}abbr[title]{border-bottom:1px dotted hsla(0,0%,0%,0.5);cursor:help;text-decoration:none;}thead{text-align:left;}td,th{text-align:left;border-bottom:1px solid hsla(0,0%,0%,0.12);font-feature-settings:"tnum";-moz-font-feature-settings:"tnum";-ms-font-feature-settings:"tnum";-webkit-font-feature-settings:"tnum";padding-left:1.16667rem;padding-right:1.16667rem;padding-top:0.875rem;padding-bottom:calc(0.875rem - 1px);}th:first-child,td:first-child{padding-left:0;}th:last-child,td:last-child{padding-right:0;}blockquote > :last-child{margin-bottom:0;}blockquote cite{font-size:1rem;line-height:1.75rem;color:hsla(0,0%,0%,0.9);font-weight:400;}blockquote cite:before{content:"— ";}ul,ol{margin-left:0;}@media only screen and (max-width:480px){ul,ol{margin-left:1.75rem;}blockquote{margin-left:-1.3125rem;margin-right:0;padding-left:0.98438rem;}}h1,h2,h3,h4,h5,h6{margin-top:3.5rem;}a{box-shadow:0 1px 0 0 currentColor;color:#007acc;text-decoration:none;}a:hover,a:active{box-shadow:none;}mark,ins{background:#007acc;color:white;padding:0.10938rem 0.21875rem;text-decoration:none;}a.gatsby-resp-image-link{box-shadow:none;}</style><style data-href="/styles.a03ac9cc63f55f1507aa.css">@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:100;src:local("Montserrat Thin "),local("Montserrat-Thin"),url(/static/montserrat-latin-100-191cc9f50f3b76b9617cb383f19acb7d.woff2) format("woff2"),url(/static/montserrat-latin-100-370318464551d5f25b0f0a78f374faac.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:100;src:local("Montserrat Thin italic"),local("Montserrat-Thinitalic"),url(/static/montserrat-latin-100italic-bdeaeb79db315697bd173a55b097dc18.woff2) format("woff2"),url(/static/montserrat-latin-100italic-ecf7d49386e8f265878e735db34a7c4b.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:200;src:local("Montserrat Extra Light "),local("Montserrat-Extra Light"),url(/static/montserrat-latin-200-85d5ef9db7f2dc6979172a4a3b2c57cb.woff2) format("woff2"),url(/static/montserrat-latin-200-1fc98e126a3d152549240e6244d7e669.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:200;src:local("Montserrat Extra Light italic"),local("Montserrat-Extra Lightitalic"),url(/static/montserrat-latin-200italic-49095760a498d024fe1a85a078850df9.woff2) format("woff2"),url(/static/montserrat-latin-200italic-fe46cf8b9462c820457d3bf537e4057f.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:300;src:local("Montserrat Light "),local("Montserrat-Light"),url(/static/montserrat-latin-300-7c3daf12b706645b5d3710f863a4da04.woff2) format("woff2"),url(/static/montserrat-latin-300-8dc95fab9cf98d02ca8d76e97d3dff60.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:300;src:local("Montserrat Light italic"),local("Montserrat-Lightitalic"),url(/static/montserrat-latin-300italic-f20b178ca2024a5eac8e42e6649db86c.woff2) format("woff2"),url(/static/montserrat-latin-300italic-3fe16939288856e8e828fa2661bf2354.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:400;src:local("Montserrat Regular "),local("Montserrat-Regular"),url(/static/montserrat-latin-400-bc3aa95dca08f5fee5291e34959c27bc.woff2) format("woff2"),url(/static/montserrat-latin-400-8102c4838f9e3d08dad644290a9cb701.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:400;src:local("Montserrat Regular italic"),local("Montserrat-Regularitalic"),url(/static/montserrat-latin-400italic-5cad650422a7184467af5a4d17b264c4.woff2) format("woff2"),url(/static/montserrat-latin-400italic-d191f22af3bb50902b99ac577f81a322.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:500;src:local("Montserrat Medium "),local("Montserrat-Medium"),url(/static/montserrat-latin-500-92d16e458625f4d2c8940f6bdca0ff09.woff2) format("woff2"),url(/static/montserrat-latin-500-8b763220218ffc11c57c84ddb80e7b26.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:500;src:local("Montserrat Medium italic"),local("Montserrat-Mediumitalic"),url(/static/montserrat-latin-500italic-47bfcca6b69d6a9acca7a8bff17193e2.woff2) format("woff2"),url(/static/montserrat-latin-500italic-72c01f753c3940c0b9cb6bf2389caddf.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:600;src:local("Montserrat SemiBold "),local("Montserrat-SemiBold"),url(/static/montserrat-latin-600-6fb1b5623e528e27c18658fecf5ee0ee.woff2) format("woff2"),url(/static/montserrat-latin-600-7c839d15a6f54e7025ba8c0c4b333e8f.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:600;src:local("Montserrat SemiBold italic"),local("Montserrat-SemiBolditalic"),url(/static/montserrat-latin-600italic-60789af1c9338ed1a9546722ec54b4f7.woff2) format("woff2"),url(/static/montserrat-latin-600italic-f3d4de8d0afb19e777c79032ce828e3d.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:700;src:local("Montserrat Bold "),local("Montserrat-Bold"),url(/static/montserrat-latin-700-39d93cf678c740f9f6b2b1cfde34bee3.woff2) format("woff2"),url(/static/montserrat-latin-700-80f10bd382f0df1cd650fec59f3c9394.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:700;src:local("Montserrat Bold italic"),local("Montserrat-Bolditalic"),url(/static/montserrat-latin-700italic-ba136d97b14e82284dd595e257f11c47.woff2) format("woff2"),url(/static/montserrat-latin-700italic-8c98142b425630821139c24bd1698700.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:800;src:local("Montserrat ExtraBold "),local("Montserrat-ExtraBold"),url(/static/montserrat-latin-800-b7018be9ed6cd94da8b6675b3a468c3b.woff2) format("woff2"),url(/static/montserrat-latin-800-9a9befcf50d64f9d2d19d8b1d1984add.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:800;src:local("Montserrat ExtraBold italic"),local("Montserrat-ExtraBolditalic"),url(/static/montserrat-latin-800italic-540ffdd223d1a9ad3d4e678e1a23372e.woff2) format("woff2"),url(/static/montserrat-latin-800italic-897086f99f4e1f45e6b1e9368527d0bc.woff) format("woff")}@font-face{font-family:Montserrat;font-style:normal;font-display:swap;font-weight:900;src:local("Montserrat Black "),local("Montserrat-Black"),url(/static/montserrat-latin-900-58cd789700850375b834e8b6776002eb.woff2) format("woff2"),url(/static/montserrat-latin-900-26d42c9428780e545a540bbb50c84bce.woff) format("woff")}@font-face{font-family:Montserrat;font-style:italic;font-display:swap;font-weight:900;src:local("Montserrat Black italic"),local("Montserrat-Blackitalic"),url(/static/montserrat-latin-900italic-451157bc8861fe54f523b3669a3def71.woff2) format("woff2"),url(/static/montserrat-latin-900italic-a8ec4957e1c24f5793305763ad9845b3.woff) format("woff")}@font-face{font-family:Merriweather;font-style:normal;font-display:swap;font-weight:300;src:local("Merriweather Light "),local("Merriweather-Light"),url(/static/merriweather-latin-300-b1158cfcd4aacb9d8fb61625e37af46a.woff2) format("woff2"),url(/static/merriweather-latin-300-cc7de05e166e90320d7d896e0f72a19d.woff) format("woff")}@font-face{font-family:Merriweather;font-style:italic;font-display:swap;font-weight:300;src:local("Merriweather Light italic"),local("Merriweather-Lightitalic"),url(/static/merriweather-latin-300italic-8fe52a48089d6ebe46db0b8e7cc66263.woff2) format("woff2"),url(/static/merriweather-latin-300italic-e1331f5397c2a673f9d3765138debdb5.woff) format("woff")}@font-face{font-family:Merriweather;font-style:normal;font-display:swap;font-weight:400;src:local("Merriweather Regular "),local("Merriweather-Regular"),url(/static/merriweather-latin-400-8276fdb72ae8f4714d4e6eba704cc39f.woff2) format("woff2"),url(/static/merriweather-latin-400-69f09800f4f6479d06e44eba837df872.woff) format("woff")}@font-face{font-family:Merriweather;font-style:italic;font-display:swap;font-weight:400;src:local("Merriweather Regular italic"),local("Merriweather-Regularitalic"),url(/static/merriweather-latin-400italic-3a9be9ea9f7aa4af6de7307df21d9fc0.woff2) format("woff2"),url(/static/merriweather-latin-400italic-d76079ed7541a433a54f79316de086e9.woff) format("woff")}@font-face{font-family:Merriweather;font-style:normal;font-display:swap;font-weight:700;src:local("Merriweather Bold "),local("Merriweather-Bold"),url(/static/merriweather-latin-700-fa534be7ffa380e39a7f6e03bf9a5e03.woff2) format("woff2"),url(/static/merriweather-latin-700-ba56ea84b8084b7ff9677f50d3cd81bd.woff) format("woff")}@font-face{font-family:Merriweather;font-style:italic;font-display:swap;font-weight:700;src:local("Merriweather Bold italic"),local("Merriweather-Bolditalic"),url(/static/merriweather-latin-700italic-1ef5edaaa20ae53ea50399884c5e48c6.woff2) format("woff2"),url(/static/merriweather-latin-700italic-534bc9e7ce93c73d73426e46acd78092.woff) format("woff")}@font-face{font-family:Merriweather;font-style:normal;font-display:swap;font-weight:900;src:local("Merriweather Black "),local("Merriweather-Black"),url(/static/merriweather-latin-900-7528fb70e8a4a82c7305e72ff43ac25f.woff2) format("woff2"),url(/static/merriweather-latin-900-3799b6e2f5ed3fcccf9d7a708d7419fa.woff) format("woff")}@font-face{font-family:Merriweather;font-style:italic;font-display:swap;font-weight:900;src:local("Merriweather Black italic"),local("Merriweather-Blackitalic"),url(/static/merriweather-latin-900italic-e1b4d2aaa78e12ad84aaf8a56321e4c2.woff2) format("woff2"),url(/static/merriweather-latin-900italic-2ae22f731b3424e8dbb4b37f7ca6e708.woff) format("woff")}code[class*=language-],pre[class*=language-]{color:#ccc;background:none;font-family:Consolas,Monaco,Andale Mono,Ubuntu Mono,monospace;font-size:1em;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{padding:1em;margin:.5em 0;overflow:auto}:not(pre)>code[class*=language-],pre[class*=language-]{background:#2d2d2d}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal}.token.block-comment,.token.cdata,.token.comment,.token.doctype,.token.prolog{color:#999}.token.punctuation{color:#ccc}.token.attr-name,.token.deleted,.token.namespace,.token.tag{color:#e2777a}.token.function-name{color:#6196cc}.token.boolean,.token.function,.token.number{color:#f08d49}.token.class-name,.token.constant,.token.property,.token.symbol{color:#f8c555}.token.atrule,.token.builtin,.token.important,.token.keyword,.token.selector{color:#cc99cd}.token.attr-value,.token.char,.token.regex,.token.string,.token.variable{color:#7ec699}.token.entity,.token.operator,.token.url{color:#67cdcc}.token.bold,.token.important{font-weight:700}.token.italic{font-style:italic}.token.entity{cursor:help}.token.inserted{color:green}</style><meta name="generator" content="Gatsby 2.13.31"/><style type="text/css">.gatsby-resp-image-image{width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;color:transparent;}</style><link rel="preconnect dns-prefetch" href="https://www.google-analytics.com"/><link rel="alternate" type="application/rss+xml" href="/rss.xml"/><link rel="shortcut icon" href="/icons/icon-48x48.png?v=008654519ce705ac7bc44303a9014606"/><link rel="manifest" href="/manifest.webmanifest"/><meta name="theme-color" content="#663399"/><link rel="apple-touch-icon" sizes="48x48" href="/icons/icon-48x48.png?v=008654519ce705ac7bc44303a9014606"/><link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png?v=008654519ce705ac7bc44303a9014606"/><link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png?v=008654519ce705ac7bc44303a9014606"/><link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png?v=008654519ce705ac7bc44303a9014606"/><link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png?v=008654519ce705ac7bc44303a9014606"/><link rel="apple-touch-icon" sizes="256x256" href="/icons/icon-256x256.png?v=008654519ce705ac7bc44303a9014606"/><link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png?v=008654519ce705ac7bc44303a9014606"/><link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png?v=008654519ce705ac7bc44303a9014606"/><title data-react-helmet="true">Often-used Scripts | Dynatic Data</title><meta data-react-helmet="true" name="description" content="This is a set of often-used scripts for data wrangling."/><meta data-react-helmet="true" property="og:title" content="Often-used Scripts"/><meta data-react-helmet="true" property="og:description" content="This is a set of often-used scripts for data wrangling."/><meta data-react-helmet="true" property="og:type" content="website"/><meta data-react-helmet="true" name="twitter:card" content="summary"/><meta data-react-helmet="true" name="twitter:creator" content="Jiang Li"/><meta data-react-helmet="true" name="twitter:title" content="Often-used Scripts"/><meta data-react-helmet="true" name="twitter:description" content="This is a set of often-used scripts for data wrangling."/><link as="script" rel="preload" href="/webpack-runtime-fb0c1daec1b781d846b0.js"/><link as="script" rel="preload" href="/app-5e7824ed6c4554b2af75.js"/><link as="script" rel="preload" href="/styles-65b30021e408503d2f71.js"/><link as="script" rel="preload" href="/1-0687f9460c931db7d6f0.js"/><link as="script" rel="preload" href="/component---src-templates-blog-post-js-0dcaf0c4e948df4c5ed9.js"/><link as="fetch" rel="preload" href="/page-data/commonly-used_scripts/page-data.json" crossorigin="use-credentials"/></head><body><noscript id="gatsby-noscript">This app works best with JavaScript enabled.</noscript><div id="___gatsby"><div style="outline:none" tabindex="-1" role="group" id="gatsby-focus-wrapper"><div style="margin-left:auto;margin-right:auto;max-width:42rem;padding:2.625rem 1.3125rem"><header><h3 style="font-family:Montserrat, sans-serif;margin-top:0"><a style="box-shadow:none;text-decoration:none;color:inherit" href="/">Dynatic Data</a></h3></header><main><h1 style="margin-top:1.75rem;margin-bottom:0">Often-used Scripts</h1><p style="font-size:0.83255rem;line-height:1.75rem;display:block;margin-bottom:1.75rem">February 06, 2018</p><div><p>I often use R, Python, SAS, SQL, and Bash in different
+tasks at the same time. To make the switch between different languages easier, I built a list of the commonly-used script for a quick reference.</p>
+<p>A simulated sample data set with missing values and duplicated values was used. </p>
+<div class="gatsby-highlight" data-language="r"><pre class="language-r"><code class="language-r">set.seed<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+N <span class="token operator">&lt;-</span> <span class="token number">1000</span>
+df <span class="token operator">&lt;-</span> tibble<span class="token punctuation">(</span>
+dimension1 <span class="token operator">=</span> sample<span class="token punctuation">(</span>c<span class="token punctuation">(</span><span class="token string">"I"</span><span class="token punctuation">,</span> <span class="token string">"II"</span><span class="token punctuation">,</span> <span class="token string">"III"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> N<span class="token punctuation">,</span> replace <span class="token operator">=</span> T<span class="token punctuation">)</span><span class="token punctuation">,</span>
+dimension2 <span class="token operator">=</span> sample<span class="token punctuation">(</span>c<span class="token punctuation">(</span><span class="token string">"A"</span><span class="token punctuation">,</span> <span class="token string">"B"</span><span class="token punctuation">,</span> <span class="token string">"C"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> N<span class="token punctuation">,</span> replace <span class="token operator">=</span> T<span class="token punctuation">)</span><span class="token punctuation">,</span>
+measure1 <span class="token operator">=</span> sample<span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">:</span><span class="token number">10</span><span class="token punctuation">,</span> N<span class="token punctuation">,</span> replace <span class="token operator">=</span> T<span class="token punctuation">)</span><span class="token punctuation">,</span>
+measure2 <span class="token operator">=</span> sample<span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">:</span><span class="token number">10</span><span class="token punctuation">,</span> N<span class="token punctuation">,</span> replace <span class="token operator">=</span> T<span class="token punctuation">)</span>
+<span class="token punctuation">)</span>
+
+df <span class="token operator">&lt;-</span> as_tibble<span class="token punctuation">(</span>lapply<span class="token punctuation">(</span>df<span class="token punctuation">,</span> 
+                       <span class="token keyword">function</span><span class="token punctuation">(</span>r<span class="token punctuation">)</span> 
+                         r<span class="token punctuation">[</span>sample<span class="token punctuation">(</span>c<span class="token punctuation">(</span><span class="token boolean">TRUE</span><span class="token punctuation">,</span> <span class="token keyword">NA</span><span class="token punctuation">)</span><span class="token punctuation">,</span> 
+                                  prob <span class="token operator">=</span> c<span class="token punctuation">(</span><span class="token number">0.85</span><span class="token punctuation">,</span> <span class="token number">0.15</span><span class="token punctuation">)</span><span class="token punctuation">,</span> 
+                                  size <span class="token operator">=</span> length<span class="token punctuation">(</span>r<span class="token punctuation">)</span><span class="token punctuation">,</span> 
+                                  replace <span class="token operator">=</span> <span class="token boolean">TRUE</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+                       <span class="token punctuation">)</span>
+                <span class="token punctuation">)</span>
+
+head<span class="token punctuation">(</span>df<span class="token punctuation">)</span></code></pre></div>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">## # A tibble: 6 x 4
+##   dimension1 dimension2 measure1 measure2
+##   &lt;chr&gt;      &lt;chr&gt;         &lt;int&gt;    &lt;int&gt;
+## 1 I          &lt;NA&gt;              7        7
+## 2 III        B                 3        8
+## 3 I          A                 4       10
+## 4 II         &lt;NA&gt;              7        3
+## 5 I          A                 9        1
+## 6 III        A                10       NA</code></pre></div>
+<h2>Row and Column</h2>
+<h3>R</h3>
+<div class="gatsby-highlight" data-language="r"><pre class="language-r"><code class="language-r"><span class="token comment"># row count</span>
+nrow<span class="token punctuation">(</span>df<span class="token punctuation">)</span> </code></pre></div>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">## [1] 1000</code></pre></div>
+<div class="gatsby-highlight" data-language="r"><pre class="language-r"><code class="language-r">df <span class="token percent-operator operator">%>%</span> count<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre></div>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">## # A tibble: 1 x 1
+##       n
+##   &lt;int&gt;
+## 1  1000</code></pre></div>
+<div class="gatsby-highlight" data-language="r"><pre class="language-r"><code class="language-r"><span class="token comment"># column names</span>
+names<span class="token punctuation">(</span>df<span class="token punctuation">)</span> </code></pre></div>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">## [1] &quot;dimension1&quot; &quot;dimension2&quot; &quot;measure1&quot;   &quot;measure2&quot;</code></pre></div>
+<div class="gatsby-highlight" data-language="r"><pre class="language-r"><code class="language-r"><span class="token comment"># data types</span>
+lapply<span class="token punctuation">(</span>df<span class="token punctuation">,</span> class<span class="token punctuation">)</span> </code></pre></div>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">## $dimension1
+## [1] &quot;character&quot;
+## 
+## $dimension2
+## [1] &quot;character&quot;
+## 
+## $measure1
+## [1] &quot;integer&quot;
+## 
+## $measure2
+## [1] &quot;integer&quot;</code></pre></div>
+<h3>Python</h3>
+<div class="gatsby-highlight" data-language="python"><pre class="language-python"><code class="language-python"><span class="token comment"># row count</span>
+df<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+
+<span class="token comment"># column names</span>
+<span class="token builtin">list</span><span class="token punctuation">(</span>df<span class="token punctuation">)</span> 
+
+<span class="token comment"># data types</span>
+df<span class="token punctuation">.</span>dtypes  </code></pre></div>
+<h3>SAS</h3>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">PROC CONTENTS DATA=df;
+RUN;</code></pre></div>
+<h3>SQL</h3>
+<div class="gatsby-highlight" data-language="sql"><pre class="language-sql"><code class="language-sql"><span class="token comment">/* row count */</span>
+<span class="token keyword">SELECT</span> <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword">FROM</span> df 
+
+<span class="token comment">/* column names */</span>
+<span class="token keyword">SELECT</span> <span class="token keyword">TOP</span> <span class="token number">0</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> df 
+
+<span class="token comment">/* data types */</span>  
+<span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> INFORMATION_SCHEMA<span class="token punctuation">.</span><span class="token keyword">COLUMNS</span>  </code></pre></div>
+<h3>Bash</h3>
+<div class="gatsby-highlight" data-language="bash"><pre class="language-bash"><code class="language-bash"><span class="token comment"># row count</span>
+<span class="token function">wc</span> -l  filename 
+
+<span class="token comment"># column names</span>
+<span class="token function">head</span> -1 filename </code></pre></div>
+<h2>Missing Values</h2>
+<h3>R</h3>
+<div class="gatsby-highlight" data-language="r"><pre class="language-r"><code class="language-r"><span class="token comment"># count missing by columns</span>
+colSums<span class="token punctuation">(</span>is.na<span class="token punctuation">(</span>df<span class="token punctuation">)</span><span class="token punctuation">)</span> </code></pre></div>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">## dimension1 dimension2   measure1   measure2 
+##        163        163        143        156</code></pre></div>
+<div class="gatsby-highlight" data-language="r"><pre class="language-r"><code class="language-r"><span class="token comment"># drop rows with missing</span>
+na.omit<span class="token punctuation">(</span>df<span class="token punctuation">)</span> </code></pre></div>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">## # A tibble: 518 x 4
+##    dimension1 dimension2 measure1 measure2
+##    &lt;chr&gt;      &lt;chr&gt;         &lt;int&gt;    &lt;int&gt;
+##  1 III        B                 3        8
+##  2 I          A                 4       10
+##  3 I          A                 9        1
+##  4 III        A                 8        8
+##  5 II         C                 2        9
+##  6 III        C                 7        1
+##  7 I          A                 9        6
+##  8 I          A                 2        4
+##  9 II         A                 1        9
+## 10 I          B                 9        2
+## # … with 508 more rows</code></pre></div>
+<div class="gatsby-highlight" data-language="r"><pre class="language-r"><code class="language-r"><span class="token comment"># drop rows with all missing</span>
+df<span class="token punctuation">[</span>rowSums<span class="token punctuation">(</span><span class="token operator">!</span>is.na<span class="token punctuation">(</span>df<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token punctuation">]</span> </code></pre></div>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">## # A tibble: 1,000 x 4
+##    dimension1 dimension2 measure1 measure2
+##    &lt;chr&gt;      &lt;chr&gt;         &lt;int&gt;    &lt;int&gt;
+##  1 I          &lt;NA&gt;              7        7
+##  2 III        B                 3        8
+##  3 I          A                 4       10
+##  4 II         &lt;NA&gt;              7        3
+##  5 I          A                 9        1
+##  6 III        A                10       NA
+##  7 III        A                 8        8
+##  8 &lt;NA&gt;       C                 2        7
+##  9 II         C                 2        9
+## 10 III        C                 7        1
+## # … with 990 more rows</code></pre></div>
+<div class="gatsby-highlight" data-language="r"><pre class="language-r"><code class="language-r"><span class="token comment"># drop columns with all missing</span>
+df<span class="token punctuation">[</span>colSums<span class="token punctuation">(</span><span class="token operator">!</span>is.na<span class="token punctuation">(</span>df<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">]</span></code></pre></div>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">## # A tibble: 1,000 x 4
+##    dimension1 dimension2 measure1 measure2
+##    &lt;chr&gt;      &lt;chr&gt;         &lt;int&gt;    &lt;int&gt;
+##  1 I          &lt;NA&gt;              7        7
+##  2 III        B                 3        8
+##  3 I          A                 4       10
+##  4 II         &lt;NA&gt;              7        3
+##  5 I          A                 9        1
+##  6 III        A                10       NA
+##  7 III        A                 8        8
+##  8 &lt;NA&gt;       C                 2        7
+##  9 II         C                 2        9
+## 10 III        C                 7        1
+## # … with 990 more rows</code></pre></div>
+<div class="gatsby-highlight" data-language="r"><pre class="language-r"><code class="language-r"><span class="token comment"># fill all missing by 0</span>
+df <span class="token percent-operator operator">%>%</span> replace<span class="token punctuation">(</span>.<span class="token punctuation">,</span> is.na<span class="token punctuation">(</span>.<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span></code></pre></div>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">## # A tibble: 1,000 x 4
+##    dimension1 dimension2 measure1 measure2
+##    &lt;chr&gt;      &lt;chr&gt;         &lt;dbl&gt;    &lt;dbl&gt;
+##  1 I          0                 7        7
+##  2 III        B                 3        8
+##  3 I          A                 4       10
+##  4 II         0                 7        3
+##  5 I          A                 9        1
+##  6 III        A                10        0
+##  7 III        A                 8        8
+##  8 0          C                 2        7
+##  9 II         C                 2        9
+## 10 III        C                 7        1
+## # … with 990 more rows</code></pre></div>
+<div class="gatsby-highlight" data-language="r"><pre class="language-r"><code class="language-r"><span class="token comment"># fill missing by columns</span>
+df <span class="token percent-operator operator">%>%</span> replace_na<span class="token punctuation">(</span>list<span class="token punctuation">(</span>dimension1 <span class="token operator">=</span> <span class="token string">"Unknown"</span><span class="token punctuation">,</span> measure1 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span> </code></pre></div>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">## # A tibble: 1,000 x 4
+##    dimension1 dimension2 measure1 measure2
+##    &lt;chr&gt;      &lt;chr&gt;         &lt;dbl&gt;    &lt;int&gt;
+##  1 I          &lt;NA&gt;              7        7
+##  2 III        B                 3        8
+##  3 I          A                 4       10
+##  4 II         &lt;NA&gt;              7        3
+##  5 I          A                 9        1
+##  6 III        A                10       NA
+##  7 III        A                 8        8
+##  8 Unknown    C                 2        7
+##  9 II         C                 2        9
+## 10 III        C                 7        1
+## # … with 990 more rows</code></pre></div>
+<h3>Python</h3>
+<div class="gatsby-highlight" data-language="python"><pre class="language-python"><code class="language-python"><span class="token comment"># count missing by columns</span>
+df<span class="token punctuation">.</span>isnull<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment"># drop any missing</span>
+df<span class="token punctuation">.</span>dropna<span class="token punctuation">(</span><span class="token punctuation">)</span> 
+
+<span class="token comment"># drop rows with all missing</span>
+df<span class="token punctuation">.</span>dropna<span class="token punctuation">(</span>how<span class="token operator">=</span><span class="token string">"all"</span><span class="token punctuation">)</span> 
+
+<span class="token comment"># drop columns with all missing</span>
+df<span class="token punctuation">.</span>dropna<span class="token punctuation">(</span>axis<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> how<span class="token operator">=</span><span class="token string">'all'</span><span class="token punctuation">)</span> 
+
+<span class="token comment"># fill all missing by 0</span>
+df<span class="token punctuation">.</span>fillna<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+
+<span class="token comment"># fill missing by columns</span>
+df<span class="token punctuation">.</span>fillna<span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"dimension1"</span><span class="token punctuation">:</span> <span class="token string">"Unknown"</span><span class="token punctuation">,</span> <span class="token string">"measure1"</span><span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre></div>
+<h2>Unique</h2>
+<h3>R</h3>
+<div class="gatsby-highlight" data-language="r"><pre class="language-r"><code class="language-r"><span class="token comment"># unique row</span>
+df <span class="token percent-operator operator">%>%</span> distinct<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre></div>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">## # A tibble: 766 x 4
+##    dimension1 dimension2 measure1 measure2
+##    &lt;chr&gt;      &lt;chr&gt;         &lt;int&gt;    &lt;int&gt;
+##  1 I          &lt;NA&gt;              7        7
+##  2 III        B                 3        8
+##  3 I          A                 4       10
+##  4 II         &lt;NA&gt;              7        3
+##  5 I          A                 9        1
+##  6 III        A                10       NA
+##  7 III        A                 8        8
+##  8 &lt;NA&gt;       C                 2        7
+##  9 II         C                 2        9
+## 10 III        C                 7        1
+## # … with 756 more rows</code></pre></div>
+<div class="gatsby-highlight" data-language="r"><pre class="language-r"><code class="language-r"><span class="token comment"># unique row by columns</span>
+df <span class="token percent-operator operator">%>%</span> distinct<span class="token punctuation">(</span>dimension1<span class="token punctuation">,</span> dimension2<span class="token punctuation">,</span> .keep_all <span class="token operator">=</span> T<span class="token punctuation">)</span></code></pre></div>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">## # A tibble: 16 x 4
+##    dimension1 dimension2 measure1 measure2
+##    &lt;chr&gt;      &lt;chr&gt;         &lt;int&gt;    &lt;int&gt;
+##  1 I          &lt;NA&gt;              7        7
+##  2 III        B                 3        8
+##  3 I          A                 4       10
+##  4 II         &lt;NA&gt;              7        3
+##  5 III        A                10       NA
+##  6 &lt;NA&gt;       C                 2        7
+##  7 II         C                 2        9
+##  8 III        C                 7        1
+##  9 III        &lt;NA&gt;              5        4
+## 10 I          C                NA       10
+## 11 II         A                 1        9
+## 12 II         B                NA        2
+## 13 &lt;NA&gt;       A                 8       10
+## 14 I          B                 9        2
+## 15 &lt;NA&gt;       B                 9        4
+## 16 &lt;NA&gt;       &lt;NA&gt;              6       NA</code></pre></div>
+<h3>Python</h3>
+<div class="gatsby-highlight" data-language="python"><pre class="language-python"><code class="language-python"><span class="token comment"># unique row</span>
+df<span class="token punctuation">.</span>drop_duplicates<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment"># unique row by columns</span>
+df<span class="token punctuation">.</span>drop_duplicates<span class="token punctuation">(</span>subset<span class="token operator">=</span><span class="token punctuation">(</span><span class="token string">'dimension1'</span><span class="token punctuation">,</span> <span class="token string">'dimension2'</span><span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre></div>
+<h2>Level Count</h2>
+<h3>R</h3>
+<div class="gatsby-highlight" data-language="r"><pre class="language-r"><code class="language-r"><span class="token comment"># distribution</span>
+table<span class="token punctuation">(</span>df<span class="token operator">$</span>dimension1<span class="token punctuation">)</span></code></pre></div>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">## 
+##   I  II III 
+## 295 275 267</code></pre></div>
+<div class="gatsby-highlight" data-language="r"><pre class="language-r"><code class="language-r"><span class="token comment"># contingency table</span>
+table<span class="token punctuation">(</span>df<span class="token operator">$</span>dimension1<span class="token punctuation">,</span> df<span class="token operator">$</span>dimension2<span class="token punctuation">)</span></code></pre></div>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">##      
+##        A  B  C
+##   I   89 80 79
+##   II  71 89 70
+##   III 75 66 86</code></pre></div>
+<h3>Python</h3>
+<div class="gatsby-highlight" data-language="python"><pre class="language-python"><code class="language-python"><span class="token comment"># distribution</span>
+df<span class="token punctuation">.</span>dimension1<span class="token punctuation">.</span>value_counts<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment"># contingency table</span>
+pd<span class="token punctuation">.</span>crosstab<span class="token punctuation">(</span>df<span class="token punctuation">.</span>dimension1<span class="token punctuation">,</span> df<span class="token punctuation">.</span>dimension2<span class="token punctuation">)</span></code></pre></div>
+<h2>Summary</h2>
+<h3>R</h3>
+<div class="gatsby-highlight" data-language="r"><pre class="language-r"><code class="language-r"><span class="token comment"># summarize the total, percent, ratio, and ratio</span>
+
+df <span class="token percent-operator operator">%>%</span> 
+  group_by<span class="token punctuation">(</span>dimension1<span class="token punctuation">)</span> <span class="token percent-operator operator">%>%</span> 
+  summarise<span class="token punctuation">(</span>
+    measure1 <span class="token operator">=</span> sum<span class="token punctuation">(</span>measure1<span class="token punctuation">,</span> na.rm <span class="token operator">=</span> T<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    measure2 <span class="token operator">=</span> sum<span class="token punctuation">(</span>measure2<span class="token punctuation">,</span> na.rm <span class="token operator">=</span> T<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    count <span class="token operator">=</span> n<span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">)</span> <span class="token percent-operator operator">%>%</span> 
+  mutate<span class="token punctuation">(</span>
+    measure1_percent <span class="token operator">=</span> measure1<span class="token operator">/</span>sum<span class="token punctuation">(</span>measure1<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    ratio <span class="token operator">=</span> measure1<span class="token operator">/</span>measure2
+  <span class="token punctuation">)</span> <span class="token percent-operator operator">%>%</span> 
+  mutate<span class="token punctuation">(</span>
+    ratio_relativity <span class="token operator">=</span> ratio<span class="token operator">/</span><span class="token punctuation">(</span>sum<span class="token punctuation">(</span>measure1<span class="token punctuation">)</span><span class="token operator">/</span>sum<span class="token punctuation">(</span>measure2<span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token punctuation">)</span></code></pre></div>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">## # A tibble: 4 x 7
+##   dimension1 measure1 measure2 count measure1_percent ratio
+##   &lt;chr&gt;         &lt;int&gt;    &lt;int&gt; &lt;int&gt;            &lt;dbl&gt; &lt;dbl&gt;
+## 1 &lt;NA&gt;            749      752   163            0.157 0.996
+## 2 I              1480     1460   295            0.311 1.01 
+## 3 II             1288     1261   275            0.271 1.02 
+## 4 III            1244     1320   267            0.261 0.942
+## # … with 1 more variable: ratio_relativity &lt;dbl&gt;</code></pre></div>
+<h3>Python</h3>
+<div class="gatsby-highlight" data-language="python"><pre class="language-python"><code class="language-python"><span class="token comment"># summarize the total, percent, ratio, and relativity</span>
+<span class="token keyword">def</span> <span class="token function">oneway</span><span class="token punctuation">(</span>g<span class="token punctuation">)</span><span class="token punctuation">:</span>
+  <span class="token keyword">return</span><span class="token punctuation">(</span>
+    pd<span class="token punctuation">.</span>Series<span class="token punctuation">(</span><span class="token punctuation">{</span>
+      <span class="token string">"measure1"</span><span class="token punctuation">:</span> g<span class="token punctuation">.</span>measure1<span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token string">"measure2"</span><span class="token punctuation">:</span> g<span class="token punctuation">.</span>measure2<span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token string">"count"</span><span class="token punctuation">:</span> <span class="token builtin">len</span><span class="token punctuation">(</span>g<span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token string">"measure1_percent"</span><span class="token punctuation">:</span> g<span class="token punctuation">.</span>measure1<span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">/</span>df<span class="token punctuation">.</span>measure1<span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token string">"ratio"</span><span class="token punctuation">:</span> g<span class="token punctuation">.</span>measure1<span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">/</span>g<span class="token punctuation">.</span>measure2<span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token string">"ratio_relativity"</span><span class="token punctuation">:</span>
+        <span class="token punctuation">(</span>g<span class="token punctuation">.</span>measure1<span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">/</span>g<span class="token punctuation">.</span>measure2<span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">/</span> 
+        <span class="token punctuation">(</span>df<span class="token punctuation">.</span>measure1<span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">/</span>df<span class="token punctuation">.</span>measure2<span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">)</span>
+  
+df<span class="token punctuation">.</span>groupby<span class="token punctuation">(</span><span class="token string">"dimension1"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token builtin">apply</span><span class="token punctuation">(</span>oneway<span class="token punctuation">)</span></code></pre></div>
+<h2>Merge</h2>
+<h3>R</h3>
+<div class="gatsby-highlight" data-language="r"><pre class="language-r"><code class="language-r"><span class="token comment"># join tables with different key names</span>
+df2 <span class="token operator">&lt;-</span> df <span class="token percent-operator operator">%>%</span>
+  group_by<span class="token punctuation">(</span>dimension1<span class="token punctuation">,</span> dimension2<span class="token punctuation">)</span> <span class="token percent-operator operator">%>%</span>
+  summarise<span class="token punctuation">(</span>
+    measure3 <span class="token operator">=</span> sum<span class="token punctuation">(</span>measure1<span class="token punctuation">,</span> na.rm <span class="token operator">=</span> T<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    measure4 <span class="token operator">=</span> sum<span class="token punctuation">(</span>measure2<span class="token punctuation">,</span> na.rm <span class="token operator">=</span> T<span class="token punctuation">)</span>
+  <span class="token punctuation">)</span> <span class="token percent-operator operator">%>%</span>
+  rename<span class="token punctuation">(</span>dimension3 <span class="token operator">=</span> dimension1<span class="token punctuation">,</span> dimension4 <span class="token operator">=</span> dimension2<span class="token punctuation">)</span>
+
+left_join<span class="token punctuation">(</span>df<span class="token punctuation">,</span> df2<span class="token punctuation">,</span>
+  by <span class="token operator">=</span> c<span class="token punctuation">(</span>
+    <span class="token string">"dimension1"</span> <span class="token operator">=</span> <span class="token string">"dimension3"</span><span class="token punctuation">,</span>
+    <span class="token string">"dimension2"</span> <span class="token operator">=</span> <span class="token string">"dimension4"</span>
+  <span class="token punctuation">)</span>
+<span class="token punctuation">)</span></code></pre></div>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">## # A tibble: 1,000 x 6
+##    dimension1 dimension2 measure1 measure2 measure3 measure4
+##    &lt;chr&gt;      &lt;chr&gt;         &lt;int&gt;    &lt;int&gt;    &lt;int&gt;    &lt;int&gt;
+##  1 I          &lt;NA&gt;              7        7      229      195
+##  2 III        B                 3        8      314      337
+##  3 I          A                 4       10      461      480
+##  4 II         &lt;NA&gt;              7        3      226      180
+##  5 I          A                 9        1      461      480
+##  6 III        A                10       NA      353      356
+##  7 III        A                 8        8      353      356
+##  8 &lt;NA&gt;       C                 2        7      206      226
+##  9 II         C                 2        9      340      333
+## 10 III        C                 7        1      386      442
+## # … with 990 more rows</code></pre></div>
+<h3>Python</h3>
+<div class="gatsby-highlight" data-language="python"><pre class="language-python"><code class="language-python"><span class="token comment"># join tables with different key names</span>
+pd<span class="token punctuation">.</span>merge<span class="token punctuation">(</span>df<span class="token punctuation">,</span> df2<span class="token punctuation">,</span>
+  how<span class="token operator">=</span><span class="token string">"left"</span><span class="token punctuation">,</span> 
+  left_on<span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">"dimesnion1"</span><span class="token punctuation">,</span> <span class="token string">"dimesnion2"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  right_on<span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">"dimesnion3"</span><span class="token punctuation">,</span> <span class="token string">"dimesnion4"</span><span class="token punctuation">]</span>
+<span class="token punctuation">)</span></code></pre></div>
+<h2>Reshape</h2>
+<h3>R</h3>
+<div class="gatsby-highlight" data-language="r"><pre class="language-r"><code class="language-r"><span class="token comment"># wide to long</span>
+df_reshape <span class="token operator">&lt;-</span> df <span class="token percent-operator operator">%>%</span> gather<span class="token punctuation">(</span>c<span class="token punctuation">(</span><span class="token string">"measure1"</span><span class="token punctuation">,</span> <span class="token string">"measure2"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> 
+                            key <span class="token operator">=</span> <span class="token string">"measure"</span><span class="token punctuation">,</span> value <span class="token operator">=</span> <span class="token string">"values"</span><span class="token punctuation">)</span>
+
+<span class="token comment"># long to wide: the value must be unqiue by other variales</span>
+df_reshape <span class="token percent-operator operator">%>%</span>
+  group_by<span class="token punctuation">(</span>dimension1<span class="token punctuation">,</span> dimension2<span class="token punctuation">,</span> measure<span class="token punctuation">)</span> <span class="token percent-operator operator">%>%</span>
+  summarise<span class="token punctuation">(</span>values <span class="token operator">=</span> sum<span class="token punctuation">(</span>values<span class="token punctuation">,</span> na.rm <span class="token operator">=</span> T<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token percent-operator operator">%>%</span> 
+  spread<span class="token punctuation">(</span>key <span class="token operator">=</span> measure<span class="token punctuation">,</span> value <span class="token operator">=</span> values<span class="token punctuation">)</span></code></pre></div>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">## # A tibble: 16 x 4
+## # Groups:   dimension1, dimension2 [16]
+##    dimension1 dimension2 measure1 measure2
+##    &lt;chr&gt;      &lt;chr&gt;         &lt;int&gt;    &lt;int&gt;
+##  1 I          A               461      480
+##  2 I          B               392      426
+##  3 I          C               398      359
+##  4 I          &lt;NA&gt;            229      195
+##  5 II         A               282      358
+##  6 II         B               440      390
+##  7 II         C               340      333
+##  8 II         &lt;NA&gt;            226      180
+##  9 III        A               353      356
+## 10 III        B               314      337
+## 11 III        C               386      442
+## 12 III        &lt;NA&gt;            191      185
+## 13 &lt;NA&gt;       A               178      206
+## 14 &lt;NA&gt;       B               209      206
+## 15 &lt;NA&gt;       C               206      226
+## 16 &lt;NA&gt;       &lt;NA&gt;            156      114</code></pre></div>
+<h3>Python</h3>
+<div class="gatsby-highlight" data-language="python"><pre class="language-python"><code class="language-python">df_reshape <span class="token operator">=</span> pd<span class="token punctuation">.</span>melt<span class="token punctuation">(</span>df<span class="token punctuation">,</span>
+                     id_vars<span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">'dimension1'</span><span class="token punctuation">,</span> <span class="token string">'dimension2'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+                     value_vars<span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">'measure1'</span><span class="token punctuation">,</span> <span class="token string">'measure2'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span>df_reshape<span class="token punctuation">.</span>groupby<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'dimension1'</span><span class="token punctuation">,</span> <span class="token string">'dimension2'</span><span class="token punctuation">,</span> <span class="token string">'variable'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+                    as_index<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span>
+           <span class="token punctuation">.</span>value<span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+           <span class="token punctuation">.</span>pivot_table<span class="token punctuation">(</span>index<span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">'dimension1'</span><span class="token punctuation">,</span> <span class="token string">'dimension2'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+                        columns<span class="token operator">=</span><span class="token string">'variable'</span><span class="token punctuation">,</span> values<span class="token operator">=</span><span class="token string">'value'</span><span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre></div></div><hr style="margin-bottom:1.75rem"/><div style="display:flex;margin-bottom:4.375rem"><div class=" gatsby-image-wrapper" style="position:relative;overflow:hidden;display:inline-block;width:50px;height:60px;margin-right:0.875rem;margin-bottom:0;min-width:50px;border-radius:100%"><img src="data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAXABQDASIAAhEBAxEB/8QAGAABAQEBAQAAAAAAAAAAAAAAAAQDAgX/xAAXAQADAQAAAAAAAAAAAAAAAAAAAQMC/9oADAMBAAIQAxAAAAGiX0ZZ1pDz3kBqBf/EABoQAQADAQEBAAAAAAAAAAAAAAEAAhIDEyH/2gAIAQEAAQUCvtX14sD73rqkCYLOZ//EABYRAQEBAAAAAAAAAAAAAAAAAAEQEf/aAAgBAwEBPwEJs//EABURAQEAAAAAAAAAAAAAAAAAABEg/9oACAECAQE/AWP/xAAdEAABBAIDAAAAAAAAAAAAAAABAAIQEiFhEUFx/9oACAEBAAY/AqsIG0LvsO4Pi3zOcx//xAAcEAEAAgMAAwAAAAAAAAAAAAABABEQIUExUXH/2gAIAQEAAT8hAnKWrks4ugPWBs7pNd4QLcKlzuvqO2mf/9oADAMBAAIAAwAAABA053//xAAWEQEBAQAAAAAAAAAAAAAAAAABEBH/2gAIAQMBAT8QBIIHJ//EABURAQEAAAAAAAAAAAAAAAAAAAEQ/9oACAECAQE/EFDEGf/EAB0QAQEAAwACAwAAAAAAAAAAAAERACExQVFhocH/2gAIAQEAAT8Qa0Q+xwh7XGjDsbryYm8a21w7Lf3NlBwWEusiatmfRYORmi7qhiVx+c//2Q==" alt="Jiang Li" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:1;transition-delay:500ms;border-radius:50%"/><noscript><picture><source srcset="/static/c023f87ace732ac6eacbe77bb048e929/dbeb4/profile-pic.jpg 1x,
+/static/c023f87ace732ac6eacbe77bb048e929/ba88c/profile-pic.jpg 1.5x,
+/static/c023f87ace732ac6eacbe77bb048e929/41851/profile-pic.jpg 2x" /><img loading="lazy" width="50" height="60" srcset="/static/c023f87ace732ac6eacbe77bb048e929/dbeb4/profile-pic.jpg 1x,
+/static/c023f87ace732ac6eacbe77bb048e929/ba88c/profile-pic.jpg 1.5x,
+/static/c023f87ace732ac6eacbe77bb048e929/41851/profile-pic.jpg 2x" src="/static/c023f87ace732ac6eacbe77bb048e929/dbeb4/profile-pic.jpg" alt="Jiang Li" style="position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center"/></picture></noscript></div><p>Written by <a href="https://www.linkedin.com/in/jiang-li-17429558"><strong>Jiang Li</strong></a> from Columbus Ohio, a curious data scientist, an enthusiastic teacher, and a proud dad of three amazing kids.<!-- --> </p></div><ul style="display:flex;flex-wrap:wrap;justify-content:space-between;list-style:none;padding:0"><li></li><li><a rel="next" href="/MOE_for_ACS_Estimate/">MOE for ACS Estimate<!-- --> →</a></li></ul></main><footer>© <!-- -->2019<!-- -->, Built with<!-- --> <a href="https://www.gatsbyjs.org">Gatsby</a></footer></div></div></div><script>
+  
+  
+  if(true) {
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  }
+  if (typeof ga === "function") {
+    ga('create', 'undefined', 'auto', {});
+      
+      
+      
+      }
+      </script><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/commonly-used_scripts/";window.webpackCompilationHash="63aa90267ed9cc5bd395";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"app":["/app-5e7824ed6c4554b2af75.js"],"component---node-modules-gatsby-plugin-offline-app-shell-js":["/component---node-modules-gatsby-plugin-offline-app-shell-js-a9adb2cc6f1d245419c3.js"],"component---src-templates-blog-post-js":["/component---src-templates-blog-post-js-0dcaf0c4e948df4c5ed9.js"],"component---src-pages-404-js":["/component---src-pages-404-js-b242fa739645bafa3af1.js"],"component---src-pages-index-js":["/component---src-pages-index-js-e1d3bcabc6a9618f1824.js"]};/*]]>*/</script><script src="/component---src-templates-blog-post-js-0dcaf0c4e948df4c5ed9.js" async=""></script><script src="/1-0687f9460c931db7d6f0.js" async=""></script><script src="/styles-65b30021e408503d2f71.js" async=""></script><script src="/app-5e7824ed6c4554b2af75.js" async=""></script><script src="/webpack-runtime-fb0c1daec1b781d846b0.js" async=""></script></body></html>

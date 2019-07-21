@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Dynatic Data]]></title><description><![CDATA[Take notes of the fun and useful stuff.]]></description><link>https://jiang-li.github.io/</link><generator>RSS for Node</generator><lastBuildDate>Sun, 21 Jul 2019 03:12:05 GMT</lastBuildDate><item><title><![CDATA[Blogging by Gastby]]></title><description><![CDATA[Previously I used R’s BlogDown. But recently I used Python more and would like to switch a more general tool. The static site built by…]]></description><link>https://jiang-li.github.io//blogging_by_gastby/</link><guid isPermaLink="false">https://jiang-li.github.io//blogging_by_gastby/</guid><pubDate>Sat, 20 Jul 2019 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Previously I used R’s BlogDown. But recently I used Python more and would like to switch a more general tool. The static site built by Gastby, which is powered by React, is pretty fast. So I decided to give a try. Here is the workflow of blogging:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;In the project folder, enter:
+&lt;code class=&quot;language-text&quot;&gt;gatsby develop&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Add new markdown file in the content/blog. I will prefer to build folder for each post, and compose a index.md inside the folder.&lt;/li&gt;
+&lt;li&gt;To deploy, run &lt;code class=&quot;language-text&quot;&gt;npm run deploy&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Notes:&lt;/p&gt;
+&lt;p&gt;The blog is build based on Gatsby’s blog starter. &lt;/p&gt;
+&lt;p&gt;To create the template
+&lt;code class=&quot;language-text&quot;&gt;gatsby new my-blog-starter https://github.com/gatsbyjs/gatsby-starter-blog&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;I added code highlighting and modified the bio. I also want Table of Contents, and will add it later.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[MOE for ACS Estimate]]></title><description><![CDATA[$a^2 + b^2 = c^2$ There is a moe column in the census data pulled using the
+tidycensus. After doing a mini
+research on it, I learned that…]]></description><link>https://jiang-li.github.io//MOE_for_ACS_Estimate/</link><guid isPermaLink="false">https://jiang-li.github.io//MOE_for_ACS_Estimate/</guid><pubDate>Sun, 18 Feb 2018 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;$a^2 + b^2 = c^2$&lt;/p&gt;
+&lt;p&gt;There is a moe column in the census data pulled using the
+&lt;a href=&quot;https://walkerke.github.io/tidycensus/&quot;&gt;tidycensus&lt;/a&gt;. After doing a mini
+research on it, I learned that actually this variable is the 90%
+confidence interval for the population mean. Yihui said “Listen / read /
+talk and forget; write and remember!”, so I guess it it better to write
+down something quickly before I forgot it.&lt;/p&gt;
+&lt;p&gt;When the population mean, $\mu$, is estimated, it is more meaningful
+to use an interval that represents the probable range. Based on the
+central limit theorem, the sample mean follows the normal distribution
+with mean &lt;em&gt;x̄&lt;/em&gt; and standard deviation $\frac {\sigma}{\sqrt N}$. Thus,
+given confidence level, the interval can be estimated by using the
+sample mean times the SD and quantile.&lt;/p&gt;
+&lt;p&gt;For example, when the confidence levels are 80%, 85%, 90%, and 95%, the
+corresponding quantiles are:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;r&quot;&gt;&lt;pre class=&quot;language-r&quot;&gt;&lt;code class=&quot;language-r&quot;&gt;c &lt;span class=&quot;token operator&quot;&gt;&amp;lt;-&lt;/span&gt; seq&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;0.8&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0.99&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0.05&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+round&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;qnorm&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;-&lt;/span&gt;c&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;## [1] 1.282 1.440 1.645 1.960&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The moe column in the census data is the Margins of Error (MOE), which
+is provided for every American Community Survey (ACS) estimate, and is
+calculated by:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Get the sample standard deviation
+$s={\sqrt {\frac {\sum _{i=1}^{N}(x_{i}-{\bar {x}})^{2}}{N-1}}}$.&lt;/li&gt;
+&lt;li&gt;Get the standard error SE = $SE = \frac {S}{\sqrt N}$.&lt;/li&gt;
+&lt;li&gt;$ MOE = 1.645 SE$&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Because the quantile is 1.645, so the US Census uses 90% confidence
+interval.&lt;/p&gt;
+&lt;p&gt;The MOE is easily to be converted to other confidence level. For
+example, the 95% MOE can be derived using 90% MOE times 1.96/1.645.&lt;/p&gt;
+&lt;p&gt;To get more details, please reference &lt;a href=&quot;https://www.census.gov/programs-surveys/acs/guidance/training-presentations/acs-moe.html&quot;&gt;Using American Community Survey
+(ACS) Estimates and Margins of
+Error&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Often-used Scripts]]></title><description><![CDATA[I often use R, Python, SAS, SQL, and Bash in different
+tasks at the same time. To make the switch between different languages easier, I…]]></description><link>https://jiang-li.github.io//commonly-used_scripts/</link><guid isPermaLink="false">https://jiang-li.github.io//commonly-used_scripts/</guid><pubDate>Tue, 06 Feb 2018 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;I often use R, Python, SAS, SQL, and Bash in different
+tasks at the same time. To make the switch between different languages easier, I built a list of the commonly-used script for a quick reference.&lt;/p&gt;
+&lt;p&gt;A simulated sample data set with missing values and duplicated values was used. &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;r&quot;&gt;&lt;pre class=&quot;language-r&quot;&gt;&lt;code class=&quot;language-r&quot;&gt;set.seed&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+N &lt;span class=&quot;token operator&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;1000&lt;/span&gt;
+df &lt;span class=&quot;token operator&quot;&gt;&amp;lt;-&lt;/span&gt; tibble&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+dimension1 &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; sample&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;c&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;I&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;II&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;III&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; N&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; replace &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; T&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+dimension2 &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; sample&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;c&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;A&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;B&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;C&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; N&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; replace &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; T&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+measure1 &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; sample&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; N&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; replace &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; T&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+measure2 &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; sample&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; N&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; replace &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; T&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+df &lt;span class=&quot;token operator&quot;&gt;&amp;lt;-&lt;/span&gt; as_tibble&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;lapply&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;df&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; 
+                       &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;r&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; 
+                         r&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;sample&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;c&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token boolean&quot;&gt;TRUE&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;NA&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; 
+                                  prob &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; c&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;0.85&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0.15&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; 
+                                  size &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; length&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;r&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; 
+                                  replace &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;TRUE&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+                       &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+                &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+head&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;df&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;## # A tibble: 6 x 4
+##   dimension1 dimension2 measure1 measure2
+##   &amp;lt;chr&amp;gt;      &amp;lt;chr&amp;gt;         &amp;lt;int&amp;gt;    &amp;lt;int&amp;gt;
+## 1 I          &amp;lt;NA&amp;gt;              7        7
+## 2 III        B                 3        8
+## 3 I          A                 4       10
+## 4 II         &amp;lt;NA&amp;gt;              7        3
+## 5 I          A                 9        1
+## 6 III        A                10       NA&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;Row and Column&lt;/h2&gt;
+&lt;h3&gt;R&lt;/h3&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;r&quot;&gt;&lt;pre class=&quot;language-r&quot;&gt;&lt;code class=&quot;language-r&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# row count&lt;/span&gt;
+nrow&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;df&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;## [1] 1000&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;r&quot;&gt;&lt;pre class=&quot;language-r&quot;&gt;&lt;code class=&quot;language-r&quot;&gt;df &lt;span class=&quot;token percent-operator operator&quot;&gt;%&gt;%&lt;/span&gt; count&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;## # A tibble: 1 x 1
+##       n
+##   &amp;lt;int&amp;gt;
+## 1  1000&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;r&quot;&gt;&lt;pre class=&quot;language-r&quot;&gt;&lt;code class=&quot;language-r&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# column names&lt;/span&gt;
+names&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;df&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;## [1] &amp;quot;dimension1&amp;quot; &amp;quot;dimension2&amp;quot; &amp;quot;measure1&amp;quot;   &amp;quot;measure2&amp;quot;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;r&quot;&gt;&lt;pre class=&quot;language-r&quot;&gt;&lt;code class=&quot;language-r&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# data types&lt;/span&gt;
+lapply&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;df&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; class&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;## $dimension1
+## [1] &amp;quot;character&amp;quot;
+## 
+## $dimension2
+## [1] &amp;quot;character&amp;quot;
+## 
+## $measure1
+## [1] &amp;quot;integer&amp;quot;
+## 
+## $measure2
+## [1] &amp;quot;integer&amp;quot;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;Python&lt;/h3&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;python&quot;&gt;&lt;pre class=&quot;language-python&quot;&gt;&lt;code class=&quot;language-python&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# row count&lt;/span&gt;
+df&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;shape&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;# column names&lt;/span&gt;
+&lt;span class=&quot;token builtin&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;df&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; 
+
+&lt;span class=&quot;token comment&quot;&gt;# data types&lt;/span&gt;
+df&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dtypes  &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;SAS&lt;/h3&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;PROC CONTENTS DATA=df;
+RUN;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;SQL&lt;/h3&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;sql&quot;&gt;&lt;pre class=&quot;language-sql&quot;&gt;&lt;code class=&quot;language-sql&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;/* row count */&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;COUNT&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;FROM&lt;/span&gt; df 
+
+&lt;span class=&quot;token comment&quot;&gt;/* column names */&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;TOP&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;FROM&lt;/span&gt; df 
+
+&lt;span class=&quot;token comment&quot;&gt;/* data types */&lt;/span&gt;  
+&lt;span class=&quot;token keyword&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;FROM&lt;/span&gt; INFORMATION_SCHEMA&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;COLUMNS&lt;/span&gt;  &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;Bash&lt;/h3&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# row count&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;wc&lt;/span&gt; -l  filename 
+
+&lt;span class=&quot;token comment&quot;&gt;# column names&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;head&lt;/span&gt; -1 filename &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;Missing Values&lt;/h2&gt;
+&lt;h3&gt;R&lt;/h3&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;r&quot;&gt;&lt;pre class=&quot;language-r&quot;&gt;&lt;code class=&quot;language-r&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# count missing by columns&lt;/span&gt;
+colSums&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;is.na&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;df&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;## dimension1 dimension2   measure1   measure2 
+##        163        163        143        156&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;r&quot;&gt;&lt;pre class=&quot;language-r&quot;&gt;&lt;code class=&quot;language-r&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# drop rows with missing&lt;/span&gt;
+na.omit&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;df&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;## # A tibble: 518 x 4
+##    dimension1 dimension2 measure1 measure2
+##    &amp;lt;chr&amp;gt;      &amp;lt;chr&amp;gt;         &amp;lt;int&amp;gt;    &amp;lt;int&amp;gt;
+##  1 III        B                 3        8
+##  2 I          A                 4       10
+##  3 I          A                 9        1
+##  4 III        A                 8        8
+##  5 II         C                 2        9
+##  6 III        C                 7        1
+##  7 I          A                 9        6
+##  8 I          A                 2        4
+##  9 II         A                 1        9
+## 10 I          B                 9        2
+## # … with 508 more rows&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;r&quot;&gt;&lt;pre class=&quot;language-r&quot;&gt;&lt;code class=&quot;language-r&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# drop rows with all missing&lt;/span&gt;
+df&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;rowSums&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;!&lt;/span&gt;is.na&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;df&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;## # A tibble: 1,000 x 4
+##    dimension1 dimension2 measure1 measure2
+##    &amp;lt;chr&amp;gt;      &amp;lt;chr&amp;gt;         &amp;lt;int&amp;gt;    &amp;lt;int&amp;gt;
+##  1 I          &amp;lt;NA&amp;gt;              7        7
+##  2 III        B                 3        8
+##  3 I          A                 4       10
+##  4 II         &amp;lt;NA&amp;gt;              7        3
+##  5 I          A                 9        1
+##  6 III        A                10       NA
+##  7 III        A                 8        8
+##  8 &amp;lt;NA&amp;gt;       C                 2        7
+##  9 II         C                 2        9
+## 10 III        C                 7        1
+## # … with 990 more rows&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;r&quot;&gt;&lt;pre class=&quot;language-r&quot;&gt;&lt;code class=&quot;language-r&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# drop columns with all missing&lt;/span&gt;
+df&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;colSums&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;!&lt;/span&gt;is.na&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;df&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;## # A tibble: 1,000 x 4
+##    dimension1 dimension2 measure1 measure2
+##    &amp;lt;chr&amp;gt;      &amp;lt;chr&amp;gt;         &amp;lt;int&amp;gt;    &amp;lt;int&amp;gt;
+##  1 I          &amp;lt;NA&amp;gt;              7        7
+##  2 III        B                 3        8
+##  3 I          A                 4       10
+##  4 II         &amp;lt;NA&amp;gt;              7        3
+##  5 I          A                 9        1
+##  6 III        A                10       NA
+##  7 III        A                 8        8
+##  8 &amp;lt;NA&amp;gt;       C                 2        7
+##  9 II         C                 2        9
+## 10 III        C                 7        1
+## # … with 990 more rows&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;r&quot;&gt;&lt;pre class=&quot;language-r&quot;&gt;&lt;code class=&quot;language-r&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# fill all missing by 0&lt;/span&gt;
+df &lt;span class=&quot;token percent-operator operator&quot;&gt;%&gt;%&lt;/span&gt; replace&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;.&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; is.na&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;.&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;## # A tibble: 1,000 x 4
+##    dimension1 dimension2 measure1 measure2
+##    &amp;lt;chr&amp;gt;      &amp;lt;chr&amp;gt;         &amp;lt;dbl&amp;gt;    &amp;lt;dbl&amp;gt;
+##  1 I          0                 7        7
+##  2 III        B                 3        8
+##  3 I          A                 4       10
+##  4 II         0                 7        3
+##  5 I          A                 9        1
+##  6 III        A                10        0
+##  7 III        A                 8        8
+##  8 0          C                 2        7
+##  9 II         C                 2        9
+## 10 III        C                 7        1
+## # … with 990 more rows&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;r&quot;&gt;&lt;pre class=&quot;language-r&quot;&gt;&lt;code class=&quot;language-r&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# fill missing by columns&lt;/span&gt;
+df &lt;span class=&quot;token percent-operator operator&quot;&gt;%&gt;%&lt;/span&gt; replace_na&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;list&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;dimension1 &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Unknown&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; measure1 &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;## # A tibble: 1,000 x 4
+##    dimension1 dimension2 measure1 measure2
+##    &amp;lt;chr&amp;gt;      &amp;lt;chr&amp;gt;         &amp;lt;dbl&amp;gt;    &amp;lt;int&amp;gt;
+##  1 I          &amp;lt;NA&amp;gt;              7        7
+##  2 III        B                 3        8
+##  3 I          A                 4       10
+##  4 II         &amp;lt;NA&amp;gt;              7        3
+##  5 I          A                 9        1
+##  6 III        A                10       NA
+##  7 III        A                 8        8
+##  8 Unknown    C                 2        7
+##  9 II         C                 2        9
+## 10 III        C                 7        1
+## # … with 990 more rows&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;Python&lt;/h3&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;python&quot;&gt;&lt;pre class=&quot;language-python&quot;&gt;&lt;code class=&quot;language-python&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# count missing by columns&lt;/span&gt;
+df&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;isnull&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token builtin&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;# drop any missing&lt;/span&gt;
+df&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dropna&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; 
+
+&lt;span class=&quot;token comment&quot;&gt;# drop rows with all missing&lt;/span&gt;
+df&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dropna&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;how&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;all&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; 
+
+&lt;span class=&quot;token comment&quot;&gt;# drop columns with all missing&lt;/span&gt;
+df&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dropna&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;axis&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; how&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;all&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; 
+
+&lt;span class=&quot;token comment&quot;&gt;# fill all missing by 0&lt;/span&gt;
+df&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;fillna&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;# fill missing by columns&lt;/span&gt;
+df&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;fillna&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;value &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;dimension1&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Unknown&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;measure1&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;Unique&lt;/h2&gt;
+&lt;h3&gt;R&lt;/h3&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;r&quot;&gt;&lt;pre class=&quot;language-r&quot;&gt;&lt;code class=&quot;language-r&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# unique row&lt;/span&gt;
+df &lt;span class=&quot;token percent-operator operator&quot;&gt;%&gt;%&lt;/span&gt; distinct&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;## # A tibble: 766 x 4
+##    dimension1 dimension2 measure1 measure2
+##    &amp;lt;chr&amp;gt;      &amp;lt;chr&amp;gt;         &amp;lt;int&amp;gt;    &amp;lt;int&amp;gt;
+##  1 I          &amp;lt;NA&amp;gt;              7        7
+##  2 III        B                 3        8
+##  3 I          A                 4       10
+##  4 II         &amp;lt;NA&amp;gt;              7        3
+##  5 I          A                 9        1
+##  6 III        A                10       NA
+##  7 III        A                 8        8
+##  8 &amp;lt;NA&amp;gt;       C                 2        7
+##  9 II         C                 2        9
+## 10 III        C                 7        1
+## # … with 756 more rows&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;r&quot;&gt;&lt;pre class=&quot;language-r&quot;&gt;&lt;code class=&quot;language-r&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# unique row by columns&lt;/span&gt;
+df &lt;span class=&quot;token percent-operator operator&quot;&gt;%&gt;%&lt;/span&gt; distinct&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;dimension1&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; dimension2&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; .keep_all &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; T&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;## # A tibble: 16 x 4
+##    dimension1 dimension2 measure1 measure2
+##    &amp;lt;chr&amp;gt;      &amp;lt;chr&amp;gt;         &amp;lt;int&amp;gt;    &amp;lt;int&amp;gt;
+##  1 I          &amp;lt;NA&amp;gt;              7        7
+##  2 III        B                 3        8
+##  3 I          A                 4       10
+##  4 II         &amp;lt;NA&amp;gt;              7        3
+##  5 III        A                10       NA
+##  6 &amp;lt;NA&amp;gt;       C                 2        7
+##  7 II         C                 2        9
+##  8 III        C                 7        1
+##  9 III        &amp;lt;NA&amp;gt;              5        4
+## 10 I          C                NA       10
+## 11 II         A                 1        9
+## 12 II         B                NA        2
+## 13 &amp;lt;NA&amp;gt;       A                 8       10
+## 14 I          B                 9        2
+## 15 &amp;lt;NA&amp;gt;       B                 9        4
+## 16 &amp;lt;NA&amp;gt;       &amp;lt;NA&amp;gt;              6       NA&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;Python&lt;/h3&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;python&quot;&gt;&lt;pre class=&quot;language-python&quot;&gt;&lt;code class=&quot;language-python&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# unique row&lt;/span&gt;
+df&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;drop_duplicates&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;# unique row by columns&lt;/span&gt;
+df&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;drop_duplicates&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;subset&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;dimension1&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;dimension2&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;Level Count&lt;/h2&gt;
+&lt;h3&gt;R&lt;/h3&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;r&quot;&gt;&lt;pre class=&quot;language-r&quot;&gt;&lt;code class=&quot;language-r&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# distribution&lt;/span&gt;
+table&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;df&lt;span class=&quot;token operator&quot;&gt;$&lt;/span&gt;dimension1&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;## 
+##   I  II III 
+## 295 275 267&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;r&quot;&gt;&lt;pre class=&quot;language-r&quot;&gt;&lt;code class=&quot;language-r&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# contingency table&lt;/span&gt;
+table&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;df&lt;span class=&quot;token operator&quot;&gt;$&lt;/span&gt;dimension1&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; df&lt;span class=&quot;token operator&quot;&gt;$&lt;/span&gt;dimension2&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;##      
+##        A  B  C
+##   I   89 80 79
+##   II  71 89 70
+##   III 75 66 86&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;Python&lt;/h3&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;python&quot;&gt;&lt;pre class=&quot;language-python&quot;&gt;&lt;code class=&quot;language-python&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# distribution&lt;/span&gt;
+df&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dimension1&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;value_counts&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;# contingency table&lt;/span&gt;
+pd&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;crosstab&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;df&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dimension1&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; df&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;dimension2&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;Summary&lt;/h2&gt;
+&lt;h3&gt;R&lt;/h3&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;r&quot;&gt;&lt;pre class=&quot;language-r&quot;&gt;&lt;code class=&quot;language-r&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# summarize the total, percent, ratio, and ratio&lt;/span&gt;
+
+df &lt;span class=&quot;token percent-operator operator&quot;&gt;%&gt;%&lt;/span&gt; 
+  group_by&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;dimension1&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token percent-operator operator&quot;&gt;%&gt;%&lt;/span&gt; 
+  summarise&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+    measure1 &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; sum&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;measure1&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; na.rm &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; T&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    measure2 &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; sum&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;measure2&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; na.rm &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; T&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    count &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; n&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token percent-operator operator&quot;&gt;%&gt;%&lt;/span&gt; 
+  mutate&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+    measure1_percent &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; measure1&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;sum&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;measure1&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    ratio &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; measure1&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;measure2
+  &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token percent-operator operator&quot;&gt;%&gt;%&lt;/span&gt; 
+  mutate&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+    ratio_relativity &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; ratio&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;sum&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;measure1&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;sum&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;measure2&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;## # A tibble: 4 x 7
+##   dimension1 measure1 measure2 count measure1_percent ratio
+##   &amp;lt;chr&amp;gt;         &amp;lt;int&amp;gt;    &amp;lt;int&amp;gt; &amp;lt;int&amp;gt;            &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;
+## 1 &amp;lt;NA&amp;gt;            749      752   163            0.157 0.996
+## 2 I              1480     1460   295            0.311 1.01 
+## 3 II             1288     1261   275            0.271 1.02 
+## 4 III            1244     1320   267            0.261 0.942
+## # … with 1 more variable: ratio_relativity &amp;lt;dbl&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;Python&lt;/h3&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;python&quot;&gt;&lt;pre class=&quot;language-python&quot;&gt;&lt;code class=&quot;language-python&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# summarize the total, percent, ratio, and relativity&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;oneway&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;g&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+    pd&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;Series&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;token string&quot;&gt;&quot;measure1&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; g&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;measure1&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token builtin&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token string&quot;&gt;&quot;measure2&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; g&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;measure2&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token builtin&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token string&quot;&gt;&quot;count&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;g&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token string&quot;&gt;&quot;measure1_percent&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; g&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;measure1&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token builtin&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;df&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;measure1&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token builtin&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token string&quot;&gt;&quot;ratio&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; g&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;measure1&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token builtin&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;g&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;measure2&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token builtin&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token string&quot;&gt;&quot;ratio_relativity&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;g&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;measure1&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token builtin&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;g&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;measure2&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token builtin&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt; 
+        &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;df&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;measure1&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token builtin&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;df&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;measure2&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token builtin&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  
+df&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;groupby&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;dimension1&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token builtin&quot;&gt;apply&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;oneway&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;Merge&lt;/h2&gt;
+&lt;h3&gt;R&lt;/h3&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;r&quot;&gt;&lt;pre class=&quot;language-r&quot;&gt;&lt;code class=&quot;language-r&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# join tables with different key names&lt;/span&gt;
+df2 &lt;span class=&quot;token operator&quot;&gt;&amp;lt;-&lt;/span&gt; df &lt;span class=&quot;token percent-operator operator&quot;&gt;%&gt;%&lt;/span&gt;
+  group_by&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;dimension1&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; dimension2&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token percent-operator operator&quot;&gt;%&gt;%&lt;/span&gt;
+  summarise&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+    measure3 &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; sum&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;measure1&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; na.rm &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; T&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    measure4 &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; sum&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;measure2&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; na.rm &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; T&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token percent-operator operator&quot;&gt;%&gt;%&lt;/span&gt;
+  rename&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;dimension3 &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; dimension1&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; dimension4 &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; dimension2&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+left_join&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;df&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; df2&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  by &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; c&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;token string&quot;&gt;&quot;dimension1&quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;dimension3&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token string&quot;&gt;&quot;dimension2&quot;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;dimension4&quot;&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;## # A tibble: 1,000 x 6
+##    dimension1 dimension2 measure1 measure2 measure3 measure4
+##    &amp;lt;chr&amp;gt;      &amp;lt;chr&amp;gt;         &amp;lt;int&amp;gt;    &amp;lt;int&amp;gt;    &amp;lt;int&amp;gt;    &amp;lt;int&amp;gt;
+##  1 I          &amp;lt;NA&amp;gt;              7        7      229      195
+##  2 III        B                 3        8      314      337
+##  3 I          A                 4       10      461      480
+##  4 II         &amp;lt;NA&amp;gt;              7        3      226      180
+##  5 I          A                 9        1      461      480
+##  6 III        A                10       NA      353      356
+##  7 III        A                 8        8      353      356
+##  8 &amp;lt;NA&amp;gt;       C                 2        7      206      226
+##  9 II         C                 2        9      340      333
+## 10 III        C                 7        1      386      442
+## # … with 990 more rows&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;Python&lt;/h3&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;python&quot;&gt;&lt;pre class=&quot;language-python&quot;&gt;&lt;code class=&quot;language-python&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# join tables with different key names&lt;/span&gt;
+pd&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;merge&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;df&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; df2&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  how&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;left&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; 
+  left_on&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;dimesnion1&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;dimesnion2&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  right_on&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;dimesnion3&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;dimesnion4&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;Reshape&lt;/h2&gt;
+&lt;h3&gt;R&lt;/h3&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;r&quot;&gt;&lt;pre class=&quot;language-r&quot;&gt;&lt;code class=&quot;language-r&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# wide to long&lt;/span&gt;
+df_reshape &lt;span class=&quot;token operator&quot;&gt;&amp;lt;-&lt;/span&gt; df &lt;span class=&quot;token percent-operator operator&quot;&gt;%&gt;%&lt;/span&gt; gather&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;c&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;measure1&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;measure2&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; 
+                            key &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;measure&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; value &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;values&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;# long to wide: the value must be unqiue by other variales&lt;/span&gt;
+df_reshape &lt;span class=&quot;token percent-operator operator&quot;&gt;%&gt;%&lt;/span&gt;
+  group_by&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;dimension1&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; dimension2&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; measure&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token percent-operator operator&quot;&gt;%&gt;%&lt;/span&gt;
+  summarise&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;values &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; sum&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;values&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; na.rm &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; T&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token percent-operator operator&quot;&gt;%&gt;%&lt;/span&gt; 
+  spread&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;key &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; measure&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; value &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; values&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;## # A tibble: 16 x 4
+## # Groups:   dimension1, dimension2 [16]
+##    dimension1 dimension2 measure1 measure2
+##    &amp;lt;chr&amp;gt;      &amp;lt;chr&amp;gt;         &amp;lt;int&amp;gt;    &amp;lt;int&amp;gt;
+##  1 I          A               461      480
+##  2 I          B               392      426
+##  3 I          C               398      359
+##  4 I          &amp;lt;NA&amp;gt;            229      195
+##  5 II         A               282      358
+##  6 II         B               440      390
+##  7 II         C               340      333
+##  8 II         &amp;lt;NA&amp;gt;            226      180
+##  9 III        A               353      356
+## 10 III        B               314      337
+## 11 III        C               386      442
+## 12 III        &amp;lt;NA&amp;gt;            191      185
+## 13 &amp;lt;NA&amp;gt;       A               178      206
+## 14 &amp;lt;NA&amp;gt;       B               209      206
+## 15 &amp;lt;NA&amp;gt;       C               206      226
+## 16 &amp;lt;NA&amp;gt;       &amp;lt;NA&amp;gt;            156      114&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;Python&lt;/h3&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;python&quot;&gt;&lt;pre class=&quot;language-python&quot;&gt;&lt;code class=&quot;language-python&quot;&gt;df_reshape &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; pd&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;melt&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;df&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+                     id_vars&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;dimension1&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;dimension2&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+                     value_vars&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;measure1&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;measure2&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;df_reshape&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;groupby&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;dimension1&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;dimension2&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;variable&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+                    as_index&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token boolean&quot;&gt;False&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+           &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;value&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token builtin&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+           &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;pivot_table&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;index&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;dimension1&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;dimension2&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+                        columns&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;variable&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; values&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;value&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content:encoded></item></channel></rss>
