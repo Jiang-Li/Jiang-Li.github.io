@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Often-used Scripts | Dynamic Data</title>
+    <meta name="description" content="Fun and useful stuff written by Jiang Li">
+    
+    
+    <link rel="preload" href="/assets/css/0.styles.efb6550f.css" as="style"><link rel="preload" href="/assets/js/app.573cedab.js" as="script"><link rel="preload" href="/assets/js/7.09baf713.js" as="script"><link rel="preload" href="/assets/js/13.6c7550e6.js" as="script"><link rel="prefetch" href="/assets/js/1.776c2022.js"><link rel="prefetch" href="/assets/js/10.f1ec4acf.js"><link rel="prefetch" href="/assets/js/11.0e3a23d2.js"><link rel="prefetch" href="/assets/js/12.9b024486.js"><link rel="prefetch" href="/assets/js/14.d297fb11.js"><link rel="prefetch" href="/assets/js/15.e7d3b287.js"><link rel="prefetch" href="/assets/js/16.54c4d1ae.js"><link rel="prefetch" href="/assets/js/17.bb0f7641.js"><link rel="prefetch" href="/assets/js/18.fd79d822.js"><link rel="prefetch" href="/assets/js/19.877ff4d8.js"><link rel="prefetch" href="/assets/js/20.e716c0a0.js"><link rel="prefetch" href="/assets/js/3.ade259c7.js"><link rel="prefetch" href="/assets/js/4.e19742c0.js"><link rel="prefetch" href="/assets/js/5.466b177b.js"><link rel="prefetch" href="/assets/js/6.f710aa99.js"><link rel="prefetch" href="/assets/js/8.51c62a28.js"><link rel="prefetch" href="/assets/js/9.b46116c4.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.efb6550f.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="vuepress-theme-meteorlxy"><header class="header" data-v-0539f1bd><div data-v-740e207b data-v-0539f1bd><nav class="navbar" data-v-740e207b><div class="container" data-v-740e207b><a href="/" class="router-link-active" data-v-740e207b><span class="navbar-site-name" data-v-740e207b>
+          Dynamic Data
+        </span></a> <div class="navbar-toggler" data-v-740e207b><svg class="icon" style="font-size:1.2em;" data-v-740e207b data-v-740e207b><title data-v-740e207b data-v-740e207b>menu</title><use xlink:href="#icon-menu" data-v-740e207b data-v-740e207b></use></svg></div> <div class="navbar-links" data-v-740e207b></div></div></nav> <div class="navbar-holder" style="display:none;" data-v-740e207b></div></div> <div class="banner" data-v-98d6aa8c data-v-0539f1bd data-v-0539f1bd><div class="container" data-v-98d6aa8c><div class="center" data-v-98d6aa8c><h1 data-v-98d6aa8c data-v-0539f1bd>
+          Often-used Scripts
+        </h1></div></div></div></header> <div class="container clearfix show-aside" data-v-6e91a59a data-v-6e91a59a><main class="main" data-v-6e91a59a><div class="post" data-v-6e91a59a data-v-6e91a59a><section class="post-meta main-div" data-v-4e23451f><section class="post-date clearfix" data-v-4e23451f><span class="create-date" data-v-4e23451f>
+      Created : 2018-02-06
+    </span> <!----></section> <section class="post-links" data-v-4e23451f><!----> <a href="/posts/2018/02/10/us-census.html" class="post-link" data-v-4e23451f>
+      Next Post : Know More about the Place You Live Using Census Data
+    </a></section></section> <article class="main-div"><div class="post-content content content__default"><p>I often use R, Python, SAS, SQL, and Bash in different
+tasks at the same time.
+To make the switch between different languages easier, I built a list of the commonly-used script for a quick reference.
+A simulated sample data set with missing values and duplicated values was used.</p> <div class="language-r extra-class"><pre class="language-r"><code>set.seed<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+N <span class="token operator">&lt;-</span> <span class="token number">1000</span>
+df <span class="token operator">&lt;-</span> tibble<span class="token punctuation">(</span>
+dimension1 <span class="token operator">=</span> sample<span class="token punctuation">(</span>c<span class="token punctuation">(</span><span class="token string">&quot;I&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;II&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;III&quot;</span><span class="token punctuation">)</span><span class="token punctuation">,</span> N<span class="token punctuation">,</span> replace <span class="token operator">=</span> T<span class="token punctuation">)</span><span class="token punctuation">,</span>
+dimension2 <span class="token operator">=</span> sample<span class="token punctuation">(</span>c<span class="token punctuation">(</span><span class="token string">&quot;A&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;B&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;C&quot;</span><span class="token punctuation">)</span><span class="token punctuation">,</span> N<span class="token punctuation">,</span> replace <span class="token operator">=</span> T<span class="token punctuation">)</span><span class="token punctuation">,</span>
+measure1 <span class="token operator">=</span> sample<span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">:</span><span class="token number">10</span><span class="token punctuation">,</span> N<span class="token punctuation">,</span> replace <span class="token operator">=</span> T<span class="token punctuation">)</span><span class="token punctuation">,</span>
+measure2 <span class="token operator">=</span> sample<span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">:</span><span class="token number">10</span><span class="token punctuation">,</span> N<span class="token punctuation">,</span> replace <span class="token operator">=</span> T<span class="token punctuation">)</span>
+<span class="token punctuation">)</span>
+
+df <span class="token operator">&lt;-</span> as_tibble<span class="token punctuation">(</span>lapply<span class="token punctuation">(</span>df<span class="token punctuation">,</span> 
+                       <span class="token keyword">function</span><span class="token punctuation">(</span>r<span class="token punctuation">)</span> 
+                         r<span class="token punctuation">[</span>sample<span class="token punctuation">(</span>c<span class="token punctuation">(</span><span class="token boolean">TRUE</span><span class="token punctuation">,</span> <span class="token keyword">NA</span><span class="token punctuation">)</span><span class="token punctuation">,</span> 
+                                  prob <span class="token operator">=</span> c<span class="token punctuation">(</span><span class="token number">0.85</span><span class="token punctuation">,</span> <span class="token number">0.15</span><span class="token punctuation">)</span><span class="token punctuation">,</span> 
+                                  size <span class="token operator">=</span> length<span class="token punctuation">(</span>r<span class="token punctuation">)</span><span class="token punctuation">,</span> 
+                                  replace <span class="token operator">=</span> <span class="token boolean">TRUE</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+                       <span class="token punctuation">)</span>
+                <span class="token punctuation">)</span>
+
+head<span class="token punctuation">(</span>df<span class="token punctuation">)</span>
+</code></pre></div><div class="language- extra-class"><pre class="language-text"><code>## # A tibble: 6 x 4
+##   dimension1 dimension2 measure1 measure2
+##   &lt;chr&gt;      &lt;chr&gt;         &lt;int&gt;    &lt;int&gt;
+## 1 I          &lt;NA&gt;              7        7
+## 2 III        B                 3        8
+## 3 I          A                 4       10
+## 4 II         &lt;NA&gt;              7        3
+## 5 I          A                 9        1
+## 6 III        A                10       NA
+</code></pre></div><h2 id="row-and-column"><a href="#row-and-column" aria-hidden="true" class="header-anchor">#</a> Row and Column</h2> <h3 id="r"><a href="#r" aria-hidden="true" class="header-anchor">#</a> R</h3> <div class="language-r extra-class"><pre class="language-r"><code><span class="token comment"># row count</span>
+nrow<span class="token punctuation">(</span>df<span class="token punctuation">)</span> 
+</code></pre></div><div class="language- extra-class"><pre class="language-text"><code>## [1] 1000
+</code></pre></div><div class="language-r extra-class"><pre class="language-r"><code>df <span class="token percent-operator operator">%&gt;%</span> count<span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre></div><div class="language- extra-class"><pre class="language-text"><code>## # A tibble: 1 x 1
+##       n
+##   &lt;int&gt;
+## 1  1000
+</code></pre></div><div class="language-r extra-class"><pre class="language-r"><code><span class="token comment"># column names</span>
+names<span class="token punctuation">(</span>df<span class="token punctuation">)</span> 
+</code></pre></div><div class="language- extra-class"><pre class="language-text"><code>## [1] &quot;dimension1&quot; &quot;dimension2&quot; &quot;measure1&quot;   &quot;measure2&quot;
+</code></pre></div><div class="language-r extra-class"><pre class="language-r"><code><span class="token comment"># data types</span>
+lapply<span class="token punctuation">(</span>df<span class="token punctuation">,</span> class<span class="token punctuation">)</span> 
+</code></pre></div><div class="language- extra-class"><pre class="language-text"><code>## $dimension1
+## [1] &quot;character&quot;
+## 
+## $dimension2
+## [1] &quot;character&quot;
+## 
+## $measure1
+## [1] &quot;integer&quot;
+## 
+## $measure2
+## [1] &quot;integer&quot;
+</code></pre></div><h3 id="python"><a href="#python" aria-hidden="true" class="header-anchor">#</a> Python</h3> <div class="language-python extra-class"><pre class="language-python"><code><span class="token comment"># row count</span>
+df<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+
+<span class="token comment"># column names</span>
+<span class="token builtin">list</span><span class="token punctuation">(</span>df<span class="token punctuation">)</span> 
+
+<span class="token comment"># data types</span>
+df<span class="token punctuation">.</span>dtypes  
+</code></pre></div><h3 id="sas"><a href="#sas" aria-hidden="true" class="header-anchor">#</a> SAS</h3> <div class="language- extra-class"><pre class="language-text"><code>PROC CONTENTS DATA=df;
+RUN;
+</code></pre></div><h3 id="sql"><a href="#sql" aria-hidden="true" class="header-anchor">#</a> SQL</h3> <div class="language-sql extra-class"><pre class="language-sql"><code><span class="token comment">/* row count */</span>
+<span class="token keyword">SELECT</span> <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword">FROM</span> df 
+
+<span class="token comment">/* column names */</span>
+<span class="token keyword">SELECT</span> <span class="token keyword">TOP</span> <span class="token number">0</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> df 
+
+<span class="token comment">/* data types */</span>  
+<span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> INFORMATION_SCHEMA<span class="token punctuation">.</span><span class="token keyword">COLUMNS</span>  
+</code></pre></div><h3 id="bash"><a href="#bash" aria-hidden="true" class="header-anchor">#</a> Bash</h3> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token comment"># row count</span>
+<span class="token function">wc</span> -l  filename 
+
+<span class="token comment"># column names</span>
+<span class="token function">head</span> -1 filename 
+</code></pre></div><h2 id="missing-values"><a href="#missing-values" aria-hidden="true" class="header-anchor">#</a> Missing Values</h2> <h3 id="r-2"><a href="#r-2" aria-hidden="true" class="header-anchor">#</a> R</h3> <div class="language-r extra-class"><pre class="language-r"><code><span class="token comment"># count missing by columns</span>
+colSums<span class="token punctuation">(</span>is.na<span class="token punctuation">(</span>df<span class="token punctuation">)</span><span class="token punctuation">)</span> 
+</code></pre></div><div class="language- extra-class"><pre class="language-text"><code>## dimension1 dimension2   measure1   measure2 
+##        163        163        143        156
+</code></pre></div><div class="language-r extra-class"><pre class="language-r"><code><span class="token comment"># drop rows with missing</span>
+na.omit<span class="token punctuation">(</span>df<span class="token punctuation">)</span> 
+</code></pre></div><div class="language- extra-class"><pre class="language-text"><code>## # A tibble: 518 x 4
+##    dimension1 dimension2 measure1 measure2
+##    &lt;chr&gt;      &lt;chr&gt;         &lt;int&gt;    &lt;int&gt;
+##  1 III        B                 3        8
+##  2 I          A                 4       10
+##  3 I          A                 9        1
+##  4 III        A                 8        8
+##  5 II         C                 2        9
+##  6 III        C                 7        1
+##  7 I          A                 9        6
+##  8 I          A                 2        4
+##  9 II         A                 1        9
+## 10 I          B                 9        2
+## # … with 508 more rows
+</code></pre></div><div class="language-r extra-class"><pre class="language-r"><code><span class="token comment"># drop rows with all missing</span>
+df<span class="token punctuation">[</span>rowSums<span class="token punctuation">(</span><span class="token operator">!</span>is.na<span class="token punctuation">(</span>df<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token punctuation">]</span> 
+</code></pre></div><div class="language- extra-class"><pre class="language-text"><code>## # A tibble: 1,000 x 4
+##    dimension1 dimension2 measure1 measure2
+##    &lt;chr&gt;      &lt;chr&gt;         &lt;int&gt;    &lt;int&gt;
+##  1 I          &lt;NA&gt;              7        7
+##  2 III        B                 3        8
+##  3 I          A                 4       10
+##  4 II         &lt;NA&gt;              7        3
+##  5 I          A                 9        1
+##  6 III        A                10       NA
+##  7 III        A                 8        8
+##  8 &lt;NA&gt;       C                 2        7
+##  9 II         C                 2        9
+## 10 III        C                 7        1
+## # … with 990 more rows
+</code></pre></div><div class="language-r extra-class"><pre class="language-r"><code><span class="token comment"># drop columns with all missing</span>
+df<span class="token punctuation">[</span>colSums<span class="token punctuation">(</span><span class="token operator">!</span>is.na<span class="token punctuation">(</span>df<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">]</span>
+</code></pre></div><div class="language- extra-class"><pre class="language-text"><code>## # A tibble: 1,000 x 4
+##    dimension1 dimension2 measure1 measure2
+##    &lt;chr&gt;      &lt;chr&gt;         &lt;int&gt;    &lt;int&gt;
+##  1 I          &lt;NA&gt;              7        7
+##  2 III        B                 3        8
+##  3 I          A                 4       10
+##  4 II         &lt;NA&gt;              7        3
+##  5 I          A                 9        1
+##  6 III        A                10       NA
+##  7 III        A                 8        8
+##  8 &lt;NA&gt;       C                 2        7
+##  9 II         C                 2        9
+## 10 III        C                 7        1
+## # … with 990 more rows
+</code></pre></div><div class="language-r extra-class"><pre class="language-r"><code><span class="token comment"># fill all missing by 0</span>
+df <span class="token percent-operator operator">%&gt;%</span> replace<span class="token punctuation">(</span>.<span class="token punctuation">,</span> is.na<span class="token punctuation">(</span>.<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
+</code></pre></div><div class="language- extra-class"><pre class="language-text"><code>## # A tibble: 1,000 x 4
+##    dimension1 dimension2 measure1 measure2
+##    &lt;chr&gt;      &lt;chr&gt;         &lt;dbl&gt;    &lt;dbl&gt;
+##  1 I          0                 7        7
+##  2 III        B                 3        8
+##  3 I          A                 4       10
+##  4 II         0                 7        3
+##  5 I          A                 9        1
+##  6 III        A                10        0
+##  7 III        A                 8        8
+##  8 0          C                 2        7
+##  9 II         C                 2        9
+## 10 III        C                 7        1
+## # … with 990 more rows
+</code></pre></div><div class="language-r extra-class"><pre class="language-r"><code><span class="token comment"># fill missing by columns</span>
+df <span class="token percent-operator operator">%&gt;%</span> replace_na<span class="token punctuation">(</span>list<span class="token punctuation">(</span>dimension1 <span class="token operator">=</span> <span class="token string">&quot;Unknown&quot;</span><span class="token punctuation">,</span> measure1 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span> 
+</code></pre></div><div class="language- extra-class"><pre class="language-text"><code>## # A tibble: 1,000 x 4
+##    dimension1 dimension2 measure1 measure2
+##    &lt;chr&gt;      &lt;chr&gt;         &lt;dbl&gt;    &lt;int&gt;
+##  1 I          &lt;NA&gt;              7        7
+##  2 III        B                 3        8
+##  3 I          A                 4       10
+##  4 II         &lt;NA&gt;              7        3
+##  5 I          A                 9        1
+##  6 III        A                10       NA
+##  7 III        A                 8        8
+##  8 Unknown    C                 2        7
+##  9 II         C                 2        9
+## 10 III        C                 7        1
+## # … with 990 more rows
+</code></pre></div><h3 id="python-2"><a href="#python-2" aria-hidden="true" class="header-anchor">#</a> Python</h3> <div class="language-python extra-class"><pre class="language-python"><code><span class="token comment"># count missing by columns</span>
+df<span class="token punctuation">.</span>isnull<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment"># drop any missing</span>
+df<span class="token punctuation">.</span>dropna<span class="token punctuation">(</span><span class="token punctuation">)</span> 
+
+<span class="token comment"># drop rows with all missing</span>
+df<span class="token punctuation">.</span>dropna<span class="token punctuation">(</span>how<span class="token operator">=</span><span class="token string">&quot;all&quot;</span><span class="token punctuation">)</span> 
+
+<span class="token comment"># drop columns with all missing</span>
+df<span class="token punctuation">.</span>dropna<span class="token punctuation">(</span>axis<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> how<span class="token operator">=</span><span class="token string">'all'</span><span class="token punctuation">)</span> 
+
+<span class="token comment"># fill all missing by 0</span>
+df<span class="token punctuation">.</span>fillna<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+
+<span class="token comment"># fill missing by columns</span>
+df<span class="token punctuation">.</span>fillna<span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">&quot;dimension1&quot;</span><span class="token punctuation">:</span> <span class="token string">&quot;Unknown&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;measure1&quot;</span><span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><h2 id="unique"><a href="#unique" aria-hidden="true" class="header-anchor">#</a> Unique</h2> <h3 id="r-3"><a href="#r-3" aria-hidden="true" class="header-anchor">#</a> R</h3> <div class="language-r extra-class"><pre class="language-r"><code><span class="token comment"># unique row</span>
+df <span class="token percent-operator operator">%&gt;%</span> distinct<span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre></div><div class="language- extra-class"><pre class="language-text"><code>## # A tibble: 766 x 4
+##    dimension1 dimension2 measure1 measure2
+##    &lt;chr&gt;      &lt;chr&gt;         &lt;int&gt;    &lt;int&gt;
+##  1 I          &lt;NA&gt;              7        7
+##  2 III        B                 3        8
+##  3 I          A                 4       10
+##  4 II         &lt;NA&gt;              7        3
+##  5 I          A                 9        1
+##  6 III        A                10       NA
+##  7 III        A                 8        8
+##  8 &lt;NA&gt;       C                 2        7
+##  9 II         C                 2        9
+## 10 III        C                 7        1
+## # … with 756 more rows
+</code></pre></div><div class="language-r extra-class"><pre class="language-r"><code><span class="token comment"># unique row by columns</span>
+df <span class="token percent-operator operator">%&gt;%</span> distinct<span class="token punctuation">(</span>dimension1<span class="token punctuation">,</span> dimension2<span class="token punctuation">,</span> .keep_all <span class="token operator">=</span> T<span class="token punctuation">)</span>
+</code></pre></div><div class="language- extra-class"><pre class="language-text"><code>## # A tibble: 16 x 4
+##    dimension1 dimension2 measure1 measure2
+##    &lt;chr&gt;      &lt;chr&gt;         &lt;int&gt;    &lt;int&gt;
+##  1 I          &lt;NA&gt;              7        7
+##  2 III        B                 3        8
+##  3 I          A                 4       10
+##  4 II         &lt;NA&gt;              7        3
+##  5 III        A                10       NA
+##  6 &lt;NA&gt;       C                 2        7
+##  7 II         C                 2        9
+##  8 III        C                 7        1
+##  9 III        &lt;NA&gt;              5        4
+## 10 I          C                NA       10
+## 11 II         A                 1        9
+## 12 II         B                NA        2
+## 13 &lt;NA&gt;       A                 8       10
+## 14 I          B                 9        2
+## 15 &lt;NA&gt;       B                 9        4
+## 16 &lt;NA&gt;       &lt;NA&gt;              6       NA
+</code></pre></div><h3 id="python-3"><a href="#python-3" aria-hidden="true" class="header-anchor">#</a> Python</h3> <div class="language-python extra-class"><pre class="language-python"><code><span class="token comment"># unique row</span>
+df<span class="token punctuation">.</span>drop_duplicates<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment"># unique row by columns</span>
+df<span class="token punctuation">.</span>drop_duplicates<span class="token punctuation">(</span>subset<span class="token operator">=</span><span class="token punctuation">(</span><span class="token string">'dimension1'</span><span class="token punctuation">,</span> <span class="token string">'dimension2'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+</code></pre></div><h2 id="level-count"><a href="#level-count" aria-hidden="true" class="header-anchor">#</a> Level Count</h2> <h3 id="r-4"><a href="#r-4" aria-hidden="true" class="header-anchor">#</a> R</h3> <div class="language-r extra-class"><pre class="language-r"><code><span class="token comment"># distribution</span>
+table<span class="token punctuation">(</span>df<span class="token operator">$</span>dimension1<span class="token punctuation">)</span>
+</code></pre></div><div class="language- extra-class"><pre class="language-text"><code>## 
+##   I  II III 
+## 295 275 267
+</code></pre></div><div class="language-r extra-class"><pre class="language-r"><code><span class="token comment"># contingency table</span>
+table<span class="token punctuation">(</span>df<span class="token operator">$</span>dimension1<span class="token punctuation">,</span> df<span class="token operator">$</span>dimension2<span class="token punctuation">)</span>
+</code></pre></div><div class="language- extra-class"><pre class="language-text"><code>##      
+##        A  B  C
+##   I   89 80 79
+##   II  71 89 70
+##   III 75 66 86
+</code></pre></div><h3 id="python-4"><a href="#python-4" aria-hidden="true" class="header-anchor">#</a> Python</h3> <div class="language-python extra-class"><pre class="language-python"><code><span class="token comment"># distribution</span>
+df<span class="token punctuation">.</span>dimension1<span class="token punctuation">.</span>value_counts<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment"># contingency table</span>
+pd<span class="token punctuation">.</span>crosstab<span class="token punctuation">(</span>df<span class="token punctuation">.</span>dimension1<span class="token punctuation">,</span> df<span class="token punctuation">.</span>dimension2<span class="token punctuation">)</span>
+</code></pre></div><h2 id="summary"><a href="#summary" aria-hidden="true" class="header-anchor">#</a> Summary</h2> <h3 id="r-5"><a href="#r-5" aria-hidden="true" class="header-anchor">#</a> R</h3> <div class="language-r extra-class"><pre class="language-r"><code><span class="token comment"># summarize the total, percent, ratio, and ratio</span>
+
+df <span class="token percent-operator operator">%&gt;%</span> 
+  group_by<span class="token punctuation">(</span>dimension1<span class="token punctuation">)</span> <span class="token percent-operator operator">%&gt;%</span> 
+  summarise<span class="token punctuation">(</span>
+    measure1 <span class="token operator">=</span> sum<span class="token punctuation">(</span>measure1<span class="token punctuation">,</span> na.rm <span class="token operator">=</span> T<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    measure2 <span class="token operator">=</span> sum<span class="token punctuation">(</span>measure2<span class="token punctuation">,</span> na.rm <span class="token operator">=</span> T<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    count <span class="token operator">=</span> n<span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">)</span> <span class="token percent-operator operator">%&gt;%</span> 
+  mutate<span class="token punctuation">(</span>
+    measure1_percent <span class="token operator">=</span> measure1<span class="token operator">/</span>sum<span class="token punctuation">(</span>measure1<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    ratio <span class="token operator">=</span> measure1<span class="token operator">/</span>measure2
+  <span class="token punctuation">)</span> <span class="token percent-operator operator">%&gt;%</span> 
+  mutate<span class="token punctuation">(</span>
+    ratio_relativity <span class="token operator">=</span> ratio<span class="token operator">/</span><span class="token punctuation">(</span>sum<span class="token punctuation">(</span>measure1<span class="token punctuation">)</span><span class="token operator">/</span>sum<span class="token punctuation">(</span>measure2<span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token punctuation">)</span>
+</code></pre></div><div class="language- extra-class"><pre class="language-text"><code>## # A tibble: 4 x 7
+##   dimension1 measure1 measure2 count measure1_percent ratio
+##   &lt;chr&gt;         &lt;int&gt;    &lt;int&gt; &lt;int&gt;            &lt;dbl&gt; &lt;dbl&gt;
+## 1 &lt;NA&gt;            749      752   163            0.157 0.996
+## 2 I              1480     1460   295            0.311 1.01 
+## 3 II             1288     1261   275            0.271 1.02 
+## 4 III            1244     1320   267            0.261 0.942
+## # … with 1 more variable: ratio_relativity &lt;dbl&gt;
+</code></pre></div><h3 id="python-5"><a href="#python-5" aria-hidden="true" class="header-anchor">#</a> Python</h3> <div class="language-python extra-class"><pre class="language-python"><code><span class="token comment"># summarize the total, percent, ratio, and relativity</span>
+<span class="token keyword">def</span> <span class="token function">oneway</span><span class="token punctuation">(</span>g<span class="token punctuation">)</span><span class="token punctuation">:</span>
+  <span class="token keyword">return</span><span class="token punctuation">(</span>
+    pd<span class="token punctuation">.</span>Series<span class="token punctuation">(</span><span class="token punctuation">{</span>
+      <span class="token string">&quot;measure1&quot;</span><span class="token punctuation">:</span> g<span class="token punctuation">.</span>measure1<span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token string">&quot;measure2&quot;</span><span class="token punctuation">:</span> g<span class="token punctuation">.</span>measure2<span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token string">&quot;count&quot;</span><span class="token punctuation">:</span> <span class="token builtin">len</span><span class="token punctuation">(</span>g<span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token string">&quot;measure1_percent&quot;</span><span class="token punctuation">:</span> g<span class="token punctuation">.</span>measure1<span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">/</span>df<span class="token punctuation">.</span>measure1<span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token string">&quot;ratio&quot;</span><span class="token punctuation">:</span> g<span class="token punctuation">.</span>measure1<span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">/</span>g<span class="token punctuation">.</span>measure2<span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token string">&quot;ratio_relativity&quot;</span><span class="token punctuation">:</span>
+        <span class="token punctuation">(</span>g<span class="token punctuation">.</span>measure1<span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">/</span>g<span class="token punctuation">.</span>measure2<span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">/</span> 
+        <span class="token punctuation">(</span>df<span class="token punctuation">.</span>measure1<span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">/</span>df<span class="token punctuation">.</span>measure2<span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">)</span>
+  
+df<span class="token punctuation">.</span>groupby<span class="token punctuation">(</span><span class="token string">&quot;dimension1&quot;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token builtin">apply</span><span class="token punctuation">(</span>oneway<span class="token punctuation">)</span>
+</code></pre></div><h2 id="merge"><a href="#merge" aria-hidden="true" class="header-anchor">#</a> Merge</h2> <h3 id="r-6"><a href="#r-6" aria-hidden="true" class="header-anchor">#</a> R</h3> <div class="language-r extra-class"><pre class="language-r"><code><span class="token comment"># join tables with different key names</span>
+df2 <span class="token operator">&lt;-</span> df <span class="token percent-operator operator">%&gt;%</span>
+  group_by<span class="token punctuation">(</span>dimension1<span class="token punctuation">,</span> dimension2<span class="token punctuation">)</span> <span class="token percent-operator operator">%&gt;%</span>
+  summarise<span class="token punctuation">(</span>
+    measure3 <span class="token operator">=</span> sum<span class="token punctuation">(</span>measure1<span class="token punctuation">,</span> na.rm <span class="token operator">=</span> T<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    measure4 <span class="token operator">=</span> sum<span class="token punctuation">(</span>measure2<span class="token punctuation">,</span> na.rm <span class="token operator">=</span> T<span class="token punctuation">)</span>
+  <span class="token punctuation">)</span> <span class="token percent-operator operator">%&gt;%</span>
+  rename<span class="token punctuation">(</span>dimension3 <span class="token operator">=</span> dimension1<span class="token punctuation">,</span> dimension4 <span class="token operator">=</span> dimension2<span class="token punctuation">)</span>
+
+left_join<span class="token punctuation">(</span>df<span class="token punctuation">,</span> df2<span class="token punctuation">,</span>
+  by <span class="token operator">=</span> c<span class="token punctuation">(</span>
+    <span class="token string">&quot;dimension1&quot;</span> <span class="token operator">=</span> <span class="token string">&quot;dimension3&quot;</span><span class="token punctuation">,</span>
+    <span class="token string">&quot;dimension2&quot;</span> <span class="token operator">=</span> <span class="token string">&quot;dimension4&quot;</span>
+  <span class="token punctuation">)</span>
+<span class="token punctuation">)</span>
+</code></pre></div><div class="language- extra-class"><pre class="language-text"><code>## # A tibble: 1,000 x 6
+##    dimension1 dimension2 measure1 measure2 measure3 measure4
+##    &lt;chr&gt;      &lt;chr&gt;         &lt;int&gt;    &lt;int&gt;    &lt;int&gt;    &lt;int&gt;
+##  1 I          &lt;NA&gt;              7        7      229      195
+##  2 III        B                 3        8      314      337
+##  3 I          A                 4       10      461      480
+##  4 II         &lt;NA&gt;              7        3      226      180
+##  5 I          A                 9        1      461      480
+##  6 III        A                10       NA      353      356
+##  7 III        A                 8        8      353      356
+##  8 &lt;NA&gt;       C                 2        7      206      226
+##  9 II         C                 2        9      340      333
+## 10 III        C                 7        1      386      442
+## # … with 990 more rows
+</code></pre></div><h3 id="python-6"><a href="#python-6" aria-hidden="true" class="header-anchor">#</a> Python</h3> <div class="language-python extra-class"><pre class="language-python"><code><span class="token comment"># join tables with different key names</span>
+pd<span class="token punctuation">.</span>merge<span class="token punctuation">(</span>df<span class="token punctuation">,</span> df2<span class="token punctuation">,</span>
+  how<span class="token operator">=</span><span class="token string">&quot;left&quot;</span><span class="token punctuation">,</span> 
+  left_on<span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">&quot;dimesnion1&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;dimesnion2&quot;</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  right_on<span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">&quot;dimesnion3&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;dimesnion4&quot;</span><span class="token punctuation">]</span>
+<span class="token punctuation">)</span>
+</code></pre></div><h2 id="reshape"><a href="#reshape" aria-hidden="true" class="header-anchor">#</a> Reshape</h2> <h3 id="r-7"><a href="#r-7" aria-hidden="true" class="header-anchor">#</a> R</h3> <div class="language-r extra-class"><pre class="language-r"><code><span class="token comment"># wide to long</span>
+df_reshape <span class="token operator">&lt;-</span> df <span class="token percent-operator operator">%&gt;%</span> gather<span class="token punctuation">(</span>c<span class="token punctuation">(</span><span class="token string">&quot;measure1&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;measure2&quot;</span><span class="token punctuation">)</span><span class="token punctuation">,</span> 
+                            key <span class="token operator">=</span> <span class="token string">&quot;measure&quot;</span><span class="token punctuation">,</span> value <span class="token operator">=</span> <span class="token string">&quot;values&quot;</span><span class="token punctuation">)</span>
+
+<span class="token comment"># long to wide: the value must be unqiue by other variales</span>
+df_reshape <span class="token percent-operator operator">%&gt;%</span>
+  group_by<span class="token punctuation">(</span>dimension1<span class="token punctuation">,</span> dimension2<span class="token punctuation">,</span> measure<span class="token punctuation">)</span> <span class="token percent-operator operator">%&gt;%</span>
+  summarise<span class="token punctuation">(</span>values <span class="token operator">=</span> sum<span class="token punctuation">(</span>values<span class="token punctuation">,</span> na.rm <span class="token operator">=</span> T<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token percent-operator operator">%&gt;%</span> 
+  spread<span class="token punctuation">(</span>key <span class="token operator">=</span> measure<span class="token punctuation">,</span> value <span class="token operator">=</span> values<span class="token punctuation">)</span>
+</code></pre></div><div class="language- extra-class"><pre class="language-text"><code>## # A tibble: 16 x 4
+## # Groups:   dimension1, dimension2 [16]
+##    dimension1 dimension2 measure1 measure2
+##    &lt;chr&gt;      &lt;chr&gt;         &lt;int&gt;    &lt;int&gt;
+##  1 I          A               461      480
+##  2 I          B               392      426
+##  3 I          C               398      359
+##  4 I          &lt;NA&gt;            229      195
+##  5 II         A               282      358
+##  6 II         B               440      390
+##  7 II         C               340      333
+##  8 II         &lt;NA&gt;            226      180
+##  9 III        A               353      356
+## 10 III        B               314      337
+## 11 III        C               386      442
+## 12 III        &lt;NA&gt;            191      185
+## 13 &lt;NA&gt;       A               178      206
+## 14 &lt;NA&gt;       B               209      206
+## 15 &lt;NA&gt;       C               206      226
+## 16 &lt;NA&gt;       &lt;NA&gt;            156      114
+</code></pre></div><h3 id="python-7"><a href="#python-7" aria-hidden="true" class="header-anchor">#</a> Python</h3> <div class="language-python extra-class"><pre class="language-python"><code>df_reshape <span class="token operator">=</span> pd<span class="token punctuation">.</span>melt<span class="token punctuation">(</span>df<span class="token punctuation">,</span>
+                     id_vars<span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">'dimension1'</span><span class="token punctuation">,</span> <span class="token string">'dimension2'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+                     value_vars<span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">'measure1'</span><span class="token punctuation">,</span> <span class="token string">'measure2'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span>df_reshape<span class="token punctuation">.</span>groupby<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'dimension1'</span><span class="token punctuation">,</span> <span class="token string">'dimension2'</span><span class="token punctuation">,</span> <span class="token string">'variable'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+                    as_index<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span>
+           <span class="token punctuation">.</span>value<span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+           <span class="token punctuation">.</span>pivot_table<span class="token punctuation">(</span>index<span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">'dimension1'</span><span class="token punctuation">,</span> <span class="token string">'dimension2'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+                        columns<span class="token operator">=</span><span class="token string">'variable'</span><span class="token punctuation">,</span> values<span class="token operator">=</span><span class="token string">'value'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+</code></pre></div></div></article> <section class="post-meta main-div" data-v-4e23451f><section class="post-date clearfix" data-v-4e23451f><span class="create-date" data-v-4e23451f>
+      Created : 2018-02-06
+    </span> <!----></section> <section class="post-links" data-v-4e23451f><!----> <a href="/posts/2018/02/10/us-census.html" class="post-link" data-v-4e23451f>
+      Next Post : Know More about the Place You Live Using Census Data
+    </a></section></section> <!----></div></main> <aside class="aside" data-v-6e91a59a><div class="info-card main-div" data-v-03c72fc4 data-v-6e91a59a><div class="info-card-header" data-v-03c72fc4><img src="/img/profile-pic.jpg" alt="Jiang Li, Ph.D." class="info-avatar" data-v-03c72fc4></div> <div class="info-card-body" data-v-03c72fc4><section class="info-nickname" data-v-03c72fc4>
+      Jiang Li, Ph.D.
+    </section> <section class="info-desc" data-v-03c72fc4>Data are dynamic,<br/>just like life.</section> <section class="info-contact" data-v-03c72fc4><section data-v-03c72fc4><span title="Columbus, Ohio" data-v-03c72fc4 data-v-03c72fc4><svg class="icon" style="font-size:1em;" data-v-03c72fc4 data-v-03c72fc4><title data-v-03c72fc4 data-v-03c72fc4>Columbus, Ohio</title><use xlink:href="#icon-location" data-v-03c72fc4 data-v-03c72fc4></use></svg><span class="info-text" data-v-03c72fc4 data-v-03c72fc4>
+          Columbus, Ohio
+        </span></span></section> <!----> <!----></section></div> <div class="info-card-footer" data-v-03c72fc4><section class="info-sns clearfix" data-v-03c72fc4><a href="https://www.linkedin.com/in/jiang-li-17429558/" target="_blank" class="sns-link" data-v-03c72fc4><span title="LinkedIn: Jiang Li" class="sns-icon" data-v-03c72fc4 data-v-03c72fc4><svg class="icon" style="font-size:1.5em;" data-v-03c72fc4 data-v-03c72fc4><title data-v-03c72fc4 data-v-03c72fc4>LinkedIn: Jiang Li</title><use xlink:href="#icon-linkedin" data-v-03c72fc4 data-v-03c72fc4></use></svg></span></a></section></div></div> <div class="post-nav-card main-div" style="position:relative;top:0;width:0px;" data-v-6e91a59a><div class="post-nav-contents"><svg class="icon"><title>book</title><use xlink:href="#icon-book"></use></svg> <span>Table of Contents</span> <div class="post-nav-toc"><ul><li><a href="/posts/2018/02/05/often-used-scripts.html#row-and-column">Row and Column</a><ul><li><a href="/posts/2018/02/05/often-used-scripts.html#r">R</a></li><li><a href="/posts/2018/02/05/often-used-scripts.html#python">Python</a></li><li><a href="/posts/2018/02/05/often-used-scripts.html#sas">SAS</a></li><li><a href="/posts/2018/02/05/often-used-scripts.html#sql">SQL</a></li><li><a href="/posts/2018/02/05/often-used-scripts.html#bash">Bash</a></li></ul></li><li><a href="/posts/2018/02/05/often-used-scripts.html#missing-values">Missing Values</a><ul><li><a href="/posts/2018/02/05/often-used-scripts.html#r-2">R</a></li><li><a href="/posts/2018/02/05/often-used-scripts.html#python-2">Python</a></li></ul></li><li><a href="/posts/2018/02/05/often-used-scripts.html#unique">Unique</a><ul><li><a href="/posts/2018/02/05/often-used-scripts.html#r-3">R</a></li><li><a href="/posts/2018/02/05/often-used-scripts.html#python-3">Python</a></li></ul></li><li><a href="/posts/2018/02/05/often-used-scripts.html#level-count">Level Count</a><ul><li><a href="/posts/2018/02/05/often-used-scripts.html#r-4">R</a></li><li><a href="/posts/2018/02/05/often-used-scripts.html#python-4">Python</a></li></ul></li><li><a href="/posts/2018/02/05/often-used-scripts.html#summary">Summary</a><ul><li><a href="/posts/2018/02/05/often-used-scripts.html#r-5">R</a></li><li><a href="/posts/2018/02/05/often-used-scripts.html#python-5">Python</a></li></ul></li><li><a href="/posts/2018/02/05/often-used-scripts.html#merge">Merge</a><ul><li><a href="/posts/2018/02/05/often-used-scripts.html#r-6">R</a></li><li><a href="/posts/2018/02/05/often-used-scripts.html#python-6">Python</a></li></ul></li><li><a href="/posts/2018/02/05/often-used-scripts.html#reshape">Reshape</a><ul><li><a href="/posts/2018/02/05/often-used-scripts.html#r-7">R</a></li></ul></li></ul></div></div> <!----></div></aside></div> <footer class="footer" data-v-1114308c><p class="sns-links" data-v-1114308c><a href="https://www.linkedin.com/in/jiang-li-17429558/" target="_blank" class="sns-link" data-v-1114308c><span title="LinkedIn: Jiang Li" class="sns-icon" data-v-1114308c data-v-1114308c><svg class="icon" style="font-size:25px;" data-v-1114308c data-v-1114308c><title data-v-1114308c data-v-1114308c>LinkedIn: Jiang Li</title><use xlink:href="#icon-linkedin" data-v-1114308c data-v-1114308c></use></svg></span></a></p> <p data-v-1114308c><span data-v-1114308c>Powered by </span> <a href="https://vuepress.vuejs.org" target="_blank" data-v-1114308c>
+      Vuepress
+    </a></p></footer></div><div class="global-ui"><!----><!----></div></div>
+    <script src="/assets/js/app.573cedab.js" defer></script><script src="/assets/js/7.09baf713.js" defer></script><script src="/assets/js/13.6c7550e6.js" defer></script>
+  </body>
+</html>

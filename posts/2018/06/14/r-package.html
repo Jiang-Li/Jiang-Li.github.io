@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Workflow of Building R Package | Dynamic Data</title>
+    <meta name="description" content="Fun and useful stuff written by Jiang Li">
+    
+    
+    <link rel="preload" href="/assets/css/0.styles.efb6550f.css" as="style"><link rel="preload" href="/assets/js/app.573cedab.js" as="script"><link rel="preload" href="/assets/js/7.09baf713.js" as="script"><link rel="preload" href="/assets/js/17.bb0f7641.js" as="script"><link rel="prefetch" href="/assets/js/1.776c2022.js"><link rel="prefetch" href="/assets/js/10.f1ec4acf.js"><link rel="prefetch" href="/assets/js/11.0e3a23d2.js"><link rel="prefetch" href="/assets/js/12.9b024486.js"><link rel="prefetch" href="/assets/js/13.6c7550e6.js"><link rel="prefetch" href="/assets/js/14.d297fb11.js"><link rel="prefetch" href="/assets/js/15.e7d3b287.js"><link rel="prefetch" href="/assets/js/16.54c4d1ae.js"><link rel="prefetch" href="/assets/js/18.fd79d822.js"><link rel="prefetch" href="/assets/js/19.877ff4d8.js"><link rel="prefetch" href="/assets/js/20.e716c0a0.js"><link rel="prefetch" href="/assets/js/3.ade259c7.js"><link rel="prefetch" href="/assets/js/4.e19742c0.js"><link rel="prefetch" href="/assets/js/5.466b177b.js"><link rel="prefetch" href="/assets/js/6.f710aa99.js"><link rel="prefetch" href="/assets/js/8.51c62a28.js"><link rel="prefetch" href="/assets/js/9.b46116c4.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.efb6550f.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="vuepress-theme-meteorlxy"><header class="header" data-v-0539f1bd><div data-v-740e207b data-v-0539f1bd><nav class="navbar" data-v-740e207b><div class="container" data-v-740e207b><a href="/" class="router-link-active" data-v-740e207b><span class="navbar-site-name" data-v-740e207b>
+          Dynamic Data
+        </span></a> <div class="navbar-toggler" data-v-740e207b><svg class="icon" style="font-size:1.2em;" data-v-740e207b data-v-740e207b><title data-v-740e207b data-v-740e207b>menu</title><use xlink:href="#icon-menu" data-v-740e207b data-v-740e207b></use></svg></div> <div class="navbar-links" data-v-740e207b></div></div></nav> <div class="navbar-holder" style="display:none;" data-v-740e207b></div></div> <div class="banner" data-v-98d6aa8c data-v-0539f1bd data-v-0539f1bd><div class="container" data-v-98d6aa8c><div class="center" data-v-98d6aa8c><h1 data-v-98d6aa8c data-v-0539f1bd>
+          Workflow of Building R Package
+        </h1></div></div></div></header> <div class="container clearfix show-aside" data-v-6e91a59a data-v-6e91a59a><main class="main" data-v-6e91a59a><div class="post" data-v-6e91a59a data-v-6e91a59a><section class="post-meta main-div" data-v-4e23451f><section class="post-date clearfix" data-v-4e23451f><span class="create-date" data-v-4e23451f>
+      Created : 2018-06-15
+    </span> <!----></section> <section class="post-links" data-v-4e23451f><a href="/posts/2018/06/14/jupyter-rsconnect.html" class="post-link" data-v-4e23451f>
+      Previous Post : Jupyter Notebook in RStudio Connect
+    </a> <a href="/posts/2019/07/19/blogging-by-gastby.html" class="post-link" data-v-4e23451f>
+      Next Post : Blogging by Gastby
+    </a></section></section> <article class="main-div"><div class="post-content content content__default"><p>Thanks to RStudio and the <em>usethis</em> and <em>ROxygen</em> packages, the building
+of a R package is much convenient. Here is a typical workflow:</p> <ol><li>Initialize the project of package</li></ol> <pre><code>usethis::create_package(&quot;...&quot;)
+</code></pre> <ol><li>Modify the description</li> <li>Copy and save R code in the /R folder</li> <li>Build -&gt; Load All</li> <li>Remove the library(…) in the code, and add the packages by</li></ol> <pre><code>usethis::use_package(&quot;...&quot;)
+</code></pre> <ol><li>Build -&gt; Check</li> <li>Write help for each function: Code -&gt; Insert ROxygen Skeleton</li> <li>Assign the other packages’ functions using in the code</li></ol> <pre><code>  @importFrom package function1, function2...
+</code></pre> <ol><li>Build -&gt; Documents</li> <li>usethis::use_readme_md()</li> <li>Build -&gt; build binary</li></ol> <p>Done!</p></div></article> <section class="post-meta main-div" data-v-4e23451f><section class="post-date clearfix" data-v-4e23451f><span class="create-date" data-v-4e23451f>
+      Created : 2018-06-15
+    </span> <!----></section> <section class="post-links" data-v-4e23451f><a href="/posts/2018/06/14/jupyter-rsconnect.html" class="post-link" data-v-4e23451f>
+      Previous Post : Jupyter Notebook in RStudio Connect
+    </a> <a href="/posts/2019/07/19/blogging-by-gastby.html" class="post-link" data-v-4e23451f>
+      Next Post : Blogging by Gastby
+    </a></section></section> <!----></div></main> <aside class="aside" data-v-6e91a59a><div class="info-card main-div" data-v-03c72fc4 data-v-6e91a59a><div class="info-card-header" data-v-03c72fc4><img src="/img/profile-pic.jpg" alt="Jiang Li, Ph.D." class="info-avatar" data-v-03c72fc4></div> <div class="info-card-body" data-v-03c72fc4><section class="info-nickname" data-v-03c72fc4>
+      Jiang Li, Ph.D.
+    </section> <section class="info-desc" data-v-03c72fc4>Data are dynamic,<br/>just like life.</section> <section class="info-contact" data-v-03c72fc4><section data-v-03c72fc4><span title="Columbus, Ohio" data-v-03c72fc4 data-v-03c72fc4><svg class="icon" style="font-size:1em;" data-v-03c72fc4 data-v-03c72fc4><title data-v-03c72fc4 data-v-03c72fc4>Columbus, Ohio</title><use xlink:href="#icon-location" data-v-03c72fc4 data-v-03c72fc4></use></svg><span class="info-text" data-v-03c72fc4 data-v-03c72fc4>
+          Columbus, Ohio
+        </span></span></section> <!----> <!----></section></div> <div class="info-card-footer" data-v-03c72fc4><section class="info-sns clearfix" data-v-03c72fc4><a href="https://www.linkedin.com/in/jiang-li-17429558/" target="_blank" class="sns-link" data-v-03c72fc4><span title="LinkedIn: Jiang Li" class="sns-icon" data-v-03c72fc4 data-v-03c72fc4><svg class="icon" style="font-size:1.5em;" data-v-03c72fc4 data-v-03c72fc4><title data-v-03c72fc4 data-v-03c72fc4>LinkedIn: Jiang Li</title><use xlink:href="#icon-linkedin" data-v-03c72fc4 data-v-03c72fc4></use></svg></span></a></section></div></div> <!----></aside></div> <footer class="footer" data-v-1114308c><p class="sns-links" data-v-1114308c><a href="https://www.linkedin.com/in/jiang-li-17429558/" target="_blank" class="sns-link" data-v-1114308c><span title="LinkedIn: Jiang Li" class="sns-icon" data-v-1114308c data-v-1114308c><svg class="icon" style="font-size:25px;" data-v-1114308c data-v-1114308c><title data-v-1114308c data-v-1114308c>LinkedIn: Jiang Li</title><use xlink:href="#icon-linkedin" data-v-1114308c data-v-1114308c></use></svg></span></a></p> <p data-v-1114308c><span data-v-1114308c>Powered by </span> <a href="https://vuepress.vuejs.org" target="_blank" data-v-1114308c>
+      Vuepress
+    </a></p></footer></div><div class="global-ui"><!----><!----></div></div>
+    <script src="/assets/js/app.573cedab.js" defer></script><script src="/assets/js/7.09baf713.js" defer></script><script src="/assets/js/17.bb0f7641.js" defer></script>
+  </body>
+</html>
