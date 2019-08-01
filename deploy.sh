@@ -1,6 +1,6 @@
 #!/bin/bash  
 
-cp -r ../blog/public/* .
+cp -r ../my-blog/public/* .
 
 git add .  
 git commit -m "generated on `date +'%Y-%m-%d %H:%M:%S'`";
