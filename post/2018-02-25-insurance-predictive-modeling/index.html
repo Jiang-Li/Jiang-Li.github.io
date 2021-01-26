@@ -1,0 +1,1215 @@
+<!DOCTYPE html><html lang="en-us" >
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.8.0">
+
+  
+
+  
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Jiang Li">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Data and Methods Modeling Output   Insurance rating models predict risk, which is usually represented by pure premium; i.e., the loss normalized by the covered time (exposure) \(\frac {loss}{exposure}\).">
+
+  
+  <link rel="alternate" hreflang="en-us" href="/post/2018-02-25-insurance-predictive-modeling/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="#2962ff">
+  
+
+  
+  
+
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha256-FMvZuGapsJLjouA6k7Eo2lusoAX9i0ShlWFG6qt7SLc=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.css" integrity="sha256-SHMGCYmST46SoyGgo4YR/9AlK1vf3ff84Aq9yK4hdqM=" crossorigin="anonymous">
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js" integrity="sha256-Md1qLToewPeKjfAHU1zyPwOutccPAm5tahnaw7Osw0A=" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+        
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+
+  
+
+  
+  
+  
+    
+      
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CRoboto:400,400italic,700%7CRoboto+Mono&display=swap">
+    
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.css">
+
+  
+
+
+
+
+  
+
+
+  
+  
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
+
+  <link rel="canonical" href="/post/2018-02-25-insurance-predictive-modeling/">
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+  
+  
+  <meta property="twitter:card" content="summary">
+  
+  <meta property="og:site_name" content="Jiang Li, Ph.D.">
+  <meta property="og:url" content="/post/2018-02-25-insurance-predictive-modeling/">
+  <meta property="og:title" content="R &#43; H2O for Insurance Rating | Jiang Li, Ph.D.">
+  <meta property="og:description" content="Data and Methods Modeling Output   Insurance rating models predict risk, which is usually represented by pure premium; i.e., the loss normalized by the covered time (exposure) \(\frac {loss}{exposure}\)."><meta property="og:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="twitter:image" content="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
+  
+    
+      <meta property="article:published_time" content="2018-02-25T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2018-02-25T00:00:00&#43;00:00">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/post/2018-02-25-insurance-predictive-modeling/"
+  },
+  "headline": "R + H2O for Insurance Rating",
+  
+  "datePublished": "2018-02-25T00:00:00Z",
+  "dateModified": "2018-02-25T00:00:00Z",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Jiang Li"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Jiang Li, Ph.D.",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "Data and Methods Modeling Output   Insurance rating models predict risk, which is usually represented by pure premium; i.e., the loss normalized by the covered time (exposure) \\(\\frac {loss}{exposure}\\)."
+}
+</script>
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>R &#43; H2O for Insurance Rating | Jiang Li, Ph.D.</title>
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class=" ">
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/">Jiang Li, Ph.D.</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/">Jiang Li, Ph.D.</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#posts"><span>Posts</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/courses/"><span>Courses</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+      <li class="nav-item dropdown theme-dropdown">
+        <a href="#" class="nav-link js-theme-selector" data-toggle="dropdown" aria-haspopup="true">
+          <i class="fas fa-palette" aria-hidden="true"></i>
+        </a>
+        <div class="dropdown-menu">
+          <a href="#" class="dropdown-item js-set-theme-light">
+            <span>Light</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-dark">
+            <span>Dark</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-auto">
+            <span>Automatic</span>
+          </a>
+        </div>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+
+  <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>R &#43; H2O for Insurance Rating</h1>
+
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Feb 25, 2018
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    6 min read
+  </span>
+  
+
+  
+  
+  
+
+  
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      
+
+<div id="TOC">
+<ul>
+<li><a href="#data-and-methods">Data and Methods</a></li>
+<li><a href="#modeling">Modeling</a></li>
+<li><a href="#output">Output</a></li>
+</ul>
+</div>
+
+<p>Insurance rating models predict risk, which is usually represented by pure premium; i.e., the loss normalized by the covered time (exposure) <span class="math inline">\(\frac {loss}{exposure}\)</span>. GLM (Generalized Linear Model) is the major method using in industry. Insurance data are highly imbalanced. When the data are not credible enough, pure premium is predicted by frequency <span class="math inline">\(\frac {claimCount}{coveredTime}\)</span> and severity <span class="math inline">\(\frac {loss}{claimCount}\)</span>, respectively, because the frequency is more credible.</p>
+<p>Here I would like to show how to predict pure premium using frequency and severity in R and H2O - transitioning away from the industry standard of SAS without any loss in model accuracy.</p>
+<div id="data-and-methods" class="section level2">
+<h2>Data and Methods</h2>
+<p>The data set is the dataCar in insuranceDate library. I used the following explanatory variables:</p>
+<table>
+<thead>
+<tr class="header">
+<th>variables</th>
+<th>note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>veh_value</td>
+<td>in $10k unit; an approximation of vehicle symbol</td>
+</tr>
+<tr class="even">
+<td>exposure</td>
+<td>in 0~1; probably earned car year</td>
+</tr>
+<tr class="odd">
+<td>numclaims</td>
+<td>claim count</td>
+</tr>
+<tr class="even">
+<td>claimcst0</td>
+<td>loss amount</td>
+</tr>
+<tr class="odd">
+<td>veh_body</td>
+<td>body type, a categorical variable</td>
+</tr>
+<tr class="even">
+<td>veh_age</td>
+<td>age of vehicle</td>
+</tr>
+<tr class="odd">
+<td>gender</td>
+<td>a categorical veritable</td>
+</tr>
+<tr class="even">
+<td>area</td>
+<td>a categorical variable; an approximation of the territory agecat</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>str(dataCar)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    67856 obs. of  11 variables:
+##  $ veh_value: num  1.06 1.03 3.26 4.14 0.72 2.01 1.6 1.47 0.52 0.38 ...
+##  $ exposure : num  0.304 0.649 0.569 0.318 0.649 ...
+##  $ clm      : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ numclaims: int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ claimcst0: num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ veh_body : Factor w/ 13 levels &quot;BUS&quot;,&quot;CONVT&quot;,..: 4 4 13 11 4 5 8 4 4 4 ...
+##  $ veh_age  : int  3 2 2 2 4 3 3 2 4 4 ...
+##  $ gender   : Factor w/ 2 levels &quot;F&quot;,&quot;M&quot;: 1 1 1 1 1 2 2 2 1 1 ...
+##  $ area     : Factor w/ 6 levels &quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;D&quot;,..: 3 1 5 4 3 3 1 2 1 2 ...
+##  $ agecat   : int  2 4 2 2 2 4 4 6 3 4 ...
+##  $ X_OBSTAT_: Factor w/ 1 level &quot;01101    0    0    0&quot;: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
+</div>
+<div id="modeling" class="section level2">
+<h2>Modeling</h2>
+<p>Usually the insurance data set is big. To make the the code to be easily scaled up, I used the H2O.</p>
+<pre class="r"><code>library(h2o)
+
+h2o.init(
+  nthreads = -1,
+  max_mem_size = &quot;4G&quot;
+)</code></pre>
+<pre><code>## 
+## H2O is not running yet, starting it now...
+## 
+## Note:  In case of errors look at the following log files:
+##     C:\Users\lijia\AppData\Local\Temp\Rtmp8eJV0n/h2o_lijia_started_from_r.out
+##     C:\Users\lijia\AppData\Local\Temp\Rtmp8eJV0n/h2o_lijia_started_from_r.err
+## 
+## 
+## Starting H2O JVM and connecting:  Connection successful!
+## 
+## R is connected to the H2O cluster: 
+##     H2O cluster uptime:         5 seconds 176 milliseconds 
+##     H2O cluster timezone:       America/New_York 
+##     H2O data parsing timezone:  UTC 
+##     H2O cluster version:        3.18.0.11 
+##     H2O cluster version age:    22 days  
+##     H2O cluster name:           H2O_started_from_R_lijia_ayp330 
+##     H2O cluster total nodes:    1 
+##     H2O cluster total memory:   3.56 GB 
+##     H2O cluster total cores:    8 
+##     H2O cluster allowed cores:  8 
+##     H2O cluster healthy:        TRUE 
+##     H2O Connection ip:          localhost 
+##     H2O Connection port:        54321 
+##     H2O Connection proxy:       NA 
+##     H2O Internal Security:      FALSE 
+##     H2O API Extensions:         Algos, AutoML, Core V3, Core V4 
+##     R Version:                  R version 3.5.0 (2018-04-23)</code></pre>
+<pre class="r"><code>h2o.no_progress()
+
+df &lt;- as.h2o(dataCar)</code></pre>
+<pre class="r"><code>varList &lt;- c(
+  &quot;veh_value&quot;,
+  &quot;exposure&quot;,
+  &quot;numclaims&quot;,
+  &quot;claimcst0&quot;,
+  &quot;veh_body&quot;,
+  &quot;veh_age&quot;,
+  &quot;gender&quot;,
+  &quot;area&quot;,
+  &quot;agecat&quot;
+)
+df &lt;- df[, varList]
+df$PP &lt;- df$claimcst0 / df$exposure
+
+# the features used in modeling
+varModel &lt;- c(
+  &quot;veh_value&quot;,
+  &quot;veh_body&quot;,
+  &quot;veh_age&quot;,
+  &quot;gender&quot;,
+  &quot;area&quot;,
+  &quot;agecat&quot;
+)
+
+df$frequency &lt;- df$numclaims / df$exposure
+df$severity &lt;- df$claimcst0 / df$numclaims
+
+print(&quot;Percentage of missing values in frequency and severity:&quot;)</code></pre>
+<pre><code>## [1] &quot;Percentage of missing values in frequency and severity:&quot;</code></pre>
+<pre class="r"><code>percent(h2o.sum(is.na(df$frequency)) / nrow(df))</code></pre>
+<pre><code>## [1] &quot;0%&quot;</code></pre>
+<pre class="r"><code>percent(h2o.sum(is.na(df$severity)) / nrow(df))</code></pre>
+<pre><code>## [1] &quot;93.2%&quot;</code></pre>
+<pre class="r"><code># The sample data set is too small. I did not split them to train and test.
+train &lt;- df
+test &lt;- df</code></pre>
+<p>First, frequency is modeled. Please note that the Poisson distribution requires a whole number as the response variable, so exposure, the denominator of frequency, is treated by the offset.</p>
+<pre class="r"><code>train$logExp &lt;- h2o.log(train$exposure) # offset
+
+freqFit = h2o.glm(y = &quot;numclaims&quot;,
+                  x = varModel,
+                  training_frame = train,
+                  offset_column = &quot;logExp&quot;,
+                  family = &quot;poisson&quot;,
+                  link = &quot;log&quot;,
+                  missing_values_handling = &quot;Skip&quot;,
+                  solver = &quot;IRLSM&quot;,
+                  lambda = 0,
+                  remove_collinear_columns = T,
+                  compute_p_values = T
+)</code></pre>
+<p>Then, severity is modeled.</p>
+<pre class="r"><code>sevFit = h2o.glm(y = &quot;severity&quot;,
+                 x = varModel,
+                 training_frame = train,
+                 family = &quot;gamma&quot;,
+                 link = &quot;log&quot;,
+                 missing_values_handling = &quot;Skip&quot;,
+                 solver = &quot;IRLSM&quot;,
+                 lambda = 0,
+                 remove_collinear_columns = T,
+                 compute_p_values = T
+)</code></pre>
+</div>
+<div id="output" class="section level2">
+<h2>Output</h2>
+<p>The predicted pure premium was calculated using the frequency and severity factors.</p>
+<pre class="r"><code>library(dplyr)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>summaryFactorGLM &lt;- function(fitModles) {
+  # Summarize the factors.
+  #
+  # Args:
+  #  fitModles: list of h2o modles: frequency and severity
+  #
+  # Returns:
+  #   A data frame of the combined factor table.
+
+  freqFit &lt;- fitModles[[&quot;frequency&quot;]]
+  sevFit &lt;- fitModles[[&quot;severity&quot;]]
+
+  freqCoef &lt;- as.data.frame(freqFit@model$coefficients_table)
+  freqCoef[freqCoef$names == &quot;Intercept&quot;, &quot;names&quot;] &lt;- &quot;freqIntercept&quot;
+
+  freqCoef &lt;- freqCoef %&gt;%
+    mutate(
+      frequencyFactor = exp(coefficients)
+    ) %&gt;%
+    select(
+      names,
+      frequencyFactor,
+      frequencyEstimate = coefficients
+    )
+
+  sevCoef &lt;- sevFit@model$coefficients_table
+
+  sevCoef[sevCoef$names == &quot;Intercept&quot;, &quot;names&quot;] &lt;- &quot;sevIntercept&quot;
+
+  sevCoef &lt;- sevCoef %&gt;%
+    mutate(
+      severityFactor = exp(coefficients)
+    ) %&gt;%
+    select(
+      names,
+      severityFactor,
+      severityEstimate = coefficients
+    )
+
+  # pure premium
+  ppCoef &lt;- full_join(freqCoef, sevCoef, by = &quot;names&quot;)
+
+  ppCoef$factor &lt;- ppCoef$frequencyFactor * ppCoef$severityFactor
+
+  # assign the factor of intercept
+  ppCoef[ppCoef$names == &quot;sevIntercept&quot;, &quot;factor&quot;] &lt;-
+    ppCoef[ppCoef$names == &quot;sevIntercept&quot;, &quot;severityFactor&quot;]
+  ppCoef[ppCoef$names == &quot;freqIntercept&quot;, &quot;factor&quot;] &lt;-
+    ppCoef[ppCoef$names == &quot;freqIntercept&quot;, &quot;frequencyFactor&quot;]
+
+  # seperate the parameter and level, remove the intercept
+  ppCoef$parameter &lt;- sapply(strsplit(ppCoef$names, &quot;\\.&quot;), &quot;[&quot;, 1)
+  ppCoef$level &lt;- sapply(strsplit(ppCoef$names, &quot;\\.&quot;), &quot;[&quot;, 2)
+  ppCoef$names &lt;- NULL
+
+
+  return(ppCoef)
+}
+
+
+factorDF &lt;-
+  summaryFactorGLM(list(frequency = freqFit, severity = sevFit)) %&gt;% 
+  select(parameter, level, factor)
+
+factorDF</code></pre>
+<pre><code>##        parameter level      factor
+## 1  freqIntercept  &lt;NA&gt;   0.5876642
+## 2       veh_body CONVT   0.3806982
+## 3       veh_body COUPE   1.2143005
+## 4       veh_body HBACK   0.6928246
+## 5       veh_body HDTOP   0.7027602
+## 6       veh_body MCARA   0.3644400
+## 7       veh_body MIBUS   0.8020327
+## 8       veh_body PANVN   0.7423515
+## 9       veh_body RDSTR   0.2057272
+## 10      veh_body SEDAN   0.6260212
+## 11      veh_body STNWG   0.6034189
+## 12      veh_body TRUCK   0.7260584
+## 13      veh_body   UTE   0.5364956
+## 14          area     B   1.0274201
+## 15          area     C   1.1034716
+## 16          area     D   0.8772347
+## 17          area     E   1.1580586
+## 18          area     F   1.5895192
+## 19        gender     M   1.1775373
+## 20     veh_value  &lt;NA&gt;   1.0521231
+## 21       veh_age  &lt;NA&gt;   1.0121147
+## 22        agecat  &lt;NA&gt;   0.8625939
+## 23  sevIntercept  &lt;NA&gt; 986.5646388</code></pre>
+</div>
+
+    </div>
+
+    
+
+
+
+
+
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=/post/2018-02-25-insurance-predictive-modeling/&amp;text=R%20&#43;%20H2O%20for%20Insurance%20Rating" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=/post/2018-02-25-insurance-predictive-modeling/&amp;t=R%20&#43;%20H2O%20for%20Insurance%20Rating" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=R%20&#43;%20H2O%20for%20Insurance%20Rating&amp;body=/post/2018-02-25-insurance-predictive-modeling/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=/post/2018-02-25-insurance-predictive-modeling/&amp;title=R%20&#43;%20H2O%20for%20Insurance%20Rating" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="whatsapp://send?text=R%20&#43;%20H2O%20for%20Insurance%20Rating%20/post/2018-02-25-insurance-predictive-modeling/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=/post/2018-02-25-insurance-predictive-modeling/&amp;title=R%20&#43;%20H2O%20for%20Insurance%20Rating" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+  
+    
+    
+    
+      
+    
+    
+    
+    <div class="media author-card content-widget-hr">
+      
+        
+        <img class="avatar mr-3 avatar-circle" src="/author/jiang-li/avatar_hu6ded1d35d0f20519f65ea396da0b57bd_60728_270x270_fill_q90_lanczos_center.jpg" alt="Jiang Li">
+      
+
+      <div class="media-body">
+        <h5 class="card-title"><a href="/">Jiang Li</a></h5>
+        <h6 class="card-subtitle">Program Chair @ M.S. in Business Analytics</h6>
+        
+        <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/#contact" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+</ul>
+
+      </div>
+    </div>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/instant.page/5.1.0/instantpage.min.js" integrity="sha512-1+qUtKoh9XZW7j+6LhRMAyOrgSQKenQ4mluTR+cvxXjP1Z54RxZuzstR/H9kgPXQsVB8IW7DMDFUJpzLjvhGSQ==" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/highlight.min.js" integrity="sha512-7t8APmYpzEsZP7CYoA7RfMPV9Bb+PJHa9x2WiUnDXZx3XHveuyWUtvNOexhkierl5flZ3tr92dP1mMS+SGlD+A==" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/languages/r.min.js"></script>
+        
+      
+
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.js" integrity="sha256-EErZamuLefUnbMBQbsEqu1USa+btR2oIlCpBJbyD4/g=" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    <script>const isSiteThemeDark = false;</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":1,"threshold":0.3};
+      const i18n = {"no_results":"No results found","placeholder":"Search...","results":"results found"};
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks",
+        'slides' : "Slides"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.3b2b658c61ebd725bd5fc606c89fe44c.js"></script>
+
+    
+
+
+
+
+
+
+  
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    
+  </p>
+
+  
+  
+
+
+
+
+
+
+  <p class="powered-by">
+    
+    Published with
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic Website Builder</a>
+    
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" class="back-to-top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
