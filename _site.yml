@@ -1,12 +1,16 @@
 name: "personal-website"
 output_dir: "."
 navbar:
-  title: "Dr. Jiang Li"
+  title: "Jiang Li, PhD"
   left:
     - text: "Home"
       href: index.html
     - text: "Business Analytics FAQ"
       href: program.html
-    - text: "Post/Publication"
+    - text: "Post/Study/Publication"
       href: post.html
+output:
+  html_document:
+    theme: united
+    css: style.css
     
