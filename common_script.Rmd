@@ -1,9 +1,12 @@
 ---
 title: "Script"
-output:
+output: 
   html_document:
-    toc_float: false
-
+    toc: true
+    toc_float:
+      toc_collapsed: true
+    toc_depth: 3
+    number_sections: true
 # output: html_notebook
 ---
 

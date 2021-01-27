@@ -20,6 +20,9 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -260,6 +263,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -267,6 +333,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -339,10 +415,10 @@ head(df)</code></pre>
 <p>Then, in order to share the data in Python, save the data in a feather file.</p>
 <pre class="r"><code>library(feather)
 write_feather(df, &quot;sample_data.feather&quot;)</code></pre>
-<div id="rows-and-columns" class="section level2">
-<h2>Rows and Columns</h2>
-<div id="r" class="section level3">
-<h3>R</h3>
+<div id="rows-and-columns" class="section level2" number="0.1">
+<h2 number="0.1"><span class="header-section-number">0.1</span> Rows and Columns</h2>
+<div id="r" class="section level3" number="0.1.1">
+<h3 number="0.1.1"><span class="header-section-number">0.1.1</span> R</h3>
 <pre class="r"><code># row count
 nrow(df) </code></pre>
 <pre><code>## [1] 1000</code></pre>
@@ -369,8 +445,8 @@ lapply(df, class) </code></pre>
 ## $measure2
 ## [1] &quot;integer&quot;</code></pre>
 </div>
-<div id="python" class="section level3">
-<h3>Python</h3>
+<div id="python" class="section level3" number="0.1.2">
+<h3 number="0.1.2"><span class="header-section-number">0.1.2</span> Python</h3>
 <pre class="python"><code>import pandas as pd
 df = pd.read_feather(&quot;sample_data.feather&quot;)
 
@@ -395,10 +471,10 @@ df.dtypes  </code></pre>
 ## dtype: object</code></pre>
 </div>
 </div>
-<div id="missing-values" class="section level2">
-<h2>Missing Values</h2>
-<div id="r-1" class="section level3">
-<h3>R</h3>
+<div id="missing-values" class="section level2" number="0.2">
+<h2 number="0.2"><span class="header-section-number">0.2</span> Missing Values</h2>
+<div id="r-1" class="section level3" number="0.2.1">
+<h3 number="0.2.1"><span class="header-section-number">0.2.1</span> R</h3>
 <pre class="r"><code># count missing values by columns
 colSums(is.na(df)) </code></pre>
 <pre><code>## dimension1 dimension2   measure1   measure2 
@@ -661,8 +737,8 @@ df %&gt;% replace_na(list(dimension1 = &quot;Unknown&quot;, measure1 = 0))</code
 ## 250         II          C        3        0
 ##  [ reached &#39;max&#39; / getOption(&quot;max.print&quot;) -- omitted 750 rows ]</code></pre>
 </div>
-<div id="python-1" class="section level3">
-<h3>Python</h3>
+<div id="python-1" class="section level3" number="0.2.2">
+<h3 number="0.2.2"><span class="header-section-number">0.2.2</span> Python</h3>
 <pre class="python"><code># count missing by columns
 df.isnull().sum()
 
@@ -674,10 +750,10 @@ df.fillna(0)
 df.fillna(value = {&quot;dimension1&quot;: &quot;Unknown&quot;, &quot;measure1&quot;: 0})</code></pre>
 </div>
 </div>
-<div id="unique-row" class="section level2">
-<h2>Unique row</h2>
-<div id="r-2" class="section level3">
-<h3>R</h3>
+<div id="unique-row" class="section level2" number="0.3">
+<h2 number="0.3"><span class="header-section-number">0.3</span> Unique row</h2>
+<div id="r-2" class="section level3" number="0.3.1">
+<h3 number="0.3.1"><span class="header-section-number">0.3.1</span> R</h3>
 <pre class="r"><code># unique row
 df %&gt;% distinct()</code></pre>
 <pre><code>##     dimension1 dimension2 measure1 measure2
@@ -952,8 +1028,8 @@ df %&gt;% distinct(dimension1, dimension2, .keep_all = T)</code></pre>
 ## 15          0          B        9        4
 ## 16          0          0        6        0</code></pre>
 </div>
-<div id="python-2" class="section level3">
-<h3>Python</h3>
+<div id="python-2" class="section level3" number="0.3.2">
+<h3 number="0.3.2"><span class="header-section-number">0.3.2</span> Python</h3>
 <pre class="python"><code># unique row
 df.drop_duplicates()
 
@@ -961,10 +1037,10 @@ df.drop_duplicates()
 df.drop_duplicates(subset=(&#39;dimension1&#39;, &#39;dimension2&#39;))</code></pre>
 </div>
 </div>
-<div id="level-count" class="section level2">
-<h2>Level Count</h2>
-<div id="r-3" class="section level3">
-<h3>R</h3>
+<div id="level-count" class="section level2" number="0.4">
+<h2 number="0.4"><span class="header-section-number">0.4</span> Level Count</h2>
+<div id="r-3" class="section level3" number="0.4.1">
+<h3 number="0.4.1"><span class="header-section-number">0.4.1</span> R</h3>
 <pre class="r"><code># distribution
 table(df$dimension1)</code></pre>
 <pre><code>## 
@@ -979,8 +1055,8 @@ table(df$dimension1, df$dimension2)</code></pre>
 ##   II  45 71 89 70
 ##   III 40 75 66 86</code></pre>
 </div>
-<div id="python-3" class="section level3">
-<h3>Python</h3>
+<div id="python-3" class="section level3" number="0.4.2">
+<h3 number="0.4.2"><span class="header-section-number">0.4.2</span> Python</h3>
 <pre class="python"><code># distribution
 df.dimension1.value_counts()
 
@@ -988,10 +1064,10 @@ df.dimension1.value_counts()
 pd.crosstab(df.dimension1, df.dimension2)</code></pre>
 </div>
 </div>
-<div id="summary" class="section level2">
-<h2>Summary</h2>
-<div id="r-4" class="section level3">
-<h3>R</h3>
+<div id="summary" class="section level2" number="0.5">
+<h2 number="0.5"><span class="header-section-number">0.5</span> Summary</h2>
+<div id="r-4" class="section level3" number="0.5.1">
+<h3 number="0.5.1"><span class="header-section-number">0.5.1</span> R</h3>
 <pre class="r"><code># summarize the total, percent, ratio, and ratio
 
 df %&gt;% 
@@ -1016,8 +1092,8 @@ df %&gt;%
 ## 3 II             1288     1261   275            0.271 1.02             1.03 
 ## 4 III            1244     1320   267            0.261 0.942            0.949</code></pre>
 </div>
-<div id="python-4" class="section level3">
-<h3>Python</h3>
+<div id="python-4" class="section level3" number="0.5.2">
+<h3 number="0.5.2"><span class="header-section-number">0.5.2</span> Python</h3>
 <pre class="python"><code># summarize the total, percent, ratio, and relativity
 def oneway(g):
   return(
@@ -1036,10 +1112,10 @@ def oneway(g):
 df.groupby(&quot;dimension1&quot;).apply(oneway)</code></pre>
 </div>
 </div>
-<div id="merge" class="section level2">
-<h2>Merge</h2>
-<div id="r-5" class="section level3">
-<h3>R</h3>
+<div id="merge" class="section level2" number="0.6">
+<h2 number="0.6"><span class="header-section-number">0.6</span> Merge</h2>
+<div id="r-5" class="section level3" number="0.6.1">
+<h3 number="0.6.1"><span class="header-section-number">0.6.1</span> R</h3>
 <pre class="r"><code># join tables with different key names
 df2 &lt;- df %&gt;%
   group_by(dimension1, dimension2) %&gt;%
@@ -1224,8 +1300,8 @@ df2 &lt;- df %&gt;%
 ## 166        III          C        0       10      386      442
 ##  [ reached &#39;max&#39; / getOption(&quot;max.print&quot;) -- omitted 834 rows ]</code></pre>
 </div>
-<div id="python-5" class="section level3">
-<h3>Python</h3>
+<div id="python-5" class="section level3" number="0.6.2">
+<h3 number="0.6.2"><span class="header-section-number">0.6.2</span> Python</h3>
 <pre class="python"><code># join tables with different key names
 # pd.merge(df, df2,
 #   how=&quot;left&quot;, 
@@ -1234,10 +1310,10 @@ df2 &lt;- df %&gt;%
 # )</code></pre>
 </div>
 </div>
-<div id="reshape" class="section level2">
-<h2>Reshape</h2>
-<div id="r-6" class="section level3">
-<h3>R</h3>
+<div id="reshape" class="section level2" number="0.7">
+<h2 number="0.7"><span class="header-section-number">0.7</span> Reshape</h2>
+<div id="r-6" class="section level3" number="0.7.1">
+<h3 number="0.7.1"><span class="header-section-number">0.7.1</span> R</h3>
 <pre class="r"><code># wide to long
 df_reshape &lt;- df %&gt;% gather(c(&quot;measure1&quot;, &quot;measure2&quot;), 
                             key = &quot;measure&quot;, value = &quot;values&quot;)
@@ -1269,8 +1345,8 @@ df_reshape %&gt;%
 ## 15 III        B               314      337
 ## 16 III        C               386      442</code></pre>
 </div>
-<div id="python-6" class="section level3">
-<h3>Python</h3>
+<div id="python-6" class="section level3" number="0.7.2">
+<h3 number="0.7.2"><span class="header-section-number">0.7.2</span> Python</h3>
 <pre class="python"><code>df_reshape = pd.melt(df,
   id_vars=[&#39;dimension1&#39;, &#39;dimension2&#39;],
   value_vars=[&#39;measure1&#39;, &#39;measure2&#39;])
@@ -1285,6 +1361,8 @@ df_reshape %&gt;%
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -1317,6 +1395,32 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
