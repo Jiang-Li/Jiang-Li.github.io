@@ -1,6 +1,69 @@
 ---
-title: "MSBA Program FAQ"
-output: html_document
+title: "Business Analytics FAQ"
+output: 
+  html_document:
+    toc: true
+    toc_float:
+      toc_collapsed: false 
+    toc_depth: 3
+    number_sections: false 
 ---
 
-TBD
+***
+
+### Q1: Is Business Analytics is a good fit for me?
+
+As long as you have an intense curiosity to answer business questions, love exploring hidden patterns in data, and enjoy solving new business problems, you are a good fit! On the other hand, if you are not interested in data-based business problem-solving or prefer doing work on a routine day-to-day basis, you may need to rethink what is more suitable for you.
+
+***
+
+### Q2: Do I need a strong math background?
+
+Not really.  For example, to understand the SVM (support vector machine), you need to know what the margin is and why you want to maximize it (make the model less sensitive to the random effect). If you are not familiar with linear algebra, it would be challenging to understand how margin is defined and maximized mathematically. However, you still can understand SVM by building a geometric intuition and apply SVM to solve problems.
+
+Although statics, linear algebra, and calculus are three mathematical pillars for data science, a clear understanding of basic statistics is good enough to start learning Business Analytics.
+
+
+***
+
+### Q3: Do I need strong programming skills?
+
+Not really. You don’t need to write code like the software engineers. The analytics programming focuses on the problem solving by using the well-developed packages. All the popular tools, such as R, Python, Tableau, SAS, etc., have the easy-to-use analytics functions/packages. My students can finish a comprehensive predictive analysis project even without writing any loop in the code.
+
+
+***
+
+### Q4: What is Business Analytics and what its difference from Data Analytics?
+
+Both Business and Data Analytics are the applied Data Science. Business Analytics **focus on applying the insights derived from data to address the business problems**. The goal is to draw concrete conclusions about a business by answering specific questions about why things happened, what will happen and what should do. Data Analytics prepares individuals to apply data science to generate insights from data and identify and predict trends. 
+
+
+Both business analytics and data analytics involve:
+
+- Working with and manipulating data.
+- Extracting insights from data.
+- Using that information to enhance business performance.
+
+Business analytics focuses more on data-driven business problem solving. Data Analytics is more general and technical, and focuses more on revealing patterns and trends from complex data.
+
+
+***
+
+### Q5: What analytics tools should I learn?
+
+As there are so many analytics tools, many people are confused when they start learning analytics. However, instead of focusing on specific tool, I want to emphasize that the ability to learn new tools is more important. The analytics tools are evolving so fast in the industry. Whatever software is popular in the industry now, it could be very different after five years. In your analytics career, you're certainly going to have to use the software more flexibly and do more than the exact tools you have learned in classes.  I want you to be prepared to do that. 
+
+Also, compared to the tools, the understanding of the methodology behind them is more critical. While software changes every year, the fundamental data-science methods are quite stable. For example, if you have a clear understanding of the data mining process and intuition of the commonly-used algorithms, you often can solve the same problem using any of the following software: Excel, R, Python, or SAS.
+
+Finally, as companies often have different preferences, to better position yourself on the modern job market, I would suggest having some exposure to all the following popular tools if it is possible:
+
+- Excel: The most popular spreadsheet tool.
+- SQL: A must-have tool to pull data from Database for a quick analysis.
+- Tableau: A popular data visualization tool.
+- R: A open-source analytics language and platform for statistical computing and graphics, which has been gaining in popularity and interest over the past years. 
+- Python: An open-source full-stack programming language that is very popular in analytics and data science.
+- SAS: The previous leading analytics software and language that are still popular in the traditional fields such as Healthcare/Pharma and Financial Services.
+
+***
+
+

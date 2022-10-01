@@ -1,12 +1,55 @@
 ---
-title: "Table of Contents"
-output: html_document
+title: " "
+output: 
+  html_document:
+    toc: false 
+    toc_float:
+      toc_collapsed: false 
+    toc_depth: 3
+    number_sections: false 
+---
+
 ---
 
 
-## 2020-02-01 
 
-### [Common Data-exploring Script by R and Python](common_script.html)
 
-- published on [Mediam.com]() 
+### [Popular Analytics Tools](https://franklinanalytics.medium.com/a-brief-summary-for-popular-analytics-tools-7d7081051c5e)
+
+### [Commonly-used R & Python Scripts for Data Wrangling](https://franklinanalytics.medium.com/side-by-side-data-wrangling-script-in-r-and-python-1e5ba4cfca04)
+
+
+
+
+
+### LinkedIn
+
+- [DATA 300: Introduction to Analytics](https://www.linkedin.com/posts/jiang-li-analytics_datawrangling-datavisualization-regressionanalysis-activity-6863938185991372800-4O2c)
+- [Data Science in 2021](https://www.linkedin.com/posts/jiang-li-analytics_state-of-data-science-in-2021-activity-6843222852242608128-yj6H)
+-[Ed Discussion Tool](https://www.linkedin.com/posts/jiang-li-analytics_personalgrowth-professionaldevelopment-education-activity-6839630323928612864-MaJu)
+- [Correlation vs. causation](https://www.linkedin.com/posts/jiang-li-analytics_bad-credit-or-no-credit-shouldnt-affect-activity-6831660659332198400-AkhL)
+- [Product Analyst Role](https://www.linkedin.com/posts/jiang-li-analytics_product-analysts-what-is-that-activity-6828681711170199552-IwdX)
+- [A/B Testing](https://www.linkedin.com/posts/jiang-li-analytics_the-art-of-ab-testing-activity-6824374446371979264-SLOu)
+- [BUSA 603: Marketing Analytics](https://www.linkedin.com/posts/jiang-li-analytics_top-five-sql-window-functions-you-should-activity-6820375641171533824-b1g6)
+- [Free courses in LinkedIn Learning](https://www.linkedin.com/posts/jiang-li-analytics_businessanalysis-personalgrowth-professionaldevelopment-activity-6800186575796924416-qv0E)
+- [Redesign DATA 610](https://www.linkedin.com/posts/jiang-li-analytics_personalgrowth-professionaldevelopment-education-activity-6798960640217145344-hmrk)
+- [AWS Cloud](https://www.linkedin.com/feed/update/urn:li:activity:6777254912163151872)
+- [DataFest 2022](https://www.linkedin.com/posts/jiang-li-analytics_personalgrowth-professionaldevelopment-education-activity-6773637143085535233-ZF_N)
+- [Notion](https://www.linkedin.com/posts/jiang-li-analytics_notion-is-free-for-students-activity-6770738229156081664-SRMQ)
+- [Domain Knowledge](https://www.linkedin.com/posts/jiang-li-analytics_domain-expertisewhy-is-it-important-for-activity-6767871834760257536-MrM7)
+- [SQL Data Duplication](https://www.linkedin.com/posts/jiang-li-analytics_personalgrowth-professionaldevelopment-education-activity-6764940052565946368-mMkJ)
+- [RStudio::global 2021](https://www.linkedin.com/posts/jiang-li-analytics_rstudio-webinars-activity-6763195681315405824-fRGt)
+- [Analytics Reporting](https://www.linkedin.com/posts/jiang-li-analytics_introduction-activity-6760577606216667136-Te0r)
+- [Key Data Science Concepts for Interview](https://www.linkedin.com/posts/jiang-li-analytics_crack-data-science-interviews-essential-activity-6758912449774186496-T28o)
+- [Welcome Dr. Vesselinov](https://www.linkedin.com/posts/jiang-li-analytics_personalgrowth-professionaldevelopment-education-activity-6755892965622784000-t2KF)
+- [Why R is the right tool](https://www.linkedin.com/posts/jiang-li-analytics_6-reasons-to-learn-r-for-business-2021-activity-6753077434914021376-Qem6)
+- [Essential SQL Concepts](https://www.linkedin.com/posts/jiang-li-analytics_ten-sql-concepts-you-should-know-for-data-activity-6745372255187976193-dsjC)
+- [Highlighted Analtyics Skills](https://www.linkedin.com/posts/jiang-li-analytics_personalgrowth-professionaldevelopment-education-activity-6741815732910247936-IVuM)
+- [AWS Big Data Event](https://www.linkedin.com/posts/jiang-li-analytics_aws-reinvent-activity-6739676099229364224-XDAN)
+- [Confidence Interval](https://www.linkedin.com/posts/jiang-li-analytics_calculating-confidence-interval-with-bootstrapping-activity-6737369570543325184-TJaq)
+- [Suggestion to students: get hands dirty](https://www.linkedin.com/posts/jiang-li-analytics_personalgrowth-professionaldevelopment-education-activity-6735202069420003329-7Btr)
+- [Data Cleaning](https://www.linkedin.com/feed/update/urn:li:activity:6735025440374751233)
+- [Suggestion to students: be a problem solver](https://www.linkedin.com/posts/jiang-li-analytics_personalgrowth-professionaldevelopment-education-activity-6734883890625867776-zWJO)
+- [Suggestion to students: continue being curious](https://www.linkedin.com/posts/jiang-li-analytics_personalgrowth-professionaldevelopment-education-activity-6734482946864025600-KP-3)
+- [Data Science Thinking: a case study](https://www.linkedin.com/feed/update/urn:li:activity:6702219196111097856)
 
