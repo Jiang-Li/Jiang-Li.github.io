@@ -1,9 +1,9 @@
     // define the dimensions and margins for the line chart
     // Use the same Margin Convention from HW1 Q3: https://poloclub.github.io/cse6242-2022spring-online/hw1/8rEHLaYmr9 _margin_convention.pdf to layout your graph
     var margin = {top: 50, right: 75, bottom: 50, left: 75}
-    var width = 960 - margin.left - margin.right, 
+    var width = 960 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom
-    
+
 
     // define the dimensions and margins for the bar chart
 
@@ -26,7 +26,7 @@
             users_rated: +d.users_rated
             }
     }).then(function (data) {
-    
+
     // console.log(data); // you should see the data in your browser's developer tools console
 
     // append svg element to the body of the page
@@ -60,7 +60,7 @@
              })
             return obj;
         });
-    
+
     // filter year
     grouped_games = grouped_games.filter(function(d) {
         return d.key.includes("2015") || d.key.includes("2016") || d.key.includes("2017")
@@ -71,29 +71,29 @@
     // Bar Chart Data.
     sorted_games = data
         .filter(function(d) {
-            return d.year.toString().includes("2015") 
-                || d.year.toString().includes("2016") 
+            return d.year.toString().includes("2015")
+                || d.year.toString().includes("2016")
                 || d.year.toString().includes("2017")
-                || d.year.toString().includes("2018") 
+                || d.year.toString().includes("2018")
                 || d.year.toString().includes("2019")
         })
-        .sort((a, b) => d3.ascending(a.year, b.year) 
+        .sort((a, b) => d3.ascending(a.year, b.year)
         || d3.descending(a.users_rated, b.users_rated))
-     
+
     var max_count = 0
     grouped_games.forEach(function(element) {
         element.values.forEach(function(d){
             if(max_count < d.value.count) max_count = d.value.count
-          }    
+          }
         )
     });
-  
+
     // Defining x and y scales
     var xScale = d3.scaleLinear()
     	.range([0,width])
         .domain([0, d3.max(data, function(d){
             return d.average_rating;})]
-        );        
+        );
 
     var yScale = d3.scaleLinear()
         .domain([0, max_count])
@@ -114,14 +114,14 @@
         })
         .attr("fill", "none")
         .attr("stroke",function(d, i){ return colorArray[i]});
-    
-    // To generate dummy values for non-existing data points in part a, it will be helpful 
-    // to initialize the array with zeros for each year and then increment the value as you 
-    // loop through the data. 
-    
-    
+
+    // To generate dummy values for non-existing data points in part a, it will be helpful
+    // to initialize the array with zeros for each year and then increment the value as you
+    // loop through the data.
+
+
     // axis X and Y
-    var xAxis = d3.axisBottom(xScale)    
+    var xAxis = d3.axisBottom(xScale)
     svg.append("g")
         .attr("id", "x-axis-lines")
         .attr("class", "axis")
@@ -132,7 +132,7 @@
         .attr("x", width/2)
         .attr("y", 40)
         .text("Rating")
-     
+
 
     var yAxis = d3.axisLeft(yScale);
     svg.append("g")
@@ -146,7 +146,7 @@
         .attr("transform", "rotate(-90)")
         .attr("x", -height/2)
         .text("Count")
-     
+
     // filled circle
     svg.append("g")
         .attr("id", "circles")
@@ -161,7 +161,7 @@
         .attr("r",3)
         .attr("cx",function(d){return xScale(d.key)})
         .attr("cy",function(d){return yScale(d.value.count)})
-        .attr("fill",function(d, i){ 
+        .attr("fill",function(d, i){
             if(d.value.year.toString().includes("2015")) {return colorArray[0]}
             else if (d.value.year.toString().includes("2016")) {return colorArray[1]}
             else if (d.value.year.toString().includes("2017")) {return colorArray[2]}
@@ -170,14 +170,14 @@
         })
         .on("mouseover",mouseOver)
         .on("mouseout",mouseOut);
-    
+
     // Title
     svg.append("text")
         .attr("id", "line_chart_title")
         .attr("y", -25)
         .attr("x", width/3)
         .text("Board games by Rating 2015-2019")
-      
+
 
     // ledgend
     var legendBox = svg.append("g")
@@ -232,16 +232,16 @@
 
         function selected_point(d) {
             return {
-                rating: +d.key, 
-                year: d.value.year.toString().slice(11,15), 
+                rating: +d.key,
+                year: d.value.year.toString().slice(11,15),
                 count: data.value.count}
-        }  
+        }
         var selection = selected_point(data);
         // console.log(selection)
 
         bar_data = sorted_games
         .filter(function(d) {
-            return d.year.toString().includes(selection.year) 
+            return d.year.toString().includes(selection.year)
                 && d.average_rating == selection.rating
         })
         .slice(0, 5)
@@ -255,7 +255,7 @@
         })
         .sort((a, b) => d3.descending(a.users_rated, b.users_rated))
         // console.log(bar_data)
- 
+
         if(selection.count > 0 ){
             bar_svg.style("display","block")
         }
@@ -273,7 +273,7 @@
 
 
         //Scale
-        
+
         var bar_xScale = d3.scaleLinear()
             .range([0, width-100])
             .domain([0, d3.max(bar_data, function(d){return d.users_rated})]);
@@ -281,14 +281,14 @@
             .range([0, height])
             .domain(bar_data.map(function(d){return d.name;}));
 
-        
+
         //bar
         var bars = bar_svg
             .append("g")
             .attr("id", "bars")
             .selectAll(".bar")
             .attr("hidden",null)
-            .data(bar_data);            
+            .data(bar_data);
         bars.exit()
             .remove();
 
@@ -317,7 +317,7 @@
             .append("text")
             .attr("x", width/3)
             .attr("y", 30)
-            .text("Number of users")        
+            .text("Number of users")
 
         bar_svg.append("g")
             .attr("id", "y-axis-bars")
@@ -334,10 +334,10 @@
             .attr("transform", "rotate(-90)")
             .attr("x", -height/2)
             .text("Games")
-        
-            
-    
-        
+
+
+
+
 
     }
 
@@ -347,17 +347,16 @@
             .classed("mouseover", false)
             .attr("r", 3);
         bar_svg.style("display", "none");
-        // svg.select(".barSVG").attr("hidden",true) 
+        // svg.select(".barSVG").attr("hidden",true)
         d3.select(".bar").attr("hidden",true)
-        d3.select("#bar_chart_title").remove()   
-        d3.select("#x-axis-bars").remove()   
-        d3.select("#y-axis-bars").remove()   
-        d3.select("#bars").remove()   
+        d3.select("#bar_chart_title").remove()
+        d3.select("#x-axis-bars").remove()
+        d3.select("#y-axis-bars").remove()
+        d3.select("#bars").remove()
     }
 
-        
+
 
     }).catch(function (error) {
       console.log(error);
     });
-
