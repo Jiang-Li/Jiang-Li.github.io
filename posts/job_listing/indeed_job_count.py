@@ -1,3 +1,5 @@
+# need to wrap to function
+# fill key works, must include, loop by colation: state or city, output name
 from selenium.webdriver.common.by import By
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -74,7 +76,7 @@ df['date'] = dates
 df['state'] = state_names
 df['count'] = job_counts
 
-filename = datetime.now().strftime("Post_"+"%m_%d_%Y"+".csv")
-df.reset_index().to_csv("./data/"+filename)
+filename = datetime.now().strftime("ost_count_state.csv")
+df.reset_index().to_csv(filename)
 
 driver.quit()
