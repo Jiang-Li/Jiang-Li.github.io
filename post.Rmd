@@ -46,7 +46,7 @@ output:
 - [Free courses in LinkedIn Learning](https://www.linkedin.com/posts/jiang-li-analytics_businessanalysis-personalgrowth-professionaldevelopment-activity-6800186575796924416-qv0E)
 - [Redesign DATA 610](https://www.linkedin.com/posts/jiang-li-analytics_personalgrowth-professionaldevelopment-education-activity-6798960640217145344-hmrk)
 - [AWS Cloud](https://www.linkedin.com/feed/update/urn:li:activity:6777254912163151872)
-- [DataFest 2022](https://www.linkedin.com/posts/jiang-li-analytics_personalgrowth-professionaldevelopment-education-activity-6773637143085535233-ZF_N)
+- [DataFest 2021](https://www.linkedin.com/posts/jiang-li-analytics_personalgrowth-professionaldevelopment-education-activity-6773637143085535233-ZF_N)
 - [Notion](https://www.linkedin.com/posts/jiang-li-analytics_notion-is-free-for-students-activity-6770738229156081664-SRMQ)
 - [Domain Knowledge](https://www.linkedin.com/posts/jiang-li-analytics_domain-expertisewhy-is-it-important-for-activity-6767871834760257536-MrM7)
 - [SQL Data Duplication](https://www.linkedin.com/posts/jiang-li-analytics_personalgrowth-professionaldevelopment-education-activity-6764940052565946368-mMkJ)
