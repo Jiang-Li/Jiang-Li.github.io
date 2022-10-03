@@ -6,7 +6,11 @@ output: html_document
 
 ![](./img/jiang.jpg)
 
-Dr. Jiang 'John' Li is the Program Chair of M.S. in Business Analytics and the Lead Faculty of M.S. in Data Analytics at Franklin University. As a former Data Scientist in the Insurance Industry, he is seasoned in Analytics Modeling and proficient in Python, R, SAS, SQL, Tableau, and various other Business Intelligence Tools. During his early career, Dr. Li did research in the Physics Department of Ohio State University and published his study on Nature, the world's most prestigious scientific journal. Dr. Li is also an enthusiastic teacher. He had volunteered as a math instructor for middle-high school students for four years. He design and teach the analytics-related Courses for the undergraduate and graduate students at Franklin University, and students highly recommend his courses. Dr. Li lives in Columbus, Ohio, with his wife and three kids.
+Dr. Jiang 'John' Li is the Program Chair of M.S. in Business Analytics and the Lead Faculty of M.S. in Data Analytics at Franklin University. As a former Data Scientist in the Insurance Industry, he is seasoned in Analytics Modeling and proficient in Python, R, SAS, SQL, Tableau, and various other Business Intelligence Tools. 
+
+During his early career, Dr. Li did research in the Physics Department of Ohio State University and published his study on Nature, the world's most prestigious scientific journal. His current research interest is [Learning analytics](https://en.wikipedia.org/wiki/Learning_analytics). 
+
+Dr. Li is also an enthusiastic teacher. He had volunteered as a math instructor for middle-high school students for four years. He design and teach the analytics-related Courses for the undergraduate and graduate students at Franklin University, and students highly recommend his courses. Dr. Li lives in Columbus, Ohio, with his wife and three kids.
 
 
 **Plesae [Drop an Email](mailto:jiang.li2@franklin.edu) or 

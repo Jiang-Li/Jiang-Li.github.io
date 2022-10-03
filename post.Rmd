@@ -27,6 +27,15 @@ output:
 
 ### LinkedIn
 
+- [Ohio First Scholarship](https://www.linkedin.com/posts/jiang-li-analytics_ohio-first-stem-scholarship-activity-6959947182766530560-GnDG?utm_source=share&utm_medium=member_desktop)
+- [Companies don’t have datasets waiting for you](https://www.linkedin.com/posts/jiang-li-analytics_machinelearning-data-datascience-activity-6938188158635294720-N-qr?utm_source=share&utm_medium=member_desktop)
+- [DataFest 2022 Winners](https://www.linkedin.com/posts/jiang-li-analytics_congratulations-to-the-winning-team-of-franklin-activity-6928436032707190784-hbCW?utm_source=share&utm_medium=member_desktop)
+- [Common Mistates of SQL JOIN](https://www.linkedin.com/feed/update/urn:li:activity:6922909309630631936?utm_source=share&utm_medium=member_desktop)
+- [An Intuitive Visualization of SQL JOIN](https://www.linkedin.com/posts/jiang-li-analytics_personalgrowth-professionaldevelopment-education-activity-6920733422604701696-uGIp?utm_source=share&utm_medium=member_desktop)
+- [McGraw Hill Business Analytics Summit 2022](https://www.linkedin.com/posts/jiang-li-analytics_businessanalytics-teaching-education-activity-6912400227819794433-cCMH?utm_source=share&utm_medium=member_desktop)
+- [Teach International Students from India](https://www.linkedin.com/posts/jiang-li-analytics_franklinmakesitpossible-2022ready-education-activity-6883931401910005760-a13a?utm_source=share&utm_medium=member_desktop)
+- [Convert English Language to Python](https://www.linkedin.com/posts/jiang-li-analytics_innovation-artificialintelligence-deeplearning-activity-6880653855856566272-abA2?utm_source=share&utm_medium=member_desktop)
+- [Commonly-used Analytics Tools](https://www.linkedin.com/posts/jiang-li-analytics_a-brief-summary-for-popular-analytics-tools-activity-6877651936670208000-n4qq?utm_source=share&utm_medium=member_desktop)
 - [DATA 300: Introduction to Analytics](https://www.linkedin.com/posts/jiang-li-analytics_datawrangling-datavisualization-regressionanalysis-activity-6863938185991372800-4O2c)
 - [Data Science in 2021](https://www.linkedin.com/posts/jiang-li-analytics_state-of-data-science-in-2021-activity-6843222852242608128-yj6H)
 -[Ed Discussion Tool](https://www.linkedin.com/posts/jiang-li-analytics_personalgrowth-professionaldevelopment-education-activity-6839630323928612864-MaJu)
