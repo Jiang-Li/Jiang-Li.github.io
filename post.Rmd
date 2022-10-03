@@ -14,7 +14,7 @@ output:
 
 ### Visual Analytics
 
-- [Indeed.com Job Listing](./posts/job_listing/index.html)
+- [Indeed.com Analytics Job Listing](./posts/job_listing/index.html)
 
 
 ### Medium
