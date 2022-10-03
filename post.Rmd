@@ -38,7 +38,7 @@ output:
 - [Commonly-used Analytics Tools](https://www.linkedin.com/posts/jiang-li-analytics_a-brief-summary-for-popular-analytics-tools-activity-6877651936670208000-n4qq?utm_source=share&utm_medium=member_desktop)
 - [DATA 300: Introduction to Analytics](https://www.linkedin.com/posts/jiang-li-analytics_datawrangling-datavisualization-regressionanalysis-activity-6863938185991372800-4O2c)
 - [Data Science in 2021](https://www.linkedin.com/posts/jiang-li-analytics_state-of-data-science-in-2021-activity-6843222852242608128-yj6H)
--[Ed Discussion Tool](https://www.linkedin.com/posts/jiang-li-analytics_personalgrowth-professionaldevelopment-education-activity-6839630323928612864-MaJu)
+- [Ed Discussion Tool](https://www.linkedin.com/posts/jiang-li-analytics_personalgrowth-professionaldevelopment-education-activity-6839630323928612864-MaJu)
 - [Correlation vs. causation](https://www.linkedin.com/posts/jiang-li-analytics_bad-credit-or-no-credit-shouldnt-affect-activity-6831660659332198400-AkhL)
 - [Product Analyst Role](https://www.linkedin.com/posts/jiang-li-analytics_product-analysts-what-is-that-activity-6828681711170199552-IwdX)
 - [A/B Testing](https://www.linkedin.com/posts/jiang-li-analytics_the-art-of-ab-testing-activity-6824374446371979264-SLOu)
