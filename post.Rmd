@@ -12,11 +12,14 @@ output:
 ---
 
 
-### [Visual Analytics: Indeed.com Job Listing](./posts/job_listing/index.html)
+### Visual Analytics
 
-### [Popular Analytics Tools](https://franklinanalytics.medium.com/a-brief-summary-for-popular-analytics-tools-7d7081051c5e)
+- [Indeed.com Job Listing](./posts/job_listing/index.html)
 
-### [Commonly-used R & Python Scripts for Data Wrangling](https://franklinanalytics.medium.com/side-by-side-data-wrangling-script-in-r-and-python-1e5ba4cfca04)
+
+### Medium
+- [Popular Analytics Tools](https://franklinanalytics.medium.com/a-brief-summary-for-popular-analytics-tools-7d7081051c5e)
+- [Commonly-used R & Python Scripts for Data Wrangling](https://franklinanalytics.medium.com/side-by-side-data-wrangling-script-in-r-and-python-1e5ba4cfca04)
 
 
 
