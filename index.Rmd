@@ -1,5 +1,5 @@
 ---
-title: "Dr. Jiang 'John' Li, Business Analytics"
+title: "Dr. Jiang 'John' Li"
 output: html_document
 ---
 ***
