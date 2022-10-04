@@ -30,8 +30,8 @@
     }).then(function(data) {
         console.log()
         color.domain([
-            d3.min(data, function(d) { return d.count; }),
-            d3.max(data, function(d) { return d.count; })
+            d3.min(data, function(d) { return Math.log(d.count); }),
+            d3.max(data, function(d) { return Math.log(d.count); })
         ]);
         d3.json("us-states.json").then(function(json){
         //Merge the ag. data and GeoJSON
@@ -73,7 +73,7 @@
                 console.log(value)
                 if (value) {
                     console.log(value)
-                    return color(value);
+                    return color(Math.log(value));
                 } else {
                     //If value is undefined…
                     return "#ccc";

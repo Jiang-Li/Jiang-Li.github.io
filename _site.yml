@@ -13,4 +13,5 @@ output:
   html_document:
     theme: readable
     css: style.css
-    
+    includes:
+      in_header: google_analytics.html
