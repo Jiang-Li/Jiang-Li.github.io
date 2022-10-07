@@ -8,3 +8,25 @@
     font-family: Arial, Helvetica, sans-serif;
     font-size: 120%;
     }
+
+#tooltip {	
+        position: absolute;			
+        text-align: center;			
+        width: 80px;					
+        height: 40px;					
+        padding: 2px;				
+        font: 12px sans-serif;		
+        background: lightskyblue;	
+        border: 0px;		
+        border-radius: 8px;			
+        pointer-events: none;			
+    }
+
+#credit {	
+        font: 12px sans-serif;		
+        pointer-events: auto;			
+        fill: blue;
+        font-weight: bold;
+        text-decoration: underline;
+        cursor: pointer
+    }

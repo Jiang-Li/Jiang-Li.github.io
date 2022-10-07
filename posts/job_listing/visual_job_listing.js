@@ -18,7 +18,7 @@
     var path = d3.geoPath()
              .projection(d3.geoAlbersUsa());
 
-    var color = d3.scaleQuantize()
+    var color = d3.scaleQuantile()
             .range(["rgb(237,248,233)", "rgb(186,228,179)",
              "rgb(116,196,118)", "rgb(49,163,84)", "rgb(0,109,44)"]);
 
@@ -28,11 +28,7 @@
             count:+d.count.replace(/,/g, '')
         }
     }).then(function(data) {
-        console.log()
-        color.domain([
-            d3.min(data, function(d) { return Math.log(d.count); }),
-            d3.max(data, function(d) { return Math.log(d.count); })
-        ]);
+        color.domain(data.map(x=>x.count));
         d3.json("us-states.json").then(function(json){
         //Merge the ag. data and GeoJSON
         // Loop through once for each ag. data value
@@ -61,6 +57,19 @@
                 }
             }
 
+            // tip
+            var tip = d3.tip().attr("id", "tooltip")
+            // .attr('class', 'd3-tip')
+            .html(
+                function(d) {
+                    // if (typeof(d.properties.value) == "undefined") d.properties.value="N/A"
+                    return "<text> " +d.properties.name + " <br>"
+                    + d.properties.value + " jobs </text> ";
+                  }
+            );
+
+            svg.call(tip)
+
             // map
             svg.selectAll("path")
             .data(json.features)
@@ -70,46 +79,52 @@
             .style("fill", function(d) {
                 //Get data value
                 var value = d.properties.value;
-                console.log(value)
+                // console.log(value)
                 if (value) {
-                    console.log(value)
-                    return color(Math.log(value));
+                    return color(value);
                 } else {
                     //If value is undefined…
                     return "#ccc";
                 }
             })
+            .on('mouseover', tip.show)
+            .on('mouseout', tip.hide)
+
      
+            console.log("hello")
+            //legend                     
+            svg.append("g")
+                .attr("id", "legend")
+                .attr("class", "legendQuant")
+                .attr("transform", "translate(800,300)");
+            
+            var legend = d3.legendColor()
+                .labelFormat(d3.format(".0f"))
+                .useClass(false)
+                .titleWidth(100)
+                .scale(color);
+            
+            svg.select(".legendQuant")
+                .call(legend);
 
+            
+            //title
+            svg.append("text")
+                .attr("id", "title")
+                .attr("y", 0)
+                .attr("x", width/3)
+                .attr("font-size", "24px")
+                .text("Indeed.com Analytics Job Listing Count, 2022-10-02")
 
+            // credit
+            svg.append("text")
+                .attr("id", "credit")
+                .attr("y", height-200)
+                .attr("x", width-50)
+                .attr("font-size", "12px")
+                .text("Dr. Jiang Li")
+                .on("click", function() { window.open("https://jiang-li.github.io/"); }); 
 
         }) // json
     }) // end csv
 
-    // d3.json("us-states.json", function(d) {
-    //     return d    
-    // }).then(function (json) {
-    //     svg.selectAll("path")
-    //        .data(json.features)
-    //        .enter()
-    //        .append("path")
-    //        .attr("d", path)
-    //        .style("fill", function(d) {
-    //            //Get data value
-    //            var value = d.properties.value;
-    //            console.log(value)
-    //            if (value) {
-    //                //If value exists…
-    //             //    console.log(value)
-    //                return color(value);
-    //            } else {
-    //                //If value is undefined…
-    //                return "#ccc";
-    //            }
-    //        })
-
-
-    // }).catch(function (error) {
-    //     console.log(error);
-    //   });
-  
