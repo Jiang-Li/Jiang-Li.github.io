@@ -1,0 +1,515 @@
+---
+title: "Review Questions"
+output: 
+  html_document:
+    toc: true
+    toc_float:
+      toc_collapsed: false 
+    toc_depth: 3
+    number_sections: false 
+---
+
+
+### What do predictive questions ask?
+
+What will happen? (e.g., what will Apple's stock price be tomorrow?)
+
+
+### What do prescriptive questions ask?
+
+What should we do? (e.g., What actions should we take to reduce employee turnover?)
+
+
+### What is a model?
+
+It is a mathematical representation of a real-world process or system. In other words, it is real-life situation expressed as math.
+
+
+
+### What is quantitative data?
+
+Number with a meaning: higher means more, lower means less (e.g., age, sales, temperature, income)
+
+### What is categorical data?
+
+Numbers w/o meaning (e.g., zip codes), non-numeric (e.g., hair color), binary data (e.g., male/female, yes/no, on/off).
+
+
+### Which is time series data?
+
+A. The average cost of a house in the United
+States every year since 1820
+
+B. The height of each professional basketball
+player in the NBA at the start of the season
+
+Solution: A
+
+### Which is structured data?
+
+A. The contents of a person's Twitter feed
+
+B. The amount of money in a person's bank
+account
+
+Solution: B
+
+
+### Data Point
+
+A survey of 25 people recorded each person's family size and type of car. Which of these is a data point?
+
+A. The 14th person's family size and car type
+B. The 14th person's family size C.The car type of each person
+C.The car type of each person
+
+Solution: A. A data point is all the information about one observation
+
+### Data Scaling
+
+We need to scale data when we are dealing with Gradient Descent Based algorithms (Linear and Logistic Regression, Neural Network) and Distance-based algorithms (KNN, K-means, SVM, PCA) as these are very sensitive to the range of the data points.
+
+### What is the formula for min-max scaling (normalization)? 
+
+$(X-X_{min})/(X_{max}-X_{min})$
+
+### What is the formula for standardization?
+
+$(X-X_{mean})/X_{standard\ deviation}$
+
+
+### What are real effects?
+
+Real relationships between attributes and responses. They are the same in all data sets.
+
+### What are random effects?
+
+They are random and different in all data sets.
+
+### Why can't we measure a model's effectiveness on data it was trained on?
+
+The model's performance on its training data is usually too optimistic, the model is fit to both real and random patterns in the data, so it becomes overly specialized to the specific randomness in the training set, that doesn't exist in other data.
+
+
+### If we use the same data to fit a model as we do to estimate how good it is, what is likely to happen?
+
+The model will appear to be better than it really is, which is also called overfitting.
+
+The model will be fit to both real and random patterns in the data. The model's effectiveness on this data set will include both types of patterns, but its true effectiveness on other data sets (with different random patterns) will only include the real patterns.
+
+### What is a training set used for
+
+Used to fit the models
+
+### What is a validation set used for?
+
+Used to choose best model
+
+### What effects does randomness have on training /validation performance?
+
+sometimes the randomness will make the performance look worse than it really is, and sometimes the randomness will make the performance look better than it really is.
+
+### What is a test data set used for?
+
+To estimate the generalization performance of chosen model
+
+### When do we need a validation set?
+
+When we are choosing between multiple models.
+
+### What is k-fold cross validation?
+
+Split the training/validation data into k-parts; we train on k-1 parts and validate on the remaining part.
+
+### What metric do you use for k-fold cross validation when comparing models?
+
+The average of all k evaluations.
+
+### What do we do after we've performed cross-validation?
+
+We train the model again using all the data.
+
+
+### What are the benefits of k-fold cross validation?
+
+Better use of data, better estimate of model quality, and chooses model more effectively.
+
+### What can clustering be used for?
+
+grouping data points (e.g., market segmentation) and discovering groups in data points (e.g., personalized medicine)
+
+### Which should we use most of the data for: training, validation, or test?
+
+Training.
+
+### In k-fold cross-validation, how many times is each part of the data used for training, and for validation?
+
+k-1 times for training, and 1 time for validation
+
+### What is a centroid?
+
+The center of a cluster.
+
+### What are the steps of k means?
+
+0. Pick k clusters within range of data.
+1. Assign each data point to nearest cluster center
+2. Recalculate cluster centers (centroids)
+3. Repeat 1 and 2 until no changes
+
+### How do we find the cluster centers?
+
+We take the mean of all the data points in cluster.
+
+### How does bias/variance change as k changes in KNN?
+
+The higher the k the higher the bias the lower the k the higher the variance. when K = 1 that is the most complex model and thus likely to overfit the data.
+
+
+### How do we find the best value of k in k means?
+
+Elbow method: we calculate the total distance of each data point to its cluster center and plot it in two dimensions. We look for the kik in the graph.
+
+### When clustering for prediction how do we choose the prediction?
+
+When we see a new data point, we just choose whichever cluster center is closest.
+
+### What is the difference between classification and clustering?
+
+With classification models, we know each data point's attributes and we already know the right classification for the data points (supervised). In clustering (unsupervised) we know the attributes but we don't know what group any of these data points are in.
+
+### What is the difference between supervised learning and unsupervised learning?
+
+Supervised - the response is known
+Unsupervised - response is not known.
+
+### Classification or clustering?
+
+A group of astronomers has a set of long-exposure CCD images of various distant objects. They do not know yet which types of object each one is, and would like your help using analytics to determine which ones look similar. Which is more appropriate: classification or clustering?  - Clustering
+
+Suppose one astronomer has categorized hundreds of the images by hand, and now wants your help using analytics to automatically determine which category each new image belongs to. Which is more appropriate: classification or clustering? - Classification
+
+### Which of these is generally a good reason to remove an outlier from your data set?
+
+A. The outlier is an incorrectly-entered data, not real data.
+
+B. Outliers like this only happen occasionally.
+
+Solution: A. If the data point isn't a true one, you should remove it from your data set.
+
+### What is an outlier?
+
+A data point that is very different from the rest.
+
+### What graph or plot can we use to find outliers?
+
+Box plot.
+
+### What are some ways to deal with outliers that are bad data?
+
+Omit them or use imputation.
+
+### Why is GARCH different from ARIMA and exponential smoothing?
+
+RIMA and exponential smoothing both estimate the value of an attribute; GARCH estimates the variance.
+
+### When would regression be used instead of a time series model?
+
+When there are other factors or predictors that affect the response. Regression helps show the relationships between factors and a response.
+
+### What is not a common use of regression?
+
+Prescriptive analytics: Determining the best course of action
+
+Regression is often good for describing and predicting, but is not as helpful for suggesting a course of action
+
+### Is regression is a way to determine whether one thing causes another?
+
+No. Regression can show relationships between observations, but it doesn't show whether one thing causes another.
+
+### What does "heteroscedasticity" mean?
+
+The variance is different in different ranges of the data
+
+### What does principal component analysis (PCA) do?
+
+Transform data so there's no correlation between dimensions and rank the new dimensions in likely order of importance.
+
+### If you use principal component analysis (PCA) to transform your data and then you run a regression model on it, how can you interpret the regression coefficients in terms of the original attributes?
+
+Each original attribute's implied regression coefficient is equal to a linear combination of the principal components' regression coefficients.
+
+This is equivalent to using the inverse transformation.
+
+### True or False: When using a random forest model, it's easy to interpret how its results are determined.
+
+False. Unlike a model like regression where we can show the result as a simple linear combination of each attribute times its regression coefficient, in a random forest model there are so many different trees used simultaneously that it's difficult to interpret exactly how any factor or factors affect the result.
+
+### A logistic regression model can be especially useful when the response...
+
+...is a probability (a number between zero and one) or is binary (either zero or one).
+
+### True Negative
+
+A model is built to determine whether data points belong to a category or not. A "true negative" result is a data point that is not in the category, and the model correctly says so. True' and 'false' refer to whether the model is correct or not, and 'positive' and 'negative' refer to whether the model says the point is in the category.
+
+### True or False: The most useful classification models are the ones that correctly classify the highest fraction of data points.
+
+False. Sometimes the cost of a false positive is so high that it's worth accepting more false negatives, or vice versa.
+
+### Explain ARIMA (auto regression integrated moving average)
+
+Predicts the value based on other factors (regression), uses earlier values to predict (auto).
+ARIMA autoregresses on the differences. It uses p time periods of previous observations to predict d-th order differences and also incorporates the moving average by looking at q previous errors (x_t_hat - x_t).
+
+### What is the ARIMA(p,d,q) model?
+
+The pth order autoregression, dth order differences, q th order moving average.
+
+### What is ARIMA(p,d,q) (0,0,0)
+
+white noise
+
+
+### What is ARIMA (0,1,0)
+random walk
+
+
+### What is ARIMA (p,0,0)
+Auto Regression model, only the auto regressive part is active
+
+
+### What is ARIMA(0,0,q)
+Moving Average model - only the moving average part is active
+
+
+what is ARIMA (0, 1, 1)
+basic exponential smoothing
+
+
+### What is GARCH (Generalized AutoRegressive Conditional Heteroskedasticity)?
+
+Model that estimates or forecasts the variance of something that we have time series data for.
+
+### When is variance estimation important?
+
+Traditional portfolio optimization: balances the expected return of a set of investment with the amount of volatility. Variance is a proxy for the amount of volatility or risk here.
+
+### How is the best fit regression line determined?
+
+It is the line that minimizes the sum of squared errors.
+
+### What does AIC (Akaike Information Criterion) do and some of its properties?
+
+Encourages fewer parameters k and higher likelihood. Works well with a lot of data points.
+
+### What is causation?
+
+One thing causes another.
+
+### What is correlation?
+
+Two things tend to happen or not happen together.
+
+### What is the R-squared value?
+
+Estimates how much variability the model accounts for.
+
+### What is adjusted r-squared?
+
+Same as $r^2$ but favors simpler models by penalizing for using too many variables.
+
+### Which plots can we use to check for normality?
+
+Q-Q plot
+
+### Whey do you focus on the first n principal components?
+
+Reduces the effect of randomness and earlier principal components are likely to have higher signal to-noise ratios
+
+
+### What is CART?
+
+Classification and Regression Trees
+
+### How do you perform pruning?
+
+For every pair of leaves created by the same branch, we use the other half of the data to see whether the estimation error is actually improved by branching. If the branching does improve error, the branches stay, but if the branching actually makes the error gets or not change, we move the branches.
+
+### What is the idea behind random forests?
+
+Introduce radomness. We generate many different trees. They will have different strengths and weaknesses. The average of all these trees is better than a single tree with specific strengths and weaknesses
+
+
+### What is the benefit of Random Forests
+
+It has better overall estimates. while each tree might be over-fitting in one place or another they don't necessarily over-fit the same way. The average overall tree tends to fall those overreaction to random effects.
+
+
+### What are the drawbacks of random forests?
+
+Harder to explain/interpret results. Can't give us a specific regression or classification model from the data.
+
+
+### How is the prediction calculated in Random Forests when doing regression trees?
+
+Use the average of the predicted response
+
+
+### How is the prediction calculated in Random Forests when doing classification?
+
+Use the mode -- the most common predicted response
+
+
+### What does TP mean?
+
+point in the category, correctly classified
+
+
+### What does FP mean?
+
+point not in category, model says it is
+
+
+### What does TN mean?
+
+point not in category, correctly classified
+
+
+### What does FN mean?
+
+point in the category model says no
+
+### what is sensitivity
+
+The fraction of category members that are correctly classified TP / (TP + FN)
+
+
+### What is specificity
+
+The fraction of non-category member that are correctly identified TN / (TN + FP)
+
+
+### What does the roc curve plot
+
+sensitivity plotted against 1 - specificity
+
+
+### What is the Area Under Curve
+
+Probability that the model estimates a random "yes" point higher than a random "no" point
+
+
+### What does it mean when the AUC = 0.5
+
+We are just guessing
+
+
+### What does ROC/AUC give you and what doesn't it?
+
+gives a quick-and-dirty estimate of quality but does not differentiate between the coset of FN and FP
+
+### What are the similarities between Logistic Regression and Linear regression?
+
+Transformation of input data, consider interaction terms, variable selection, has trees.
+
+
+### What are the differences between Logistic Regression and Linear regression
+
+Logistic Regression takes longer to calculate, has no closed-form solution, and difficult to understand model quality (no r-squared value).
+
+### What is bias?
+
+Bias is an error from erroneous assumption in the learning algorithm. High bias can cause an algorithm to miss the relevant relations between features and target outputs (underfitting).
+
+
+### What is variance?
+
+An error from sensitivity to small fluctuations in the training set. High variance can cause an algorithm to model the random noise in the training data, rather than the intended outputs (overfitting)
+
+### outlier
+
+Data point that is very different from the rest
+
+### What is likelihood?
+
+The probability (probability density) of some observed outcomes given a set of parameter values.
+
+
+### Maximum likelihood
+
+Parameters that give the highest probability
+
+
+### What is the maximum likelihood estimate
+
+The set of parameters that minimizes the sum of squared errors.
+
+### What can extra parameters do?
+
+Cause overfitting
+
+### If there is a strong relationship between a predictor and the response what will it's p-value be?
+
+Very low.
+
+### Why are simple models better than complex ones?
+
+Less data is required; less chance of insignificant factors and easier to interpret.
+
+### What is forward selection
+
+We select the best new factor and see if it's good enough (R^2, AIC, or p-value) add it to our model and fit the model with the current set of factors. Then at the end we remove factors that are lower than a certain threshold.
+
+
+### What is backward elimination
+
+We start with all factors and find the worst on a supplied threshold (p = 0.15). If it is worse we remove it and start the process over. We do that until we have the number of factors that we want and then we move the factors lower than a second threshold (p = .05) and fit the model with all set of factors
+
+### what is stepwise regression
+
+It is a combination of forward selection and backward elimination. We can either start with all factors or no factors and at each step we remove or add a factor. As we go through the procedure after adding each new factor and at the end we eliminate right away factors that no longer appear.
+
+### Controlling
+
+If we're testing to see whether red cars sell for higher prices than blue cars, we need to account for the type and age of the cars in our data set. This is called Controlling.
+
+### Under what conditions should you run A/B tests
+
+When you can collect data quickly. When the data is representative and the amount of data is small compared to the whole population.
+
+### What are three ways of dealing with missing data that don't require imputation.
+
+discard the data, use categorical variables to indicate missing data, estimate missing values
+
+### What are the pros and cons of throwing away missing data
+
+Pros: not potentially introducing errors; easy to implement
+
+Cons: don't want to lose to many data points; potential for censored or biased missing data
+
+### What are the advantages and disadvantages of imputing missing data with the mean, median (numeric) or mode (categorical)
+
+Advantage: hedge against being too wrong and easy to compute
+
+Disadvantage: it can be biased imputation. Example people with high income less likely to answer survey and thus the mean/median will underestimate the missing value
+
+### What are the advantages and disadvantages of using regression for imputation
+
+It reduces or eliminates the problem of bias. Also gives better values for missing data
+
+Disadvantages: we have to build, validate and test a whole other model just to fill in the missing data and then we have to do it all over again to get the answer we want. Also we are using the same data twice: once for imputation and a second time to fit the model.
+
+### Why limit number of predictors in a model?
+
+overfitting: when # of predictors is close to or larger than # of data points. Model may fit too closely to random effects
+
+simplicity: simple models are usually better
+
+### How to reduce the numbers of predictors?
+
+LASSO: It is a statistical method that applies a penalty to the coefficients of the variables in a regression model, shrinking some of them to zero. This results in a more simplified and interpretable model with fewer predictors.
+
+Recursive feature elimination (RFE): RFE is an iterative method that starts with all the predictors and then removes the least important one at each iteration, based on a certain criterion, until a desired number of predictors is reached.
+
+Principal component analysis (PCA)

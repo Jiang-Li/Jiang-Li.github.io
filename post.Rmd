@@ -11,13 +11,20 @@ output:
 
 ---
 
+### Publications
 
-### Visual Analytics
+- Learning Analytics Finds That A Shared Course May Improve Technology Students
+Retention, Journal of Computing Sciences in Colleges, accepted 2023 Jan.
+
+
+### Posts
+
+- [Analytics Concept Review](./posts/analytics_review.html)
+
 
 - [Indeed.com Analytics Job Listing](./posts/job_listing/index.html)
 
 
-### Medium
 - [Popular Analytics Tools](https://franklinanalytics.medium.com/a-brief-summary-for-popular-analytics-tools-7d7081051c5e)
 - [Commonly-used R & Python Scripts for Data Wrangling](https://franklinanalytics.medium.com/side-by-side-data-wrangling-script-in-r-and-python-1e5ba4cfca04)
 
