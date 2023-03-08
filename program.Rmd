@@ -11,13 +11,19 @@ output:
 
 ***
 
-### Q1: Is Business Analytics is a good fit for me?
+### Q1: May I know more about the Business Analytics Program at Franklin University?
+
+Please watch my [Program Orientation](https://www.youtube.com/watch?v=BBqFU5vULOU)  
+
+***
+
+### Q2: Is Business Analytics is a good fit for me?
 
 As long as you have an intense curiosity to answer business questions, love exploring hidden patterns in data, and enjoy solving new business problems, you are a good fit! On the other hand, if you are not interested in data-based business problem-solving or prefer doing work on a routine day-to-day basis, you may need to rethink what is more suitable for you.
 
 ***
 
-### Q2: Do I need a strong math background?
+### Q3: Do I need a strong math background?
 
 Not really.  For example, to understand the SVM (support vector machine), you need to know what the margin is and why you want to maximize it (make the model less sensitive to the random effect). If you are not familiar with linear algebra, it would be challenging to understand how margin is defined and maximized mathematically. However, you still can understand SVM by building a geometric intuition and apply SVM to solve problems.
 
@@ -26,14 +32,14 @@ Although statics, linear algebra, and calculus are three mathematical pillars fo
 
 ***
 
-### Q3: Do I need strong programming skills?
+### Q4: Do I need strong programming skills?
 
 Not really. You don’t need to write code like the software engineers. The analytics programming focuses on the problem solving by using the well-developed packages. All the popular tools, such as R, Python, Tableau, SAS, etc., have the easy-to-use analytics functions/packages. My students can finish a comprehensive predictive analysis project even without writing any loop in the code.
 
 
 ***
 
-### Q4: What is Business Analytics and what its difference from Data Analytics?
+### Q5: What is Business Analytics and what its difference from Data Analytics?
 
 Both Business and Data Analytics are the applied Data Science. Business Analytics **focus on applying the insights derived from data to address the business problems**. The goal is to draw concrete conclusions about a business by answering specific questions about why things happened, what will happen and what should do. Data Analytics prepares individuals to apply data science to generate insights from data and identify and predict trends. 
 
@@ -49,7 +55,7 @@ Business analytics focuses more on data-driven business problem solving. Data An
 
 ***
 
-### Q5: What analytics tools should I learn?
+### Q6: What analytics tools should I learn?
 
 As there are so many analytics tools, many people are confused when they start learning analytics. However, instead of focusing on specific tool, I want to emphasize that the ability to learn new tools is more important. The analytics tools are evolving so fast in the industry. Whatever software is popular in the industry now, it could be very different after five years. In your analytics career, you're certainly going to have to use the software more flexibly and do more than the exact tools you have learned in classes.  I want you to be prepared to do that. 
 

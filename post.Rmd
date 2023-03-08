@@ -22,6 +22,9 @@ Retention, Journal of Computing Sciences in Colleges, accepted 2023 Jan.
 - [Analytics Concept Review](./posts/analytics_review.html)
 
 
+- [Analytics Job Application](./posts/job_application/index.html)
+
+
 - [Indeed.com Analytics Job Listing](./posts/job_listing/index.html)
 
 

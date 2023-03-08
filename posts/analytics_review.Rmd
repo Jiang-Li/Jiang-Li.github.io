@@ -513,3 +513,5 @@ LASSO: It is a statistical method that applies a penalty to the coefficients of 
 Recursive feature elimination (RFE): RFE is an iterative method that starts with all the predictors and then removes the least important one at each iteration, based on a certain criterion, until a desired number of predictors is reached.
 
 Principal component analysis (PCA)
+
+PCA is a technique used to simplify complex datasets by reducing their dimensions (variables) while retaining most of their information. It works by transforming variables into a set of new variables, called principal components, which are independent linear combinations of the original variables with the highest variance. The first principal component captures the largest amount of variability in the data, followed by the second and so on. 
