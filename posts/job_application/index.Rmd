@@ -1,5 +1,5 @@
 ---
-title: "Analytics Job Application: Tips and Strategies"
+title: "Analytics Job Application"
 subtitle: "Maximizing Your Chances of Landing Your Analytics Job"
 author: "Dr. Jiang Li"
 institute: "Franklin University"
@@ -78,15 +78,22 @@ class: inverse, center, middle
 - [SQL: Data Reporting and Analysis](https://www.linkedin.com/learning/sql-data-reporting-and-analysis-18082247)
 - [SQL Tutorial for Data Analysis](https://mode.com/sql-tutorial/)
 
-### Tableau
+***
 
-- [Training Videos](https://www.tableau.com/learn/training/20224)
+Visit [here](https://www.linkedin.com/posts/jiang-li-analytics_businessanalysis-personalgrowth-professionaldevelopment-activity-6800186575796924416-qv0E) to access LinkedIn Learning for free!
 
-
+Use your Franklin email to access [OREILLY's](https://learning.oreilly.com/home/) learning resources for free!
 ]
 
 
 .pull-right[
+
+
+### Tableau
+
+- [Training Videos](https://www.tableau.com/learn/training/20224)
+- [A Good General Book for Data Visualizaton: Storytelling with Data](https://learning.oreilly.com/library/view/storytelling-with-data/9781119002253/)
+
 
 
 ### R
@@ -98,9 +105,6 @@ class: inverse, center, middle
 
 - [pandas Essential Training](https://www.linkedin.com/learning/pandas-essential-training)
 
-***
-
-Visit [here](https://www.linkedin.com/posts/jiang-li-analytics_businessanalysis-personalgrowth-professionaldevelopment-activity-6800186575796924416-qv0E) to access LinkedIn Learning for free!
 
 
 ]
@@ -135,7 +139,7 @@ Visit [here](https://www.linkedin.com/posts/jiang-li-analytics_businessanalysis-
 
 ### LinkedIn 
 
-- [Profile for Job Seekers](https://www.themuse.com/advice/linkedin-profile-tips):
+- [Profile for Job Seekers](https://www.themuse.com/advice/linkedin-profile-tips)
 
 ### Online Portfolio
 
@@ -159,7 +163,7 @@ Visit [here](https://www.linkedin.com/posts/jiang-li-analytics_businessanalysis-
 
 --
 
-### Phone/Online Interview: some tech and non-tech questions.
+### Phone/Online Interview: some tech and non-tech questions
 
 --
 
@@ -179,18 +183,19 @@ Visit [here](https://www.linkedin.com/posts/jiang-li-analytics_businessanalysis-
 
 ### Tech Questions 
 
+- Review the [basic analytics concepts](https://jiang-li.github.io/posts/analytics_review.html)
 - Search based on job role and employer online, for example:
   - [Chase Data Analyst Interview Questions](https://www.glassdoor.com/Interview/J-P-Morgan-Data-Analyst-Interview-Questions-EI_IE145.0,10_KO11,23.htm)
 
-- Search based on skills or Tools
+- Search based on skills or Tools, for example:
   - [Ten SQL Concepts You Should Know for Data Science Interviews](https://towardsdatascience.com/ten-sql-concepts-you-should-know-for-data-science-interviews-7acf3e428185)
   
-**Note:** It's an easy way to see any Medium article for free. If you hit the Medium paywall, just open Twitter, go to your DMs, and DM yourself the link. Then click the link from your own DM, and you're in.
+**Note:** There is an easy way to see any Medium article for free. Open Twitter, go to your DMs, and DM yourself the link. Then click the link from your own DM.
 --
 
 ### Non-tech Questions
 
-- [10 must-know interview questions](https://www.notion.so/7ba715c1a7044237b0b514d653813203?v=19ba91d66a7f4e389c4b2996445d74e0&p=f74d502561324f0c9138aec38b343d75&pm=s)
+- [10 must-know interview questions](https://twitter.com/FluentInFinance/status/1624182116924653572)
 - [Do you have questions for me?](https://www.indeed.com/career-advice/interviewing/interview-question-do-you-have-any-questions)
 
 ---
@@ -228,9 +233,9 @@ I want you to act as an interviewer from **Chase bank at Columbus Ohio**. I will
 
 - What are the best programming languages and tools that can be used for Business Analytics? what kind of jobs do we need to apply for Business Analytics? How we need to prepare Resume for BA? Any best companies which have opportunities for Data Engineering or Data Analytics?
 
-- How the job market gonna be in Analytics ? 2. What are the skill required for growth opportunities ?
+- How the job market gonna be in Analytics? What are the skill required for growth opportunities ?
 
-- What skills do we need to get into full-time analytics job in google/Microsoft/Amazon ? What certification do we need before completion of course ? When we should start searching for the job ? How can we find the recruiters of Business analytics position ? Any sources or Leeds from university
+- What skills do we need to get into full-time analytics job in google/Microsoft/Amazon? What certification do we need before completion of course? When we should start searching for the job? How can we find the recruiters of Business analytics position? Any sources or Leeds from university.
 
 - The skills required for job and is it possible to find s job in recession times.
 
