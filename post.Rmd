@@ -20,7 +20,6 @@ Retention, Journal of Computing Sciences in Colleges, accepted 2023 Jan.
 ### Posts
 
 - [Introduction to Regularization](./posts/regularization/index.nb.html)
-- [Introduction to Hyperparameter Tuning](./posts/hyperparameter/index.nb.html)
 - [Analytics Concept Review](./posts/Regularization/analytics_review.html)
 - [Analytics Job Application](./posts/job_application/index.html)
 - [Indeed.com Analytics Job Listing](./posts/job_listing/index.html)
