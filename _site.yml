@@ -5,12 +5,14 @@ navbar:
   left:
     - text: "Analytics Programs"
       href: program.html
-    - text: "Teaching"
+    - text: "Courses"
       href: course.html
     - text: "Posts"
       href: post.html
     - text: "Publications"
       href: publication.html
+    - text: "Teaching"
+      href: teach.html
 
 output:
   html_document:

@@ -18,7 +18,7 @@ As an enthusiastic educator, I design and teach analytics-related courses for bo
 
 
 **Plesae [Drop an Email](mailto:jiang.li2@franklin.edu) or 
-[Schedule a Meeting](https://outlook.office365.com/owa/calendar/JiangLi@FranklinU.onmicrosoft.com/bookings/) if you have questions or your are interested in Franklin's analytics programs, courses, or teaching opportunities.**
+[Book a Meeting](https://outlook.office365.com/owa/calendar/JiangLi@FranklinU.onmicrosoft.com/bookings/) if you have questions or your are interested in Franklin's analytics programs, courses, or teaching opportunities.**
 
 
 ```{r, echo=F, include=F}
