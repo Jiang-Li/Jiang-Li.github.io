@@ -13,7 +13,7 @@ output:
 
 ### Analytics Teaching Hub
 
-This course explores data mining methods and tools, examines the issues in the analytical analysis of massive datasets, and unstructured data. Students will learn the concepts and techniques to discover the patterns in large datasets, which support organizational decision making.
+[Franklin Analytics Teaching Hub](https://franklinu-my.sharepoint.com/:o:/g/personal/jiang_li2_franklin_edu/EtAx9PJlPq5BgCQ5XtIBV68BFMXf8d5VGp7r8wUbh9NGfA?e=dDlnJK) is a collection of documents to assist instructors in teaching, including teaching management and FAQs about EdStem. The access requires a Franklin account.
 
 ***
 
