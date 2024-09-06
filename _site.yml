@@ -3,12 +3,15 @@ output_dir: "."
 navbar:
   title: "Jiang 'John' Li, Ph.D."
   left:
-    - text: "Business Analytics"
+    - text: "Analytics Programs"
       href: program.html
     - text: "Teaching"
       href: course.html
-    - text: "Posts & Publications"
+    - text: "Posts"
       href: post.html
+    - text: "Publications"
+      href: publication.html
+
 output:
   html_document:
     theme: readable
