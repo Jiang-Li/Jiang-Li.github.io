@@ -20,7 +20,7 @@ Retention, Journal of Computing Sciences in Colleges, accepted 2023 Jan.
 ### Posts
 
 - [Introduction to Regularization](./posts/regularization/index.nb.html)
-- [Analytics Concept Review](./posts/Regularization/analytics_review.html)
+- [Analytics Concept Review](./posts/analytics_review/index.html)
 - [Analytics Job Application](./posts/job_application/index.html)
 - [Indeed.com Analytics Job Listing](./posts/job_listing/index.html)
 - [Popular Analytics Tools](https://franklinanalytics.medium.com/a-brief-summary-for-popular-analytics-tools-7d7081051c5e)
