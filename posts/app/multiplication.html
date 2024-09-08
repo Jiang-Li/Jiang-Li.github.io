@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiplication Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 80%;
+            max-width: 500px;
+        }
+        .question {
+            font-size: 36px;
+            margin-bottom: 30px;
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+        }
+        button {
+            font-size: 24px;
+            padding: 15px;
+            cursor: pointer;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+        }
+        .stats {
+            margin-top: 30px;
+            font-size: 18px;
+        }
+        #startButton {
+            margin-top: 20px;
+            font-size: 24px;
+            padding: 15px 30px;
+            background-color: #2196F3;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="question" id="question">Click Start to begin!</div>
+        <div class="buttons" id="buttons"></div>
+        <div class="stats">
+            <p>Question: <span id="questionCount">0</span>/10</p>
+            <p>Correct answers: <span id="correct">0</span></p>
+            <p>Time: <span id="time">0</span> seconds</p>
+            <p>Best time: <span id="bestTime">N/A</span> seconds</p>
+        </div>
+        <button id="startButton">Start</button>
+    </div>
+    
+    <!-- Replace the audio elements at the end of the body -->
+    <audio id="correctSound" src="https://www.soundjay.com/buttons/sounds/button-3.mp3"></audio>
+    <audio id="incorrectSound" src="https://www.soundjay.com/buttons/sounds/button-10.mp3"></audio>
+    
+    <script>
+        let num1, num2, correctAnswer, startTime, correctCount = 0, bestTime = Infinity;
+        let currentAnswer = '';
+        let questionCount = 0;
+        let gameActive = false;
+        let lastQuestion = '';
+
+        const correctSound = document.getElementById('correctSound');
+        const incorrectSound = document.getElementById('incorrectSound');
+
+        function generateQuestion() {
+            let newQuestion;
+            do {
+                num1 = Math.floor(Math.random() * 8) + 2; // 2 to 9
+                num2 = Math.floor(Math.random() * 8) + 2; // 2 to 9
+                correctAnswer = num1 * num2;
+                newQuestion = `${num1} × ${num2} = ?`;
+            } while (newQuestion === lastQuestion);
+
+            lastQuestion = newQuestion;
+            document.getElementById('question').textContent = newQuestion;
+            questionCount++;
+            document.getElementById('questionCount').textContent = questionCount;
+        }
+
+        function createButtons() {
+            const buttonsContainer = document.getElementById('buttons');
+            buttonsContainer.innerHTML = '';
+            for (let i = 0; i <= 9; i++) {
+                const button = document.createElement('button');
+                button.textContent = i;
+                button.onclick = () => handleInput(i);
+                buttonsContainer.appendChild(button);
+            }
+        }
+
+        function handleInput(digit) {
+            if (!gameActive) return;
+            currentAnswer += digit;
+            if (currentAnswer.length === 2 || parseInt(currentAnswer) >= correctAnswer) {
+                checkAnswer(parseInt(currentAnswer));
+                currentAnswer = '';
+            }
+        }
+
+        function checkAnswer(answer) {
+            if (answer === correctAnswer) {
+                correctSound.currentTime = 0; // Reset the audio to the beginning
+                correctSound.play().catch(e => console.error("Error playing sound:", e));
+                correctCount++;
+                document.getElementById('correct').textContent = correctCount;
+                if (questionCount < 10) {
+                    generateQuestion();
+                } else {
+                    endGame();
+                }
+            } else {
+                incorrectSound.currentTime = 0; // Reset the audio to the beginning
+                incorrectSound.play().catch(e => console.error("Error playing sound:", e));
+                currentAnswer = '';
+            }
+        }
+
+        function updateTime() {
+            if (!gameActive) return;
+            const currentTime = Math.floor((Date.now() - startTime) / 1000);
+            document.getElementById('time').textContent = currentTime;
+            setTimeout(updateTime, 1000);
+        }
+
+        function startQuiz() {
+            questionCount = 0;
+            correctCount = 0;
+            gameActive = true;
+            document.getElementById('correct').textContent = '0';
+            document.getElementById('time').textContent = '0';
+            generateQuestion();
+            createButtons();
+            startTime = Date.now();
+            updateTime();
+            document.getElementById('startButton').style.display = 'none';
+        }
+
+        function endGame() {
+            gameActive = false;
+            const currentTime = Math.floor((Date.now() - startTime) / 1000);
+            if (correctCount === 10 && currentTime < bestTime) {
+                bestTime = currentTime;
+                document.getElementById('bestTime').textContent = bestTime;
+            }
+            document.getElementById('question').textContent = 'Game Over!';
+            document.getElementById('startButton').style.display = 'inline-block';
+            document.getElementById('startButton').textContent = 'Play Again';
+        }
+
+        document.getElementById('startButton').addEventListener('click', startQuiz);
+    </script>
+</body>
+</html>
