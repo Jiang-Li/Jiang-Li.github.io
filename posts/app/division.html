@@ -53,6 +53,11 @@
             font-size: 20px; /* Increased font size */
             padding: 8px; /* Increased padding */
         }
+        .button-pressed {
+            background-color: #45a049;
+            transform: scale(0.95);
+            transition: all 0.1s;
+        }
     </style>
 </head>
 <body>
@@ -166,7 +171,10 @@
             for (let i = 0; i <= 9; i++) {
                 const button = document.createElement('button');
                 button.textContent = i;
-                button.onclick = () => handleInput(i);
+                button.addEventListener('mousedown', () => addButtonPressEffect(i));
+                button.addEventListener('mouseup', () => removeButtonPressEffect(i));
+                button.addEventListener('mouseleave', () => removeButtonPressEffect(i));
+                button.addEventListener('click', () => handleInput(i));
                 buttonsContainer.appendChild(button);
             }
         }
@@ -180,6 +188,16 @@
                 checkAnswer(parseInt(currentAnswer));
                 currentAnswer = '';
             }
+        }
+
+        function addButtonPressEffect(digit) {
+            const button = document.querySelector(`#buttons button:nth-child(${digit === 0 ? 10 : digit + 1})`);
+            button.classList.add('button-pressed');
+        }
+
+        function removeButtonPressEffect(digit) {
+            const button = document.querySelector(`#buttons button:nth-child(${digit === 0 ? 10 : digit + 1})`);
+            button.classList.remove('button-pressed');
         }
 
         function checkAnswer(answer) {
