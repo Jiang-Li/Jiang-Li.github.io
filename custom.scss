@@ -1,0 +1,391 @@
+/*-- scss:defaults --*/
+
+// Professional color scheme
+$primary: #1f4e79 !default;        // Franklin Blue
+$secondary: #6c757d !default;      // Professional Gray
+$success: #28a745 !default;
+$info: #17a2b8 !default;
+$warning: #ffc107 !default;
+$danger: #dc3545 !default;
+$light: #f8f9fa !default;
+$dark: #343a40 !default;
+
+// Typography
+$font-family-sans-serif: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !default;
+$headings-font-weight: 600 !default;
+$lead-font-weight: 400 !default;
+
+/*-- scss:rules --*/
+
+// Hero section styling
+.hero-section {
+  background: linear-gradient(135deg, #1f4e79 0%, #2c5aa0 100%);
+  color: white;
+  padding: 2rem 0;
+  margin-bottom: 2rem;
+}
+
+.hero-content {
+  align-items: flex-start;
+  min-height: auto;
+}
+
+.hero-content .columns {
+  align-items: flex-start;
+  min-height: auto;
+  gap: 1rem;
+}
+
+.hero-left {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 1rem;
+}
+
+.hero-right {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.hero-about-title {
+  color: white;
+  font-size: 1.8rem;
+  margin-top: 0;
+  margin-bottom: 1.2rem;
+  font-weight: 600;
+}
+
+.hero-right p {
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.hero-right strong {
+  color: white;
+  font-weight: 600;
+}
+
+.hero-right a {
+  color: #87CEEB;
+  text-decoration: underline;
+}
+
+.hero-right a:hover {
+  color: white;
+}
+
+.hero-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 0.8rem;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.hero-subtitle {
+  font-size: 1.1rem;
+  font-weight: 300;
+  margin-bottom: 1.5rem;
+  opacity: 0.9;
+}
+
+// Professional photo styling
+.profile-photo {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid white;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+  margin: 0 auto 1.2rem auto;
+  display: block;
+}
+
+// Responsive design for hero
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 1.5rem 0;
+  }
+  
+  .hero-content {
+    min-height: auto;
+  }
+  
+  .hero-content .columns {
+    flex-direction: column;
+    min-height: auto;
+    gap: 1rem;
+  }
+  
+  .hero-left {
+    text-align: center;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    width: 100% !important;
+  }
+  
+  .hero-right {
+    padding: 0.5rem;
+    width: 100% !important;
+  }
+  
+  .hero-about-title {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-top: 0;
+  }
+  
+  .profile-photo {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 1rem;
+  }
+}
+
+// Achievement cards
+.achievement-card {
+  background: white;
+  border-radius: 8px;
+  padding: 1.8rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+  border-left: 4px solid #1f4e79;
+  transition: transform 0.2s ease-in-out;
+  height: 100%;
+}
+
+.achievement-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.achievement-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: #1f4e79;
+}
+
+.achievement-icon {
+  font-size: 2rem;
+  color: #1f4e79;
+  margin-bottom: 0.8rem;
+}
+
+// Professional buttons
+.btn-professional {
+  background: #1f4e79;
+  border: none;
+  color: white;
+  padding: 10px 24px;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  display: inline-block;
+  margin: 0.4rem;
+  transition: all 0.3s ease;
+}
+
+.btn-professional:hover {
+  background: #2c5aa0;
+  color: white;
+  text-decoration: none;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.btn-outline-professional {
+  background: transparent;
+  border: 2px solid #1f4e79;
+  color: #1f4e79;
+  padding: 8px 22px;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  display: inline-block;
+  margin: 0.4rem;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-professional:hover {
+  background: #1f4e79;
+  color: white;
+  text-decoration: none;
+}
+
+// Section styling
+.content-section {
+  padding: 2.5rem 0;
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1f4e79;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.section-subtitle {
+  font-size: 1.1rem;
+  color: #6c757d;
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+// Stats section
+.stats-section {
+  background: #f8f9fa;
+  padding: 2.5rem 0;
+  margin: 2rem 0;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 1rem;
+}
+
+.stat-number {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #1f4e79;
+  display: block;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: #6c757d;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 0.5rem;
+}
+
+// Contact section
+.contact-section {
+  background: #1f4e79;
+  color: white;
+  padding: 2.5rem 0;
+  margin-top: 2rem;
+}
+
+// Professional experience styling
+.content-section h3 {
+  font-size: 1.4rem;
+  color: #1f4e79;
+  margin-bottom: 0.8rem;
+  margin-top: 1.5rem;
+}
+
+.content-section h2 {
+  font-size: 1.8rem;
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 1.8rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+  
+  .profile-photo {
+    width: 160px;
+    height: 160px;
+  }
+  
+  .achievement-card {
+    padding: 1.5rem;
+  }
+  
+  .section-title {
+    font-size: 1.6rem;
+  }
+  
+  .stat-number {
+    font-size: 1.8rem;
+  }
+  
+  .achievement-card h3 {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-title {
+    font-size: 1.6rem;
+  }
+  
+  .section-title {
+    font-size: 1.4rem;
+  }
+  
+  .profile-photo {
+    width: 140px;
+    height: 140px;
+  }
+  
+  .btn-professional, .btn-outline-professional {
+    font-size: 0.85rem;
+    padding: 8px 18px;
+  }
+}
+
+// Navigation enhancements
+.navbar-brand {
+  font-weight: 700;
+  font-size: 1.3rem;
+}
+
+// Footer enhancements
+.page-footer {
+  background: #343a40;
+  color: white;
+  padding: 2rem 0;
+  margin-top: 2rem;
+}
+
+.page-footer a {
+  color: #adb5bd;
+  text-decoration: none;
+}
+
+.page-footer a:hover {
+  color: white;
+  text-decoration: underline;
+}
+
+// Body text improvements
+p {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+// List improvements
+ul li, ol li {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 0.3rem;
+}
+
+// Ensure proper text sizing in achievement cards
+.achievement-card p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.achievement-card ul {
+  margin-bottom: 0;
+}
+
+.achievement-card ul li {
+  font-size: 0.9rem;
+} 

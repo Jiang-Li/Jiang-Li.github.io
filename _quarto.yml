@@ -1,0 +1,54 @@
+project:
+  type: website
+  output-dir: _site
+  render:
+    - "*.qmd"
+  resources:
+    - "posts/**"
+
+website:
+  title: ""
+  description: "Program Chair for Analytics Programs at Franklin University | Data Science Educator | Former Industry Data Scientist"
+  site-url: "https://jiang-li.github.io"
+  
+  navbar:
+    background: primary
+    search: true
+    left:
+      - text: "Home"
+        href: index.qmd
+      - text: "FAQ"
+        href: program.qmd
+      - text: "Courses"
+        href: course.qmd
+      - text: "Research"
+        href: publication.qmd
+      - text: "Posts"
+        href: post.qmd
+      - text: "Teaching"
+        href: teach.qmd
+    right:
+      - icon: linkedin
+        href: https://www.linkedin.com/in/jiang-li-analytics/
+      - icon: envelope
+        href: mailto:jiang.li2@franklin.edu
+
+  page-footer:
+    left: |
+      Dr. Jiang Li | Franklin University
+    center: |
+      [📧 jiang.li2@franklin.edu](mailto:jiang.li2@franklin.edu) | [📅 Schedule Meeting](https://outlook.office.com/bookwithme/user/1b87d6117e28448bbaa0cb30b44c1f47@franklin.edu?anonymous&ep=bwmEmailSignature)
+    right: |
+      © 2025 June | Powered by [Quarto](https://quarto.org)
+
+format:
+  html:
+    theme: 
+      - cosmo
+      - custom.scss
+    css: style.css
+    include-in-header: google_analytics.html
+    toc: true
+    toc-location: left
+    code-fold: true
+    page-layout: full 

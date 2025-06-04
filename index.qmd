@@ -1,0 +1,76 @@
+---
+title: "Dr. Jiang 'John' Li"
+subtitle: "Program Chair | Data Science Educator | Analytics Expert"
+format: 
+  html:
+    page-layout: full
+---
+
+:::: {.hero-section}
+::: {.container}
+::: {.columns .hero-content}
+::: {.column width="40%" .hero-left}
+![](./img/jiang.jpg){.profile-photo}
+
+[📧 Email Me](mailto:jiang.li2@franklin.edu){.btn-professional}
+
+[📅 Book Meeting](https://outlook.office.com/bookwithme/user/1b87d6117e28448bbaa0cb30b44c1f47@franklin.edu?anonymous&ep=bwmEmailSignature){.btn-outline-professional style="color: white; border-color: white;"}
+:::
+
+::: {.column width="60%" .hero-right}
+## About Me {.hero-about-title}
+
+I serve as **Program Chair for the M.S. in Business Analytics and B.S. in Analytics**, and **Lead Faculty for the M.S. in Data Analytics** at Franklin University. My unique background combines **industry experience as a Data Scientist** in the insurance sector with **academic research** that includes a publication in **Nature** journal from my physics research at Ohio State University.
+
+Currently, my research focuses on **[Learning Analytics](https://en.wikipedia.org/wiki/Learning_analytics)**, exploring how data can transform educational outcomes. I bring this dual perspective of industry practice and academic rigor to analytics education, helping students become effective problem-solvers in real-world contexts.
+:::
+:::
+:::
+::::
+
+::: {.container .content-section}
+
+## Professional Background
+
+**🎓 Current Academic Role**
+- Program Chair: M.S. Business Analytics & B.S. Analytics 
+- Lead Faculty: M.S. Data Analytics
+- Achievement: Led Business Analytics program to **#8 national ranking** (TechGuide)
+
+**🏢 Industry Experience**
+- Data Scientist in Insurance Industry
+- Real-world analytics modeling and implementation
+- Expertise in Excel, SQL, Python, R, and Tableau
+
+**🔬 Research Foundation**
+- Physics research at Ohio State University
+- Published in Nature journal
+- Current focus: Learning Analytics and educational data science
+
+## Teaching Philosophy
+
+Rather than focusing on specific tools, I emphasize the **ability to learn and adapt** to new technologies. Analytics tools evolve rapidly, but fundamental methodologies remain stable. My students learn to be **problem-solvers first**, then apply appropriate tools to solve those problems.
+
+This approach prepares students for the reality that whatever software is popular today may be different in five years, but strong analytical thinking and adaptability will always be valuable.
+
+```{r}
+#| echo: false
+#| include: false
+library(lubridate)
+year <- year(now())
+month <- month(now())
+```
+
+## Connect With Me
+
+Whether you're interested in Franklin's analytics programs, exploring research collaborations, or seeking analytics expertise, I'd love to hear from you.
+
+::: {.text-center}
+[📧 Email Me](mailto:jiang.li2@franklin.edu){.btn-outline-professional} [📅 Book Meeting](https://outlook.office.com/bookwithme/user/1b87d6117e28448bbaa0cb30b44c1f47@franklin.edu?anonymous&ep=bwmEmailSignature){.btn-professional} [💼 LinkedIn](https://www.linkedin.com/in/jiang-li-analytics/){.btn-outline-professional}
+:::
+
+:::
+
+---
+
+

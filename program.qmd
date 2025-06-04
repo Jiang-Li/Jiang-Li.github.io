@@ -1,0 +1,202 @@
+---
+title: "Analytics FAQ"
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-depth: 3
+    number-sections: false
+---
+
+***
+
+### Q1: May I know more about the Business Analytics Program at Franklin University?
+
+Our Business Analytics Program has achieved **national recognition**, ranking **#8 by TechGuide** among online programs. Watch my comprehensive [Program Orientation](https://www.youtube.com/watch?v=BBqFU5vULOU) for detailed insights into curriculum, career outcomes, and program benefits.
+
+**Key Program Highlights:**
+
+- Industry-experienced faculty
+- Practical, hands-on learning
+- Strong job placement rates
+- Flexible online format
+- Real-world capstone projects
+
+***
+
+### Q2: Is Business Analytics a good fit for me?
+
+Business Analytics is ideal if you have:
+
+✅ **Intense curiosity** to answer business questions  
+✅ **Passion for exploring** hidden patterns in data  
+✅ **Enjoyment in solving** new business problems  
+✅ **Interest in data-driven** decision making  
+
+❌ **Not recommended if you:**
+
+- Prefer routine, day-to-day work without variation
+- Are not interested in data-based problem-solving
+- Dislike analytical thinking or quantitative reasoning
+
+***
+
+### Q3: Do I need a strong math background?
+
+**Short answer: Not really.** Here's what you need to know:
+
+**Example: Understanding Linear Regression**
+
+- You need to understand that we're finding the best line through data points
+- Why this line helps us make predictions about new data
+- **Applied approach**: You can build effective models using software tools without knowing the mathematical derivations
+- **The math behind it**: Understanding calculus and linear algebra explains *how* the computer finds the best line, but you don't need this to *use* regression effectively
+
+**Our Philosophy**: We teach analytics as an **applied discipline**. You learn to solve real business problems using proven methods and tools, rather than deriving mathematical formulas.
+
+**Mathematical Foundation Needed:**
+
+- **Essential**: Basic statistics understanding and logical thinking
+- **Helpful but not required**: Linear algebra, calculus
+- **Reality**: You can successfully complete analytics projects and build your career without advanced mathematics
+
+***
+
+### Q4: Do I need strong programming skills?
+
+**Absolutely not!** Our approach focuses on **problem-solving using existing tools** rather than software engineering.
+
+**Analytics Programming vs. Software Engineering:**
+
+- ✅ **Analytics Focus**: Problem-solving with well-developed packages
+- ✅ **Tool Utilization**: Leveraging R, Python, Tableau, SAS functions
+- ✅ **Student Success**: Complete predictive analysis projects without writing loops
+- ❌ **Not Required**: Writing code like software engineers
+
+**Our Philosophy**: We teach you to be **analytics problem-solvers**, not programmers.
+
+***
+
+### Q5: What is Business Analytics and how does it differ from Data Analytics?
+
+Both are **applied Data Science** fields, but with different emphases and technical depth:
+
+**🏢 Business Analytics **
+
+- **Primary Focus**: Solving business problems using data
+- **Goal**: Support decision-making and improve business outcomes
+- **Questions**: What happened? Why did this happen? What should we do?
+- **Approach**: Business-oriented with moderate technical depth
+- **Tools**: Excel, SQL, Python, Power BI/Tableau, dashboards
+- **Output**: Actionable insights, KPIs, business recommendations
+- **Audience**: Business users, managers, decision-makers
+
+**📊 Data Analytics **
+
+- **Primary Focus**: Understanding and exploring data in technical depth
+- **Goal**: Generate insights, identify patterns, and build predictive models
+- **Questions**: What trends exist? What can we predict? How accurate is the model?
+- **Approach**: Technical/methodological with higher statistical rigor
+- **Tools**: SQL, Python/R, advanced statistics, ML libraries, Jupyter notebooks
+- **Output**: Statistical reports, model predictions, pattern detection
+- **Audience**: Analysts, technical teams, data scientists
+
+**Key Difference**: Business Analytics emphasizes **applying data insights to business contexts** for stakeholder decision-making, while Data Analytics focuses on **technical precision and advanced statistical modeling** for deeper analytical exploration.
+
+**Common Foundation**: Both programs teach data manipulation, statistical analysis, and insight generation - the difference is in application focus and technical depth.
+
+***
+
+### Q6: What analytics tools should I learn?
+
+**Most Important Principle**: **Ability to learn new tools** > mastery of specific tools
+
+**🎯 Key Philosophy**: Analytics tools evolve rapidly. The software popular today may be different in five years. **Focus on methodology and adaptability** rather than tool-specific expertise.
+
+**Methodology > Tools**: Understanding the **data mining process** and **algorithm intuition** allows you to solve problems across platforms.
+
+**Recommended Tool Exposure by Category:**
+
+**Spreadsheet Tools:**
+
+- **Excel**: Widely used for modeling, scenario analysis, and quick calculations
+
+**Database Querying:**
+
+- **SQL**: Core skill for accessing and manipulating structured data (essential)
+
+**Data Visualization:**
+
+- **Power BI**: Common in business settings, integrates well with Microsoft ecosystem
+- **Tableau**: Strong in design and advanced visualizations
+
+**Programming Languages:**
+
+- **Python**: Most popular for analytics and data science; strong in automation, ML, and dashboard development
+- **R**: Preferred in research and academia; excellent for statistical analysis and specialized visualizations
+
+**Why These Tools Matter:**
+
+- **Industry Demand**: High job market requirements across sectors
+- **Versatility**: Each serves different analytical needs and contexts
+- **Learning Value**: Skills transfer between similar tools
+- **Career Growth**: Exposure to multiple tools increases opportunities
+
+**Strategy**: Gain exposure to tools from each category to position yourself effectively in the job market. The goal is understanding **when and why** to use each tool, not becoming an expert in all of them.
+
+***
+
+### Q7: What career opportunities are available after graduation?
+
+Below is a snapshot of where graduates from **B.S. in Analytics**, **M.S. in Business Analytics**, and **M.S. in Data Analytics** programs typically land. Roles marked ★ often prefer—or sometimes require—a master's degree.
+
+**Career Paths by Functional Area:**
+
+**Business & Strategy**
+
+- Business Analyst, Business Intelligence (BI) Analyst★, Product Analyst
+- *Notes*: Translate data into business actions; BI roles lean toward the M.S. in Business Analytics
+
+**Data & Reporting**
+
+- Data Analyst, Reporting Analyst, Data Visualization Developer
+- *Notes*: Core roles for B.S. grads; master's degree can fast-track you to senior analyst positions
+
+**Marketing & Customer Insights**
+
+- Marketing Analyst, Customer/CRM Analyst, Growth Analyst
+- *Notes*: Heavy use of A/B testing and dashboarding; often require storytelling skills
+
+**Operations & Supply Chain**
+
+- Operations Research Analyst★, Supply Chain Analyst
+- *Notes*: Optimization and simulation skills valued; many roles in manufacturing, logistics, and retail
+
+**Advanced Modeling & AI**
+
+- Data Scientist★, Machine Learning Engineer★, Quantitative Analyst (FinTech)★
+- *Notes*: Strong fit for M.S. in Data Analytics; requires solid programming (Python/R) and statistics
+
+**Analytics Engineering**
+
+- Analytics Engineer★, Data Engineer (entry-level)
+- *Notes*: Emerging bridge role: turns raw data into clean, analysis-ready datasets (dbt, SQL)
+
+**Governance & Risk**
+
+- Risk Analyst, Compliance Data Analyst, Fraud Analyst
+- *Notes*: Growing demand in finance, healthcare, and government sectors
+
+**Industries Hiring Our Graduates:**
+
+- Technology & Software
+- Finance and Banking / FinTech
+- Healthcare & Life Sciences
+- Retail & E-commerce
+- Manufacturing & Supply Chain
+- Consulting & Professional Services
+- Government & Public Sector
+- Energy & Utilities (data-driven grid management)
+- Sports & Entertainment (ticketing, performance analytics)
+
+**Career Advancement Tip**: Keep a portfolio (GitHub, Tableau Public, Power BI) showcasing projects that match your target roles—employers increasingly treat it as a second résumé.

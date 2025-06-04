@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Analytics Tools Popularity Chart</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        .date {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .chart {
+            width: 100%;
+            height: 400px;
+        }
+        .bar {
+            fill: #8884d8;
+        }
+        .bar:hover {
+            fill: #5753a8;
+        }
+        .axis-label {
+            font-size: 12px;
+        }
+        .tooltip {
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px;
+            border-radius: 3px;
+            font-size: 12px;
+            pointer-events: none;
+        }
+        .note, .takeaway {
+            font-size: 14px;
+            color: #666;
+            margin-top: 20px;
+        }
+        .takeaway {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Popularity of Analytics Tools in Job Listings</h1>
+        <p class="subtitle">Based on Indeed.com job listings for analytics positions in the USA<br>(Full-time, Entry-level, Master's degree required)</p>
+        <p class="date">Data collected: August 2024</p>
+        <div id="chart" class="chart"></div>
+        <p class="note">Note: Data collected using keywords "analytics" plus the tool name for each search.</p>
+        <p class="takeaway">Key Takeaway: As of August 2024, Python has become increasingly popular in industry and is now as frequently required as SQL in analytics job listings.</p>
+    </div>
+
+    <script>
+        const data = [
+            { name: 'Excel', popularity: 100 },
+            { name: 'SQL', popularity: 25 },
+            { name: 'Python', popularity: 25 },
+            { name: 'R', popularity: 15 },
+            { name: 'Tableau', popularity: 10 }
+        ];
+
+        const margin = { top: 20, right: 20, bottom: 40, left: 40 };
+        const width = 760 - margin.left - margin.right;
+        const height = 400 - margin.top - margin.bottom;
+
+        const svg = d3.select('#chart')
+            .append('svg')
+            .attr('width', width + margin.left + margin.right)
+            .attr('height', height + margin.top + margin.bottom)
+            .append('g')
+            .attr('transform', `translate(${margin.left},${margin.top})`);
+
+        const x = d3.scaleBand()
+            .range([0, width])
+            .padding(0.1);
+
+        const y = d3.scaleLinear()
+            .range([height, 0]);
+
+        x.domain(data.map(d => d.name));
+        y.domain([0, d3.max(data, d => d.popularity)]);
+
+        svg.selectAll('.bar')
+            .data(data)
+            .enter().append('rect')
+            .attr('class', 'bar')
+            .attr('x', d => x(d.name))
+            .attr('width', x.bandwidth())
+            .attr('y', d => y(d.popularity))
+            .attr('height', d => height - y(d.popularity));
+
+        svg.append('g')
+            .attr('transform', `translate(0,${height})`)
+            .call(d3.axisBottom(x));
+
+        svg.append('g')
+            .call(d3.axisLeft(y));
+
+        svg.append('text')
+            .attr('transform', 'rotate(-90)')
+            .attr('y', 0 - margin.left)
+            .attr('x', 0 - (height / 2))
+            .attr('dy', '1em')
+            .style('text-anchor', 'middle')
+            .text('Popularity vs Excel (%)');
+
+        const tooltip = d3.select('body').append('div')
+            .attr('class', 'tooltip')
+            .style('opacity', 0);
+
+        svg.selectAll('.bar')
+            .on('mouseover', function(event, d) {
+                tooltip.transition()
+                    .duration(200)
+                    .style('opacity', .9);
+                tooltip.html(`${d.name}: ${d.popularity}%`)
+                    .style('left', (event.pageX) + 'px')
+                    .style('top', (event.pageY - 28) + 'px');
+            })
+            .on('mouseout', function(d) {
+                tooltip.transition()
+                    .duration(500)
+                    .style('opacity', 0);
+            });
+    </script>
+</body>
+</html>

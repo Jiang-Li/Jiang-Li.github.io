@@ -1,0 +1,68 @@
+---
+title: "Supervise/Teach the Following Courses"
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-depth: 3
+    number-sections: false
+---
+
+***
+
+### DATA 610: Big Data Analytics and Data Mining 
+
+This course explores data mining methods and tools, examines the issues in the analytical analysis of massive datasets, and unstructured data. Students will learn the concepts and techniques to discover the patterns in large datasets, which support organizational decision making.
+
+***
+
+### DATA 611: Applied Machine Learning
+
+This course explores two main areas of machine learning: supervised and unsupervised. Topics include linear and logistic regression, probabilistic inference, Support Vector Machines, Artificial Neural Networks, clustering, dimensionality reduction, and programming.
+
+***
+
+### DATA 612: Computing for Data Analytics
+
+This course explores the methods of analytics computing and the procedures for diagnostic and predictive analytics. Topics include data manipulation, clustering algorithms, and regression methods using basic programming techniques.
+
+***
+
+### DATA 300: Introduction to Analytics
+
+This course introduces the fundamentals of Business and Data Analytics. Students will learn the fundamentals of business problem framing, data wrangling, descriptive and inferential statistics, data visualization, and data storytelling in analytics. Not open to students with credit for INFA 300.
+
+
+***
+
+### DATA 400: Principles of Machine Learning
+
+Students will learn the basic concepts behind major machine learning algorithms, the essential steps for creating a typical machine learning model, the strengths and weaknesses of different algorithms, and the model evaluation using different performance metrics. Eventually students will be able to build a prediction model by machine learning algorithm using Python language. The differences between Java and Python will be reviewed. The common problems in practical machine learning exercises and their solutions also will be discussed.
+
+
+
+***
+
+### BUSA 250: SQL for Business
+
+This course introduces data analytics using Structured Query Language (SQL). Students will learn how to apply SQL in data exploration analysis and business problem-solving.
+
+
+***
+
+### BUSA 350:  Principles Analytics Modeling 
+
+This course introduces the principles of analytics modeling. Students will learn exploratory data analytics, regression, classification, clustering, model interpretation, and model evaluation. Not open to students with credit for INFA 420.
+
+***
+
+### BUSA 603: Marketing Management & Analytics
+
+This course covers the application of analytics tools, techniques, strategies and methods to marketing management. Students learn to analyze market data, enabling management decisions to be based on data-driven facts and customer insights. Using marketing analytics tools to model scenarios, students learn how organizations can measure returns on investment relative to their marketing efforts, drive performance and strengthen the effectiveness of its campaigns.
+
+
+***
+
+### BUSA 695: Capstone in Business Analytics
+
+Students demonstrate an integrative knowledge of analytics in this course by developing a project plan to implement analytics for an important function, unit or department of the organization chosen in the Business Analytics strategy course. Students apply analytics tools, techniques, methods and strategies to drive business outcomes for the chosen company using relevant project-based methodologies. The course allows students to develop a professional portfolio that will highlight the work completed throughout the degree program. This may serve as a relevant employability resource. 
