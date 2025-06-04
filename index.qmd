@@ -53,14 +53,6 @@ Rather than focusing on specific tools, I emphasize the **ability to learn and a
 
 This approach prepares students for the reality that whatever software is popular today may be different in five years, but strong analytical thinking and adaptability will always be valuable.
 
-```{r}
-#| echo: false
-#| include: false
-library(lubridate)
-year <- year(now())
-month <- month(now())
-```
-
 ## Connect With Me
 
 Whether you're interested in Franklin's analytics programs, exploring research collaborations, or seeking analytics expertise, I'd love to hear from you.
