@@ -74,9 +74,16 @@ jobs:
         git push
         
     - name: Set up Quarto
-      if: steps.verify-changed-files.outputs.changed == 'true'
       uses: quarto-dev/quarto-actions/setup@v2
-      
+      with:
+        tinytex: true
+        
+    - name: Install Jupyter for Quarto
+      run: |
+        pip install jupyter nbformat ipykernel
+        python -c "import nbformat; print('nbformat available')"
+        quarto check jupyter
+        
     - name: Render website
       if: steps.verify-changed-files.outputs.changed == 'true'
       run: |
