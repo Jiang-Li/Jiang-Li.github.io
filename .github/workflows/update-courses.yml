@@ -18,7 +18,7 @@ jobs:
       id: setup_python_main
       uses: actions/setup-python@v5
       with:
-        python-version: '3.12'
+        python-version: '3.9'
         cache: 'pip'
         
     - name: Install system dependencies
@@ -74,32 +74,30 @@ jobs:
         git commit -m "🤖 Auto-update course data $(date +'%Y-%m-%d %H:%M:%S')"
         git push
         
-    - name: Setup Python for Quarto & Install Jupyter
+    - name: Install Jupyter in System Python for Quarto
       run: |
-        echo "Setting up Python environment for Quarto..."
-        python -m pip install --upgrade pip
-        pip install jupyter nbclient nbconvert ipykernel
-        python -c "import nbformat; print('nbformat available after pip install for Quarto Python candidate.')"
-        echo "QUARTO_PYTHON_PATH=$(which python)" >> $GITHUB_ENV
-        echo "QUARTO_PYTHON_PATH set to: $(which python) (version $(python --version))"
+        echo "Attempting to install Jupyter into /usr/bin/python3 for Quarto kernel execution..."
+        sudo /usr/bin/python3 -m pip install --upgrade pip --break-system-packages
+        sudo /usr/bin/python3 -m pip install jupyter nbclient nbconvert ipykernel --break-system-packages
+        echo "Verifying nbformat in /usr/bin/python3..."
+        sudo /usr/bin/python3 -c "import nbformat; print(f'nbformat version {nbformat.__version__} successfully imported in /usr/bin/python3')"
+        echo "Contents of /usr/lib/python3/dist-packages after install:"
+        ls -l /usr/lib/python3/dist-packages || true 
+        echo "Contents of /usr/local/lib/python3.12/dist-packages after install:"
+        ls -l /usr/local/lib/python3.12/dist-packages/ || true
 
     - name: Set up Quarto
       uses: quarto-dev/quarto-actions/setup@v2
       with:
         tinytex: true
-      env:
-        QUARTO_PYTHON: ${{ env.QUARTO_PYTHON_PATH }}
         
     - name: Render website
       if: steps.verify-changed-files.outputs.changed == 'true'
-      env:
-        QUARTO_PYTHON: ${{ env.QUARTO_PYTHON_PATH }}
       run: |
         echo "--- Debug info before render --- "
         echo "PATH: $PATH"
         echo "which python (system PATH): $(which python)" # This will show the python from setup-python
         echo "python --version (system PATH): $(python --version)"
-        echo "QUARTO_PYTHON env var is: $QUARTO_PYTHON" # This should be the path from QUARTO_PYTHON_PATH
         echo "--- Running quarto check jupyter with QUARTO_PYTHON=$QUARTO_PYTHON --- "
         quarto check jupyter
         echo "--- Running quarto render with QUARTO_PYTHON=$QUARTO_PYTHON --- "
