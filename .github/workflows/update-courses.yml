@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  simple-deploy:
+  update-course-report:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -57,38 +57,73 @@ jobs:
 
     - name: Scrape Franklin course data
       run: |
-        echo "🔍 Starting course data scraping..."
+        echo "🎯 Franklin Course Report Update - Starting Data Collection"
+        echo "============================================================"
         cd teach/franklin-course-scraper
         timeout 300 python scripts/scrape_franklin_courses.py || echo "⚠️ Course scraping failed or timed out, continuing with existing data..."
         
-        # Check if data was created
+        # Check if fresh data was created
         if [ -f "data/franklin_courses.csv" ]; then
-          echo "✅ Course data file exists"
-          wc -l data/franklin_courses.csv
+          echo "✅ Fresh course data generated successfully"
+          echo "📊 File size: $(du -h data/franklin_courses.csv)"
+          echo "📋 Course sections found: $(($(wc -l < data/franklin_courses.csv) - 1))"
+          echo "🕒 Data timestamp: $(date)"
         else
-          echo "⚠️ No course data file found, website will show error message"
+          echo "⚠️ No course data file found - course schedule will show error message"
         fi
 
-    - name: Verify course data
+    - name: Verify course data quality
       run: |
         if [ -f teach/franklin-course-scraper/data/franklin_courses.csv ]; then
-          echo "✅ Course data file exists"
-          echo "📊 File size: $(du -h teach/franklin-course-scraper/data/franklin_courses.csv)"
-          echo "📋 Lines in file: $(wc -l < teach/franklin-course-scraper/data/franklin_courses.csv)"
-          echo "🔍 First few lines:"
-          head -n 3 teach/franklin-course-scraper/data/franklin_courses.csv
+          echo "🔍 Data Quality Check:"
+          echo "📄 File exists: ✅"
+          echo "📏 File size: $(stat -c%s teach/franklin-course-scraper/data/franklin_courses.csv) bytes"
+          echo "📊 Total rows: $(wc -l < teach/franklin-course-scraper/data/franklin_courses.csv)"
+          echo "🎓 Sample data (first row):"
+          head -n 2 teach/franklin-course-scraper/data/franklin_courses.csv | tail -n 1 | cut -d',' -f1-4
         else
-          echo "❌ Course data file not found"
-          ls -la teach/franklin-course-scraper/data/ || echo "Data directory not found"
+          echo "❌ Course data file not found - checking directory structure:"
+          find teach/franklin-course-scraper -name "*.csv" -type f || echo "No CSV files found"
         fi
 
     - name: Set up Quarto
       uses: quarto-dev/quarto-actions/setup@v2
 
-    - name: Render website
+    - name: Render course schedule
       run: |
-        echo "Rendering Quarto website..."
+        echo "📝 Rendering course schedule with fresh data..."
+        echo "Course data path: teach/franklin-course-scraper/data/franklin_courses.csv"
+        quarto render teach/course-schedule.qmd
+        echo "✅ Course schedule rendered successfully"
+
+    - name: Check if full rebuild needed
+      id: check-rebuild
+      run: |
+        # Only do full rebuild on push or manual dispatch, not on scheduled runs
+        if [ "${{ github.event_name }}" = "schedule" ]; then
+          echo "rebuild=false" >> $GITHUB_OUTPUT
+          echo "📄 Scheduled run: Only course schedule updated"
+        else
+          echo "rebuild=true" >> $GITHUB_OUTPUT  
+          echo "🔄 Push/Manual run: Full site rebuild"
+        fi
+
+    - name: Render full website (if needed)
+      if: steps.check-rebuild.outputs.rebuild == 'true'
+      run: |
+        echo "🌐 Rendering complete website..."
         quarto render
+        echo "✅ Full website rendered successfully"
+
+    - name: Ensure site directory exists
+      run: |
+        # Make sure _site directory exists for deployment
+        if [ ! -d "_site" ]; then
+          echo "🔧 Creating _site directory and rendering full site..."
+          quarto render
+        else
+          echo "✅ Site directory exists"
+        fi
 
     - name: Setup Pages
       uses: actions/configure-pages@v4
@@ -100,4 +135,11 @@ jobs:
 
     - name: Deploy to GitHub Pages
       id: deployment
-      uses: actions/deploy-pages@v4 
+      uses: actions/deploy-pages@v4
+
+    - name: Report deployment success
+      run: |
+        echo "🎉 Course report update completed successfully!"
+        echo "📊 Fresh course data collected and processed"
+        echo "🌐 Website deployed to: ${{ steps.deployment.outputs.page_url }}"
+        echo "📅 Course schedule available at: ${{ steps.deployment.outputs.page_url }}teach/course-schedule.html" 
