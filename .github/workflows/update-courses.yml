@@ -80,11 +80,19 @@ jobs:
         
     - name: Install Jupyter for Quarto
       run: |
-        # Install for both Python versions to ensure Quarto can find it
+        # Install Jupyter packages
         pip install jupyter nbformat ipykernel
-        sudo /usr/bin/python3 -m pip install jupyter nbformat ipykernel
-        python -c "import nbformat; print('nbformat available for setup-python')"
-        /usr/bin/python3 -c "import nbformat; print('nbformat available for system python')"
+        python -c "import nbformat; print('nbformat available')"
+        
+        # Configure Quarto to use the setup-python environment
+        PYTHON_PATH=$(which python)
+        echo "Python path: $PYTHON_PATH"
+        quarto tools install python --update-path
+        
+        # Set environment variable for Quarto
+        echo "QUARTO_PYTHON=$PYTHON_PATH" >> $GITHUB_ENV
+        
+        # Verify Quarto can find Jupyter
         quarto check jupyter
         
     - name: Render website
