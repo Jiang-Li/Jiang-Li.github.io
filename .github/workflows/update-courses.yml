@@ -20,18 +20,46 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 2  # Needed to detect file changes
 
+    # NEW: Detect what files changed to decide if scraping is needed
+    - name: Detect changes
+      id: changes
+      run: |
+        if [ "${{ github.event_name }}" = "schedule" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          echo "scrape=true" >> $GITHUB_OUTPUT
+          echo "🕒 Scheduled/Manual run: Will run course scraper"
+        else
+          # Check if course-related files changed in this push
+          CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD)
+          echo "📝 Changed files in this push:"
+          echo "$CHANGED_FILES"
+          
+          if echo "$CHANGED_FILES" | grep -E "(teach/franklin-course-scraper/|teach/course-schedule\.qmd|course_request\.md)"; then
+            echo "scrape=true" >> $GITHUB_OUTPUT
+            echo "🎯 Course-related files changed: Will run course scraper"
+          else
+            echo "scrape=false" >> $GITHUB_OUTPUT
+            echo "📄 Only non-course files changed: Skipping course scraper for faster build"
+          fi
+        fi
+
+    # These steps only run when scraping is needed
     - name: Set up Python
+      if: steps.changes.outputs.scrape == 'true'
       uses: actions/setup-python@v5
       with:
         python-version: '3.9'
 
     - name: Install Python dependencies
+      if: steps.changes.outputs.scrape == 'true'
       run: |
         python -m pip install --upgrade pip
         pip install requests beautifulsoup4 pandas numpy PyYAML jupyter nbclient nbconvert ipykernel selenium
 
     - name: Install Chrome and ChromeDriver
+      if: steps.changes.outputs.scrape == 'true'
       run: |
         # Install Chrome using modern keyring approach
         wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo gpg --dearmor -o /usr/share/keyrings/google-chrome-keyring.gpg
@@ -46,10 +74,12 @@ jobs:
         google-chrome --version
 
     - name: Create data directory
+      if: steps.changes.outputs.scrape == 'true'
       run: |
         mkdir -p teach/franklin-course-scraper/data
 
     - name: Scrape Franklin course data
+      if: steps.changes.outputs.scrape == 'true'
       run: |
         echo "🎯 Franklin Course Report Update - Starting Data Collection"
         echo "============================================================"
@@ -67,6 +97,7 @@ jobs:
         fi
 
     - name: Verify course data quality
+      if: steps.changes.outputs.scrape == 'true'
       run: |
         if [ -f teach/franklin-course-scraper/data/franklin_courses.csv ]; then
           echo "🔍 Data Quality Check:"
@@ -80,20 +111,23 @@ jobs:
           find teach/franklin-course-scraper -name "*.csv" -type f || echo "No CSV files found"
         fi
 
+    # Always setup Quarto regardless of scraping
     - name: Set up Quarto
       uses: quarto-dev/quarto-actions/setup@v2
 
+    # Only render course schedule if we scraped new data
     - name: Render course schedule
+      if: steps.changes.outputs.scrape == 'true'
       run: |
         echo "📝 Rendering course schedule with fresh data..."
         echo "Course data path: teach/franklin-course-scraper/data/franklin_courses.csv"
         quarto render teach/course-schedule.qmd
         echo "✅ Course schedule rendered successfully"
 
+    # Smart rebuild logic based on trigger type and file changes
     - name: Check if full rebuild needed
       id: check-rebuild
       run: |
-        # Only do full rebuild on push or manual dispatch, not on scheduled runs
         if [ "${{ github.event_name }}" = "schedule" ]; then
           echo "rebuild=false" >> $GITHUB_OUTPUT
           echo "📄 Scheduled run: Only course schedule updated"
@@ -134,6 +168,10 @@ jobs:
     - name: Report deployment success
       run: |
         echo "🎉 Course report update completed successfully!"
-        echo "📊 Fresh course data collected and processed"
+        if [ "${{ steps.changes.outputs.scrape }}" = "true" ]; then
+          echo "📊 Fresh course data collected and processed"
+        else
+          echo "📄 Quick update: Non-course files updated only"
+        fi
         echo "🌐 Website deployed to: ${{ steps.deployment.outputs.page_url }}"
         echo "📅 Course schedule available at: ${{ steps.deployment.outputs.page_url }}teach/course-schedule.html" 
