@@ -120,13 +120,18 @@ jobs:
         echo "which python3 (should be system python e.g. 3.12): $(which python3)"
         echo "python3 --version (should be system python e.g. 3.12): $(python3 --version)"
         echo "--- Running sudo /usr/bin/python3 -c 'import nbformat; print(nbformat.__version__)' ---"
-        sudo /usr/bin/python3 -c "import nbformat; print(f'Direct check: nbformat version {nbformat.__version__}')" || echo "Direct check of nbformat failed for /usr/bin/python3"
+        sudo /usr/bin/python3 -c "import nbformat; print(f'Direct check: nbformat version {nbformat.__version__}')" || echo "Direct nbformat check failed"
+        echo "--- Running sudo /usr/bin/python3 -c 'import yaml; print(yaml.__version__)' ---"
+        sudo /usr/bin/python3 -c "import yaml; print(f'Direct check: PyYAML version {yaml.__version__}')" || echo "Direct PyYAML check failed"
+        echo "--- Running sudo /usr/bin/python3 -c 'import pandas; print(pandas.__version__)' ---"
+        sudo /usr/bin/python3 -c "import pandas; print(f'Direct check: pandas version {pandas.__version__}')" || echo "Direct pandas check failed"
+        echo "--- Running sudo /usr/bin/python3 -c 'import numpy; print(numpy.__version__)' ---"
+        sudo /usr/bin/python3 -c "import numpy; print(f'Direct check: numpy version {numpy.__version__}')" || echo "Direct numpy check failed"
+
         echo "--- Running quarto check --- "
         quarto check
-        echo "--- Running quarto check jupyter --- " # No longer passing QUARTO_PYTHON here
-        quarto check jupyter
-        echo "--- Running quarto render --- " # No longer passing QUARTO_PYTHON here
-        quarto render
+        echo "--- Running quarto render --clean --- "
+        quarto render --clean
         
     - name: Deploy to GitHub Pages
       if: steps.verify-changed-files.outputs.changed == 'true'
