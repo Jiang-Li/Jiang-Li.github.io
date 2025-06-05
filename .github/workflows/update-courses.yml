@@ -78,18 +78,23 @@ jobs:
       with:
         tinytex: true
         
-    - name: Install Jupyter for Quarto
+    - name: Configure Python environment for Quarto
       run: |
-        # Install Jupyter for setup-python environment
-        pip install jupyter nbformat ipykernel
-        python -c "import nbformat; print('nbformat available for setup-python')"
+        # Install Jupyter in setup-python environment
+        python -m pip install --upgrade pip
+        python -m pip install jupyter nbformat ipykernel
         
-        # Install Jupyter for the system Python that Quarto actually uses
-        sudo /usr/bin/python3 -m pip install --break-system-packages jupyter nbformat ipykernel
-        /usr/bin/python3 -c "import nbformat; print('nbformat available for system python')" || echo "Failed to import in system python"
+        # Verify installation
+        python -c "import nbformat; print('nbformat installed successfully')"
         
-        # Verify Quarto can find Jupyter
-        quarto check jupyter || echo "Quarto check failed, but continuing"
+        # Configure environment variables to force Quarto to use our Python
+        echo "QUARTO_PYTHON=$(which python)" >> $GITHUB_ENV
+        echo "JUPYTER_PATH=$(python -c 'import jupyter; print(jupyter.path.jupyter_path()[0])')" >> $GITHUB_ENV
+        
+        # Create a simple requirements.txt for the Jupyter environment
+        echo "jupyter" > /tmp/requirements.txt
+        echo "nbformat" >> /tmp/requirements.txt
+        echo "ipykernel" >> /tmp/requirements.txt
         
     - name: Render website
       if: steps.verify-changed-files.outputs.changed == 'true'
