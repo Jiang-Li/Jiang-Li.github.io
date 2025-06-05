@@ -85,12 +85,13 @@ jobs:
         echo "Ensuring pip is available for system Python and installing Jupyter components, pandas, and numpy..."
         # We will use /usr/bin/python3 explicitly to invoke its pip module
         # Adding --ignore-installed to avoid issues with system-managed packages like jsonschema
-        sudo /usr/bin/python3 -m pip install --ignore-installed jupyter nbclient nbconvert ipykernel pandas numpy --break-system-packages --no-cache-dir
+        sudo /usr/bin/python3 -m pip install --ignore-installed jupyter nbclient nbconvert ipykernel pandas numpy PyYAML --break-system-packages --no-cache-dir
         
         echo "--- Verifying imports in /usr/bin/python3 ---"
         sudo /usr/bin/python3 -c "import nbformat; print(f'nbformat version {nbformat.__version__} successfully imported in /usr/bin/python3')"
         sudo /usr/bin/python3 -c "import pandas; print(f'pandas version {pandas.__version__} successfully imported in /usr/bin/python3')"
         sudo /usr/bin/python3 -c "import numpy; print(f'numpy version {numpy.__version__} successfully imported in /usr/bin/python3')"
+        sudo /usr/bin/python3 -c "import yaml; print(f'PyYAML version {yaml.__version__} successfully imported in /usr/bin/python3')"
         
         echo "--- Listing packages for /usr/bin/python3 ---"
         sudo /usr/bin/python3 -m pip list
@@ -110,7 +111,7 @@ jobs:
     - name: Render website
       if: steps.verify-changed-files.outputs.changed == 'true'
       env:
-        QUARTO_PYTHON: "" # Explicitly unset
+        QUARTO_PYTHON: "/usr/bin/python3" # Explicitly set to system python
       run: |
         echo "--- Debug info before render --- "
         echo "Current PATH: $PATH"
