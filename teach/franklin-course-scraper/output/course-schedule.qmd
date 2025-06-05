@@ -59,105 +59,15 @@ format:
 
 ## 📚 Complete Course Schedule
 
+::: {.callout-note}
+## Course Data Update Required
+
+The course schedule will be automatically updated when the course data scraper is re-enabled. For now, please refer to the main teaching page for course information.
+:::
+
 ::: {.course-table}
 
-```{python}
-#| echo: false
-import pandas as pd
-import os
-
-# Load course data
-csv_path = "../data/franklin_courses.csv"
-if os.path.exists(csv_path):
-    df = pd.read_csv(csv_path)
-    
-    # Format the data for display
-    df_display = df.copy()
-    
-    # Add enrollment status
-    df_display['Enrollment_Status'] = df_display.apply(
-        lambda row: f"{row['Enrolled_Seats']}/{row['Total_Seats']}", axis=1
-    )
-    
-    # Add availability status
-    def get_availability_class(row):
-        available = row['Available_Seats']
-        if available >= 10:
-            return 'available'
-        elif available > 0:
-            return 'limited'
-        else:
-            return 'full'
-    
-    df_display['Availability_Class'] = df_display.apply(get_availability_class, axis=1)
-    
-    # Select and rename columns for display
-    display_columns = [
-        'Course_Code', 'Course_Name', 'Credits', 'Session_Code',
-        'Enrollment_Status', 'Available_Seats', 'Waitlist',
-        'Weekdays', 'Class_Times', 'Locations', 'Instructors',
-        'Teaching_Mode', 'Start_Date', 'End_Date', 'First_Term'
-    ]
-    
-    df_final = df_display[display_columns].copy()
-    
-    # Rename columns for better display
-    df_final.columns = [
-        'Course Code', 'Course Name', 'Credits', 'Session',
-        'Enrollment', 'Available', 'Waitlist',
-        'Weekdays', 'Class Times', 'Location', 'Instructor',
-        'Mode', 'Start Date', 'End Date', 'First Term'
-    ]
-    
-    # Sort by course code
-    df_final = df_final.sort_values('Course Code')
-    
-    # Create HTML table with proper styling
-    html_table = '<table class="table">\n<thead>\n<tr>\n'
-    
-    # Add headers
-    for col in df_final.columns:
-        html_table += f'<th>{col}</th>\n'
-    html_table += '</tr>\n</thead>\n<tbody>\n'
-    
-    # Add rows
-    for idx, row in df_final.iterrows():
-        # Apply first-term styling
-        row_class = 'first-term' if row['First Term'] == 'Yes' else ''
-        html_table += f'<tr class="{row_class}">\n'
-        
-        for col_idx, (col, value) in enumerate(row.items()):
-            if col == 'Enrollment':
-                html_table += f'<td class="enrollment">{value}</td>\n'
-            elif col == 'Available':
-                # Get availability class for this row
-                orig_idx = df_final.index[df_final['Course Code'] == row['Course Code']].tolist()[0]
-                avail_class = df_display.loc[orig_idx, 'Availability_Class']
-                html_table += f'<td class="enrollment {avail_class}">{value}</td>\n'
-            elif col == 'First Term':
-                display_val = '✅' if value == 'Yes' else ''
-                html_table += f'<td style="text-align: center;">{display_val}</td>\n'
-            else:
-                html_table += f'<td>{value}</td>\n'
-        
-        html_table += '</tr>\n'
-    
-    html_table += '</tbody>\n</table>'
-    
-    # Print table info
-    from IPython.display import Markdown, display
-    display(Markdown("**Fall 2025 Term**"))
-    display(Markdown(""))
-    display(Markdown("**Legend:** ✅ = First-term courses"))
-    print(f"")
-    
-    # Print the HTML table
-    from IPython.display import HTML, display
-    display(HTML(html_table))
-    
-else:
-    print("Course data not available. Please check data/franklin_courses.csv")
-```
+*Course schedule will be displayed here when data is available.*
 
 :::
 
@@ -165,20 +75,7 @@ else:
 
 ## 📊 Quick Statistics
 
-```{python}
-#| echo: false
-if os.path.exists(csv_path):
-    # Calculate quick stats
-    total_sections = len(df)
-    total_enrollment = df['Enrolled_Seats'].sum()
-    total_capacity = df['Total_Seats'].sum()
-    utilization = (total_enrollment / total_capacity * 100) if total_capacity > 0 else 0
-    first_term_count = len(df[df['First_Term'] == 'Yes'])
-    
-    print(f"- **Total Sections:** {total_sections}")
-    print(f"- **Total Enrollment:** {total_enrollment} students")
-    print(f"- **Capacity Utilization:** {utilization:.1f}%")
-    print(f"- **First-term Courses:** {first_term_count}")
-```
+- **Status:** Course data scraper temporarily disabled
+- **Next Update:** When workflow is re-enabled with proper Python environment
 
 --- 
