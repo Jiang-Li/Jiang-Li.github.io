@@ -74,36 +74,35 @@ jobs:
         git commit -m "🤖 Auto-update course data $(date +'%Y-%m-%d %H:%M:%S')"
         git push
         
+    - name: Setup Python for Quarto & Install Jupyter
+      run: |
+        echo "Setting up Python environment for Quarto..."
+        python -m pip install --upgrade pip
+        pip install jupyter nbclient nbconvert ipykernel
+        python -c "import nbformat; print('nbformat available after pip install for Quarto Python candidate.')"
+        echo "QUARTO_PYTHON_PATH=$(which python)" >> $GITHUB_ENV
+        echo "QUARTO_PYTHON_PATH set to: $(which python) (version $(python --version))"
+
     - name: Set up Quarto
       uses: quarto-dev/quarto-actions/setup@v2
       with:
         tinytex: true
-        
-    - name: Install Jupyter stack
-      run: |
-        python -m pip install --upgrade pip
-        # Install minimal Jupyter requirements for Quarto
-        pip install jupyter nbclient nbconvert ipykernel
-        
-        # Verify installation
-        python -c "import nbformat; print('nbformat available')"
-        
-        # Verify Quarto can find our Python
-        echo "Python path for Jupyter install: $(which python)"
-        echo "Python version for Jupyter install: $(python --version)"
-        quarto check jupyter
+      env:
+        QUARTO_PYTHON: ${{ env.QUARTO_PYTHON_PATH }}
         
     - name: Render website
       if: steps.verify-changed-files.outputs.changed == 'true'
+      env:
+        QUARTO_PYTHON: ${{ env.QUARTO_PYTHON_PATH }}
       run: |
         echo "--- Debug info before render --- "
         echo "PATH: $PATH"
-        echo "which python: $(which python)"
-        echo "python --version: $(python --version)"
-        echo "QUARTO_PYTHON env var is: $QUARTO_PYTHON" # Check if it's (un)set as expected
-        echo "--- Running quarto check jupyter --- "
+        echo "which python (system PATH): $(which python)" # This will show the python from setup-python
+        echo "python --version (system PATH): $(python --version)"
+        echo "QUARTO_PYTHON env var is: $QUARTO_PYTHON" # This should be the path from QUARTO_PYTHON_PATH
+        echo "--- Running quarto check jupyter with QUARTO_PYTHON=$QUARTO_PYTHON --- "
         quarto check jupyter
-        echo "--- Running quarto render --- "
+        echo "--- Running quarto render with QUARTO_PYTHON=$QUARTO_PYTHON --- "
         quarto render
         
     - name: Deploy to GitHub Pages
