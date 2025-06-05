@@ -4,28 +4,28 @@
     "href": "teach/franklin-course-scraper/output/course-schedule.html",
     "title": "Course Schedule - Fall 2025",
     "section": "",
-    "text": "Course Data Update Required\n\n\n\nThe course schedule will be automatically updated when the course data scraper is re-enabled. For now, please refer to the main teaching page for course information.\n\n\n\nCourse schedule will be displayed here when data is available."
+    "text": "Course Data Update Required\n\n\n\nThe course schedule will be automatically updated when the course data scraper is re-enabled. For now, please refer to the main teaching page for course information."
   },
   {
     "objectID": "teach/franklin-course-scraper/output/course-schedule.html#complete-course-schedule",
     "href": "teach/franklin-course-scraper/output/course-schedule.html#complete-course-schedule",
     "title": "Course Schedule - Fall 2025",
     "section": "",
-    "text": "Course Data Update Required\n\n\n\nThe course schedule will be automatically updated when the course data scraper is re-enabled. For now, please refer to the main teaching page for course information.\n\n\n\nCourse schedule will be displayed here when data is available."
+    "text": "Course Data Update Required\n\n\n\nThe course schedule will be automatically updated when the course data scraper is re-enabled. For now, please refer to the main teaching page for course information."
   },
   {
     "objectID": "teach/franklin-course-scraper/output/course-schedule.html#quick-statistics",
     "href": "teach/franklin-course-scraper/output/course-schedule.html#quick-statistics",
     "title": "Course Schedule - Fall 2025",
     "section": "📊 Quick Statistics",
-    "text": "📊 Quick Statistics\n\nStatus: Course data scraper temporarily disabled\nNext Update: When workflow is re-enabled with proper Python environment"
+    "text": "📊 Quick Statistics"
   },
   {
     "objectID": "teach.html",
     "href": "teach.html",
     "title": "Teaching Materials & Tools",
     "section": "",
-    "text": "Analytics Teaching Hub\nFranklin Analytics Teaching Hub is a collection of documents to assist instructors in teaching, including teaching management and FAQs about EdStem. The access requires a Franklin account.\n\n\n\n🧪 Test Section - Updated June 5, 2025\nThis is a test to verify that website changes are being deployed correctly.\nIf you can see this message, the deployment is working! ✅\n\n\n\n\nEdStemPoint Transfer\nComing soon."
+    "text": "Analytics Teaching Hub\nFranklin Analytics Teaching Hub is a collection of documents to assist instructors in teaching, including teaching management and FAQs about EdStem. The access requires a Franklin account.\n\n\n\n🧪 Test Section - Updated June 5, 2025\nThis is a test to verify that website changes are being deployed correctly.\nIf you can see this message, the deployment is working! ✅\n\n\nOn Campus Course Schedule\n📅 Schedule Table - Live course schedule updated daily\n📊 Course Data (CSV) - Downloadable course information\n\n\n\nEdStemPoint Transfer\nComing soon."
   },
   {
     "objectID": "program.html",
@@ -91,17 +91,17 @@
     "text": "Identifying Interpretable Features Impacting Nontraditional Undergraduate Computer Science Student Retention, Frontier In Education (FIE) 2024 Conference.\nLearning Analytics Finds That A Shared Course May Improve Technology Students Retention, Journal of Computing Sciences in Colleges, April 2023. link\nDynamics and mechanism of repair of ultraviolet-induced (6–4) photoproduct by photolyase, Nature, August 2010. link"
   },
   {
-    "objectID": "teach/course-schedule.html",
-    "href": "teach/course-schedule.html",
+    "objectID": "teach/course-schedule.html#quick-statistics",
+    "href": "teach/course-schedule.html#quick-statistics",
     "title": "Course Schedule - Fall 2025",
-    "section": "",
-    "text": "Note: Python execution is temporarily disabled for testing. Course data will be displayed when the full system is working.\n\n\nThe course schedule system is currently being tested. When fully operational, this page will display:\n\nData Updated: Live timestamp from course scraper\nTotal Sections: Number of course sections available\n\nCourses Offered: Unique courses in the catalog\nStudents Enrolled: Current enrollment vs capacity\n\n\n\n\nWhen operational, a dynamic table will show:\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCourse\nSection\nTitle\nCredits\nEnrolled\nTotal\nAvailable\nDays\nTimes\nLocation\nInstructor\nMode\nDates\n\n\n\n\nCourse data will appear here when Python execution is enabled\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCourse schedule functionality temporarily disabled for deployment testing"
+    "section": "📊 Quick Statistics",
+    "text": "📊 Quick Statistics"
   },
   {
     "objectID": "teach/course-schedule.html#course-schedule---static-display",
     "href": "teach/course-schedule.html#course-schedule---static-display",
     "title": "Course Schedule - Fall 2025",
-    "section": "",
-    "text": "Note: Python execution is temporarily disabled for testing. Course data will be displayed when the full system is working.\n\n\nThe course schedule system is currently being tested. When fully operational, this page will display:\n\nData Updated: Live timestamp from course scraper\nTotal Sections: Number of course sections available\n\nCourses Offered: Unique courses in the catalog\nStudents Enrolled: Current enrollment vs capacity\n\n\n\n\nWhen operational, a dynamic table will show:\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCourse\nSection\nTitle\nCredits\nEnrolled\nTotal\nAvailable\nDays\nTimes\nLocation\nInstructor\nMode\nDates\n\n\n\n\nCourse data will appear here when Python execution is enabled\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCourse schedule functionality temporarily disabled for deployment testing"
+    "section": "Course Schedule - Static Display",
+    "text": "Course Schedule - Static Display\nNote: Python execution is temporarily disabled for testing. Course data will be displayed when the full system is working.\n\nCourse Data Information\nThe course schedule system is currently being tested. When fully operational, this page will display:\n\nData Updated: Live timestamp from course scraper\nTotal Sections: Number of course sections available\n\nCourses Offered: Unique courses in the catalog\nStudents Enrolled: Current enrollment vs capacity\n\n\n\nCourse Table\nWhen operational, a dynamic table will show:\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCourse\nSection\nTitle\nCredits\nEnrolled\nTotal\nAvailable\nDays\nTimes\nLocation\nInstructor\nMode\nDates\n\n\n\n\nCourse data will appear here when Python execution is enabled\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCourse schedule functionality temporarily disabled for deployment testing"
   }
 ]
