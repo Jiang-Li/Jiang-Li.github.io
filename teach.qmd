@@ -16,10 +16,18 @@ format:
 
 ***
 
+### 🧪 Test Section - Updated June 5, 2025
+
+**This is a test to verify that website changes are being deployed correctly.**
+
+If you can see this message, the deployment is working! ✅
+
+<!--
 ### On Campus Course Schedule
 
 **📅 [Schedule Table](/teach/course-schedule.html)** - Course schedule pulled on June 4, 2025  
 **📊 [Course Data (CSV)](teach/franklin-course-scraper/data/franklin_courses.csv)** - Downloadable course information
+-->
 
 ***
 

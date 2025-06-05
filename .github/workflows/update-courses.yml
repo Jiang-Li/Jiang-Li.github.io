@@ -1,159 +1,44 @@
 name: Update Course Data
-
 on:
+  push:
+    branches: [master]
   schedule:
-    # Run every day at 6:00 AM UTC (adjust timezone as needed)
-    - cron: '0 6 * * *'
-  workflow_dispatch:  # Allow manual triggering
+    - cron: '0 6 * * *'  # Run daily at 6 AM UTC (2 AM EDT)
+  workflow_dispatch:
 
 jobs:
-  update-courses:
+  simple-deploy:
     runs-on: ubuntu-latest
-    
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      
-    - name: Set up Python
-      id: setup_python_main
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.9'
-        cache: 'pip'
-        
-    - name: Install system dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y wget gnupg
-        
-    - name: Install Chrome
-      run: |
-        wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-        sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
-        sudo apt-get update
-        sudo apt-get install -y google-chrome-stable
-        
-    - name: Install ChromeDriver
-      run: |
-        # Get Chrome version
-        CHROME_VERSION=$(google-chrome --version | cut -d ' ' -f3)
-        echo "Chrome version: $CHROME_VERSION"
-        
-        # Download compatible ChromeDriver from Chrome for Testing
-        wget -O chromedriver-linux64.zip "https://storage.googleapis.com/chrome-for-testing-public/$CHROME_VERSION/linux64/chromedriver-linux64.zip"
-        unzip chromedriver-linux64.zip
-        sudo mv chromedriver-linux64/chromedriver /usr/local/bin/
-        sudo chmod +x /usr/local/bin/chromedriver
-        rm -rf chromedriver-linux64.zip chromedriver-linux64
-        
-    - name: Install Python dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r teach/franklin-course-scraper/requirements.txt
-        echo "Installing Jupyter stack into the Python 3.9 environment for Quarto kernel execution fallback..."
-        pip install jupyter nbclient nbconvert ipykernel pandas numpy PyYAML
-        
-    - name: Install Jupyter in System Python for Quarto
-      run: |
-        echo "Attempting to install Jupyter, pandas, and numpy into /usr/bin/python3 (system Python) for Quarto kernel execution..."
-        echo "System python3 path: $(which /usr/bin/python3)" 
-        echo "System python3 version: $(/usr/bin/python3 --version)"
-        
-        echo "Ensuring pip is available for system Python and installing Jupyter components, pandas, and numpy..."
-        # We will use /usr/bin/python3 explicitly to invoke its pip module
-        # Adding --ignore-installed to avoid issues with system-managed packages like jsonschema
-        sudo /usr/bin/python3 -m pip install --ignore-installed jupyter nbclient nbconvert ipykernel pandas numpy PyYAML --break-system-packages --no-cache-dir
-        
-        echo "--- Verifying imports in /usr/bin/python3 ---"
-        sudo /usr/bin/python3 -c "import nbformat; print(f'nbformat version {nbformat.__version__} successfully imported in /usr/bin/python3')"
-        sudo /usr/bin/python3 -c "import pandas; print(f'pandas version {pandas.__version__} successfully imported in /usr/bin/python3')"
-        sudo /usr/bin/python3 -c "import numpy; print(f'numpy version {numpy.__version__} successfully imported in /usr/bin/python3')"
-        sudo /usr/bin/python3 -c "import yaml; print(f'PyYAML version {yaml.__version__} successfully imported in /usr/bin/python3')"
-        
-        echo "--- Listing packages for /usr/bin/python3 ---"
-        sudo /usr/bin/python3 -m pip list
-        
-        echo "Contents of /usr/local/lib/python3.12/dist-packages/ (expected install location for system python 3.12):"
-        ls -l /usr/local/lib/python3.12/dist-packages/ || echo "/usr/local/lib/python3.12/dist-packages/ not found or empty"
-        echo "Contents of /usr/lib/python3/dist-packages (another possible location for system packages):"
-        ls -l /usr/lib/python3/dist-packages || echo "/usr/lib/python3/dist-packages not found or empty"
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
 
-    - name: Run course scraper
-      run: |
-        cd teach/franklin-course-scraper/scripts
-        python scrape_franklin_courses.py
-        
-    - name: Check for changes
-      id: verify-changed-files
-      run: |
-        if [ -n "$(git status --porcelain)" ]; then
-          echo "changed=true" >> $GITHUB_OUTPUT
-        else
-          echo "changed=false" >> $GITHUB_OUTPUT
-        fi
-        
-    - name: Commit and push changes
-      if: steps.verify-changed-files.outputs.changed == 'true'
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add teach/franklin-course-scraper/data/franklin_courses.csv
-        git commit -m "🤖 Auto-update course data $(date +'%Y-%m-%d %H:%M:%S')"
-        git push
-        
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+    - uses: actions/checkout@v4
+
     - name: Set up Quarto
       uses: quarto-dev/quarto-actions/setup@v2
       with:
         tinytex: true
-      env:
-        QUARTO_PYTHON: "" # Explicitly unset
-        
-    - name: Pre-render verification
-      if: steps.verify-changed-files.outputs.changed == 'true'
-      run: |
-        echo "=== PRE-RENDER VERIFICATION ==="
-        echo "Verifying Jupyter packages are available in system Python before rendering..."
-        echo "System Python: /usr/bin/python3"
-        /usr/bin/python3 --version
-        
-        echo "Testing imports without sudo:"
-        /usr/bin/python3 -c "import nbformat; print(f'✓ nbformat {nbformat.__version__} available')" || echo "✗ nbformat import failed"
-        /usr/bin/python3 -c "import pandas; print(f'✓ pandas {pandas.__version__} available')" || echo "✗ pandas import failed"
-        /usr/bin/python3 -c "import numpy; print(f'✓ numpy {numpy.__version__} available')" || echo "✗ numpy import failed"
-        /usr/bin/python3 -c "import yaml; print(f'✓ PyYAML {yaml.__version__} available')" || echo "✗ PyYAML import failed"
-        
-        echo "Python path for /usr/bin/python3:"
-        /usr/bin/python3 -c "import sys; print('\\n'.join(sys.path))"
-        
-    - name: Render website
-      if: steps.verify-changed-files.outputs.changed == 'true'
-      env:
-        QUARTO_PYTHON: "/usr/bin/python3" # Explicitly set to system python
-      run: |
-        echo "--- Debug info before render --- "
-        echo "Current PATH: $PATH"
-        echo "QUARTO_PYTHON is: '$QUARTO_PYTHON'" # Check if it's truly empty
-        echo "which python (should be from setup-python e.g. 3.9): $(which python)" 
-        echo "python --version (should be from setup-python e.g. 3.9): $(python --version)"
-        echo "which python3 (should be system python e.g. 3.12): $(which python3)"
-        echo "python3 --version (should be system python e.g. 3.12): $(python3 --version)"
-        echo "--- Running sudo /usr/bin/python3 -c 'import nbformat; print(nbformat.__version__)' ---"
-        sudo /usr/bin/python3 -c "import nbformat; print(f'Direct check: nbformat version {nbformat.__version__}')" || echo "Direct nbformat check failed"
-        echo "--- Running sudo /usr/bin/python3 -c 'import yaml; print(yaml.__version__)' ---"
-        sudo /usr/bin/python3 -c "import yaml; print(f'Direct check: PyYAML version {yaml.__version__}')" || echo "Direct PyYAML check failed"
-        echo "--- Running sudo /usr/bin/python3 -c 'import pandas; print(pandas.__version__)' ---"
-        sudo /usr/bin/python3 -c "import pandas; print(f'Direct check: pandas version {pandas.__version__}')" || echo "Direct pandas check failed"
-        echo "--- Running sudo /usr/bin/python3 -c 'import numpy; print(numpy.__version__)' ---"
-        sudo /usr/bin/python3 -c "import numpy; print(f'Direct check: numpy version {numpy.__version__}')" || echo "Direct numpy check failed"
 
-        echo "--- Running quarto check --- "
-        quarto check
-        echo "--- Running quarto render --clean --- "
-        quarto render --clean
-        
-    - name: Deploy to GitHub Pages
-      if: steps.verify-changed-files.outputs.changed == 'true'
-      uses: peaceiris/actions-gh-pages@v3
+    - name: Render website
+      run: |
+        echo "Rendering Quarto website..."
+        quarto render
+
+    - name: Setup Pages
+      uses: actions/configure-pages@v4
+
+    - name: Upload site
+      uses: actions/upload-pages-artifact@v3
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./_site 
+        path: _site
+
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4 

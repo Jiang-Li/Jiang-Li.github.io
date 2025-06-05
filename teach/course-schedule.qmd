@@ -62,8 +62,11 @@ toc: false
 number-sections: false
 ---
 
+## Course Schedule - Static Display
 
+**Note:** Python execution is temporarily disabled for testing. Course data will be displayed when the full system is working.
 
+<!-- 
 ```{python}
 #| echo: false
 #| warning: false
@@ -244,7 +247,8 @@ if len(df) > 0:
 else:
     print("No course data available to display.")
 ```
+-->
 
 ---
 
-*Data automatically generated from Franklin Course Catalog*
+*Course schedule functionality temporarily disabled for deployment testing*
