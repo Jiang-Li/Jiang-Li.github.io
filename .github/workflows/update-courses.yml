@@ -53,29 +53,6 @@ jobs:
         echo "Installing Jupyter stack into the Python 3.9 environment for Quarto kernel execution fallback..."
         pip install jupyter nbclient nbconvert ipykernel pandas numpy PyYAML
         
-    - name: Run course scraper
-      run: |
-        cd teach/franklin-course-scraper/scripts
-        python scrape_franklin_courses.py
-        
-    - name: Check for changes
-      id: verify-changed-files
-      run: |
-        if [ -n "$(git status --porcelain)" ]; then
-          echo "changed=true" >> $GITHUB_OUTPUT
-        else
-          echo "changed=false" >> $GITHUB_OUTPUT
-        fi
-        
-    - name: Commit and push changes
-      if: steps.verify-changed-files.outputs.changed == 'true'
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add teach/franklin-course-scraper/data/franklin_courses.csv
-        git commit -m "🤖 Auto-update course data $(date +'%Y-%m-%d %H:%M:%S')"
-        git push
-        
     - name: Install Jupyter in System Python for Quarto
       run: |
         echo "Attempting to install Jupyter, pandas, and numpy into /usr/bin/python3 (system Python) for Quarto kernel execution..."
@@ -101,12 +78,52 @@ jobs:
         echo "Contents of /usr/lib/python3/dist-packages (another possible location for system packages):"
         ls -l /usr/lib/python3/dist-packages || echo "/usr/lib/python3/dist-packages not found or empty"
 
+    - name: Run course scraper
+      run: |
+        cd teach/franklin-course-scraper/scripts
+        python scrape_franklin_courses.py
+        
+    - name: Check for changes
+      id: verify-changed-files
+      run: |
+        if [ -n "$(git status --porcelain)" ]; then
+          echo "changed=true" >> $GITHUB_OUTPUT
+        else
+          echo "changed=false" >> $GITHUB_OUTPUT
+        fi
+        
+    - name: Commit and push changes
+      if: steps.verify-changed-files.outputs.changed == 'true'
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add teach/franklin-course-scraper/data/franklin_courses.csv
+        git commit -m "🤖 Auto-update course data $(date +'%Y-%m-%d %H:%M:%S')"
+        git push
+        
     - name: Set up Quarto
       uses: quarto-dev/quarto-actions/setup@v2
       with:
         tinytex: true
       env:
         QUARTO_PYTHON: "" # Explicitly unset
+        
+    - name: Pre-render verification
+      if: steps.verify-changed-files.outputs.changed == 'true'
+      run: |
+        echo "=== PRE-RENDER VERIFICATION ==="
+        echo "Verifying Jupyter packages are available in system Python before rendering..."
+        echo "System Python: /usr/bin/python3"
+        /usr/bin/python3 --version
+        
+        echo "Testing imports without sudo:"
+        /usr/bin/python3 -c "import nbformat; print(f'✓ nbformat {nbformat.__version__} available')" || echo "✗ nbformat import failed"
+        /usr/bin/python3 -c "import pandas; print(f'✓ pandas {pandas.__version__} available')" || echo "✗ pandas import failed"
+        /usr/bin/python3 -c "import numpy; print(f'✓ numpy {numpy.__version__} available')" || echo "✗ numpy import failed"
+        /usr/bin/python3 -c "import yaml; print(f'✓ PyYAML {yaml.__version__} available')" || echo "✗ PyYAML import failed"
+        
+        echo "Python path for /usr/bin/python3:"
+        /usr/bin/python3 -c "import sys; print('\\n'.join(sys.path))"
         
     - name: Render website
       if: steps.verify-changed-files.outputs.changed == 'true'
