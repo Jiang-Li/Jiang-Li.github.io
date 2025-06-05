@@ -80,8 +80,11 @@ jobs:
         
     - name: Install Jupyter for Quarto
       run: |
+        # Install for both Python versions to ensure Quarto can find it
         pip install jupyter nbformat ipykernel
-        python -c "import nbformat; print('nbformat available')"
+        sudo /usr/bin/python3 -m pip install jupyter nbformat ipykernel
+        python -c "import nbformat; print('nbformat available for setup-python')"
+        /usr/bin/python3 -c "import nbformat; print('nbformat available for system python')"
         quarto check jupyter
         
     - name: Render website
