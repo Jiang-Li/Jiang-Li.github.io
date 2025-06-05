@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Division Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 40px; /* Increased padding */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 90%; /* Increased from 80% */
+            max-width: 600px; /* Increased from 500px */
+        }
+        .question {
+            font-size: 40px; /* Increased font size */
+            margin-bottom: 40px; /* Increased margin */
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px; /* Increased gap */
+        }
+        button {
+            font-size: 28px; /* Increased font size */
+            padding: 20px; /* Increased padding */
+            cursor: pointer;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 8px; /* Slightly increased border radius */
+        }
+        .stats {
+            margin-top: 40px; /* Increased margin */
+            font-size: 20px; /* Increased font size */
+        }
+        #nameSelect {
+            margin-top: 30px; /* Increased margin */
+            margin-bottom: 30px; /* Increased margin */
+        }
+        #nameDropdown {
+            font-size: 20px; /* Increased font size */
+            padding: 8px; /* Increased padding */
+        }
+        .button-pressed {
+            background-color: #45a049;
+            transform: scale(0.95);
+            transition: all 0.1s;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="question" id="question">Select your name and click Start to begin!</div>
+        <div id="nameSelect">
+            <select id="nameDropdown">
+                <option value="">Choose a name</option>
+                <option value="Hannah">Hannah</option>
+                <option value="Karina">Karina</option>
+                <option value="Matthew">Matthew</option>
+                <option value="Dad">Dad</option>
+            </select>
+        </div>
+        <button id="startButton">Start</button>
+        <div class="buttons" id="buttons"></div>
+        <div class="stats">
+            <p>Question: <span id="questionCount">0</span>/10</p>
+            <p>Correct answers: <span id="correct">0</span></p>
+            <p>Time: <span id="time">0</span> seconds</p>
+            <p>Best time: <span id="bestTime">N/A</span></p>
+        </div>
+    </div>
+    
+    <audio id="correctSound" src="https://www.soundjay.com/buttons/sounds/button-3.mp3"></audio>
+    <audio id="incorrectSound" src="https://www.soundjay.com/buttons/sounds/button-10.mp3"></audio>
+    
+    <script>
+        let dividend, divisor, correctAnswer, startTime, correctCount = 0;
+        let currentAnswer = '';
+        let questionCount = 0;
+        let gameActive = false;
+        let lastQuestion = '';
+        let bestTime = JSON.parse(localStorage.getItem('divisionBestTime')) || { time: Infinity, name: 'N/A' };
+
+        const correctSound = document.getElementById('correctSound');
+        const incorrectSound = document.getElementById('incorrectSound');
+
+        function startQuiz() {
+            const selectedName = document.getElementById('nameDropdown').value;
+            if (!selectedName) {
+                alert("Please select a name before starting the quiz.");
+                return;
+            }
+            
+            questionCount = 0;
+            correctCount = 0;
+            gameActive = true;
+            document.getElementById('correct').textContent = '0';
+            document.getElementById('time').textContent = '0';
+            document.getElementById('question').textContent = `${selectedName}, get ready!`;
+            updateBestTimeDisplay();
+            generateQuestion();
+            createButtons();
+            showButtons();
+            startTime = Date.now();
+            updateTime();
+            document.getElementById('startButton').style.display = 'none';
+            document.getElementById('nameDropdown').disabled = true;
+        }
+
+        function endGame() {
+            gameActive = false;
+            const currentTime = Math.floor((Date.now() - startTime) / 1000);
+            const selectedName = document.getElementById('nameDropdown').value;
+            if (correctCount === 10 && currentTime < bestTime.time) {
+                bestTime = { time: currentTime, name: selectedName };
+                localStorage.setItem('divisionBestTime', JSON.stringify(bestTime));
+                updateBestTimeDisplay();
+            }
+            hideButtons();
+            displayGameOver();
+        }
+
+        function displayGameOver() {
+            document.getElementById('question').textContent = 'Game Over! Select a name to play again.';
+            document.getElementById('startButton').style.display = 'inline-block';
+            document.getElementById('startButton').textContent = 'Play Again';
+            document.getElementById('nameDropdown').disabled = false;
+        }
+
+        function updateBestTimeDisplay() {
+            const bestTimeElement = document.getElementById('bestTime');
+            if (bestTime.time === Infinity) {
+                bestTimeElement.textContent = 'N/A';
+            } else {
+                bestTimeElement.textContent = `${bestTime.time} seconds from ${bestTime.name}`;
+            }
+        }
+
+        function generateQuestion() {
+            let newQuestion;
+            do {
+                divisor = Math.floor(Math.random() * 10) + 2; // 2 to 11
+                let multiplier = Math.floor(Math.random() * 8) + 4; // 4 to 11
+                dividend = divisor * multiplier;
+                correctAnswer = multiplier;
+                newQuestion = `${dividend} ÷ ${divisor} = ?`;
+            } while (newQuestion === lastQuestion || dividend < 10 || dividend > 99);
+
+            lastQuestion = newQuestion;
+            document.getElementById('question').textContent = newQuestion;
+            questionCount++;
+            document.getElementById('questionCount').textContent = questionCount;
+            currentAnswer = '';
+        }
+
+        function createButtons() {
+            const buttonsContainer = document.getElementById('buttons');
+            buttonsContainer.innerHTML = '';
+            for (let i = 0; i <= 9; i++) {
+                const button = document.createElement('button');
+                button.textContent = i;
+                button.addEventListener('mousedown', () => addButtonPressEffect(i));
+                button.addEventListener('mouseup', () => removeButtonPressEffect(i));
+                button.addEventListener('mouseleave', () => removeButtonPressEffect(i));
+                button.addEventListener('click', () => handleInput(i));
+                buttonsContainer.appendChild(button);
+            }
+        }
+
+        function handleInput(digit) {
+            if (!gameActive) return;
+            currentAnswer += digit;
+            document.getElementById('question').textContent = `${dividend} ÷ ${divisor} = ${currentAnswer}`;
+            
+            if (currentAnswer.length === correctAnswer.toString().length) {
+                checkAnswer(parseInt(currentAnswer));
+                currentAnswer = '';
+            }
+        }
+
+        function addButtonPressEffect(digit) {
+            const button = document.querySelector(`#buttons button:nth-child(${digit === 0 ? 10 : digit + 1})`);
+            button.classList.add('button-pressed');
+        }
+
+        function removeButtonPressEffect(digit) {
+            const button = document.querySelector(`#buttons button:nth-child(${digit === 0 ? 10 : digit + 1})`);
+            button.classList.remove('button-pressed');
+        }
+
+        function checkAnswer(answer) {
+            if (answer === correctAnswer) {
+                correctSound.currentTime = 0;
+                correctSound.play().catch(e => console.error("Error playing sound:", e));
+                correctCount++;
+                document.getElementById('correct').textContent = correctCount;
+                if (questionCount < 10) {
+                    generateQuestion();
+                } else {
+                    endGame();
+                }
+            } else {
+                incorrectSound.currentTime = 0;
+                incorrectSound.play().catch(e => console.error("Error playing sound:", e));
+                currentAnswer = '';
+                document.getElementById('question').textContent = `${dividend} ÷ ${divisor} = ?`;
+            }
+        }
+
+        function updateTime() {
+            if (!gameActive) return;
+            const currentTime = Math.floor((Date.now() - startTime) / 1000);
+            document.getElementById('time').textContent = currentTime;
+            setTimeout(updateTime, 1000);
+        }
+
+        function hideButtons() {
+            document.getElementById('buttons').style.display = 'none';
+        }
+
+        function showButtons() {
+            document.getElementById('buttons').style.display = 'grid';
+        }
+
+        // Call this function when the page loads
+        window.onload = function() {
+            updateBestTimeDisplay();
+        };
+
+        // Initialize best time display
+        updateBestTimeDisplay();
+
+        document.getElementById('startButton').addEventListener('click', startQuiz);
+    </script>
+</body>
+</html>

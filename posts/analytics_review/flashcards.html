@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Concept Review - Flip Cards</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .controls {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
+            padding: 12px 24px;
+            margin: 0 10px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+
+        .btn:hover {
+            background: white;
+            color: #667eea;
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .card {
+            perspective: 1000px;
+            height: 250px;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .card-front {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
+            color: #333;
+            border: 3px solid #667eea;
+        }
+
+        .card-back {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: rotateY(180deg);
+        }
+
+        .card-content {
+            text-align: center;
+            word-wrap: break-word;
+            overflow-y: auto;
+            max-height: 100%;
+        }
+
+        .question {
+            font-size: 1.1em;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .answer {
+            font-size: 1em;
+            line-height: 1.5;
+            text-align: left;
+        }
+
+        .card-number {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: rgba(102, 126, 234, 0.8);
+            color: white;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .progress {
+            text-align: center;
+            color: white;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .cards-container {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .card {
+                height: 200px;
+            }
+            
+            .question {
+                font-size: 1em;
+            }
+            
+            .answer {
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📚 Analytics Concept Review</h1>
+        <p>Interactive Flip Cards for Study Practice</p>
+    </div>
+
+    <div class="controls">
+        <button class="btn" onclick="flipAll()">Flip All Cards</button>
+        <button class="btn" onclick="resetAll()">Reset All</button>
+        <button class="btn" onclick="shuffleCards()">Shuffle</button>
+    </div>
+
+    <div class="progress">
+        <span id="progress">0 of 67 cards reviewed</span>
+    </div>
+
+    <div class="cards-container" id="cardsContainer">
+        <!-- Cards will be generated by JavaScript -->
+    </div>
+
+    <script>
+        const concepts = [
+            {
+                question: "What is p-value?",
+                answer: "The probability that we observed our data, or data even more extreme, if the null hypothesis were true."
+            },
+            {
+                question: "What is confidence interval?",
+                answer: "A range of reasonable values for a population parameter given our sample."
+            },
+            {
+                question: "What is statistical significance?",
+                answer: "We observe a p-value that is smaller than the significance level. We say the result is statistically significant at that level."
+            },
+            {
+                question: "What is Type 1 error?",
+                answer: "We reject the null hypothesis when it is actually true. The probability of Type 1 error is α (alpha)."
+            },
+            {
+                question: "What is Type 2 error?",
+                answer: "We fail to reject the null hypothesis when it is actually false. The probability of Type 2 error is β (beta)."
+            },
+            {
+                question: "What is Statistical Power?",
+                answer: "The probability that we correctly reject a false null hypothesis. Power = 1 - β."
+            },
+            {
+                question: "What is descriptive analytics?",
+                answer: "Analytics that describes what happened in the past using historical data."
+            },
+            {
+                question: "What is diagnostic analytics?",
+                answer: "Analytics that explains why something happened by examining relationships and patterns."
+            },
+            {
+                question: "What is predictive analytics?",
+                answer: "Analytics that forecasts what might happen in the future using statistical models and machine learning."
+            },
+            {
+                question: "What is prescriptive analytics?",
+                answer: "Analytics that recommends what actions should be taken using optimization and simulation."
+            },
+            {
+                question: "What is overfitting?",
+                answer: "When a model learns the training data too well, including noise, making it perform poorly on new data."
+            },
+            {
+                question: "What is underfitting?",
+                answer: "When a model is too simple to capture the underlying patterns in the data."
+            },
+            {
+                question: "What is cross-validation?",
+                answer: "A technique to assess model performance by training on subsets of data and testing on the remaining portions."
+            },
+            {
+                question: "What is the difference between supervised and unsupervised learning?",
+                answer: "Supervised learning uses labeled data to predict outcomes, while unsupervised learning finds patterns in unlabeled data."
+            },
+            {
+                question: "What is clustering?",
+                answer: "An unsupervised learning technique that groups similar data points together."
+            },
+            {
+                question: "What is a confusion matrix?",
+                answer: "A table showing correct vs predicted classifications, with true positives, true negatives, false positives, and false negatives."
+            },
+            {
+                question: "What is precision?",
+                answer: "The fraction of predicted positive cases that are actually positive: TP / (TP + FP)."
+            },
+            {
+                question: "What is recall (sensitivity)?",
+                answer: "The fraction of actual positive cases that are correctly predicted: TP / (TP + FN)."
+            },
+            {
+                question: "What is specificity?",
+                answer: "The fraction of actual negative cases that are correctly identified: TN / (TN + FP)."
+            },
+            {
+                question: "What is F1 score?",
+                answer: "The harmonic mean of precision and recall: 2 × (precision × recall) / (precision + recall)."
+            },
+            {
+                question: "What is the ROC curve?",
+                answer: "A plot of sensitivity (true positive rate) against 1-specificity (false positive rate) at various threshold settings."
+            },
+            {
+                question: "What is AUC (Area Under Curve)?",
+                answer: "The probability that the model estimates a random positive case higher than a random negative case. AUC = 0.5 means random guessing."
+            },
+            {
+                question: "What is linear regression?",
+                answer: "A statistical method that models the relationship between a dependent variable and independent variables using a linear equation."
+            },
+            {
+                question: "What is logistic regression?",
+                answer: "A regression method used for binary classification that uses the logistic function to model probabilities."
+            },
+            {
+                question: "What is R-squared?",
+                answer: "A measure of how much variability in the dependent variable is explained by the independent variables in the model."
+            },
+            {
+                question: "What is adjusted R-squared?",
+                answer: "Similar to R-squared but penalizes the addition of variables that don't improve the model, favoring simpler models."
+            },
+            {
+                question: "What is multicollinearity?",
+                answer: "When independent variables in a regression model are highly correlated with each other, making it difficult to determine individual effects."
+            },
+            {
+                question: "What is correlation vs causation?",
+                answer: "Correlation means two variables tend to change together. Causation means one variable actually causes changes in another."
+            },
+            {
+                question: "What is a decision tree?",
+                answer: "A model that makes decisions by splitting data based on feature values, creating a tree-like structure of if-then rules."
+            },
+            {
+                question: "What is random forest?",
+                answer: "An ensemble method that combines many decision trees, using randomness to reduce overfitting and improve predictions."
+            },
+            {
+                question: "What are the benefits of random forests?",
+                answer: "Better overall estimates, reduced overfitting, handles missing values well, provides feature importance."
+            },
+            {
+                question: "What are the drawbacks of random forests?",
+                answer: "Harder to interpret, can't provide specific rules, may overfit with very noisy data, requires more computational resources."
+            },
+            {
+                question: "What is pruning in decision trees?",
+                answer: "Removing branches that don't improve prediction accuracy to prevent overfitting and create simpler, more generalizable models."
+            },
+            {
+                question: "What is CART?",
+                answer: "Classification and Regression Trees - a method for building decision trees for both classification and regression problems."
+            },
+            {
+                question: "What is k-means clustering?",
+                answer: "An algorithm that partitions data into k clusters by minimizing within-cluster sum of squares."
+            },
+            {
+                question: "What is hierarchical clustering?",
+                answer: "A method that creates a hierarchy of clusters either by merging (agglomerative) or splitting (divisive) clusters."
+            },
+            {
+                question: "What is principal component analysis (PCA)?",
+                answer: "A dimensionality reduction technique that finds the principal components that explain the most variance in the data."
+            },
+            {
+                question: "Why focus on the first n principal components?",
+                answer: "Earlier components capture more variance and have higher signal-to-noise ratios, while later components often represent noise."
+            },
+            {
+                question: "What is time series analysis?",
+                answer: "Statistical methods for analyzing data points collected over time to identify trends, patterns, and make forecasts."
+            },
+            {
+                question: "What is ARIMA?",
+                answer: "AutoRegressive Integrated Moving Average - a time series model that uses past values, differences, and moving averages to predict future values."
+            },
+            {
+                question: "What is ARIMA(p,d,q)?",
+                answer: "p = order of autoregression, d = degree of differencing, q = order of moving average. (0,0,0) = white noise, (0,1,0) = random walk."
+            },
+            {
+                question: "What is GARCH?",
+                answer: "Generalized AutoRegressive Conditional Heteroskedasticity - a model for estimating and forecasting variance in time series data."
+            },
+            {
+                question: "When is variance estimation important?",
+                answer: "In portfolio optimization where variance serves as a proxy for risk/volatility when balancing expected returns."
+            },
+            {
+                question: "What is the best fit regression line?",
+                answer: "The line that minimizes the sum of squared errors between predicted and actual values."
+            },
+            {
+                question: "What is AIC (Akaike Information Criterion)?",
+                answer: "A measure for model selection that balances goodness of fit with model complexity, encouraging fewer parameters and higher likelihood."
+            },
+            {
+                question: "What is bias in machine learning?",
+                answer: "Error from overly simplistic assumptions, causing the model to miss relevant relationships (underfitting)."
+            },
+            {
+                question: "What is variance in machine learning?",
+                answer: "Error from sensitivity to small changes in training data, causing the model to learn noise (overfitting)."
+            },
+            {
+                question: "What is the bias-variance tradeoff?",
+                answer: "The balance between bias (underfitting) and variance (overfitting) - reducing one typically increases the other."
+            },
+            {
+                question: "What is regularization?",
+                answer: "Techniques (like L1/L2) that add penalties to model complexity to prevent overfitting by constraining parameter values."
+            },
+            {
+                question: "What is feature selection?",
+                answer: "The process of selecting the most relevant variables for the model while removing irrelevant or redundant features."
+            },
+            {
+                question: "What is feature engineering?",
+                answer: "Creating new features from existing data through transformations, combinations, or domain knowledge to improve model performance."
+            },
+            {
+                question: "What is normalization vs standardization?",
+                answer: "Normalization scales data to 0-1 range. Standardization centers data around mean=0 with standard deviation=1."
+            },
+            {
+                question: "What is a training set vs test set?",
+                answer: "Training set is used to build the model. Test set is held out to evaluate final model performance on unseen data."
+            },
+            {
+                question: "What is a validation set?",
+                answer: "A subset of training data used for model selection and hyperparameter tuning, separate from the final test set."
+            },
+            {
+                question: "What is ensemble learning?",
+                answer: "Combining predictions from multiple models to achieve better performance than any individual model."
+            },
+            {
+                question: "What is bagging vs boosting?",
+                answer: "Bagging trains models in parallel on different samples (like Random Forest). Boosting trains models sequentially, each correcting previous errors."
+            },
+            {
+                question: "What is gradient descent?",
+                answer: "An optimization algorithm that iteratively adjusts model parameters to minimize the cost function by following the gradient."
+            },
+            {
+                question: "What is a neural network?",
+                answer: "A model inspired by biological neurons, consisting of layers of interconnected nodes that learn complex patterns through backpropagation."
+            },
+            {
+                question: "What is deep learning?",
+                answer: "A subset of machine learning using neural networks with multiple hidden layers to learn hierarchical representations of data."
+            },
+            {
+                question: "What is data mining?",
+                answer: "The process of discovering patterns, relationships, and insights from large datasets using statistical and computational methods."
+            },
+            {
+                question: "What is ETL?",
+                answer: "Extract, Transform, Load - the process of extracting data from sources, transforming it into usable format, and loading it into target systems."
+            },
+            {
+                question: "What is data warehouse vs data lake?",
+                answer: "Data warehouse stores structured, processed data for analysis. Data lake stores raw data in native format for flexible future use."
+            },
+            {
+                question: "What is big data?",
+                answer: "Large, complex datasets characterized by Volume, Velocity, Variety, and Veracity that require specialized tools and methods."
+            },
+            {
+                question: "What is A/B testing?",
+                answer: "A controlled experiment comparing two versions (A and B) to determine which performs better for a specific metric."
+            },
+            {
+                question: "What is statistical hypothesis testing?",
+                answer: "A method to make inferences about population parameters based on sample data using null and alternative hypotheses."
+            },
+            {
+                question: "What is sampling bias?",
+                answer: "When the sample is not representative of the population, leading to incorrect conclusions about the population."
+            },
+            {
+                question: "What is survivorship bias?",
+                answer: "Focusing only on successful examples while ignoring failures, leading to false conclusions about factors for success."
+            },
+            {
+                question: "What is data visualization?",
+                answer: "The graphical representation of data to help understand patterns, trends, and insights through charts, graphs, and interactive displays."
+            }
+        ];
+
+        let flippedCards = new Set();
+        let currentOrder = [...Array(concepts.length).keys()];
+
+        function createCards() {
+            const container = document.getElementById('cardsContainer');
+            container.innerHTML = '';
+            
+            currentOrder.forEach((index, position) => {
+                const concept = concepts[index];
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="card-inner" onclick="flipCard(${position})">
+                        <div class="card-front">
+                            <div class="card-number">${position + 1}</div>
+                            <div class="card-content">
+                                <div class="question">${concept.question}</div>
+                            </div>
+                        </div>
+                        <div class="card-back">
+                            <div class="card-content">
+                                <div class="answer">${concept.answer}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function flipCard(position) {
+            const card = document.querySelectorAll('.card')[position];
+            card.classList.toggle('flipped');
+            
+            if (card.classList.contains('flipped')) {
+                flippedCards.add(position);
+            } else {
+                flippedCards.delete(position);
+            }
+            
+            updateProgress();
+        }
+
+        function flipAll() {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                card.classList.add('flipped');
+                flippedCards.add(index);
+            });
+            updateProgress();
+        }
+
+        function resetAll() {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                card.classList.remove('flipped');
+                flippedCards.delete(index);
+            });
+            updateProgress();
+        }
+
+        function shuffleCards() {
+            currentOrder = currentOrder.sort(() => Math.random() - 0.5);
+            flippedCards.clear();
+            createCards();
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const progress = document.getElementById('progress');
+            progress.textContent = `${flippedCards.size} of ${concepts.length} cards reviewed`;
+        }
+
+        // Initialize the cards when the page loads
+        createCards();
+        updateProgress();
+    </script>
+</body>
+</html> 
