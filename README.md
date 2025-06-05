@@ -2,188 +2,96 @@
 
 A professional academic website built with Quarto showcasing Dr. Li's work as Program Chair for Analytics programs at Franklin University.
 
-## 🚀 Quick Start
+## 🚀 Features
 
-### Prerequisites
-- [Quarto](https://quarto.org/docs/get-started/) installed
-- R with required packages (lubridate)
-- Git for version control
+- **📊 Automated Course Scraping**: Daily updates of Franklin University course schedules with enrollment data
+- **🎓 Interactive Learning**: 67+ analytics concept review flashcards
+- **📱 Responsive Design**: Franklin University branding, mobile-first approach
+- **🤖 GitHub Actions**: Automated daily course data updates at 6 AM
 
-### Running the Website Locally
-
-1. **Start the development server:**
-   ```bash
-   quarto preview --port 4200 --no-browser
-   ```
-   
-2. **View the website:**
-   Open your browser and navigate to `http://localhost:4200`
-
-3. **Stop the server:**
-   Press `Ctrl+C` in the terminal
-
-### Building for Production
+## 🏃‍♂️ Quick Start
 
 ```bash
+# Start development server
+quarto preview --port 4200
+
+# Build for production  
 quarto render
 ```
 
-This generates all HTML files in the project directory, ready for deployment.
-
-## 📁 Project Structure
+## 📁 Key Structure
 
 ```
-├── README.md                 # This file
-├── _quarto.yml              # Main Quarto configuration
-├── custom.scss              # Custom styling (Franklin University theme)
+├── _quarto.yml              # Quarto configuration
 ├── index.qmd                # Homepage
-├── post.qmd                 # Posts/Blog listing page
-├── program.qmd              # Analytics Programs page
-├── course.qmd               # Courses page
-├── teach.qmd                # Teaching Materials page
-├── publication.qmd          # Publications page
-├── img/                     # Images directory
-│   └── jiang.jpg           # Profile photo
+├── teach.qmd                # Teaching materials
+├── teach/course-schedule.qmd # Live course schedule
+├── teach/franklin-course-scraper/  # Course data automation
+│   ├── scripts/scrape_franklin_courses.py
+│   ├── data/franklin_courses.csv
+│   └── course_request.md    # Courses to track
+├── .github/workflows/       # Automated course updates
 └── posts/                   # Blog posts and content
-    ├── analytics_review/    # Analytics concept reviews
-    │   └── flashcards.html # Interactive flip cards
-    ├── job_application/     # Job application materials
-    ├── job_listing/         # Job listing visualizations
-    └── ...                  # Other posts
 ```
 
-## 🎨 Customization
+## 🤖 Course Scraper System
 
-### Theme and Styling
-- **Main theme**: Located in `custom.scss`
-- **Franklin University colors**: Primary blue (#1f4e79)
-- **Responsive design**: Mobile-first approach
+### Automated Features
+- **Daily Scraping**: Runs every day at 6 AM UTC via GitHub Actions
+- **14 Courses Tracked**: DATA, COMP, MATH, BUSA, ITEC programs
+- **Real-time Enrollment**: Shows enrolled/total/available seats
+- **First-term Highlighting**: Special marking for orientation courses
 
-### Key Style Classes
-- `.btn-professional`: Blue buttons with white text
-- `.btn-outline-professional`: Outline buttons
-- `.hero-section`: Blue gradient header section
-- `.achievement-card`: Content cards with hover effects
-
-### Adding New Content
-
-#### Adding a New Post
-1. Create a new folder in `posts/` directory:
-   ```bash
-   mkdir posts/new-post-name
-   ```
-
-2. Add your content files (qmd, html, images, etc.)
-
-3. Update `post.qmd` to include your new post in the listing
-
-#### Updating Homepage
-- Edit `index.qmd` for main content
-- Profile photo: Replace `img/jiang.jpg`
-- Contact information: Update email links and meeting scheduler
-
-#### Adding New Pages
-1. Create a new `.qmd` file in the root directory
-2. Add navigation link in `_quarto.yml` under `navbar`
-
-## 📝 Content Management
-
-### LinkedIn Posts
-Update the LinkedIn section in `post.qmd` with new posts:
-- Add new entries in chronological order (newest first)
-- Include date, title, and LinkedIn URL
-
-### Publications
-Update `publication.qmd` with new research papers and publications.
-
-### Courses
-Update `course.qmd` and `teach.qmd` with new course materials and teaching resources.
-
-## 🔧 Maintenance Tasks
-
-### Regular Updates
-1. **Content refresh**: Update posts, courses, and achievements
-2. **Dependencies**: Keep Quarto and R packages updated
-3. **Images**: Optimize images for web performance
-4. **Links**: Check and update external links
-
-### Troubleshooting
-
-#### Port Already in Use Error
+### Manual Updates
 ```bash
-# Kill process using port 4200
-lsof -ti:4200 | xargs kill -9
-# Or use a different port
-quarto preview --port 4201 --no-browser
+cd teach/franklin-course-scraper/scripts
+python scrape_franklin_courses.py
 ```
 
-#### CSS Changes Not Showing
-```bash
-# Force rebuild
-quarto render --clean
+### Configuration
+Edit `teach/franklin-course-scraper/course_request.md` to modify tracked courses:
+```
+Term: Fall 2025
+*PF 521        # * marks first-term courses
+DATA 610
+*DATA 630
+# ... more courses
 ```
 
-#### Missing Dependencies
-```bash
-# Install missing R packages
-R -e "install.packages('lubridate')"
-```
+## 🎨 Content Management
+
+### Adding Posts
+1. Create folder in `posts/new-post-name/`
+2. Add content files (qmd, html, images)
+3. Update `post.qmd` listing
+
+### Updating Courses
+- **Automatic**: GitHub Actions updates daily
+- **Manual**: Run scraper script and commit changes
+- **Configuration**: Edit course request file
 
 ## 🚀 Deployment
 
-### GitHub Pages (Recommended)
-1. **Commit and push changes:**
-   ```bash
-   git add .
-   git commit -m "Update website content"
-   git push origin main
-   ```
+**Automatic**: GitHub Actions builds and deploys on push to main branch
 
-2. **GitHub will automatically build and deploy** (if GitHub Actions is configured)
+**Manual**:
+```bash
+git add . && git commit -m "Update content" && git push
+```
 
-### Manual Deployment
-1. **Build the site:**
-   ```bash
-   quarto render
-   ```
+## 🛠️ Tech Stack
 
-2. **Upload files** to your web hosting service
+- **Frontend**: Quarto, HTML/CSS/JS
+- **Automation**: Python, Selenium, BeautifulSoup
+- **CI/CD**: GitHub Actions
+- **Deployment**: GitHub Pages
+- **Data**: CSV, Pandas
 
-## 📊 Features
+## 📞 Contact
 
-### Interactive Elements
-- **Analytics Flashcards**: 67 interactive concept review cards
-- **Responsive Design**: Works on desktop, tablet, and mobile
-- **Professional Styling**: Franklin University branding
-- **Contact Integration**: Direct email and meeting scheduler links
-
-### SEO Optimized
-- Semantic HTML structure
-- Meta descriptions and titles
-- Professional social media preview
-
-## 🛠️ Development Notes
-
-### Custom Components
-- Hero section with two-column layout (photo + about)
-- Achievement cards with hover effects
-- Professional button styling
-- Mobile-responsive navigation
-
-### Performance
-- Optimized images
-- Minimal external dependencies
-- Clean, semantic HTML output
-
-## 📞 Support
-
-For technical issues or questions about maintaining this website:
-- Check Quarto documentation: https://quarto.org/docs/
-- Review commit history for recent changes
-- Contact: jiang.li2@franklin.edu
+- **Email**: jiang.li2@franklin.edu
+- **Documentation**: [Quarto Docs](https://quarto.org/docs/)
 
 ---
 
-**Last Updated**: December 2024
-**Quarto Version**: 1.x
-**Theme**: Franklin University Professional 
+**Auto-updated course data** • **Built with Quarto** • **Franklin University branding** 
