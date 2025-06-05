@@ -76,17 +76,19 @@ jobs:
         
     - name: Install Jupyter in System Python for Quarto
       run: |
-        echo "Attempting to install Jupyter into /usr/bin/python3 (system Python) for Quarto kernel execution..."
-        echo "System python3 path: $(which /usr/bin/python3)" # Should be /usr/bin/python3
+        echo "Attempting to install Jupyter, pandas, and numpy into /usr/bin/python3 (system Python) for Quarto kernel execution..."
+        echo "System python3 path: $(which /usr/bin/python3)" 
         echo "System python3 version: $(/usr/bin/python3 --version)"
         
-        echo "Ensuring pip is available for system Python and installing Jupyter components..."
+        echo "Ensuring pip is available for system Python and installing Jupyter components, pandas, and numpy..."
         # We will use /usr/bin/python3 explicitly to invoke its pip module
-        # No need to upgrade system pip if it's causing issues.
-        sudo /usr/bin/python3 -m pip install jupyter nbclient nbconvert ipykernel --break-system-packages --no-cache-dir
+        # Adding --ignore-installed to avoid issues with system-managed packages like jsonschema
+        sudo /usr/bin/python3 -m pip install --ignore-installed jupyter nbclient nbconvert ipykernel pandas numpy --break-system-packages --no-cache-dir
         
-        echo "--- Verifying nbformat in /usr/bin/python3 ---"
-        sudo /usr/bin/python3 -c "import nbformat; print(f'nbformat version {nbformat.__version__} successfully imported in /usr/bin/python3')" || echo "Failed to import nbformat in /usr/bin/python3"
+        echo "--- Verifying imports in /usr/bin/python3 ---"
+        sudo /usr/bin/python3 -c "import nbformat; print(f'nbformat version {nbformat.__version__} successfully imported in /usr/bin/python3')"
+        sudo /usr/bin/python3 -c "import pandas; print(f'pandas version {pandas.__version__} successfully imported in /usr/bin/python3')"
+        sudo /usr/bin/python3 -c "import numpy; print(f'numpy version {numpy.__version__} successfully imported in /usr/bin/python3')"
         
         echo "--- Listing packages for /usr/bin/python3 ---"
         sudo /usr/bin/python3 -m pip list
