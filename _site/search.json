@@ -4,21 +4,21 @@
     "href": "teach/franklin-course-scraper/output/course-schedule.html",
     "title": "Course Schedule - Fall 2025",
     "section": "",
-    "text": "Course Data Update Required\n\n\n\nThe course schedule will be automatically updated when the course data scraper is re-enabled. For now, please refer to the main teaching page for course information.\n\n\n\n\n\n**📊 Course data loaded: 21 courses found**\n*Last updated: June 05, 2025 at 02:12 AM*"
+    "text": "Course Data Update Required\n\n\n\nThe course schedule will be automatically updated when the course data scraper is re-enabled. For now, please refer to the main teaching page for course information.\n\n\n\n\n\n**❌ Course Data Unavailable**\nThe course scraper failed to collect data. This may be due to:\n- Technical issues with the scraping process\n- Network connectivity problems\n- Changes in the source website\n\n*The automated course data collection will retry during the next scheduled update.*"
   },
   {
     "objectID": "teach/franklin-course-scraper/output/course-schedule.html#complete-course-schedule",
     "href": "teach/franklin-course-scraper/output/course-schedule.html#complete-course-schedule",
     "title": "Course Schedule - Fall 2025",
     "section": "",
-    "text": "Course Data Update Required\n\n\n\nThe course schedule will be automatically updated when the course data scraper is re-enabled. For now, please refer to the main teaching page for course information.\n\n\n\n\n\n**📊 Course data loaded: 21 courses found**\n*Last updated: June 05, 2025 at 02:12 AM*"
+    "text": "Course Data Update Required\n\n\n\nThe course schedule will be automatically updated when the course data scraper is re-enabled. For now, please refer to the main teaching page for course information.\n\n\n\n\n\n**❌ Course Data Unavailable**\nThe course scraper failed to collect data. This may be due to:\n- Technical issues with the scraping process\n- Network connectivity problems\n- Changes in the source website\n\n*The automated course data collection will retry during the next scheduled update.*"
   },
   {
     "objectID": "teach/franklin-course-scraper/output/course-schedule.html#quick-statistics",
     "href": "teach/franklin-course-scraper/output/course-schedule.html#quick-statistics",
     "title": "Course Schedule - Fall 2025",
     "section": "📊 Quick Statistics",
-    "text": "📊 Quick Statistics\n\n\n- **Total Sections:** 21\n- **Total Enrollment:** 10 students\n- **Capacity Utilization:** 2.1%\n- **First-term Courses:** 9"
+    "text": "📊 Quick Statistics"
   },
   {
     "objectID": "teach.html",
@@ -95,7 +95,7 @@
     "href": "teach/course-schedule.html",
     "title": "Course Schedule - Fall 2025",
     "section": "",
-    "text": "**❌ Course Data Unavailable**\nThe course scraper failed to collect data. This may be due to:\n- Technical issues with the scraping process\n- Network connectivity problems\n- Changes in the source website\n\n*The automated course data collection will retry during the next scheduled update.*"
+    "text": "Data Updated: June 05, 2025 at 02:47 AM\n        Total Sections: 21\n        Courses Offered: 14\n        Students Enrolled: 10/475\n    \n    \n\n\n\n\n\n        \n\n\n\nCourse\nSection\nTitle\nCredits\nEnrolled\nTotal\nAvailable\nDays\nTimes\nLocation\nInstructor\nMode\nDates\n\n\n\n\nBUSA 603\nF1FF\nBUSA-603 Marketing Mgmt & Analytics\n4\n0\n22\n22\nT\nTBD\nDowntown\nTBD\nFace-to-Face\n9/29/2025 - 11/8/2025\n\n\nBUSA 695\nH1FF\nBUSA-695 Capstone in Business Analytics\n4\n0\n22\n22\nT\nTBD\nDowntown\nTBD\nFace-to-Face\n11/10/2025 - 12/20/2025\n\n\nCOMP 511\nU1FF\nCOMP-511 Foundation Data Struc & Obj Or\n4\n0\n22\n22\nT\nTBD\nDowntown\nTBD\nFace-to-Face\n8/18/2025 - 11/8/2025\n\n\nCOMP 611\nU1FF\nCOMP-611 Adv Data Structure and Program\n4\n0\n45\n45\nTh\n6:00 PM-9:40 PM\nDowntown\nTBD\nHybrid\n8/18/2025 - 11/8/2025\n\n\nCOMP 620\nR1FF\nCOMP-620 Analysis of Algorithms\n4\n0\n22\n22\nM\n6:00 PM-9:40 PM\nDowntown\nTBD\nHybrid\n9/8/2025 - 11/29/2025\n\n\nCOMP 630\nU1FF\nCOMP-630 Issues/Database Management\n4\n0\n22\n22\nT\nTBD\nDowntown\nTBD\nFace-to-Face\n8/18/2025 - 11/8/2025\n\n\nCOMP 691\nQ1FF\nCOMP-691 Capstone\n4\n10\n22\n12\nT\n6:00 PM-9:40 PM\nDowntown\nTBD\nHybrid\n9/29/2025 - 12/20/2025\n\n\nDATA 610\nU1FF\nDATA-610 Big Data Analytics/Data Mining\n4\n0\n22\n22\nT\nTBD\nDowntown\nTBD\nFace-to-Face\n8/18/2025 - 11/8/2025\n\n\nDATA 610\nU2FF\nDATA-610 Big Data Analytics/Data Mining\n4\n0\n22\n22\nT\nTBD\nDowntown\nTBD\nFace-to-Face\n8/18/2025 - 11/8/2025\n\n\nDATA 610\nU3FF\nDATA-610 Big Data Analytics/Data Mining\n4\n0\n22\n22\nT\nTBD\nDowntown\nTBD\nFace-to-Face\n8/18/2025 - 11/8/2025\n\n\nDATA 610\nU4FF\nDATA-610 Big Data Analytics/Data Mining\n4\n0\n22\n22\nT\nTBD\nDowntown\nTBD\nFace-to-Face\n8/18/2025 - 11/8/2025\n\n\nDATA 630\nU1FF\nDATA-630 Applied Database Management\n4\n0\n22\n22\nT\nTBD\nDowntown\nTBD\nFace-to-Face\n8/18/2025 - 11/8/2025\n\n\nITEC 640\nQ1FF\nITEC-640 Project Management\n4\n0\n22\n22\nT/Th\n6:00 PM-7:50 PM\nDowntown\nTBD\nFace-to-Face\n9/30/2025 - 12/18/2025\n\n\nITEC 660\nQ1FF\nITEC-660 Web Development and Deployment\n4\n0\n22\n22\nT/Th\n10:00 AM-12:00 PM\nDowntown\nTBD\nFace-to-Face\n9/30/2025 - 12/18/2025\n\n\nITEC 690\nQ1FF\nITEC-690 IT Strategy and Policy\n4\n0\n22\n22\nM/W\n6:00 PM-7:50 PM\nDowntown\nTBD\nFace-to-Face\n9/29/2025 - 12/17/2025\n\n\nMATH 601\nQ1FF\nMATH-601 Introduction to Analytics\n4\n0\n22\n22\nT\nTBD\nDowntown\nTBD\nHybrid\n9/29/2025 - 12/20/2025\n\n\nPF 521\nE1FF\nPF-521 Advanced Learning Strategies\n0\n0\n20\n20\nT\nTBD\nDowntown\nTBD\nFace-to-Face\n8/18/2025 - 9/27/2025\n\n\nPF 521\nE2FF\nPF-521 Advanced Learning Strategies\n0\n0\n20\n20\nT\nTBD\nDowntown\nTBD\nFace-to-Face\n8/18/2025 - 9/27/2025\n\n\nPF 521\nE3FF\nPF-521 Advanced Learning Strategies\n0\n0\n20\n20\nT\nTBD\nDowntown\nTBD\nFace-to-Face\n8/18/2025 - 9/27/2025\n\n\nPF 521\nE4FF\nPF-521 Advanced Learning Strategies\n0\n0\n20\n20\nT\nTBD\nDowntown\nTBD\nFace-to-Face\n8/18/2025 - 9/27/2025\n\n\nPF 521\nE5FF\nPF-521 Advanced Learning Strategies\n0\n0\n20\n20\nT\nTBD\nDowntown\nTBD\nFace-to-Face\n8/18/2025 - 9/27/2025\n\n\n\n\n    \n\n\n\nData automatically generated from Franklin Course Catalog"
   },
   {
     "objectID": "teach/course-schedule.html#complete-course-schedule",
@@ -117,5 +117,54 @@
     "title": "Course Schedule - Fall 2025",
     "section": "Course Schedule - Static Display",
     "text": "Course Schedule - Static Display\nNote: Python execution is temporarily disabled for testing. Course data will be displayed when the full system is working.\n\nCourse Data Information\nThe course schedule system is currently being tested. When fully operational, this page will display:\n\nData Updated: Live timestamp from course scraper\nTotal Sections: Number of course sections available\n\nCourses Offered: Unique courses in the catalog\nStudents Enrolled: Current enrollment vs capacity\n\n\n\nCourse Table\nWhen operational, a dynamic table will show:\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCourse\nSection\nTitle\nCredits\nEnrolled\nTotal\nAvailable\nDays\nTimes\nLocation\nInstructor\nMode\nDates\n\n\n\n\nCourse data will appear here when Python execution is enabled\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCourse schedule functionality temporarily disabled for deployment testing"
+  },
+  {
+    "objectID": "teach/franklin-course-scraper/teach/course-analytics.html",
+    "href": "teach/franklin-course-scraper/teach/course-analytics.html",
+    "title": "Franklin University Course Analytics",
+    "section": "",
+    "text": "Fall 2025 • Analytics & Computer Science Programs\nLast Updated: June 05, 2025"
+  },
+  {
+    "objectID": "teach/franklin-course-scraper/teach/course-analytics.html#executive-summary",
+    "href": "teach/franklin-course-scraper/teach/course-analytics.html#executive-summary",
+    "title": "Franklin University Course Analytics",
+    "section": "📈 Executive Summary",
+    "text": "📈 Executive Summary\n\n\n\n\n21\n\n\nCourse Sections\n\n\n\n\n\n14\n\n\nUnique Courses\n\n\n\n\n\n10\n\n\nTotal Enrollment\n\n\n\n\n\n2.1%\n\n\nCapacity Utilization\n\n\n\n\n\nKey Insights\n\nEnrollment Status: 10 students enrolled across 21 course sections\nCapacity Management: 465 seats still available with 2.1% utilization rate\nProgram Mix: 9 first-term courses and 12 regular courses\nWaitlist Activity: 0 students on waitlists"
+  },
+  {
+    "objectID": "teach/franklin-course-scraper/teach/course-analytics.html#program-distribution",
+    "href": "teach/franklin-course-scraper/teach/course-analytics.html#program-distribution",
+    "title": "Franklin University Course Analytics",
+    "section": "🎓 Program Distribution",
+    "text": "🎓 Program Distribution\n\n\n            Sections  Enrolled  Capacity  Available  Utilization_Rate\nDepartment                                                           \nBUSA               2         0        44         44               0.0\nCOMP               5        10       133        123               7.5\nDATA               5         0       110        110               0.0\nITEC               3         0        66         66               0.0\nMATH               1         0        22         22               0.0\nPF                 5         0       100        100               0.0\n\n\n\nDepartment Highlights\n\nPF: 5 sections, 0.0% utilization\nDATA: 5 sections, 0.0% utilization\nCOMP: 5 sections, 7.5% utilization\nITEC: 3 sections, 0.0% utilization\nBUSA: 2 sections, 0.0% utilization\nMATH: 1 sections, 0.0% utilization"
+  },
+  {
+    "objectID": "teach/franklin-course-scraper/teach/course-analytics.html#scheduling-analysis",
+    "href": "teach/franklin-course-scraper/teach/course-analytics.html#scheduling-analysis",
+    "title": "Franklin University Course Analytics",
+    "section": "📅 Scheduling Analysis",
+    "text": "📅 Scheduling Analysis\n\nPopular Class Times\n\nTBD: 15 sections\nM6:00 PM-9:40 PMTBD9/8/2025 - 11/29/2025: 1 sections\nT6:00 PM-9:40 PMTBD9/29/2025 - 12/20/2025: 1 sections\n\n\n\nWeekday Distribution\n\nTBD: 21 sections"
+  },
+  {
+    "objectID": "teach/franklin-course-scraper/teach/course-analytics.html#detailed-course-information",
+    "href": "teach/franklin-course-scraper/teach/course-analytics.html#detailed-course-information",
+    "title": "Franklin University Course Analytics",
+    "section": "📋 Detailed Course Information",
+    "text": "📋 Detailed Course Information\n\n\n### Course Enrollment Summary\n\n             Course_Code                             Course_Name  Enrolled_Seats  Total_Seats  Available_Seats  Waitlist Teaching_Mode First_Term\n       COMP-691*Capstone                       COMP-691 Capstone              10           22               12         0        Hybrid         No\n         PF-521*Advanced     PF-521 Advanced Learning Strategies               0           20               20         0  Face-to-Face        Yes\n         PF-521*Advanced     PF-521 Advanced Learning Strategies               0           20               20         0  Face-to-Face        Yes\n         PF-521*Advanced     PF-521 Advanced Learning Strategies               0           20               20         0  Face-to-Face        Yes\n         PF-521*Advanced     PF-521 Advanced Learning Strategies               0           20               20         0  Face-to-Face        Yes\n            DATA-610*Big DATA-610 Big Data Analytics/Data Mining               0           22               22         0  Face-to-Face         No\n            DATA-610*Big DATA-610 Big Data Analytics/Data Mining               0           22               22         0  Face-to-Face         No\n            DATA-610*Big DATA-610 Big Data Analytics/Data Mining               0           22               22         0  Face-to-Face         No\n            DATA-610*Big DATA-610 Big Data Analytics/Data Mining               0           22               22         0  Face-to-Face         No\n        DATA-630*Applied    DATA-630 Applied Database Management               0           22               22         0  Face-to-Face        Yes\n   MATH-601*Introduction      MATH-601 Introduction to Analytics               0           22               22         0        Hybrid        Yes\n         PF-521*Advanced     PF-521 Advanced Learning Strategies               0           20               20         0  Face-to-Face        Yes\n       BUSA-695*Capstone BUSA-695 Capstone in Business Analytics               0           22               22         0  Face-to-Face         No\n     COMP-511*Foundation COMP-511 Foundation Data Struc & Obj Or               0           22               22         0  Face-to-Face        Yes\n       COMP-620*Analysis         COMP-620 Analysis of Algorithms               0           22               22         0        Hybrid         No\nCOMP-630*Issues/Database     COMP-630 Issues/Database Management               0           22               22         0  Face-to-Face         No\n            COMP-611*Adv COMP-611 Adv Data Structure and Program               0           45               45         0        Hybrid        Yes\n        ITEC-640*Project             ITEC-640 Project Management               0           22               22         0  Face-to-Face         No\n            ITEC-660*Web ITEC-660 Web Development and Deployment               0           22               22         0  Face-to-Face         No\n      BUSA-603*Marketing     BUSA-603 Marketing Mgmt & Analytics               0           22               22         0  Face-to-Face         No\n             ITEC-690*IT         ITEC-690 IT Strategy and Policy               0           22               22         0  Face-to-Face         No"
+  },
+  {
+    "objectID": "teach/franklin-course-scraper/teach/course-analytics.html#data-access",
+    "href": "teach/franklin-course-scraper/teach/course-analytics.html#data-access",
+    "title": "Franklin University Course Analytics",
+    "section": "📊 Data Access",
+    "text": "📊 Data Access\n\nCSV Download\n\nComplete Course Data (CSV) - Full dataset with all course details\nAnalytics Summary (JSON) - Processed analytics and metrics\n\n\n\nData Fields\nThe course data includes 18 comprehensive fields covering enrollment, scheduling, faculty, and program information:\n\nEnrollment Data: Enrolled/Available/Total seats, waitlist information\nSchedule Information: Weekdays, class times, start/end dates\n\nLocation & Faculty: Classroom assignments, instructor information\nProgram Details: Course codes, names, credits, teaching modes\nAnalytics Tags: First-term identification, program classification"
+  },
+  {
+    "objectID": "teach/franklin-course-scraper/teach/course-analytics.html#data-collection",
+    "href": "teach/franklin-course-scraper/teach/course-analytics.html#data-collection",
+    "title": "Franklin University Course Analytics",
+    "section": "🔄 Data Collection",
+    "text": "🔄 Data Collection\nThis report is automatically generated from live Franklin University course catalog data:\n\nCollection Method: Automated web scraping via Selenium WebDriver\nUpdate Frequency: Daily at 6:00 AM EST via GitHub Actions\nData Validation: Multi-step validation and error handling\nQuality Assurance: Comprehensive data cleaning and verification\n\n\nTechnical Details\n\nLast Scraped: 2025-06-05T02:52:57.693888\nTerm Focus: Fall 2025\nSections Analyzed: 21\nData Freshness: ✅ Current\n\n\nThis report supports curriculum planning, enrollment management, and program development decisions for Franklin University’s Analytics and Computer Science programs."
   }
 ]
