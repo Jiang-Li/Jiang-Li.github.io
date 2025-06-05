@@ -86,11 +86,21 @@ jobs:
         
         # Verify installation
         python -c "import nbformat; print('nbformat available')"
+        
+        # Set environment variable to force Quarto to use our Python
+        echo "QUARTO_PYTHON=$(which python)" >> $GITHUB_ENV
+        
+        # Verify Quarto can find our Python
+        echo "Python path: $(which python)"
+        echo "Python version: $(python --version)"
         quarto check jupyter
         
     - name: Render website
       if: steps.verify-changed-files.outputs.changed == 'true'
+      env:
+        QUARTO_PYTHON: ${{ env.QUARTO_PYTHON }}
       run: |
+        echo "Using Python: $QUARTO_PYTHON"
         quarto render
         
     - name: Deploy to GitHub Pages
