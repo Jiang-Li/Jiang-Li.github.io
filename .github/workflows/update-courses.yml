@@ -60,7 +60,7 @@ jobs:
     - name: Install scraping dependencies
       if: steps.changes.outputs.scrape == 'true'
       run: |
-        pip install requests beautifulsoup4 selenium
+        pip install beautifulsoup4 selenium
 
     - name: Install Chrome and ChromeDriver
       if: steps.changes.outputs.scrape == 'true'
@@ -76,11 +76,6 @@ jobs:
         
         # Verify Chrome installation
         google-chrome --version
-
-    - name: Create data directory
-      if: steps.changes.outputs.scrape == 'true'
-      run: |
-        mkdir -p teach/franklin-course-scraper/data
 
     - name: Scrape Franklin course data
       if: steps.changes.outputs.scrape == 'true'
@@ -100,33 +95,9 @@ jobs:
           echo "⚠️ No course data file found - course schedule will show error message"
         fi
 
-    - name: Verify course data quality
-      if: steps.changes.outputs.scrape == 'true'
-      run: |
-        if [ -f teach/franklin-course-scraper/data/franklin_courses.csv ]; then
-          echo "🔍 Data Quality Check:"
-          echo "📄 File exists: ✅"
-          echo "📏 File size: $(stat -c%s teach/franklin-course-scraper/data/franklin_courses.csv) bytes"
-          echo "📊 Total rows: $(wc -l < teach/franklin-course-scraper/data/franklin_courses.csv)"
-          echo "🎓 Sample data (first row):"
-          head -n 2 teach/franklin-course-scraper/data/franklin_courses.csv | tail -n 1 | cut -d',' -f1-4
-        else
-          echo "❌ Course data file not found - checking directory structure:"
-          find teach/franklin-course-scraper -name "*.csv" -type f || echo "No CSV files found"
-        fi
-
     # Always setup Quarto regardless of scraping
     - name: Set up Quarto
       uses: quarto-dev/quarto-actions/setup@v2
-
-    # Only render course schedule if we scraped new data
-    - name: Render course schedule
-      if: steps.changes.outputs.scrape == 'true'
-      run: |
-        echo "📝 Rendering course schedule with fresh data..."
-        echo "Course data path: teach/franklin-course-scraper/data/franklin_courses.csv"
-        quarto render teach/course-schedule.qmd
-        echo "✅ Course schedule rendered successfully"
 
     # Smart rebuild logic based on trigger type and file changes
     - name: Check if full rebuild needed
@@ -149,13 +120,8 @@ jobs:
 
     - name: Ensure site directory exists
       run: |
-        # Make sure _site directory exists for deployment
-        if [ ! -d "_site" ]; then
-          echo "🔧 Creating _site directory and rendering full site..."
-          quarto render
-        else
-          echo "✅ Site directory exists"
-        fi
+        # Quarto render always creates _site directory
+        quarto render
 
     - name: Setup Pages
       uses: actions/configure-pages@v4
