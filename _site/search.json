@@ -4,21 +4,21 @@
     "href": "teach/franklin-course-scraper/output/course-schedule.html",
     "title": "Course Schedule - Fall 2025",
     "section": "",
-    "text": "Course Data Update Required\n\n\n\nThe course schedule will be automatically updated when the course data scraper is re-enabled. For now, please refer to the main teaching page for course information."
+    "text": "Course Data Update Required\n\n\n\nThe course schedule will be automatically updated when the course data scraper is re-enabled. For now, please refer to the main teaching page for course information.\n\n\n\n\n\n**📊 Course data loaded: 21 courses found**\n*Last updated: June 05, 2025 at 02:12 AM*"
   },
   {
     "objectID": "teach/franklin-course-scraper/output/course-schedule.html#complete-course-schedule",
     "href": "teach/franklin-course-scraper/output/course-schedule.html#complete-course-schedule",
     "title": "Course Schedule - Fall 2025",
     "section": "",
-    "text": "Course Data Update Required\n\n\n\nThe course schedule will be automatically updated when the course data scraper is re-enabled. For now, please refer to the main teaching page for course information."
+    "text": "Course Data Update Required\n\n\n\nThe course schedule will be automatically updated when the course data scraper is re-enabled. For now, please refer to the main teaching page for course information.\n\n\n\n\n\n**📊 Course data loaded: 21 courses found**\n*Last updated: June 05, 2025 at 02:12 AM*"
   },
   {
     "objectID": "teach/franklin-course-scraper/output/course-schedule.html#quick-statistics",
     "href": "teach/franklin-course-scraper/output/course-schedule.html#quick-statistics",
     "title": "Course Schedule - Fall 2025",
     "section": "📊 Quick Statistics",
-    "text": "📊 Quick Statistics"
+    "text": "📊 Quick Statistics\n\n\n- **Total Sections:** 21\n- **Total Enrollment:** 10 students\n- **Capacity Utilization:** 2.1%\n- **First-term Courses:** 9"
   },
   {
     "objectID": "teach.html",
@@ -89,6 +89,20 @@
     "title": "Publications",
     "section": "",
     "text": "Identifying Interpretable Features Impacting Nontraditional Undergraduate Computer Science Student Retention, Frontier In Education (FIE) 2024 Conference.\nLearning Analytics Finds That A Shared Course May Improve Technology Students Retention, Journal of Computing Sciences in Colleges, April 2023. link\nDynamics and mechanism of repair of ultraviolet-induced (6–4) photoproduct by photolyase, Nature, August 2010. link"
+  },
+  {
+    "objectID": "teach/course-schedule.html",
+    "href": "teach/course-schedule.html",
+    "title": "Course Schedule - Fall 2025",
+    "section": "",
+    "text": "**❌ Course Data Unavailable**\nThe course scraper failed to collect data. This may be due to:\n- Technical issues with the scraping process\n- Network connectivity problems\n- Changes in the source website\n\n*The automated course data collection will retry during the next scheduled update.*"
+  },
+  {
+    "objectID": "teach/course-schedule.html#complete-course-schedule",
+    "href": "teach/course-schedule.html#complete-course-schedule",
+    "title": "Course Schedule - Fall 2025",
+    "section": "",
+    "text": "**❌ Course Data Unavailable**\nThe course scraper failed to collect data. This may be due to:\n- Technical issues with the scraping process\n- Network connectivity problems\n- Changes in the source website\n\n*The automated course data collection will retry during the next scheduled update.*"
   },
   {
     "objectID": "teach/course-schedule.html#quick-statistics",

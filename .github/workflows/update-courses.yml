@@ -29,185 +29,58 @@ jobs:
     - name: Install Python dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install requests beautifulsoup4 pandas numpy PyYAML jupyter nbclient nbconvert ipykernel
+        pip install requests beautifulsoup4 pandas numpy PyYAML jupyter nbclient nbconvert ipykernel selenium
+
+    - name: Install Chrome and ChromeDriver
+      run: |
+        # Install Chrome
+        wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+        echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
+        sudo apt-get update
+        sudo apt-get install -y google-chrome-stable
+        
+        # Install ChromeDriver
+        CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+')
+        CHROMEDRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_VERSION%%.*}")
+        wget -q "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip"
+        unzip chromedriver_linux64.zip
+        sudo mv chromedriver /usr/local/bin/
+        sudo chmod +x /usr/local/bin/chromedriver
+        
+        # Verify installation
+        google-chrome --version
+        chromedriver --version
 
     - name: Create data directory
-      run: mkdir -p teach/franklin-course-scraper/data
+      run: |
+        mkdir -p teach/franklin-course-scraper/data
 
     - name: Scrape Franklin course data
       run: |
-        python3 << 'EOF'
-        import requests
-        from bs4 import BeautifulSoup
-        import pandas as pd
-        import re
-        from datetime import datetime
-        import os
+        echo "🔍 Starting course data scraping..."
+        cd teach/franklin-course-scraper
+        timeout 300 python scripts/scrape_franklin_courses.py || echo "⚠️ Course scraping failed or timed out, continuing with existing data..."
+        
+        # Check if data was created
+        if [ -f "data/franklin_courses.csv" ]; then
+          echo "✅ Course data file exists"
+          wc -l data/franklin_courses.csv
+        else
+          echo "⚠️ No course data file found, website will show error message"
+        fi
 
-        def scrape_franklin_courses():
-            """Scrape Franklin University course data and save to CSV"""
-            
-            # Franklin University course search URL
-            url = "https://ssb-prod.ec.franklin.edu/PROD/bwckctlg.p_display_courses"
-            
-            # Parameters for Analytics and Computer Science programs
-            analytics_params = {
-                'term_in': '202540',  # Fall 2025
-                'one_subj': 'ANLY',
-                'sel_crse_strt': '',
-                'sel_crse_end': '',
-                'sel_levl': '',
-                'sel_schd': '',
-                'sel_coll': '',
-                'sel_divs': '',
-                'sel_dept': '',
-                'sel_attr': ''
-            }
-            
-            cs_params = {
-                'term_in': '202540',  # Fall 2025
-                'one_subj': 'COMP',
-                'sel_crse_strt': '',
-                'sel_crse_end': '',
-                'sel_levl': '',
-                'sel_schd': '',
-                'sel_coll': '',
-                'sel_divs': '',
-                'sel_dept': '',
-                'sel_attr': ''
-            }
-            
-            all_courses = []
-            
-            # Scrape both ANLY and COMP courses
-            for program, params in [("Analytics", analytics_params), ("Computer Science", cs_params)]:
-                try:
-                    print(f"Scraping {program} courses...")
-                    response = requests.get(url, params=params, timeout=30)
-                    response.raise_for_status()
-                    
-                    soup = BeautifulSoup(response.content, 'html.parser')
-                    
-                    # Find course blocks
-                    course_blocks = soup.find_all('td', class_='nttitle')
-                    
-                    for block in course_blocks:
-                        try:
-                            # Extract course title and code
-                            title_text = block.get_text(strip=True)
-                            if ' - ' in title_text:
-                                course_code, course_name = title_text.split(' - ', 1)
-                                course_code = course_code.strip()
-                                course_name = course_name.strip()
-                            else:
-                                continue
-                            
-                            # Find the next sibling with course details
-                            details_block = block.find_next_sibling('td', class_='ntdefault')
-                            if not details_block:
-                                continue
-                            
-                            details_text = details_block.get_text(separator='\n', strip=True)
-                            
-                            # Extract credits
-                            credits_match = re.search(r'(\d+\.?\d*)\s+credit hours?', details_text, re.IGNORECASE)
-                            credits = credits_match.group(1) if credits_match else "3"
-                            
-                            # Create course record
-                            course_data = {
-                                'Course_Code': course_code,
-                                'Course_Name': course_name,
-                                'Credits': credits,
-                                'Session_Code': 'Fall2025',
-                                'Enrolled_Seats': 20,  # Sample data
-                                'Total_Seats': 25,     # Sample data
-                                'Available_Seats': 5,   # Sample data
-                                'Waitlist': 0,
-                                'Weekdays': 'TuTh',
-                                'Class_Times': '6:00 PM - 8:30 PM',
-                                'Locations': 'Online',
-                                'Instructors': 'Staff',
-                                'Teaching_Mode': 'Online',
-                                'Start_Date': '2025-08-25',
-                                'End_Date': '2025-12-15',
-                                'First_Term': 'Yes' if 'intro' in course_name.lower() or '500' in course_code else 'No',
-                                'Program': program
-                            }
-                            
-                            all_courses.append(course_data)
-                            print(f"Added: {course_code} - {course_name}")
-                            
-                        except Exception as e:
-                            print(f"Error processing course block: {e}")
-                            continue
-                            
-                except Exception as e:
-                    print(f"Error scraping {program}: {e}")
-                    continue
-            
-            # If no courses found, create sample data
-            if not all_courses:
-                print("No courses found, creating sample data...")
-                all_courses = [
-                    {
-                        'Course_Code': 'ANLY 500',
-                        'Course_Name': 'Introduction to Analytics',
-                        'Credits': '3',
-                        'Session_Code': 'Fall2025',
-                        'Enrolled_Seats': 18,
-                        'Total_Seats': 25,
-                        'Available_Seats': 7,
-                        'Waitlist': 0,
-                        'Weekdays': 'TuTh',
-                        'Class_Times': '6:00 PM - 8:30 PM',
-                        'Locations': 'Online',
-                        'Instructors': 'Dr. Smith',
-                        'Teaching_Mode': 'Online',
-                        'Start_Date': '2025-08-25',
-                        'End_Date': '2025-12-15',
-                        'First_Term': 'Yes',
-                        'Program': 'Analytics'
-                    },
-                    {
-                        'Course_Code': 'COMP 500',
-                        'Course_Name': 'Programming Fundamentals',
-                        'Credits': '3',
-                        'Session_Code': 'Fall2025',
-                        'Enrolled_Seats': 22,
-                        'Total_Seats': 25,
-                        'Available_Seats': 3,
-                        'Waitlist': 1,
-                        'Weekdays': 'MoWe',
-                        'Class_Times': '6:00 PM - 8:30 PM',
-                        'Locations': 'Online',
-                        'Instructors': 'Dr. Johnson',
-                        'Teaching_Mode': 'Online',
-                        'Start_Date': '2025-08-25',
-                        'End_Date': '2025-12-15',
-                        'First_Term': 'Yes',
-                        'Program': 'Computer Science'
-                    }
-                ]
-            
-            # Convert to DataFrame and save
-            df = pd.DataFrame(all_courses)
-            
-            # Ensure data directory exists
-            os.makedirs('teach/franklin-course-scraper/data', exist_ok=True)
-            
-            # Save to CSV
-            csv_path = 'teach/franklin-course-scraper/data/franklin_courses.csv'
-            df.to_csv(csv_path, index=False)
-            
-            print(f"Saved {len(df)} courses to {csv_path}")
-            return df
-
-        # Run the scraper
-        if __name__ == "__main__":
-            df = scrape_franklin_courses()
-            print("Course scraping completed successfully!")
-            print(f"Total courses scraped: {len(df)}")
-        EOF
+    - name: Verify course data
+      run: |
+        if [ -f teach/franklin-course-scraper/data/franklin_courses.csv ]; then
+          echo "✅ Course data file exists"
+          echo "📊 File size: $(du -h teach/franklin-course-scraper/data/franklin_courses.csv)"
+          echo "📋 Lines in file: $(wc -l < teach/franklin-course-scraper/data/franklin_courses.csv)"
+          echo "🔍 First few lines:"
+          head -n 3 teach/franklin-course-scraper/data/franklin_courses.csv
+        else
+          echo "❌ Course data file not found"
+          ls -la teach/franklin-course-scraper/data/ || echo "Data directory not found"
+        fi
 
     - name: Set up Quarto
       uses: quarto-dev/quarto-actions/setup@v2

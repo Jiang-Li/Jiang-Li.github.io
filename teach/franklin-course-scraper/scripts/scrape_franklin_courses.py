@@ -24,6 +24,9 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from bs4 import BeautifulSoup
+from pathlib import Path
+import pandas as pd
+import sys
 
 # Compiled regex patterns for better performance
 SECTION_PATTERN = re.compile(r'[a-z]+\*\d+-[a-z0-9]{4}', re.IGNORECASE)
@@ -766,33 +769,44 @@ class FranklinCourseScraper:
             return all_sections
 
 def main():
-    scraper = None
-    try:
-        print("🎯 Franklin University Course Scraper - Data Collection")
-        print("=" * 60)
-        
-        scraper = FranklinCourseScraper(headless=True)
-        course_request = scraper.read_course_list("course_request.md")
-        
-        if not course_request.courses:
-            print("❌ No courses to process")
-            return
-        
-        # Actually scrape the courses
-        print("🌐 Starting web scraping...")
-        sections = scraper.scrape_multiple_courses(course_request)
-        
-        if sections:
-            scraper.save_to_csv(sections)
-            print("✅ Data collection complete")
-        else:
-            print("❌ No data collected")
+    """Main function to scrape course data and save to CSV"""
+    print("🚀 Starting Franklin University course scraper...")
     
+    # Create output directory if it doesn't exist
+    output_dir = Path(__file__).parent.parent / "data"
+    output_dir.mkdir(exist_ok=True)
+    output_file = output_dir / "franklin_courses.csv"
+    
+    try:
+        # Scrape course data
+        course_sections = scrape_course_data()
+        
+        if course_sections:
+            # Convert to DataFrame and save
+            df = pd.DataFrame([course.__dict__ for course in course_sections])
+            df.to_csv(output_file, index=False)
+            print(f"✅ Successfully scraped {len(course_sections)} course sections")
+            print(f"📁 Data saved to: {output_file}")
+        else:
+            print("⚠️  No course data found during scraping")
+            # Create an empty CSV with just headers
+            df = pd.DataFrame(columns=[
+                'course_code', 'session_code', 'course_name', 'credits', 'term',
+                'seats_available', 'seats_total', 'seats_waitlisted',
+                'weekdays', 'class_times', 'locations', 'instructors', 'teaching_mode'
+            ])
+            df.to_csv(output_file, index=False)
+            print(f"📁 Empty data file created at: {output_file}")
+            
     except Exception as e:
-        print(f"❌ Error: {e}")
-    finally:
-        if scraper:
-            scraper.close()
+        print(f"❌ Scraping failed: {str(e)}")
+        # Don't create any file when scraping fails
+        if output_file.exists():
+            output_file.unlink()  # Remove any existing file
+        print("🚫 No data file created due to scraping failure")
+        # Exit with error code so workflow knows it failed
+        sys.exit(1)
+
 
 if __name__ == "__main__":
     main() 
