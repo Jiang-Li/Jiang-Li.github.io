@@ -164,7 +164,9 @@ class FranklinCourseScraper:
     def save_to_csv(self, sections: List[CourseSection], filename: str = None):
         try:
             if filename is None:
-                data_dir = "../data"  # Save to parent data directory, not scripts/data
+                # Get the scraper directory (one level up from scripts/) then into data/
+                data_dir = os.path.join(os.path.dirname(__file__), "..", "data")
+                data_dir = os.path.abspath(data_dir)  # Convert to absolute path
                 if not os.path.exists(data_dir):
                     os.makedirs(data_dir, exist_ok=True)
                 filename = os.path.join(data_dir, "franklin_courses.csv")
@@ -769,43 +771,33 @@ class FranklinCourseScraper:
             return all_sections
 
 def main():
-    """Main function to scrape course data and save to CSV"""
-    print("🚀 Starting Franklin University course scraper...")
-    
-    # Create output directory if it doesn't exist
-    output_dir = Path(__file__).parent.parent / "data"
-    output_dir.mkdir(exist_ok=True)
-    output_file = output_dir / "franklin_courses.csv"
-    
+    scraper = None
     try:
-        # Scrape course data
-        course_sections = scrape_course_data()
+        print("🎯 Franklin University Course Scraper - Data Collection")
+        print("=" * 60)
         
-        if course_sections:
-            # Convert to DataFrame and save
-            df = pd.DataFrame([course.__dict__ for course in course_sections])
-            df.to_csv(output_file, index=False)
-            print(f"✅ Successfully scraped {len(course_sections)} course sections")
-            print(f"📁 Data saved to: {output_file}")
+        scraper = FranklinCourseScraper(headless=True)
+        course_request = scraper.read_course_list("course_request.md")
+        
+        if not course_request.courses:
+            print("❌ No courses to process")
+            return
+        
+        # Actually scrape the courses
+        print("🌐 Starting web scraping...")
+        sections = scraper.scrape_multiple_courses(course_request)
+        
+        if sections:
+            scraper.save_to_csv(sections)
+            print("✅ Data collection complete")
         else:
-            print("⚠️  No course data found during scraping")
-            # Create an empty CSV with just headers
-            df = pd.DataFrame(columns=[
-                'course_code', 'session_code', 'course_name', 'credits', 'term',
-                'seats_available', 'seats_total', 'seats_waitlisted',
-                'weekdays', 'class_times', 'locations', 'instructors', 'teaching_mode'
-            ])
-            df.to_csv(output_file, index=False)
-            print(f"📁 Empty data file created at: {output_file}")
-            
+            print("❌ No data collected")
+    
     except Exception as e:
-        print(f"❌ Scraping failed: {str(e)}")
-        # Don't create any file when scraping fails
-        if output_file.exists():
-            output_file.unlink()  # Remove any existing file
-        print("🚫 No data file created due to scraping failure")
-        # Exit with error code so workflow knows it failed
-        sys.exit(1)
+        print(f"❌ Error: {e}")
+    finally:
+        if scraper:
+            scraper.close()
 
 
 if __name__ == "__main__":
