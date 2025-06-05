@@ -6,63 +6,71 @@ format:
     page-layout: full
     css: 
       - ../style.css
-      - |
-        .course-table {
-          overflow-x: auto;
-          margin: 1rem 0;
-        }
-        .course-table table {
-          width: 100%;
-          min-width: 1300px;
-          border-collapse: collapse;
-          font-size: 0.9rem;
-        }
-        .course-table th {
-          background: #1e40af;
-          color: white;
-          padding: 0.75rem 0.5rem;
-          text-align: left;
-          font-weight: 600;
-          position: sticky;
-          top: 0;
-          z-index: 10;
-        }
-        .course-table td {
-          padding: 0.5rem;
-          border-bottom: 1px solid #e5e7eb;
-          white-space: nowrap;
-        }
-        .course-table tr:nth-child(even) {
-          background: #f9fafb;
-        }
-        .course-table tr:hover {
-          background: #f3f4f6;
-        }
-        .course-table tr.first-term {
-          background: #dbeafe !important;
-          font-weight: 600;
-        }
-        .course-table tr.first-term:hover {
-          background: #bfdbfe !important;
-        }
-        .enrollment {
-          text-align: center;
-          font-weight: 600;
-        }
-        .available {
-          color: #059669;
-        }
-        .limited {
-          color: #d97706;
-        }
-        .full {
-          color: #dc2626;
-        }
 toc: false
 number-sections: false
 ---
 
-
+<style>
+.course-table {
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+.course-table table {
+  width: 100%;
+  min-width: 1200px;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.course-table th {
+  background: #1e40af;
+  color: white;
+  padding: 0.75rem 0.5rem;
+  text-align: left;
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.course-table td {
+  padding: 0.5rem;
+  border-bottom: 1px solid #e5e7eb;
+  white-space: nowrap;
+}
+.course-table tr:nth-child(even) {
+  background: #f9fafb;
+}
+.course-table tr:hover {
+  background: #f3f4f6;
+}
+.course-table tr.first-term {
+  background: #dbeafe !important;
+  font-weight: 600;
+}
+.course-table tr.first-term:hover {
+  background: #bfdbfe !important;
+}
+.enrollment {
+  text-align: center;
+  font-weight: 600;
+}
+.available {
+  color: #059669;
+}
+.limited {
+  color: #d97706;
+}
+.full {
+  color: #dc2626;
+}
+.first-term-badge {
+  background: #3b82f6;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+</style>
 
 ```{python}
 #| echo: false
@@ -71,6 +79,7 @@ number-sections: false
 import pandas as pd
 import numpy as np
 from datetime import datetime
+import pytz
 import os
 
 # Read data from the Franklin course scraper project
@@ -87,52 +96,45 @@ if os.path.exists(data_path):
     # Fix Session_Code: Extract just the section code
     df['Session_Code_Clean'] = df['Session_Code'].str.extract(r'-([A-Z0-9]+)$')
     
-    # CSV data is now correct after scraper fix - use values directly
-    # Enrolled_Seats = correctly calculated enrollment
-    # Available_Seats = correctly calculated available seats  
-    # Total_Seats = total capacity
+    # Note: Available_Seats column removed from CSV output in scraper
+    # Using Enrolled_Seats and Total_Seats to calculate availability status
+    df['Available_Seats'] = pd.to_numeric(df['Total_Seats'], errors='coerce') - pd.to_numeric(df['Enrolled_Seats'], errors='coerce')
+    df['Available_Seats'] = df['Available_Seats'].fillna(0).astype(int)
     
-    # Calculate availability status based on corrected available seats
+    # Calculate availability status
     df['Enrollment_Status'] = df.apply(lambda row: 
         'Available' if row['Available_Seats'] > 5 else
         'Limited' if row['Available_Seats'] > 0 else
         'Full', axis=1)
     
-    # Clean course names - they look correct in the CSV
+    # Clean course names
     df['Course_Name_Clean'] = df['Course_Name']
     
-    # Parse schedule information - clean up the messy data
-    df['Weekdays_Clean'] = df['Class_Times'].str.extract(r'([MTWRFSU][a-z]*[/,\s]*[MTWRFSU]*[a-z]*)')
-    df['Weekdays_Clean'] = df['Weekdays_Clean'].fillna('TBD')
-    
-    # Extract clean class times
-    df['Class_Times_Clean'] = df['Class_Times'].str.extract(r'(\d+:\d+\s*[AP]M\s*-\s*\d+:\d+\s*[AP]M)')
-    df['Class_Times_Clean'] = df['Class_Times_Clean'].fillna('TBD')
-    
-    # Clean locations - extract just "Downtown" or other location
-    df['Locations_Clean'] = 'Downtown'  # All courses appear to be downtown
-    
-    # Clean instructors - appears to be "Seats" placeholder
-    df['Instructors_Clean'] = 'TBD'
+    # Parse schedule information
+    df['Weekdays_Clean'] = df['Weekdays'].fillna('TBD')
+    df['Class_Times_Clean'] = df['Class_Times'].fillna('TBD')
+    df['Locations_Clean'] = df['Locations'].fillna('TBD')
+    df['Instructors_Clean'] = df['Instructors'].fillna('TBD')
     
     # Sort by course code and session
     df = df.sort_values(['Course_Code_Clean', 'Session_Code_Clean'])
     
-    # Simple statistics
+    # Statistics
     total_sections = len(df)
     total_courses = df['Course_Code_Clean'].nunique()
     total_enrolled = df['Enrolled_Seats'].sum()
     total_capacity = df['Total_Seats'].sum()
     
-    # Format the datetime for better readability
+    # Format the datetime - now saved directly in EST from scraper
     if len(df) > 0:
-        from datetime import datetime
         scraped_time = df['Scraped_DateTime'].iloc[0]
         try:
-            dt = datetime.fromisoformat(scraped_time.replace('T', ' '))
-            formatted_time = dt.strftime("%B %d, %Y at %I:%M %p")
+            # Parse ISO format datetime (already in EST timezone)
+            dt = datetime.fromisoformat(scraped_time.replace('T', ' ').replace('-05:00', '').replace('+00:00', ''))
+            formatted_time = dt.strftime("%B %d, %Y at %I:%M %p EST")
         except:
-            formatted_time = scraped_time[:16]
+            # Fallback for any parsing issues
+            formatted_time = scraped_time[:16] + " EST"
     else:
         formatted_time = 'No data'
     
@@ -158,17 +160,19 @@ else:
 #| warning: false
 
 if len(df) > 0:
-    # Create HTML table with improved formatting
+    # Create HTML table with improved formatting (without Available column)
     html_rows = []
     
     for _, row in df.iterrows():
         first_term_class = "first-term" if row['First_Term'] == 'Yes' else ""
         status_class = f"enrollment {row['Enrollment_Status'].lower()}"
         
-        # Format enrollment data - separate columns for Enrolled and Total
+        # Format enrollment data - only Enrolled and Total (no Available column)
         enrolled_display = str(int(row['Enrolled_Seats']))
         total_display = str(int(row['Total_Seats']))
-        available_display = str(int(row['Available_Seats']))
+        
+        # Add first term indicator badge
+        first_term_indicator = '<span class="first-term-badge">First Term</span>' if row['First_Term'] == 'Yes' else ''
         
         # Clean up display data
         weekdays = row['Weekdays_Clean'] if pd.notna(row['Weekdays_Clean']) else 'TBD'
@@ -176,12 +180,12 @@ if len(df) > 0:
         location = row['Locations_Clean'] if pd.notna(row['Locations_Clean']) else 'TBD'
         instructor = row['Instructors_Clean'] if pd.notna(row['Instructors_Clean']) else 'TBD'
         
-        # Format dates - clean up messy date formatting from scraper
+        # Format dates
         import re
         start_date = row['Start_Date'] if pd.notna(row['Start_Date']) else 'TBD'
         end_date = row['End_Date'] if pd.notna(row['End_Date']) else 'TBD'
         
-        # Clean up messy date formatting like "-TBD8/18/2025"
+        # Clean up date formatting
         if start_date != 'TBD':
             date_match = re.search(r'(\d{1,2}/\d{1,2}/\d{4})', str(start_date))
             start_date = date_match.group(1) if date_match else 'TBD'
@@ -194,55 +198,50 @@ if len(df) > 0:
         
         html_row = f"""
         <tr class="{first_term_class}">
-            <td><strong>{row['Course_Display']}</strong></td>
+            <td><strong>{row['Course_Display']}</strong> {first_term_indicator}</td>
             <td>{row['Session_Code_Clean']}</td>
             <td>{row['Course_Name_Clean']}</td>
             <td>{row['Credits']}</td>
             <td class="{status_class}">{enrolled_display}</td>
             <td class="{status_class}">{total_display}</td>
-            <td class="{status_class}">{available_display}</td>
             <td>{weekdays}</td>
             <td>{times}</td>
             <td>{location}</td>
             <td>{instructor}</td>
-            <td>{row['Teaching_Mode']}</td>
             <td>{date_range}</td>
-        </tr>
-        """
+        </tr>"""
         html_rows.append(html_row)
     
-    html_table = f"""
+    # Create table header (removed Available column)
+    table_html = f"""
     <div class="course-table">
         <table>
             <thead>
                 <tr>
                     <th>Course</th>
                     <th>Section</th>
-                    <th>Title</th>
+                    <th>Course Name</th>
                     <th>Credits</th>
                     <th>Enrolled</th>
-                    <th>Total</th>
-                    <th>Available</th>
+                    <th>Capacity</th>
                     <th>Days</th>
                     <th>Times</th>
                     <th>Location</th>
                     <th>Instructor</th>
-                    <th>Mode</th>
                     <th>Dates</th>
                 </tr>
             </thead>
             <tbody>
-                {"".join(html_rows)}
+                {''.join(html_rows)}
             </tbody>
         </table>
     </div>
     """
     
-    from IPython.display import HTML
-    display(HTML(html_table))
-
+    display(HTML(table_html))
+    
 else:
-    print("No course data available to display.")
+    print("⚠️ No course data available to display.")
 ```
 
 ---

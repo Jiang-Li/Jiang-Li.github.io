@@ -82,57 +82,6 @@ ul.task-list li input[type="checkbox"] {
 
 
 <link rel="stylesheet" href="../style.css">
-<link rel="stylesheet" href=".course-table {
-  overflow-x: auto;
-  margin: 1rem 0;
-}
-.course-table table {
-  width: 100%;
-  min-width: 1300px;
-  border-collapse: collapse;
-  font-size: 0.9rem;
-}
-.course-table th {
-  background: #1e40af;
-  color: white;
-  padding: 0.75rem 0.5rem;
-  text-align: left;
-  font-weight: 600;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
-.course-table td {
-  padding: 0.5rem;
-  border-bottom: 1px solid #e5e7eb;
-  white-space: nowrap;
-}
-.course-table tr:nth-child(even) {
-  background: #f9fafb;
-}
-.course-table tr:hover {
-  background: #f3f4f6;
-}
-.course-table tr.first-term {
-  background: #dbeafe !important;
-  font-weight: 600;
-}
-.course-table tr.first-term:hover {
-  background: #bfdbfe !important;
-}
-.enrollment {
-  text-align: center;
-  font-weight: 600;
-}
-.available {
-  color: #059669;
-}
-.limited {
-  color: #d97706;
-}
-.full {
-  color: #dc2626;
-}">
 </head>
 
 <body class="floating nav-fixed quarto-light">
@@ -219,11 +168,72 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div id="5cb0f3e0" class="cell" data-execution_count="1">
+<style>
+.course-table {
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+.course-table table {
+  width: 100%;
+  min-width: 1200px;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.course-table th {
+  background: #1e40af;
+  color: white;
+  padding: 0.75rem 0.5rem;
+  text-align: left;
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.course-table td {
+  padding: 0.5rem;
+  border-bottom: 1px solid #e5e7eb;
+  white-space: nowrap;
+}
+.course-table tr:nth-child(even) {
+  background: #f9fafb;
+}
+.course-table tr:hover {
+  background: #f3f4f6;
+}
+.course-table tr.first-term {
+  background: #dbeafe !important;
+  font-weight: 600;
+}
+.course-table tr.first-term:hover {
+  background: #bfdbfe !important;
+}
+.enrollment {
+  text-align: center;
+  font-weight: 600;
+}
+.available {
+  color: #059669;
+}
+.limited {
+  color: #d97706;
+}
+.full {
+  color: #dc2626;
+}
+.first-term-badge {
+  background: #3b82f6;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+</style>
+<div id="f30f0155" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display">
 
     <div style="margin-bottom: 1.5rem; font-size: 1rem;">
-        <p><strong>Data Updated:</strong> June 05, 2025 at 02:47 AM</p>
+        <p><strong>Data Updated:</strong> June 05, 2025 at 02:47 AM EST</p>
         <p><strong>Total Sections:</strong> 21</p>
         <p><strong>Courses Offered:</strong> 14</p>
         <p><strong>Students Enrolled:</strong> 10/475</p>
@@ -231,7 +241,7 @@ ul.task-list li input[type="checkbox"] {
     
 </div>
 </div>
-<div id="5c94d62e" class="cell" data-execution_count="2">
+<div id="edcee381" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="course-table">
         
@@ -240,16 +250,14 @@ ul.task-list li input[type="checkbox"] {
 <tr class="header">
 <th data-quarto-table-cell-role="th">Course</th>
 <th data-quarto-table-cell-role="th">Section</th>
-<th data-quarto-table-cell-role="th">Title</th>
+<th data-quarto-table-cell-role="th">Course Name</th>
 <th data-quarto-table-cell-role="th">Credits</th>
 <th data-quarto-table-cell-role="th">Enrolled</th>
-<th data-quarto-table-cell-role="th">Total</th>
-<th data-quarto-table-cell-role="th">Available</th>
+<th data-quarto-table-cell-role="th">Capacity</th>
 <th data-quarto-table-cell-role="th">Days</th>
 <th data-quarto-table-cell-role="th">Times</th>
 <th data-quarto-table-cell-role="th">Location</th>
 <th data-quarto-table-cell-role="th">Instructor</th>
-<th data-quarto-table-cell-role="th">Mode</th>
 <th data-quarto-table-cell-role="th">Dates</th>
 </tr>
 </thead>
@@ -261,12 +269,10 @@ ul.task-list li input[type="checkbox"] {
 <td>4</td>
 <td class="enrollment available">0</td>
 <td class="enrollment available">22</td>
-<td class="enrollment available">22</td>
-<td>T</td>
 <td>TBD</td>
-<td>Downtown</td>
 <td>TBD</td>
-<td>Face-to-Face</td>
+<td>Downtown,TBDFace-To-Face</td>
+<td>Seats</td>
 <td>9/29/2025 - 11/8/2025</td>
 </tr>
 <tr class="even">
@@ -276,42 +282,36 @@ ul.task-list li input[type="checkbox"] {
 <td>4</td>
 <td class="enrollment available">0</td>
 <td class="enrollment available">22</td>
-<td class="enrollment available">22</td>
-<td>T</td>
 <td>TBD</td>
-<td>Downtown</td>
 <td>TBD</td>
-<td>Face-to-Face</td>
+<td>Downtown,TBDFace-To-Face</td>
+<td>Seats</td>
 <td>11/10/2025 - 12/20/2025</td>
 </tr>
 <tr class="first-term odd">
-<td><strong>COMP 511</strong></td>
+<td><strong>COMP 511</strong> <span class="first-term-badge">First Term</span></td>
 <td>U1FF</td>
 <td>COMP-511 Foundation Data Struc &amp; Obj Or</td>
 <td>4</td>
 <td class="enrollment available">0</td>
 <td class="enrollment available">22</td>
-<td class="enrollment available">22</td>
-<td>T</td>
 <td>TBD</td>
-<td>Downtown</td>
 <td>TBD</td>
-<td>Face-to-Face</td>
+<td>Downtown,TBDFace-To-Face</td>
+<td>Seats</td>
 <td>8/18/2025 - 11/8/2025</td>
 </tr>
 <tr class="first-term even">
-<td><strong>COMP 611</strong></td>
+<td><strong>COMP 611</strong> <span class="first-term-badge">First Term</span></td>
 <td>U1FF</td>
 <td>COMP-611 Adv Data Structure and Program</td>
 <td>4</td>
 <td class="enrollment available">0</td>
 <td class="enrollment available">45</td>
-<td class="enrollment available">45</td>
-<td>Th</td>
-<td>6:00 PM-9:40 PM</td>
-<td>Downtown</td>
 <td>TBD</td>
-<td>Hybrid</td>
+<td>Th6:00 PM-9:40 PMTBD8/18/2025 - 11/8/2025</td>
+<td>Downtown,TBDHybrid - Face to Face</td>
+<td>Seats</td>
 <td>8/18/2025 - 11/8/2025</td>
 </tr>
 <tr class="odd">
@@ -321,12 +321,10 @@ ul.task-list li input[type="checkbox"] {
 <td>4</td>
 <td class="enrollment available">0</td>
 <td class="enrollment available">22</td>
-<td class="enrollment available">22</td>
-<td>M</td>
-<td>6:00 PM-9:40 PM</td>
-<td>Downtown</td>
 <td>TBD</td>
-<td>Hybrid</td>
+<td>M6:00 PM-9:40 PMTBD9/8/2025 - 11/29/2025</td>
+<td>Downtown,TBDHybrid - Face to Face</td>
+<td>Seats</td>
 <td>9/8/2025 - 11/29/2025</td>
 </tr>
 <tr class="even">
@@ -336,12 +334,10 @@ ul.task-list li input[type="checkbox"] {
 <td>4</td>
 <td class="enrollment available">0</td>
 <td class="enrollment available">22</td>
-<td class="enrollment available">22</td>
-<td>T</td>
 <td>TBD</td>
-<td>Downtown</td>
 <td>TBD</td>
-<td>Face-to-Face</td>
+<td>Downtown,TBDFace-To-Face</td>
+<td>Seats</td>
 <td>8/18/2025 - 11/8/2025</td>
 </tr>
 <tr class="odd">
@@ -351,12 +347,10 @@ ul.task-list li input[type="checkbox"] {
 <td>4</td>
 <td class="enrollment available">10</td>
 <td class="enrollment available">22</td>
-<td class="enrollment available">12</td>
-<td>T</td>
-<td>6:00 PM-9:40 PM</td>
-<td>Downtown</td>
 <td>TBD</td>
-<td>Hybrid</td>
+<td>T6:00 PM-9:40 PMTBD9/29/2025 - 12/20/2025</td>
+<td>Downtown,TBDHybrid - Face to Face</td>
+<td>Seats</td>
 <td>9/29/2025 - 12/20/2025</td>
 </tr>
 <tr class="even">
@@ -366,12 +360,10 @@ ul.task-list li input[type="checkbox"] {
 <td>4</td>
 <td class="enrollment available">0</td>
 <td class="enrollment available">22</td>
-<td class="enrollment available">22</td>
-<td>T</td>
 <td>TBD</td>
-<td>Downtown</td>
 <td>TBD</td>
-<td>Face-to-Face</td>
+<td>Downtown,TBDFace-To-Face</td>
+<td>Seats</td>
 <td>8/18/2025 - 11/8/2025</td>
 </tr>
 <tr class="odd">
@@ -381,12 +373,10 @@ ul.task-list li input[type="checkbox"] {
 <td>4</td>
 <td class="enrollment available">0</td>
 <td class="enrollment available">22</td>
-<td class="enrollment available">22</td>
-<td>T</td>
 <td>TBD</td>
-<td>Downtown</td>
 <td>TBD</td>
-<td>Face-to-Face</td>
+<td>Downtown,TBDFace-To-Face</td>
+<td>Seats</td>
 <td>8/18/2025 - 11/8/2025</td>
 </tr>
 <tr class="even">
@@ -396,12 +386,10 @@ ul.task-list li input[type="checkbox"] {
 <td>4</td>
 <td class="enrollment available">0</td>
 <td class="enrollment available">22</td>
-<td class="enrollment available">22</td>
-<td>T</td>
 <td>TBD</td>
-<td>Downtown</td>
 <td>TBD</td>
-<td>Face-to-Face</td>
+<td>Downtown,TBDFace-To-Face</td>
+<td>Seats</td>
 <td>8/18/2025 - 11/8/2025</td>
 </tr>
 <tr class="odd">
@@ -411,27 +399,23 @@ ul.task-list li input[type="checkbox"] {
 <td>4</td>
 <td class="enrollment available">0</td>
 <td class="enrollment available">22</td>
-<td class="enrollment available">22</td>
-<td>T</td>
 <td>TBD</td>
-<td>Downtown</td>
 <td>TBD</td>
-<td>Face-to-Face</td>
+<td>Downtown,TBDFace-To-Face</td>
+<td>Seats</td>
 <td>8/18/2025 - 11/8/2025</td>
 </tr>
 <tr class="first-term even">
-<td><strong>DATA 630</strong></td>
+<td><strong>DATA 630</strong> <span class="first-term-badge">First Term</span></td>
 <td>U1FF</td>
 <td>DATA-630 Applied Database Management</td>
 <td>4</td>
 <td class="enrollment available">0</td>
 <td class="enrollment available">22</td>
-<td class="enrollment available">22</td>
-<td>T</td>
 <td>TBD</td>
-<td>Downtown</td>
 <td>TBD</td>
-<td>Face-to-Face</td>
+<td>Downtown,TBDFace-To-Face</td>
+<td>Seats</td>
 <td>8/18/2025 - 11/8/2025</td>
 </tr>
 <tr class="odd">
@@ -441,12 +425,10 @@ ul.task-list li input[type="checkbox"] {
 <td>4</td>
 <td class="enrollment available">0</td>
 <td class="enrollment available">22</td>
-<td class="enrollment available">22</td>
-<td>T/Th</td>
-<td>6:00 PM-7:50 PM</td>
-<td>Downtown</td>
 <td>TBD</td>
-<td>Face-to-Face</td>
+<td>T/Th6:00 PM-7:50 PMTBD9/30/2025 - 12/18/2025</td>
+<td>Downtown,TBDFace-To-Face</td>
+<td>Seats</td>
 <td>9/30/2025 - 12/18/2025</td>
 </tr>
 <tr class="even">
@@ -456,12 +438,10 @@ ul.task-list li input[type="checkbox"] {
 <td>4</td>
 <td class="enrollment available">0</td>
 <td class="enrollment available">22</td>
-<td class="enrollment available">22</td>
-<td>T/Th</td>
-<td>10:00 AM-12:00 PM</td>
-<td>Downtown</td>
 <td>TBD</td>
-<td>Face-to-Face</td>
+<td>T/Th10:00 AM-12:00 PMTBD9/30/2025 - 12/18/2025</td>
+<td>Downtown,TBDFace-To-Face</td>
+<td>Seats</td>
 <td>9/30/2025 - 12/18/2025</td>
 </tr>
 <tr class="odd">
@@ -471,102 +451,88 @@ ul.task-list li input[type="checkbox"] {
 <td>4</td>
 <td class="enrollment available">0</td>
 <td class="enrollment available">22</td>
-<td class="enrollment available">22</td>
-<td>M/W</td>
-<td>6:00 PM-7:50 PM</td>
-<td>Downtown</td>
 <td>TBD</td>
-<td>Face-to-Face</td>
+<td>M/W6:00 PM-7:50 PMTBD9/29/2025 - 12/17/2025</td>
+<td>Downtown,TBDFace-To-Face</td>
+<td>Seats</td>
 <td>9/29/2025 - 12/17/2025</td>
 </tr>
 <tr class="first-term even">
-<td><strong>MATH 601</strong></td>
+<td><strong>MATH 601</strong> <span class="first-term-badge">First Term</span></td>
 <td>Q1FF</td>
 <td>MATH-601 Introduction to Analytics</td>
 <td>4</td>
 <td class="enrollment available">0</td>
 <td class="enrollment available">22</td>
-<td class="enrollment available">22</td>
-<td>T</td>
 <td>TBD</td>
-<td>Downtown</td>
 <td>TBD</td>
-<td>Hybrid</td>
+<td>Downtown,TBDHybrid - Face to Face</td>
+<td>Seats</td>
 <td>9/29/2025 - 12/20/2025</td>
 </tr>
 <tr class="first-term odd">
-<td><strong>PF 521</strong></td>
+<td><strong>PF 521</strong> <span class="first-term-badge">First Term</span></td>
 <td>E1FF</td>
 <td>PF-521 Advanced Learning Strategies</td>
 <td>0</td>
 <td class="enrollment available">0</td>
 <td class="enrollment available">20</td>
-<td class="enrollment available">20</td>
-<td>T</td>
 <td>TBD</td>
-<td>Downtown</td>
 <td>TBD</td>
-<td>Face-to-Face</td>
+<td>Downtown,TBDFace-To-Face</td>
+<td>Seats</td>
 <td>8/18/2025 - 9/27/2025</td>
 </tr>
 <tr class="first-term even">
-<td><strong>PF 521</strong></td>
+<td><strong>PF 521</strong> <span class="first-term-badge">First Term</span></td>
 <td>E2FF</td>
 <td>PF-521 Advanced Learning Strategies</td>
 <td>0</td>
 <td class="enrollment available">0</td>
 <td class="enrollment available">20</td>
-<td class="enrollment available">20</td>
-<td>T</td>
 <td>TBD</td>
-<td>Downtown</td>
 <td>TBD</td>
-<td>Face-to-Face</td>
+<td>Downtown,TBDFace-To-Face</td>
+<td>Seats</td>
 <td>8/18/2025 - 9/27/2025</td>
 </tr>
 <tr class="first-term odd">
-<td><strong>PF 521</strong></td>
+<td><strong>PF 521</strong> <span class="first-term-badge">First Term</span></td>
 <td>E3FF</td>
 <td>PF-521 Advanced Learning Strategies</td>
 <td>0</td>
 <td class="enrollment available">0</td>
 <td class="enrollment available">20</td>
-<td class="enrollment available">20</td>
-<td>T</td>
 <td>TBD</td>
-<td>Downtown</td>
 <td>TBD</td>
-<td>Face-to-Face</td>
+<td>Downtown,TBDFace-To-Face</td>
+<td>Seats</td>
 <td>8/18/2025 - 9/27/2025</td>
 </tr>
 <tr class="first-term even">
-<td><strong>PF 521</strong></td>
+<td><strong>PF 521</strong> <span class="first-term-badge">First Term</span></td>
 <td>E4FF</td>
 <td>PF-521 Advanced Learning Strategies</td>
 <td>0</td>
 <td class="enrollment available">0</td>
 <td class="enrollment available">20</td>
-<td class="enrollment available">20</td>
-<td>T</td>
 <td>TBD</td>
-<td>Downtown</td>
 <td>TBD</td>
-<td>Face-to-Face</td>
+<td>Downtown,TBDFace-To-Face</td>
+<td>Seats</td>
 <td>8/18/2025 - 9/27/2025</td>
 </tr>
 <tr class="first-term odd">
-<td><strong>PF 521</strong></td>
+<td><strong>PF 521</strong> <span class="first-term-badge">First Term</span></td>
 <td>E5FF</td>
 <td>PF-521 Advanced Learning Strategies</td>
 <td>0</td>
 <td class="enrollment available">0</td>
 <td class="enrollment available">20</td>
-<td class="enrollment available">20</td>
-<td>T</td>
 <td>TBD</td>
-<td>Downtown</td>
 <td>TBD</td>
-<td>Face-to-Face</td>
+<td>Downtown,TBDFace-To-Face</td>
+<td>Seats</td>
 <td>8/18/2025 - 9/27/2025</td>
 </tr>
 </tbody>

@@ -175,12 +175,15 @@ class FranklinCourseScraper:
             
             headers = [
                 'Course_Code', 'Session_Code', 'Course_Name', 'Credits', 'Term',
-                'Enrolled_Seats', 'Available_Seats', 'Total_Seats', 'Waitlist',
+                'Enrolled_Seats', 'Total_Seats', 'Waitlist',
                 'Weekdays', 'Class_Times', 'Locations', 'Instructors', 
                 'Teaching_Mode', 'Start_Date', 'End_Date', 'First_Term', 'Scraped_DateTime'
             ]
             
-            scraped_datetime = datetime.now().isoformat()
+            # Save timestamp in EST timezone for consistency
+            from datetime import timezone, timedelta
+            est_tz = timezone(timedelta(hours=-5))  # EST is UTC-5
+            scraped_datetime = datetime.now(est_tz).isoformat()
             
             csv_data = []
             for section in sections:
@@ -195,7 +198,7 @@ class FranklinCourseScraper:
                 
                 row = [
                     section.course_code, section.session_code, section.course_name,
-                    section.credits, section.term, enrolled_seats, section.seats_available,
+                    section.credits, section.term, enrolled_seats, 
                     section.seats_total, section.seats_waitlisted,
                     ', '.join(section.weekdays), ', '.join(section.class_times),
                     ', '.join(section.locations), ', '.join(section.instructors),
