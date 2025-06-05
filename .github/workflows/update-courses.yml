@@ -77,10 +77,15 @@ jobs:
     - name: Install Jupyter in System Python for Quarto
       run: |
         echo "Attempting to install Jupyter into /usr/bin/python3 for Quarto kernel execution..."
+        echo "Initial PATH: $PATH"
+        echo "which python3: $(which python3)"
+        echo "python3 --version: $(python3 --version)"
         sudo /usr/bin/python3 -m pip install --upgrade pip --break-system-packages
         sudo /usr/bin/python3 -m pip install jupyter nbclient nbconvert ipykernel --break-system-packages
-        echo "Verifying nbformat in /usr/bin/python3..."
+        echo "--- Verifying nbformat in /usr/bin/python3 ---"
         sudo /usr/bin/python3 -c "import nbformat; print(f'nbformat version {nbformat.__version__} successfully imported in /usr/bin/python3')"
+        echo "--- Listing packages for /usr/bin/python3 ---"
+        sudo /usr/bin/python3 -m pip list
         echo "Contents of /usr/lib/python3/dist-packages after install:"
         ls -l /usr/lib/python3/dist-packages || true 
         echo "Contents of /usr/local/lib/python3.12/dist-packages after install:"
@@ -90,17 +95,28 @@ jobs:
       uses: quarto-dev/quarto-actions/setup@v2
       with:
         tinytex: true
+      env:
+        QUARTO_PYTHON: "" # Explicitly unset
         
     - name: Render website
       if: steps.verify-changed-files.outputs.changed == 'true'
+      env:
+        QUARTO_PYTHON: "" # Explicitly unset
       run: |
         echo "--- Debug info before render --- "
-        echo "PATH: $PATH"
-        echo "which python (system PATH): $(which python)" # This will show the python from setup-python
-        echo "python --version (system PATH): $(python --version)"
-        echo "--- Running quarto check jupyter with QUARTO_PYTHON=$QUARTO_PYTHON --- "
+        echo "Current PATH: $PATH"
+        echo "QUARTO_PYTHON is: '$QUARTO_PYTHON'" # Check if it's truly empty
+        echo "which python (should be from setup-python e.g. 3.9): $(which python)" 
+        echo "python --version (should be from setup-python e.g. 3.9): $(python --version)"
+        echo "which python3 (should be system python e.g. 3.12): $(which python3)"
+        echo "python3 --version (should be system python e.g. 3.12): $(python3 --version)"
+        echo "--- Running sudo /usr/bin/python3 -c 'import nbformat; print(nbformat.__version__)' ---"
+        sudo /usr/bin/python3 -c "import nbformat; print(f'Direct check: nbformat version {nbformat.__version__}')" || echo "Direct check of nbformat failed for /usr/bin/python3"
+        echo "--- Running quarto check --- "
+        quarto check
+        echo "--- Running quarto check jupyter --- " # No longer passing QUARTO_PYTHON here
         quarto check jupyter
-        echo "--- Running quarto render with QUARTO_PYTHON=$QUARTO_PYTHON --- "
+        echo "--- Running quarto render --- " # No longer passing QUARTO_PYTHON here
         quarto render
         
     - name: Deploy to GitHub Pages
