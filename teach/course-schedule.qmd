@@ -66,188 +66,22 @@ number-sections: false
 
 **Note:** Python execution is temporarily disabled for testing. Course data will be displayed when the full system is working.
 
-<!-- 
-```{python}
-#| echo: false
-#| warning: false
+### Course Data Information
 
-import pandas as pd
-import numpy as np
-from datetime import datetime
-import os
+The course schedule system is currently being tested. When fully operational, this page will display:
 
-# Read data from the Franklin course scraper project
-data_path = "franklin-course-scraper/data/franklin_courses.csv"
+- **Data Updated:** Live timestamp from course scraper
+- **Total Sections:** Number of course sections available  
+- **Courses Offered:** Unique courses in the catalog
+- **Students Enrolled:** Current enrollment vs capacity
 
-if os.path.exists(data_path):
-    df = pd.read_csv(data_path)
-    
-    # Clean and prepare data
-    # Fix Course_Code: Extract proper course code from mangled data
-    df['Course_Code_Clean'] = df['Session_Code'].str.extract(r'([A-Z]+\*[0-9]+)')
-    df['Course_Display'] = df['Course_Code_Clean'].str.replace('*', ' ')
-    
-    # Fix Session_Code: Extract just the section code
-    df['Session_Code_Clean'] = df['Session_Code'].str.extract(r'-([A-Z0-9]+)$')
-    
-    # CSV data is now correct after scraper fix - use values directly
-    # Enrolled_Seats = correctly calculated enrollment
-    # Available_Seats = correctly calculated available seats  
-    # Total_Seats = total capacity
-    
-    # Calculate availability status based on corrected available seats
-    df['Enrollment_Status'] = df.apply(lambda row: 
-        'Available' if row['Available_Seats'] > 5 else
-        'Limited' if row['Available_Seats'] > 0 else
-        'Full', axis=1)
-    
-    # Clean course names - they look correct in the CSV
-    df['Course_Name_Clean'] = df['Course_Name']
-    
-    # Parse schedule information - clean up the messy data
-    df['Weekdays_Clean'] = df['Class_Times'].str.extract(r'([MTWRFSU][a-z]*[/,\s]*[MTWRFSU]*[a-z]*)')
-    df['Weekdays_Clean'] = df['Weekdays_Clean'].fillna('TBD')
-    
-    # Extract clean class times
-    df['Class_Times_Clean'] = df['Class_Times'].str.extract(r'(\d+:\d+\s*[AP]M\s*-\s*\d+:\d+\s*[AP]M)')
-    df['Class_Times_Clean'] = df['Class_Times_Clean'].fillna('TBD')
-    
-    # Clean locations - extract just "Downtown" or other location
-    df['Locations_Clean'] = 'Downtown'  # All courses appear to be downtown
-    
-    # Clean instructors - appears to be "Seats" placeholder
-    df['Instructors_Clean'] = 'TBD'
-    
-    # Sort by course code and session
-    df = df.sort_values(['Course_Code_Clean', 'Session_Code_Clean'])
-    
-    # Simple statistics
-    total_sections = len(df)
-    total_courses = df['Course_Code_Clean'].nunique()
-    total_enrolled = df['Enrolled_Seats'].sum()
-    total_capacity = df['Total_Seats'].sum()
-    
-    # Format the datetime for better readability
-    if len(df) > 0:
-        from datetime import datetime
-        scraped_time = df['Scraped_DateTime'].iloc[0]
-        try:
-            dt = datetime.fromisoformat(scraped_time.replace('T', ' '))
-            formatted_time = dt.strftime("%B %d, %Y at %I:%M %p")
-        except:
-            formatted_time = scraped_time[:16]
-    else:
-        formatted_time = 'No data'
-    
-    from IPython.display import HTML, display
-    
-    stats_html = f"""
-    <div style="margin-bottom: 1.5rem; font-size: 1rem;">
-        <p><strong>Data Updated:</strong> {formatted_time}</p>
-        <p><strong>Total Sections:</strong> {total_sections}</p>
-        <p><strong>Courses Offered:</strong> {total_courses}</p>
-        <p><strong>Students Enrolled:</strong> {total_enrolled}/{total_capacity}</p>
-    </div>
-    """
-    display(HTML(stats_html))
-    
-else:
-    print("⚠️ Course data not found. Please run the scraper first.")
-    df = pd.DataFrame()
-```
+### Course Table
 
-```{python}
-#| echo: false
-#| warning: false
+When operational, a dynamic table will show:
 
-if len(df) > 0:
-    # Create HTML table with improved formatting
-    html_rows = []
-    
-    for _, row in df.iterrows():
-        first_term_class = "first-term" if row['First_Term'] == 'Yes' else ""
-        status_class = f"enrollment {row['Enrollment_Status'].lower()}"
-        
-        # Format enrollment data - separate columns for Enrolled and Total
-        enrolled_display = str(int(row['Enrolled_Seats']))
-        total_display = str(int(row['Total_Seats']))
-        available_display = str(int(row['Available_Seats']))
-        
-        # Clean up display data
-        weekdays = row['Weekdays_Clean'] if pd.notna(row['Weekdays_Clean']) else 'TBD'
-        times = row['Class_Times_Clean'] if pd.notna(row['Class_Times_Clean']) else 'TBD'
-        location = row['Locations_Clean'] if pd.notna(row['Locations_Clean']) else 'TBD'
-        instructor = row['Instructors_Clean'] if pd.notna(row['Instructors_Clean']) else 'TBD'
-        
-        # Format dates - clean up messy date formatting from scraper
-        import re
-        start_date = row['Start_Date'] if pd.notna(row['Start_Date']) else 'TBD'
-        end_date = row['End_Date'] if pd.notna(row['End_Date']) else 'TBD'
-        
-        # Clean up messy date formatting like "-TBD8/18/2025"
-        if start_date != 'TBD':
-            date_match = re.search(r'(\d{1,2}/\d{1,2}/\d{4})', str(start_date))
-            start_date = date_match.group(1) if date_match else 'TBD'
-        
-        if end_date != 'TBD':
-            date_match = re.search(r'(\d{1,2}/\d{1,2}/\d{4})', str(end_date))
-            end_date = date_match.group(1) if date_match else 'TBD'
-        
-        date_range = f"{start_date} - {end_date}" if start_date != 'TBD' and end_date != 'TBD' else 'TBD'
-        
-        html_row = f"""
-        <tr class="{first_term_class}">
-            <td><strong>{row['Course_Display']}</strong></td>
-            <td>{row['Session_Code_Clean']}</td>
-            <td>{row['Course_Name_Clean']}</td>
-            <td>{row['Credits']}</td>
-            <td class="{status_class}">{enrolled_display}</td>
-            <td class="{status_class}">{total_display}</td>
-            <td class="{status_class}">{available_display}</td>
-            <td>{weekdays}</td>
-            <td>{times}</td>
-            <td>{location}</td>
-            <td>{instructor}</td>
-            <td>{row['Teaching_Mode']}</td>
-            <td>{date_range}</td>
-        </tr>
-        """
-        html_rows.append(html_row)
-    
-    html_table = f"""
-    <div class="course-table">
-        <table>
-            <thead>
-                <tr>
-                    <th>Course</th>
-                    <th>Section</th>
-                    <th>Title</th>
-                    <th>Credits</th>
-                    <th>Enrolled</th>
-                    <th>Total</th>
-                    <th>Available</th>
-                    <th>Days</th>
-                    <th>Times</th>
-                    <th>Location</th>
-                    <th>Instructor</th>
-                    <th>Mode</th>
-                    <th>Dates</th>
-                </tr>
-            </thead>
-            <tbody>
-                {"".join(html_rows)}
-            </tbody>
-        </table>
-    </div>
-    """
-    
-    from IPython.display import HTML
-    display(HTML(html_table))
-
-else:
-    print("No course data available to display.")
-```
--->
+| Course | Section | Title | Credits | Enrolled | Total | Available | Days | Times | Location | Instructor | Mode | Dates |
+|--------|---------|-------|---------|----------|-------|-----------|------|-------|----------|------------|------|-------|
+| *Course data will appear here when Python execution is enabled* |
 
 ---
 
