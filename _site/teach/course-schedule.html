@@ -189,6 +189,28 @@ ul.task-list li input[type="checkbox"] {
   top: 0;
   z-index: 10;
 }
+/* Freeze first two columns */
+.course-table th:nth-child(1), 
+.course-table td:nth-child(1) {
+  position: sticky;
+  left: 0;
+  background: inherit;
+  z-index: 5;
+}
+.course-table th:nth-child(2), 
+.course-table td:nth-child(2) {
+  position: sticky;
+  left: 120px; /* Adjust based on first column width */
+  background: inherit;
+  z-index: 5;
+}
+/* Header cells for frozen columns need higher z-index */
+.course-table th:nth-child(1) {
+  z-index: 15;
+}
+.course-table th:nth-child(2) {
+  z-index: 15;
+}
 .course-table td {
   padding: 0.5rem;
   border-bottom: 1px solid #e5e7eb;
@@ -206,6 +228,28 @@ ul.task-list li input[type="checkbox"] {
 }
 .course-table tr.first-term:hover {
   background: #bfdbfe !important;
+}
+/* Ensure frozen columns match row backgrounds */
+.course-table tr:nth-child(even) td:nth-child(1),
+.course-table tr:nth-child(even) td:nth-child(2) {
+  background: #f9fafb;
+}
+.course-table tr:hover td:nth-child(1),
+.course-table tr:hover td:nth-child(2) {
+  background: #f3f4f6;
+}
+.course-table tr.first-term td:nth-child(1),
+.course-table tr.first-term td:nth-child(2) {
+  background: #dbeafe !important;
+}
+.course-table tr.first-term:hover td:nth-child(1),
+.course-table tr.first-term:hover td:nth-child(2) {
+  background: #bfdbfe !important;
+}
+/* Header background for frozen columns */
+.course-table th:nth-child(1),
+.course-table th:nth-child(2) {
+  background: #1e40af;
 }
 .enrollment {
   text-align: center;
@@ -229,11 +273,11 @@ ul.task-list li input[type="checkbox"] {
   font-weight: 600;
 }
 </style>
-<div id="f30f0155" class="cell" data-execution_count="1">
+<div id="47ddc3ab" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display">
 
     <div style="margin-bottom: 1.5rem; font-size: 1rem;">
-        <p><strong>Data Updated:</strong> June 05, 2025 at 02:47 AM EST</p>
+        <p><strong>Data Updated:</strong> June 05, 2025 at 10:08 AM EST</p>
         <p><strong>Total Sections:</strong> 21</p>
         <p><strong>Courses Offered:</strong> 14</p>
         <p><strong>Students Enrolled:</strong> 10/475</p>
@@ -241,7 +285,7 @@ ul.task-list li input[type="checkbox"] {
     
 </div>
 </div>
-<div id="edcee381" class="cell" data-execution_count="2">
+<div id="b02053c7" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="course-table">
         
@@ -272,7 +316,7 @@ ul.task-list li input[type="checkbox"] {
 <td>TBD</td>
 <td>TBD</td>
 <td>Downtown,TBDFace-To-Face</td>
-<td>Seats</td>
+<td>TBD</td>
 <td>9/29/2025 - 11/8/2025</td>
 </tr>
 <tr class="even">
@@ -285,7 +329,7 @@ ul.task-list li input[type="checkbox"] {
 <td>TBD</td>
 <td>TBD</td>
 <td>Downtown,TBDFace-To-Face</td>
-<td>Seats</td>
+<td>TBD</td>
 <td>11/10/2025 - 12/20/2025</td>
 </tr>
 <tr class="first-term odd">
@@ -298,7 +342,7 @@ ul.task-list li input[type="checkbox"] {
 <td>TBD</td>
 <td>TBD</td>
 <td>Downtown,TBDFace-To-Face</td>
-<td>Seats</td>
+<td>TBD</td>
 <td>8/18/2025 - 11/8/2025</td>
 </tr>
 <tr class="first-term even">
@@ -311,7 +355,7 @@ ul.task-list li input[type="checkbox"] {
 <td>TBD</td>
 <td>Th6:00 PM-9:40 PMTBD8/18/2025 - 11/8/2025</td>
 <td>Downtown,TBDHybrid - Face to Face</td>
-<td>Seats</td>
+<td>TBD</td>
 <td>8/18/2025 - 11/8/2025</td>
 </tr>
 <tr class="odd">
@@ -324,7 +368,7 @@ ul.task-list li input[type="checkbox"] {
 <td>TBD</td>
 <td>M6:00 PM-9:40 PMTBD9/8/2025 - 11/29/2025</td>
 <td>Downtown,TBDHybrid - Face to Face</td>
-<td>Seats</td>
+<td>TBD</td>
 <td>9/8/2025 - 11/29/2025</td>
 </tr>
 <tr class="even">
@@ -337,7 +381,7 @@ ul.task-list li input[type="checkbox"] {
 <td>TBD</td>
 <td>TBD</td>
 <td>Downtown,TBDFace-To-Face</td>
-<td>Seats</td>
+<td>TBD</td>
 <td>8/18/2025 - 11/8/2025</td>
 </tr>
 <tr class="odd">
@@ -350,7 +394,7 @@ ul.task-list li input[type="checkbox"] {
 <td>TBD</td>
 <td>T6:00 PM-9:40 PMTBD9/29/2025 - 12/20/2025</td>
 <td>Downtown,TBDHybrid - Face to Face</td>
-<td>Seats</td>
+<td>TBD</td>
 <td>9/29/2025 - 12/20/2025</td>
 </tr>
 <tr class="even">
@@ -363,7 +407,7 @@ ul.task-list li input[type="checkbox"] {
 <td>TBD</td>
 <td>TBD</td>
 <td>Downtown,TBDFace-To-Face</td>
-<td>Seats</td>
+<td>TBD</td>
 <td>8/18/2025 - 11/8/2025</td>
 </tr>
 <tr class="odd">
@@ -376,7 +420,7 @@ ul.task-list li input[type="checkbox"] {
 <td>TBD</td>
 <td>TBD</td>
 <td>Downtown,TBDFace-To-Face</td>
-<td>Seats</td>
+<td>TBD</td>
 <td>8/18/2025 - 11/8/2025</td>
 </tr>
 <tr class="even">
@@ -389,7 +433,7 @@ ul.task-list li input[type="checkbox"] {
 <td>TBD</td>
 <td>TBD</td>
 <td>Downtown,TBDFace-To-Face</td>
-<td>Seats</td>
+<td>TBD</td>
 <td>8/18/2025 - 11/8/2025</td>
 </tr>
 <tr class="odd">
@@ -402,7 +446,7 @@ ul.task-list li input[type="checkbox"] {
 <td>TBD</td>
 <td>TBD</td>
 <td>Downtown,TBDFace-To-Face</td>
-<td>Seats</td>
+<td>TBD</td>
 <td>8/18/2025 - 11/8/2025</td>
 </tr>
 <tr class="first-term even">
@@ -415,7 +459,7 @@ ul.task-list li input[type="checkbox"] {
 <td>TBD</td>
 <td>TBD</td>
 <td>Downtown,TBDFace-To-Face</td>
-<td>Seats</td>
+<td>TBD</td>
 <td>8/18/2025 - 11/8/2025</td>
 </tr>
 <tr class="odd">
@@ -428,7 +472,7 @@ ul.task-list li input[type="checkbox"] {
 <td>TBD</td>
 <td>T/Th6:00 PM-7:50 PMTBD9/30/2025 - 12/18/2025</td>
 <td>Downtown,TBDFace-To-Face</td>
-<td>Seats</td>
+<td>TBD</td>
 <td>9/30/2025 - 12/18/2025</td>
 </tr>
 <tr class="even">
@@ -441,7 +485,7 @@ ul.task-list li input[type="checkbox"] {
 <td>TBD</td>
 <td>T/Th10:00 AM-12:00 PMTBD9/30/2025 - 12/18/2025</td>
 <td>Downtown,TBDFace-To-Face</td>
-<td>Seats</td>
+<td>TBD</td>
 <td>9/30/2025 - 12/18/2025</td>
 </tr>
 <tr class="odd">
@@ -454,7 +498,7 @@ ul.task-list li input[type="checkbox"] {
 <td>TBD</td>
 <td>M/W6:00 PM-7:50 PMTBD9/29/2025 - 12/17/2025</td>
 <td>Downtown,TBDFace-To-Face</td>
-<td>Seats</td>
+<td>TBD</td>
 <td>9/29/2025 - 12/17/2025</td>
 </tr>
 <tr class="first-term even">
@@ -467,7 +511,7 @@ ul.task-list li input[type="checkbox"] {
 <td>TBD</td>
 <td>TBD</td>
 <td>Downtown,TBDHybrid - Face to Face</td>
-<td>Seats</td>
+<td>TBD</td>
 <td>9/29/2025 - 12/20/2025</td>
 </tr>
 <tr class="first-term odd">
@@ -480,7 +524,7 @@ ul.task-list li input[type="checkbox"] {
 <td>TBD</td>
 <td>TBD</td>
 <td>Downtown,TBDFace-To-Face</td>
-<td>Seats</td>
+<td>TBD</td>
 <td>8/18/2025 - 9/27/2025</td>
 </tr>
 <tr class="first-term even">
@@ -493,7 +537,7 @@ ul.task-list li input[type="checkbox"] {
 <td>TBD</td>
 <td>TBD</td>
 <td>Downtown,TBDFace-To-Face</td>
-<td>Seats</td>
+<td>TBD</td>
 <td>8/18/2025 - 9/27/2025</td>
 </tr>
 <tr class="first-term odd">
@@ -506,7 +550,7 @@ ul.task-list li input[type="checkbox"] {
 <td>TBD</td>
 <td>TBD</td>
 <td>Downtown,TBDFace-To-Face</td>
-<td>Seats</td>
+<td>TBD</td>
 <td>8/18/2025 - 9/27/2025</td>
 </tr>
 <tr class="first-term even">
@@ -519,7 +563,7 @@ ul.task-list li input[type="checkbox"] {
 <td>TBD</td>
 <td>TBD</td>
 <td>Downtown,TBDFace-To-Face</td>
-<td>Seats</td>
+<td>TBD</td>
 <td>8/18/2025 - 9/27/2025</td>
 </tr>
 <tr class="first-term odd">
@@ -532,7 +576,7 @@ ul.task-list li input[type="checkbox"] {
 <td>TBD</td>
 <td>TBD</td>
 <td>Downtown,TBDFace-To-Face</td>
-<td>Seats</td>
+<td>TBD</td>
 <td>8/18/2025 - 9/27/2025</td>
 </tr>
 </tbody>

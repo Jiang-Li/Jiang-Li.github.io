@@ -31,6 +31,28 @@ number-sections: false
   top: 0;
   z-index: 10;
 }
+/* Freeze first two columns */
+.course-table th:nth-child(1), 
+.course-table td:nth-child(1) {
+  position: sticky;
+  left: 0;
+  background: inherit;
+  z-index: 5;
+}
+.course-table th:nth-child(2), 
+.course-table td:nth-child(2) {
+  position: sticky;
+  left: 120px; /* Adjust based on first column width */
+  background: inherit;
+  z-index: 5;
+}
+/* Header cells for frozen columns need higher z-index */
+.course-table th:nth-child(1) {
+  z-index: 15;
+}
+.course-table th:nth-child(2) {
+  z-index: 15;
+}
 .course-table td {
   padding: 0.5rem;
   border-bottom: 1px solid #e5e7eb;
@@ -48,6 +70,28 @@ number-sections: false
 }
 .course-table tr.first-term:hover {
   background: #bfdbfe !important;
+}
+/* Ensure frozen columns match row backgrounds */
+.course-table tr:nth-child(even) td:nth-child(1),
+.course-table tr:nth-child(even) td:nth-child(2) {
+  background: #f9fafb;
+}
+.course-table tr:hover td:nth-child(1),
+.course-table tr:hover td:nth-child(2) {
+  background: #f3f4f6;
+}
+.course-table tr.first-term td:nth-child(1),
+.course-table tr.first-term td:nth-child(2) {
+  background: #dbeafe !important;
+}
+.course-table tr.first-term:hover td:nth-child(1),
+.course-table tr.first-term:hover td:nth-child(2) {
+  background: #bfdbfe !important;
+}
+/* Header background for frozen columns */
+.course-table th:nth-child(1),
+.course-table th:nth-child(2) {
+  background: #1e40af;
 }
 .enrollment {
   text-align: center;

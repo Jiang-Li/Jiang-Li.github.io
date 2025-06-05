@@ -17,10 +17,16 @@ format:
 ***
 
 
-### On Campus Course Schedule
+### On-Campus Course Schedule
 
 **📅 [Schedule Table](teach/course-schedule.html)** - Live course schedule updated daily  
 **📊 [Course Data (CSV)](teach/franklin-course-scraper/data/franklin_courses.csv)** - Downloadable course information
+
+***
+
+### Analytics Concept Review 📚
+
+**🃏 [Interactive Flip Cards](teach/analytics_review/flashcards.html)** - 67+ analytics concepts for study practice
 
 ***
 

@@ -660,17 +660,55 @@ class FranklinCourseScraper:
         instructors = [DEFAULT_INSTRUCTOR]
         
         try:
+            # Look for instructor names in multiple ways
             cells = table.find_all(['td', 'th'])
+            candidate_instructors = []
+            
             for cell in cells:
                 text = cell.get_text(strip=True)
                 
-                # Look for instructor names (has letters and possibly comma)
-                if len(text) > 3 and any(c.isalpha() for c in text) and not any(
-                    keyword in text.lower() for keyword in ['room', 'time', 'pm', 'am', DEFAULT_INSTRUCTOR.lower()]
-                ):
-                    instructors = [text]
-                    break
-        except:
+                # Skip if text is too short or contains excluded keywords
+                if (len(text) < 4 or
+                    any(keyword in text.lower() for keyword in [
+                        'room', 'time', 'pm', 'am', 'seats', 'enrolled', 'available', 
+                        'total', 'waitlist', 'downtown', 'building', 'hall', 'campus',
+                        'monday', 'tuesday', 'wednesday', 'thursday', 'friday',
+                        'saturday', 'sunday', 'face-to-face', 'hybrid', 'online',
+                        DEFAULT_INSTRUCTOR.lower(), 'course', 'section', 'credit',
+                        'start', 'end', 'date', 'week', 'class', 'meeting'
+                    ])):
+                    continue
+                
+                # Look for instructor patterns
+                # Pattern 1: Names with space and alphabetic characters
+                if (' ' in text and 
+                    any(c.isalpha() for c in text) and 
+                    not text.replace(' ', '').replace(',', '').replace('.', '').isdigit()):
+                    
+                    # Additional check: should have at least one capital letter (typical for names)
+                    if any(c.isupper() for c in text):
+                        candidate_instructors.append(text)
+                
+                # Pattern 2: Names with comma (Last, First format)
+                elif (',' in text and 
+                      any(c.isalpha() for c in text) and 
+                      len(text.split(',')) == 2):
+                    candidate_instructors.append(text)
+            
+            # If we found candidates, use the first reasonable one
+            if candidate_instructors:
+                # Prefer names that look more like "First Last" or "Last, First"
+                for candidate in candidate_instructors:
+                    # Skip if it looks like a course code or contains numbers prominently
+                    if not re.search(r'\d{3,}', candidate):  # No 3+ digit numbers
+                        instructors = [candidate]
+                        break
+                else:
+                    # Fall back to first candidate if none look ideal
+                    instructors = [candidate_instructors[0]]
+                    
+        except Exception as e:
+            print(f"Debug: Instructor extraction error: {e}")
             pass
         
         return instructors
