@@ -15,9 +15,10 @@ jobs:
       uses: actions/checkout@v4
       
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
-        python-version: '3.9'
+        python-version: '3.12'
+        cache: 'pip'
         
     - name: Install system dependencies
       run: |
@@ -47,7 +48,6 @@ jobs:
     - name: Install Python dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install jupyter nbformat ipykernel
         pip install -r teach/franklin-course-scraper/requirements.txt
         
     - name: Run course scraper
@@ -78,23 +78,15 @@ jobs:
       with:
         tinytex: true
         
-    - name: Configure Python environment for Quarto
+    - name: Install Jupyter stack
       run: |
-        # Install Jupyter in setup-python environment
         python -m pip install --upgrade pip
-        python -m pip install jupyter nbformat ipykernel
+        # Install minimal Jupyter requirements for Quarto
+        pip install jupyter nbclient nbconvert ipykernel
         
         # Verify installation
-        python -c "import nbformat; print('nbformat installed successfully')"
-        
-        # Configure environment variables to force Quarto to use our Python
-        echo "QUARTO_PYTHON=$(which python)" >> $GITHUB_ENV
-        echo "JUPYTER_PATH=$(python -c 'import jupyter; print(jupyter.path.jupyter_path()[0])')" >> $GITHUB_ENV
-        
-        # Create a simple requirements.txt for the Jupyter environment
-        echo "jupyter" > /tmp/requirements.txt
-        echo "nbformat" >> /tmp/requirements.txt
-        echo "ipykernel" >> /tmp/requirements.txt
+        python -c "import nbformat; print('nbformat available')"
+        quarto check jupyter
         
     - name: Render website
       if: steps.verify-changed-files.outputs.changed == 'true'
