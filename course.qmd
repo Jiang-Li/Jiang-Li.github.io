@@ -10,21 +10,30 @@ format:
 
 ***
 
-### DATA 610: Big Data Analytics and Data Mining 
+### DATA 250: Analytics Programming
 
-This course explores data mining methods and tools, examines the issues in the analytical analysis of massive datasets, and unstructured data. Students will learn the concepts and techniques to discover the patterns in large datasets, which support organizational decision making.
+This course introduces the essential general programming concepts and techniques to analytics students. The goal is to equip the students with the necessary programming skill in analytics problem-solving. Topics include boolean, numbers, loops, function, debugging, Python's specifics (such as NumPy, Pandas, Jupyter notebook), R's specifics (such as list, data frame, factor, apply, RMarkdown), the process of data retrieving, cleaning, integrating, transforming, and enriching to support analytics.
 
-***
+**Weekly Topics**  
+Week 1 – Python Basics  
+Week 2 – Python Packages – NumPy and Pandas  
+Week 3 – Data Preparation by Python  
+Week 4 – Data Wrangling by Python  
+Week 5 – Data Visualization by Python  
+Week 6 – Data Aggregation by Python  
+Week 7 – Midterm Exam  
+Week 8 – R Basics and Data Visualization  
+Week 9 – Data Transformation by R  
+Week 10 – Data Tidying in R  
+Week 11 – Data Import and Workflow in R  
+Week 12 – Final Exam  
 
-### DATA 611: Applied Machine Learning
+**Exams**  
+There is a proctored midterm exam in Week 7 and a proctored final exam in Week 12.
 
-This course explores two main areas of machine learning: supervised and unsupervised. Topics include linear and logistic regression, probabilistic inference, Support Vector Machines, Artificial Neural Networks, clustering, dimensionality reduction, and programming.
+**Tools**  
+Python (NumPy, Pandas), R (tidyverse), EdStem
 
-***
-
-### DATA 612: Computing for Data Analytics
-
-This course explores the methods of analytics computing and the procedures for diagnostic and predictive analytics. Topics include data manipulation, clustering algorithms, and regression methods using basic programming techniques.
 
 ***
 
@@ -32,6 +41,25 @@ This course explores the methods of analytics computing and the procedures for d
 
 This course introduces the fundamentals of Business and Data Analytics. Students will learn the fundamentals of business problem framing, data wrangling, descriptive and inferential statistics, data visualization, and data storytelling in analytics. Not open to students with credit for INFA 300.
 
+**Weekly Topics**
+
+- Week 0 – Pre-course Preparation  
+- Week 1 – Introduction to Business Analytics  
+- Week 2 – Introduction to Analytics Programming I  
+- Week 3 – Introduction to Analytics Programming II  
+- Week 4 – Data Management and Wrangling  
+- Week 5 – Summary Measures  
+- Week 6 – Data Visualization  
+- Week 7 – Probability and Probability Distributions  
+- Week 8 – Statistical Inference  
+- Week 9 – Regression Analysis I  
+- Week 10 – Regression Analysis II  
+- Week 11 – Introduction to Prescriptive Analysis  
+- Week 12 – Final Exam  
+
+**Exams:** There is a proctored final exam in Week 12, but no midterm exam.
+
+**Tools:** Excel, R
 
 ***
 
@@ -39,13 +67,164 @@ This course introduces the fundamentals of Business and Data Analytics. Students
 
 Students will learn the basic concepts behind major machine learning algorithms, the essential steps for creating a typical machine learning model, the strengths and weaknesses of different algorithms, and the model evaluation using different performance metrics. Eventually students will be able to build a prediction model by machine learning algorithm using Python language. The differences between Java and Python will be reviewed. The common problems in practical machine learning exercises and their solutions also will be discussed.
 
+**Weekly Topics**  
+Week 1 – Introduction to Machine Learning Concepts and Python Analytics Programming  
+Week 2 – Exploratory Data Analysis  
+Week 3 – Classification Algorithms  
+Week 4 – Regression Analysis  
+Week 5 – Model Evaluations  
+Week 6 – Advanced Classification Algorithms  
+Week 7 – Advanced Regression Analysis  
+Week 8 – Manual Feature Engineering  
+Week 9 – Hyperparameter Tuning and Pipelines  
+Week 10 – Ensemble Learning  
+Week 11 – Unsupervised Learning  
+Week 12 – Final Presentation & Knowledge Check Exam  
+
+**Exams**  
+There is a final exam and final project in Week 12.
+
+**Tools**  
+Python (scikit-learn, pandas), Jupyter Notebook, EdStem
+
+***
+
+### DATA 430: Data Engineering Technologies
+
+This course covers fundamental methods and widely-used technologies in data engineering. Topics include application programming interface (API), web scraping, Extract Transform Load (ETL), and analytics at-scale using PySpark.
 
 
 ***
 
+### DATA 450: Advanced Topics in Analytics
+
+This course covers advanced analytics topics, including big-data analytics using popular platforms, model interpretation strategies, simulations, optimizations, and analytics reporting and presentation methods. A discussion of ethical considerations for model evaluation is also included.
+
+***
+
+### DATA 600: Modern Tools for Stat Analysis
+
+This course offers an in-depth exploration of modern statistical analysis tools, focusing on the integration of modern analytics tools enhanced by artificial intelligence techniques. The goal is to equip students with advanced skills in using these contemporary analytics tools for statistical descriptive data analysis and effective problem-solving across various analytical contexts.
+
+**Weekly Topics**  
+Week 1 – Excel Analytics Essentials  
+Week 2 – Python Basics  
+Week 3 – Python Packages: NumPy and Pandas  
+Week 4 – Data Preparation by Python  
+Week 5 – Data Wrangling and Visualization by Python  
+Week 6 – Data Aggregation by Python  
+Week 7 – R Basics and Data Visualization and Midterm Exam  
+Week 8 – Data Transformation by R  
+Week 9 – Data Tidying in R  
+Week 10 – Data Import and Workflow in R  
+Week 11 – AI-Augmented Analytics  
+Week 12 – Final Exam  
+
+**Exams**  
+There is a midterm exam in Week 7 and a final exam in Week 12.
+
+**Tools**  
+Excel, Python (NumPy, Pandas), R (tidyverse), AI
+
+***
+
+### DATA 610: Big Data Analytics and Data Mining 
+
+This course explores data mining methods and tools, examines the issues in the analytical analysis of massive datasets, and unstructured data. Students will learn the concepts and techniques to discover the patterns in large datasets, which support organizational decision making.
+
+**Weekly Topics**
+
+- Week 1 – Introduction to R Analytics Programming  
+- Week 2 – Introduction to Data Mining and Big Data Analytics  
+- Week 3 – Model Performance and Data Visualization  
+- Week 4 – Data Reduction  
+- Week 5 – Evaluating Predictive Performance  
+- Week 6 – Prediction – Linear Methods  
+- Week 7 – Prediction – Non-linear Methods  
+- Week 8 – Association Analysis  
+- Week 9 – Cluster Analysis  
+- Week 10 – Text Mining  
+- Week 11 – Forecasting Time Series  
+- Week 12 – Final Assessment  
+
+**Exams:** There is a proctored midterm exam in Week 7 and a proctored final exam in Week 12.
+
+**Tools:** R, Jupyter Notebook, EdStem
+
+
+***
+
+### DATA 611: Applied Machine Learning
+
+This course explores two main areas of machine learning: supervised and unsupervised. Topics include linear and logistic regression, probabilistic inference, Support Vector Machines, Artificial Neural Networks, clustering, dimensionality reduction, and programming.
+
+**Weekly Topics**  
+Week 1 – Python Programming Language and Python in Data Science  
+Week 2 – Introduction to Machine Learning Concepts  
+Week 3 – Anatomy of a Classification Algorithm  
+Week 4 – Classification by scikit-learn  
+Week 5 – Data Processing  
+Week 6 – Dimension Reduction  
+Week 7 – Model Evaluation  
+Week 8 – Regression  
+Week 9 – Clustering  
+Week 10 – Natural Language Processing  
+Week 11 – Neural Network  
+Week 12 – Final Project Presentation  
+
+**Exams**  
+There is no midterm or final exam, but students complete a major final project and presentation in Week 12.
+
+**Tools**  
+Python, scikit-learn, Google Colab
+
+***
+
+
+### DATA 630: Applied Database Management 
+
+This course teaches data management from an applied perspective. The topics include fundamentals of database management systems, structured query language (SQL) for data analytics, relational database design, and data warehousing.
+
+**Weekly Topics**  
+Week 1 – Data Modeling & Database  
+Week 2 – Relational Database Model  
+Week 3 – Data Normalization  
+Week 4 – Introduction to SQL  
+Week 5 – Conditions  
+Week 6 – Join Tables  
+Week 7 – Aggregate Functions  
+Week 8 – Windows Functions  
+Week 9 – Date, Time, & Union  
+Week 10 – Exploratory Data Analysis & Reporting  
+Week 11 – Data Warehousing  
+Week 12 – Final Exam  
+
+**Exams**  
+There is a proctored midterm exam in Week 6 and a proctored final exam in Week 12.
+
+**Tools**  
+SQL, EdStem 
+
+***
+
+
 ### BUSA 250: SQL for Business
 
 This course introduces data analytics using Structured Query Language (SQL). Students will learn how to apply SQL in data exploration analysis and business problem-solving.
+
+**Weekly Topics**  
+Week 1 – Basics of SQL for Analytics  
+Week 2 – SQL for Data Preparation  
+Week 3 – Aggregate Functions for Data Analysis  
+Week 4 – Window Functions for Data Analysis  
+Week 5 – Analytics Using Complex Data Types and Performant SQL  
+Week 6 – Final Project  
+
+**Exams**  
+There is no midterm or final exam, but students complete a major final project in Week 6.
+
+**Tools**  
+SQL, EdStem
 
 
 ***
@@ -54,11 +233,39 @@ This course introduces data analytics using Structured Query Language (SQL). Stu
 
 This course introduces the principles of analytics modeling. Students will learn exploratory data analytics, regression, classification, clustering, model interpretation, and model evaluation. Not open to students with credit for INFA 420.
 
+**Weekly Topics**  
+Week 1 – Advanced Regression Analysis  
+Week 2 – Introduction to Data Mining  
+Week 3 – Supervised Data Mining: KNN & Naïve Bayes  
+Week 4 – Supervised Data Mining: Decision Trees  
+Week 5 – Unsupervised Data Mining  
+Week 6 – Forecasting with Time Series Data  
+
+**Exams**  
+There is no midterm or final exam, but students complete a major final project.
+
+**Tools**  
+R
+
 ***
 
 ### BUSA 603: Marketing Management & Analytics
 
 This course covers the application of analytics tools, techniques, strategies and methods to marketing management. Students learn to analyze market data, enabling management decisions to be based on data-driven facts and customer insights. Using marketing analytics tools to model scenarios, students learn how organizations can measure returns on investment relative to their marketing efforts, drive performance and strengthen the effectiveness of its campaigns.
+
+**Weekly Topics**  
+Week 1 – Introduction to Marketing Metrics and Marketing Analytics  
+Week 2 – Marketing Data Patterns and Fundamentals of Digital Marketing Analytics  
+Week 3 – Supervised Learning in Marketing Analytics  
+Week 4 – Unsupervised Learning in Marketing Analytics  
+Week 5 – Natural Language Processing and Social Network Analysis in Marketing Analytics  
+Week 6 – Final Exam  
+
+**Exams**  
+There is a proctored final exam in Week 6.
+
+**Tools**  
+Python, Google Analytics
 
 
 ***
@@ -66,3 +273,17 @@ This course covers the application of analytics tools, techniques, strategies an
 ### BUSA 695: Capstone in Business Analytics
 
 Students demonstrate an integrative knowledge of analytics in this course by developing a project plan to implement analytics for an important function, unit or department of the organization chosen in the Business Analytics strategy course. Students apply analytics tools, techniques, methods and strategies to drive business outcomes for the chosen company using relevant project-based methodologies. The course allows students to develop a professional portfolio that will highlight the work completed throughout the degree program. This may serve as a relevant employability resource. 
+
+**Weekly Topics**  
+Week 1 – Introducing the Capstone Project  
+Week 2 – Defining the Problem  
+Week 3 – Develop the Plan  
+Week 4 – Data Analysis  
+Week 5 – Data Visualization & Reporting  
+Week 6 – Solutions & Recommendations  
+
+**Exams**  
+There is no midterm or final exam, but students complete a major capstone project. 
+
+**Tools**  
+Students select from tools covered in the program, including Excel, Tableau, Python, R, etc.
