@@ -8,7 +8,7 @@ format:
 
 ---
 
-- Identifying Interpretable Features Impacting Nontraditional Undergraduate Computer Science Student Retention, Frontier In Education (FIE) 2024 Conference.
+- Identifying Interpretable Features Impacting Nontraditional Undergraduate Computer Science Student Retention, Frontier In Education (FIE) 2024 Conference. [link](https://ieeexplore.ieee.org/document/10892997)
 
 - Learning Analytics Finds That A Shared Course May Improve Technology Students
 Retention, Journal of Computing Sciences in Colleges, April 2023. [link](https://dl.acm.org/doi/abs/10.5555/3606388.3606395)
