@@ -132,25 +132,25 @@ Excel, Python (NumPy, Pandas), R (tidyverse), AI
 
 This course explores data mining methods and tools, examines the issues in the analytical analysis of massive datasets, and unstructured data. Students will learn the concepts and techniques to discover the patterns in large datasets, which support organizational decision making.
 
-**Weekly Topics**
+**Weekly Topics**  
+Week 1 – Introduction to Data Science, Data Mining, and Big Data Analytics  
+Week 2 – Python Basics  
+Week 3 – Python Packages  
+Week 4 – Data Wrangling  
+Week 5 – Data Visualization and Exploration  
+Week 6 – Regression  
+Week 7 – Evaluating Model Performance  
+Week 8 – Supervised Learning  
+Week 9 – Unsupervised Learning  
+Week 10 – Decision Trees  
+Week 11 – Artificial Intelligence  
+Week 12 – Final Exam  
 
-- Week 1 – Introduction to R Analytics Programming  
-- Week 2 – Introduction to Data Mining and Big Data Analytics  
-- Week 3 – Model Performance and Data Visualization  
-- Week 4 – Data Reduction  
-- Week 5 – Evaluating Predictive Performance  
-- Week 6 – Prediction – Linear Methods  
-- Week 7 – Prediction – Non-linear Methods  
-- Week 8 – Association Analysis  
-- Week 9 – Cluster Analysis  
-- Week 10 – Text Mining  
-- Week 11 – Forecasting Time Series  
-- Week 12 – Final Assessment  
+**Exams**  
+There is a proctored midterm exam in Week 6 and a proctored final exam in Week 12.
 
-**Exams:** There is a proctored midterm exam in Week 7 and a proctored final exam in Week 12.
-
-**Tools:** R, Jupyter Notebook, EdStem
-
+**Tools**  
+Python (NumPy, Pandas), Jupyter Notebook, EdStem
 
 ***
 
