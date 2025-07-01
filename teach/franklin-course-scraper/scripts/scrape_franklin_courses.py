@@ -185,34 +185,117 @@ class FranklinCourseScraper:
             est_tz = timezone(timedelta(hours=-5))  # EST is UTC-5
             scraped_datetime = datetime.now(est_tz).isoformat()
             
-            csv_data = []
+            # Group sections by course code to combine multiple sections
+            from collections import defaultdict
+            grouped_sections = defaultdict(list)
             for section in sections:
-                # Calculate enrolled seats: Enrolled = Total - Available
-                enrolled_seats = "N/A"
-                try:
-                    if (section.seats_total != 'N/A' and section.seats_available != 'N/A' and 
-                        str(section.seats_total).isdigit() and str(section.seats_available).isdigit()):
-                        enrolled_seats = str(int(section.seats_total) - int(section.seats_available))
-                except:
-                    pass
+                # Use the base course code (without session) as grouping key
+                base_course_code = section.course_code.split('*')[0] + '*' + section.course_code.split('*')[1] if '*' in section.course_code else section.course_code
+                grouped_sections[base_course_code].append(section)
+            
+            csv_data = []
+            for course_code, course_sections in grouped_sections.items():
+                # If only one section, use simple format without semicolons
+                if len(course_sections) == 1:
+                    section = course_sections[0]
+                    # Calculate enrolled seats: Enrolled = Total - Available
+                    enrolled_seats = "N/A"
+                    try:
+                        if (section.seats_total != 'N/A' and section.seats_available != 'N/A' and 
+                            str(section.seats_total).isdigit() and str(section.seats_available).isdigit()):
+                            enrolled_seats = str(int(section.seats_total) - int(section.seats_available))
+                    except:
+                        pass
+                    
+                    row = [
+                        section.course_code, section.session_code, section.course_name,
+                        section.credits, section.term, enrolled_seats, 
+                        section.seats_total, section.seats_waitlisted,
+                        ', '.join(section.weekdays), ', '.join(section.class_times),
+                        ', '.join(section.locations), ', '.join(section.instructors),
+                        section.teaching_mode, section.start_date, section.end_date,
+                        'Yes' if section.is_first_term else 'No', scraped_datetime
+                    ]
+                    csv_data.append(row)
                 
-                row = [
-                    section.course_code, section.session_code, section.course_name,
-                    section.credits, section.term, enrolled_seats, 
-                    section.seats_total, section.seats_waitlisted,
-                    ', '.join(section.weekdays), ', '.join(section.class_times),
-                    ', '.join(section.locations), ', '.join(section.instructors),
-                    section.teaching_mode, section.start_date, section.end_date,
-                    'Yes' if section.is_first_term else 'No', scraped_datetime
-                ]
-                csv_data.append(row)
+                else:
+                    # Multiple sections - combine with semicolons
+                    first_section = course_sections[0]
+                    
+                    # Combine session codes
+                    all_session_codes = [section.session_code for section in course_sections]
+                    combined_session_code = '; '.join(all_session_codes)
+                    
+                    # Combine and calculate total enrolled seats
+                    total_enrolled = 0
+                    total_capacity = 0
+                    total_waitlist = 0
+                    
+                    for section in course_sections:
+                        try:
+                            if (section.seats_total != 'N/A' and section.seats_available != 'N/A' and 
+                                str(section.seats_total).isdigit() and str(section.seats_available).isdigit()):
+                                enrolled = int(section.seats_total) - int(section.seats_available)
+                                total_enrolled += enrolled
+                                total_capacity += int(section.seats_total)
+                            if section.seats_waitlisted != 'N/A' and str(section.seats_waitlisted).isdigit():
+                                total_waitlist += int(section.seats_waitlisted)
+                        except:
+                            pass
+                    
+                    # Combine weekdays, times, locations, instructors with semicolons
+                    all_weekdays = []
+                    all_times = []
+                    all_locations = []
+                    all_instructors = []
+                    all_modes = []
+                    all_start_dates = []
+                    all_end_dates = []
+                    
+                    for section in course_sections:
+                        # Flatten lists and add to combined lists
+                        if section.weekdays and section.weekdays != ['TBD']:
+                            all_weekdays.extend(section.weekdays)
+                        if section.class_times and section.class_times != ['TBD']:
+                            all_times.extend(section.class_times)
+                        if section.locations:
+                            all_locations.extend(section.locations)
+                        if section.instructors:
+                            all_instructors.extend(section.instructors)
+                        if section.teaching_mode:
+                            all_modes.append(section.teaching_mode)
+                        if section.start_date and section.start_date != 'N/A':
+                            all_start_dates.append(section.start_date)
+                        if section.end_date and section.end_date != 'N/A':
+                            all_end_dates.append(section.end_date)
+                    
+                    # Join with semicolons and remove duplicates
+                    combined_weekdays = '; '.join(list(dict.fromkeys(all_weekdays))) if all_weekdays else 'TBD'
+                    combined_times = '; '.join(list(dict.fromkeys(all_times))) if all_times else 'TBD'
+                    combined_locations = '; '.join(list(dict.fromkeys(all_locations))) if all_locations else 'TBD'
+                    combined_instructors = '; '.join(list(dict.fromkeys(all_instructors))) if all_instructors else 'TBD'
+                    combined_modes = '; '.join(list(dict.fromkeys(all_modes))) if all_modes else 'TBD'
+                    combined_start_dates = '; '.join(list(dict.fromkeys(all_start_dates))) if all_start_dates else 'N/A'
+                    combined_end_dates = '; '.join(list(dict.fromkeys(all_end_dates))) if all_end_dates else 'N/A'
+                    
+                    row = [
+                        first_section.course_code, combined_session_code, first_section.course_name,
+                        first_section.credits, first_section.term, 
+                        str(total_enrolled) if total_enrolled > 0 else "N/A",
+                        str(total_capacity) if total_capacity > 0 else "N/A", 
+                        str(total_waitlist) if total_waitlist > 0 else "0",
+                        combined_weekdays, combined_times, combined_locations, combined_instructors,
+                        combined_modes, combined_start_dates, combined_end_dates,
+                        'Yes' if first_section.is_first_term else 'No', scraped_datetime
+                    ]
+                    csv_data.append(row)
             
             with open(filename, 'w', newline='', encoding='utf-8') as csvfile:
                 writer = csv.writer(csvfile)
                 writer.writerow(headers)
                 writer.writerows(csv_data)
             
-            print(f"✅ Saved {len(sections)} sections to {filename}")
+            print(f"✅ Saved {len(csv_data)} courses (from {len(sections)} sections) to {filename}")
             
         except Exception as e:
             print(f"❌ Failed to save CSV: {e}")
@@ -376,15 +459,15 @@ class FranklinCourseScraper:
                 term_sections = self.extract_sections_for_term(soup, term_header, term_text, course_info, course_code)
                 sections.extend(term_sections)
             
-            # Filter to keep FF sections OR sections with "hybrid" in locations
+            # Simplified filtering: Only keep FF (face-to-face) sections
             filtered_sections = []
             for section in sections:
-                # Keep if has FF in session code (and not WW)
-                if "FF" in section.session_code and "WW" not in section.session_code:
+                # Only keep FF sections (face-to-face)
+                if "FF" in section.session_code:
                     filtered_sections.append(section)
-                # Also keep if has "hybrid" in locations (case insensitive)
-                elif any("hybrid" in location.lower() for location in section.locations):
-                    filtered_sections.append(section)
+                    print(f"   ✅ Keeping FF section: {section.session_code}")
+                else:
+                    print(f"   ❌ Filtering out non-FF section: {section.session_code}")
             
             # Deduplicate sections based on course_code + session_code
             unique_sections = {}
@@ -506,9 +589,12 @@ class FranklinCourseScraper:
             link_text = link_elem.get_text(strip=True)
             session_code = link_text.split()[-1] if link_text else "Unknown"
             
+            print(f"   🔍 Extracting details for section: {session_code}")
+            
             # Find the section table
             section_table = link_elem.find_next('table', class_='search-sectiontable')
             if not section_table:
+                print(f"   ❌ No section table found for {session_code}")
                 return None
             
             # Extract seat information (enrolled/total/waitlist pattern)
@@ -519,6 +605,11 @@ class FranklinCourseScraper:
             location_info = self.extract_locations(section_table)
             instructor_info = self.extract_instructor_info(section_table)
             date_info = self.extract_date_info(section_table)
+            
+            # Debug: Print extracted data for each section
+            print(f"   📊 {session_code} - Times: {time_info.get('times', ['TBD'])}")
+            print(f"   📍 {session_code} - Locations: {location_info}")
+            print(f"   🎯 {session_code} - Weekdays: {time_info.get('weekdays', ['TBD'])}")
             
             # Parse weekdays into both full and short forms
             weekdays_full = time_info.get('weekdays', ['TBD'])
@@ -595,63 +686,250 @@ class FranklinCourseScraper:
         return seats_info
 
     def extract_time_info(self, table):
-        """Extract schedule time information"""
+        """Extract schedule time information - enhanced for both FF and WW sections"""
         time_info = {'weekdays': [DEFAULT_WEEKDAY], 'times': [DEFAULT_TIME]}
         
         try:
-            cells = table.find_all(['td', 'th'])
-            for cell in cells:
-                text = cell.get_text(strip=True)
-                
-                # Look for time patterns like "6:00 PM - 8:00 PM"
-                if TIME_PATTERN.search(text):
-                    time_info['times'] = [text]
-                
-                # Look for weekday patterns like "MW" or "Monday, Wednesday"
-                weekday_patterns = ['M', 'T', 'W', 'R', 'F', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
-                if any(pattern in text for pattern in weekday_patterns):
-                    weekdays = self.parse_weekdays(text)
-                    if weekdays:
-                        time_info['weekdays'] = weekdays
-        except:
+            # Get all text content from the table
+            all_text = table.get_text(' ', strip=True)
+            
+            # Look for various time patterns (more comprehensive)
+            import re
+            
+            # Pattern 1: Standard time format "6:00 PM - 8:00 PM"
+            time_patterns = [
+                r'(\d{1,2}:\d{2}\s*[AP]M\s*-\s*\d{1,2}:\d{2}\s*[AP]M)',
+                r'(\d{1,2}:\d{2}[AP]M\s*-\s*\d{1,2}:\d{2}[AP]M)',
+                r'(\d{1,2}:\d{2}\s*[ap]m\s*-\s*\d{1,2}:\d{2}\s*[ap]m)',
+            ]
+            
+            for pattern in time_patterns:
+                matches = re.findall(pattern, all_text, re.IGNORECASE)
+                if matches:
+                    time_info['times'] = matches
+                    break
+            
+            # Look for weekday patterns - enhanced
+            weekday_patterns = [
+                r'\b(T/Th)\b',  # Specific pattern for T/Th (highest priority)
+                r'\b(M/W/F|M/W|W/F|T/Th|Th/F)\b',  # Common slash-separated patterns
+                r'\b(Th)\b',  # Specific pattern for Thursday 
+                r'\b([MTWRFSU]{1,5})\b',  # Compact format like MW, TR
+                r'\b(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\b',
+                r'\b(Mon|Tue|Wed|Thu|Fri|Sat|Sun)\b'
+            ]
+            
+            for pattern in weekday_patterns:
+                matches = re.findall(pattern, all_text, re.IGNORECASE)
+                if matches:
+                    # Convert matches to standard weekdays
+                    weekdays = []
+                    for match in matches:
+                        parsed = self.parse_weekdays(match)
+                        weekdays.extend(parsed)
+                    
+                    if weekdays and weekdays != [DEFAULT_WEEKDAY]:
+                        time_info['weekdays'] = list(set(weekdays))  # Remove duplicates
+                        break
+            
+            # Alternative: Look in individual cells (original method as fallback)
+            if time_info['times'] == [DEFAULT_TIME]:
+                cells = table.find_all(['td', 'th'])
+                for cell in cells:
+                    text = cell.get_text(strip=True)
+                    
+                    # Look for time patterns
+                    for pattern in time_patterns:
+                        if re.search(pattern, text, re.IGNORECASE):
+                            time_info['times'] = [text]
+                            break
+                    
+                    if time_info['times'] != [DEFAULT_TIME]:
+                        break
+        
+        except Exception as e:
+            print(f"   ⚠️  Time extraction error: {e}")
             pass
         
         return time_info
 
     def parse_weekdays(self, text):
-        """Parse weekday abbreviations into full names"""
+        """Parse weekday abbreviations into full names - enhanced"""
         weekdays = []
+        text = text.strip()
         
-        # Handle compact format like "MW", "TR", etc.
-        if len(text) <= 4 and all(c in 'MTWRFSU' for c in text.upper()):
-            for char in text.upper():
-                if char in WEEKDAY_MAPPING:
-                    weekdays.append(WEEKDAY_MAPPING[char])
+        # Enhanced weekday mapping
+        weekday_mapping = {
+            'M': 'Monday', 'T': 'Tuesday', 'W': 'Wednesday', 'R': 'Thursday', 'TH': 'Thursday',
+            'F': 'Friday', 'S': 'Saturday', 'U': 'Sunday',
+            'MON': 'Monday', 'TUE': 'Tuesday', 'WED': 'Wednesday', 'THU': 'Thursday',
+            'FRI': 'Friday', 'SAT': 'Saturday', 'SUN': 'Sunday',
+            'MONDAY': 'Monday', 'TUESDAY': 'Tuesday', 'WEDNESDAY': 'Wednesday', 
+            'THURSDAY': 'Thursday', 'FRIDAY': 'Friday', 'SATURDAY': 'Saturday', 'SUNDAY': 'Sunday'
+        }
         
-        # Handle comma-separated format
-        elif ',' in text:
-            for day in text.split(','):
-                day = day.strip()
-                if day in WEEKDAY_MAPPING.values():
-                    weekdays.append(day)
+        # Handle direct mapping
+        text_upper = text.upper()
+        if text_upper in weekday_mapping:
+            return [weekday_mapping[text_upper]]
         
-        return weekdays if weekdays else [DEFAULT_WEEKDAY]
+        # Handle compact format like "MW", "TR", "MTh", etc.
+        if len(text) <= 5 and all(c in 'MTWRFSHUT' for c in text.upper()):
+            text_upper = text.upper()
+            i = 0
+            while i < len(text_upper):
+                # Check for "TH" first (two characters)
+                if i < len(text_upper) - 1 and text_upper[i:i+2] == 'TH':
+                    weekdays.append('Thursday')
+                    i += 2
+                # Check for single character weekdays
+                elif text_upper[i] in weekday_mapping:
+                    weekdays.append(weekday_mapping[text_upper[i]])
+                    i += 1
+                else:
+                    i += 1
+        
+        # Handle separated format (comma, space, slash)
+        elif any(sep in text for sep in [',', ' ', '/']):
+            separators = [',', ' ', '/']
+            for sep in separators:
+                if sep in text:
+                    for day in text.split(sep):
+                        day = day.strip().upper()
+                        # Handle "TH" specifically for Thursday
+                        if day == 'TH':
+                            weekdays.append('Thursday')
+                        elif day in weekday_mapping:
+                            weekdays.append(weekday_mapping[day])
+                    break
+        
+        # Handle full weekday names in text
+        else:
+            import re
+            for abbrev, full_name in weekday_mapping.items():
+                if re.search(r'\b' + re.escape(abbrev) + r'\b', text_upper):
+                    weekdays.append(full_name)
+        
+        # Remove duplicates while preserving order
+        seen = set()
+        unique_weekdays = []
+        for day in weekdays:
+            if day not in seen:
+                seen.add(day)
+                unique_weekdays.append(day)
+        
+        return unique_weekdays if unique_weekdays else [DEFAULT_WEEKDAY]
 
     def extract_locations(self, table):
-        """Extract location information"""
-        locations = [DEFAULT_LOCATION]
+        """Extract location information - enhanced to capture multiple location components"""
+        locations = []
         
         try:
-            cells = table.find_all(['td', 'th'])
-            for cell in cells:
-                text = cell.get_text(strip=True)
+            # Get all text content from the table
+            all_text = table.get_text(' ', strip=True)
+            print(f"   🔍 Full location text: {repr(all_text[:200])}")
+            
+            # Enhanced location patterns - most specific first
+            import re
+            
+            location_patterns = [
+                # Specific room patterns (highest priority)
+                r'(Frasch\s+Hall\s+\d+)',
+                r'([A-Za-z]+\s+Hall\s+\d+)',
+                r'([A-Za-z]+\s+Building\s+\d+)',
+                r'(Room\s+\d+)',
+                r'(Classroom\s+\d+)',
+                # General location patterns
+                r'(Downtown[^,]*(?:Hall|Room|Building|Class)[^,]*\d+)',
+                r'(Internet\s+Class[^,]*)',
+                r'(Online[^,]*)',
+                # Blended course patterns - capture classroom info near lecture times
+                r'(LEC\s+[MTWRFSU]\s+\d{1,2}:\d{2}\s*[AP]M[^,]*(?:Hall|Room|Building)[^,]*\d+)',
+                r'((?:Hall|Room|Building)[^,]*\d+[^,]*LEC\s+[MTWRFSU])',
+            ]
+            
+            # Try each pattern and collect all unique matches
+            found_locations = []
+            for pattern in location_patterns:
+                matches = re.findall(pattern, all_text, re.IGNORECASE)
+                for match in matches:
+                    clean_match = re.sub(r'\s+', ' ', match.strip())
+                    if clean_match and clean_match not in found_locations:
+                        found_locations.append(clean_match)
+            
+            # For blended courses, also search for classroom info more broadly
+            if 'blended' in all_text.lower() or 'lec' in all_text.lower():
+                # Look for standalone building/room numbers that might be missed
+                additional_patterns = [
+                    r'(\b(?:Frasch|Main|North|South|East|West)\s+(?:Hall|Building)\s+\d+\b)',
+                    r'(\bRoom\s+\d+\b)',
+                    r'(\b[A-Z][a-z]+\s+\d{3,4}\b)',  # Building + room number like "Frasch 422"
+                ]
                 
-                # Look for room/building patterns
-                if any(keyword in text.lower() for keyword in ['room', 'building', 'hall', 'downtown', 'campus']):
-                    locations = [text]
-                    break
-        except:
-            pass
+                for pattern in additional_patterns:
+                    matches = re.findall(pattern, all_text, re.IGNORECASE)
+                    for match in matches:
+                        clean_match = re.sub(r'\s+', ' ', match.strip())
+                        if clean_match and clean_match not in found_locations:
+                            found_locations.append(clean_match)
+            
+            # Enhanced cell-by-cell search if patterns didn't find specific rooms
+            if not any('hall' in loc.lower() or 'room' in loc.lower() for loc in found_locations):
+                cells = table.find_all(['td', 'th'])
+                
+                for cell in cells:
+                    text = cell.get_text(strip=True)
+                    
+                    # Look for room/building references
+                    if re.search(r'(?:hall|room|building)\s+\d+', text, re.IGNORECASE):
+                        found_locations.append(text)
+                    elif re.search(r'frasch\s+\d+', text, re.IGNORECASE):
+                        found_locations.append(text)
+            
+            # If we found specific locations, use them; otherwise search more broadly
+            if found_locations:
+                locations = found_locations
+            else:
+                # Fallback to searching cells for location info
+                location_keywords = [
+                    'room', 'building', 'hall', 'downtown', 'campus', 'center',
+                    'internet', 'online', 'web', 'virtual', 'remote', 'distance',
+                    'class', 'classroom', 'lab', 'laboratory', 'library',
+                    'frasch', 'main', 'north', 'south', 'east', 'west'
+                ]
+                
+                cells = table.find_all(['td', 'th'])
+                for cell in cells:
+                    text = cell.get_text(strip=True)
+                    
+                    # Skip enrollment/capacity data that looks like "20 / 22 / 0"
+                    if re.match(r'^\d+\s*/\s*\d+\s*/\s*\d+', text):
+                        continue
+                    
+                    # Skip if text contains only numbers, slashes, and "Unlimited"
+                    if re.match(r'^[\d\s/]+(?:unlimited|seat|counts|unavailable)*[\s\w]*$', text, re.IGNORECASE):
+                        continue
+                    
+                    if any(keyword in text.lower() for keyword in location_keywords):
+                        locations.append(text)
+                        break
+                
+                # If still no locations, look for "Downtown" specifically
+                if not locations:
+                    if 'downtown' in all_text.lower():
+                        locations = ['Downtown']
+                    elif 'face-to-face' in all_text.lower() or 'hybrid' in all_text.lower():
+                        locations = ['Downtown']  # Default for face-to-face courses
+            
+            # Final cleanup and fallback
+            if not locations:
+                locations = [DEFAULT_LOCATION]
+            
+            print(f"   📍 Extracted locations: {locations}")
+            
+        except Exception as e:
+            print(f"   ⚠️  Location extraction error: {e}")
+            locations = [DEFAULT_LOCATION]
         
         return locations
 

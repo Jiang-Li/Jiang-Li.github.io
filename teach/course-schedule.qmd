@@ -36,15 +36,19 @@ number-sections: false
 .course-table td:nth-child(1) {
   position: sticky;
   left: 0;
-  background: inherit;
+  background: white;
   z-index: 5;
+  white-space: nowrap;
+  padding-right: 1rem;
 }
 .course-table th:nth-child(2), 
 .course-table td:nth-child(2) {
   position: sticky;
-  left: 120px; /* Adjust based on first column width */
-  background: inherit;
+  left: var(--first-col-width, 150px); /* Will be calculated dynamically */
+  background: white;
   z-index: 5;
+  white-space: nowrap;
+  padding-right: 1rem;
 }
 /* Header cells for frozen columns need higher z-index */
 .course-table th:nth-child(1) {
@@ -56,6 +60,10 @@ number-sections: false
 .course-table td {
   padding: 0.5rem;
   border-bottom: 1px solid #e5e7eb;
+}
+/* Only freeze the first two columns as nowrap */
+.course-table td:nth-child(1),
+.course-table td:nth-child(2) {
   white-space: nowrap;
 }
 .course-table tr:nth-child(even) {
@@ -74,11 +82,11 @@ number-sections: false
 /* Ensure frozen columns match row backgrounds */
 .course-table tr:nth-child(even) td:nth-child(1),
 .course-table tr:nth-child(even) td:nth-child(2) {
-  background: #f9fafb;
+  background: #f9fafb !important;
 }
 .course-table tr:hover td:nth-child(1),
 .course-table tr:hover td:nth-child(2) {
-  background: #f3f4f6;
+  background: #f3f4f6 !important;
 }
 .course-table tr.first-term td:nth-child(1),
 .course-table tr.first-term td:nth-child(2) {
@@ -91,7 +99,12 @@ number-sections: false
 /* Header background for frozen columns */
 .course-table th:nth-child(1),
 .course-table th:nth-child(2) {
-  background: #1e40af;
+  background: #1e40af !important;
+}
+/* Default row background for frozen columns */
+.course-table td:nth-child(1),
+.course-table td:nth-child(2) {
+  background: white !important;
 }
 .enrollment {
   text-align: center;
@@ -115,6 +128,37 @@ number-sections: false
   font-weight: 600;
 }
 </style>
+
+<script>
+function adjustColumnWidths() {
+  // Wait for table to be rendered
+  setTimeout(() => {
+    const table = document.querySelector('.course-table table');
+    if (!table) return;
+    
+    // Get the first column's actual width
+    const firstColumnHeader = table.querySelector('th:nth-child(1)');
+    if (!firstColumnHeader) return;
+    
+    const firstColWidth = firstColumnHeader.getBoundingClientRect().width;
+    
+    // Set CSS custom property for second column positioning
+    document.documentElement.style.setProperty('--first-col-width', `${firstColWidth}px`);
+    
+    console.log(`First column width: ${firstColWidth}px`);
+  }, 100);
+}
+
+// Run on page load
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', adjustColumnWidths);
+} else {
+  adjustColumnWidths();
+}
+
+// Run again after any dynamic content changes
+window.addEventListener('resize', adjustColumnWidths);
+</script>
 
 ```{python}
 #| echo: false
@@ -204,59 +248,469 @@ else:
 #| warning: false
 
 if len(df) > 0:
-    # Create HTML table with improved formatting (without Available column)
+    # Weekday mapping for better readability
+    weekday_mapping = {
+        'M': 'Mon', 'T': 'Tue', 'W': 'Wed', 'R': 'Thu', 'Th': 'Thu',
+        'F': 'Fri', 'S': 'Sat', 'U': 'Sun'
+    }
+    
+    def format_schedule_time(weekdays_raw, times_raw):
+        """Format weekdays and times into a readable schedule"""
+        if pd.isna(times_raw) or times_raw == 'TBD':
+            return 'TBD'
+        
+        import re
+        times_str = str(times_raw)
+        weekdays_str = str(weekdays_raw) if pd.notna(weekdays_raw) else ''
+        
+        # Handle semicolon-separated multiple times (new format from updated scraper)
+        if ';' in times_str:
+            time_parts = [part.strip() for part in times_str.split(';')]
+            formatted_times = []
+            
+            for time_part in time_parts:
+                formatted_time = format_single_time(time_part)
+                if formatted_time != 'TBD':
+                    formatted_times.append(formatted_time)
+            
+            return '; '.join(formatted_times) if formatted_times else 'TBD'
+        # Handle multiple weekdays with same time (e.g., "Tuesday, Thursday" with single time)
+        elif ',' in weekdays_str and ',' not in times_str:
+            weekdays_list = [day.strip() for day in weekdays_str.split(',')]
+            
+            # Create pairs and sort by weekday order
+            day_time_pairs = []
+            weekday_order = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+            
+            for weekday in weekdays_list:
+                # Format weekday abbreviation
+                if weekday.lower() == 'monday':
+                    day_abbrev = 'Mon'
+                    day_order = 0
+                elif weekday.lower() == 'tuesday':
+                    day_abbrev = 'Tue'
+                    day_order = 1
+                elif weekday.lower() == 'wednesday':
+                    day_abbrev = 'Wed'
+                    day_order = 2
+                elif weekday.lower() == 'thursday':
+                    day_abbrev = 'Thu'
+                    day_order = 3
+                elif weekday.lower() == 'friday':
+                    day_abbrev = 'Fri'
+                    day_order = 4
+                elif weekday.lower() == 'saturday':
+                    day_abbrev = 'Sat'
+                    day_order = 5
+                elif weekday.lower() == 'sunday':
+                    day_abbrev = 'Sun'
+                    day_order = 6
+                else:
+                    day_abbrev = weekday
+                    day_order = 7  # Unknown days go last
+                
+                # Clean up time format - use the same time for all weekdays
+                import re
+                time_clean = re.sub(r'(\d{1,2}:\d{2}\s*[AP]M)\s*-\s*(\d{1,2}:\d{2}\s*[AP]M)', r'\1 - \2', times_str, flags=re.IGNORECASE)
+                day_time_pairs.append((day_order, f"{day_abbrev} {time_clean}"))
+            
+            # Sort by day order and extract formatted strings
+            day_time_pairs.sort(key=lambda x: x[0])
+            formatted_pairs = [pair[1] for pair in day_time_pairs]
+            
+            return '; '.join(formatted_pairs) if formatted_pairs else 'TBD'
+        # Handle comma-separated weekdays and times within a single section (e.g., BUSA 695)
+        elif ',' in weekdays_str and ',' in times_str:
+            weekdays_list = [day.strip() for day in weekdays_str.split(',')]
+            times_list = [time.strip() for time in times_str.split(',')]
+            
+            # Create pairs and sort by weekday order
+            day_time_pairs = []
+            weekday_order = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+            
+            for i, weekday in enumerate(weekdays_list):
+                if i < len(times_list):
+                    time = times_list[i]
+                    # Format weekday abbreviation
+                    if weekday.lower() == 'monday':
+                        day_abbrev = 'Mon'
+                        day_order = 0
+                    elif weekday.lower() == 'tuesday':
+                        day_abbrev = 'Tue'
+                        day_order = 1
+                    elif weekday.lower() == 'wednesday':
+                        day_abbrev = 'Wed'
+                        day_order = 2
+                    elif weekday.lower() == 'thursday':
+                        day_abbrev = 'Thu'
+                        day_order = 3
+                    elif weekday.lower() == 'friday':
+                        day_abbrev = 'Fri'
+                        day_order = 4
+                    elif weekday.lower() == 'saturday':
+                        day_abbrev = 'Sat'
+                        day_order = 5
+                    elif weekday.lower() == 'sunday':
+                        day_abbrev = 'Sun'
+                        day_order = 6
+                    else:
+                        day_abbrev = weekday
+                        day_order = 7  # Unknown days go last
+                    
+                    # Clean up time format
+                    time_clean = re.sub(r'(\d{1,2}:\d{2}\s*[AP]M)\s*-\s*(\d{1,2}:\d{2}\s*[AP]M)', r'\1 - \2', time, flags=re.IGNORECASE)
+                    day_time_pairs.append((day_order, f"{day_abbrev} {time_clean}"))
+            
+            # Sort by day order and extract formatted strings
+            day_time_pairs.sort(key=lambda x: x[0])
+            formatted_pairs = [pair[1] for pair in day_time_pairs]
+            
+            return '; '.join(formatted_pairs) if formatted_pairs else 'TBD'
+        else:
+            # Handle single time - combine weekday and time properly
+            if weekdays_str and weekdays_str != 'nan':
+                # Convert full weekday names to abbreviations
+                weekday_str = weekdays_str.strip()
+                if weekday_str.lower() == 'monday':
+                    day_abbrev = 'Mon'
+                elif weekday_str.lower() == 'tuesday':
+                    day_abbrev = 'Tue'
+                elif weekday_str.lower() == 'wednesday':
+                    day_abbrev = 'Wed'
+                elif weekday_str.lower() == 'thursday':
+                    day_abbrev = 'Thu'
+                elif weekday_str.lower() == 'friday':
+                    day_abbrev = 'Fri'
+                elif weekday_str.lower() == 'saturday':
+                    day_abbrev = 'Sat'
+                elif weekday_str.lower() == 'sunday':
+                    day_abbrev = 'Sun'
+                else:
+                    # Handle abbreviated weekdays
+                    day_abbrev = weekday_mapping.get(weekday_str, weekday_str)
+                
+                # Clean up time format
+                import re
+                time_clean = re.sub(r'(\d{1,2}:\d{2}\s*[AP]M)\s*-\s*(\d{1,2}:\d{2}\s*[AP]M)', r'\1 - \2', times_str, flags=re.IGNORECASE)
+                
+                return f"{day_abbrev} {time_clean}"
+            else:
+                # No weekday info, just format the time
+                return format_single_time(times_str)
+    
+    def format_single_time(times_str):
+        """Format a single time entry"""
+        import re
+        
+        # Extract weekday from the beginning of the string
+        weekday_match = re.match(r'^([MTWRFSU]|Th)', times_str)
+        weekday = weekday_match.group(1) if weekday_match else None
+        
+        # Extract time pattern (look for time like "1:00 PM-3:00 PM")
+        time_pattern = r'(\d{1,2}:\d{2}\s*[AP]M\s*-\s*\d{1,2}:\d{2}\s*[AP]M)'
+        time_match = re.search(time_pattern, times_str, re.IGNORECASE)
+        time_str = time_match.group(1) if time_match else None
+        
+        if weekday and time_str:
+            # Map weekday to full name
+            if weekday in weekday_mapping:
+                full_weekday = weekday_mapping[weekday]
+                # Clean up time format to ensure proper spacing
+                time_str = re.sub(r'(\d{1,2}:\d{2}\s*[AP]M)\s*-\s*(\d{1,2}:\d{2}\s*[AP]M)', r'\1 - \2', time_str, flags=re.IGNORECASE)
+                return f"{full_weekday} {time_str}"
+        
+        # Fallback: if we found a time but no weekday, just return the time
+        if time_str:
+            time_str = re.sub(r'(\d{1,2}:\d{2}\s*[AP]M)\s*-\s*(\d{1,2}:\d{2}\s*[AP]M)', r'\1 - \2', time_str, flags=re.IGNORECASE)
+            return time_str
+        
+        # If we found a weekday but no time
+        if weekday and weekday in weekday_mapping:
+            return weekday_mapping[weekday]
+            
+        return 'TBD'
+    
+    def clean_location(location_raw):
+        """Clean up the messy location data"""
+        if pd.isna(location_raw) or location_raw == 'TBD':
+            return 'TBD'
+        
+        import re
+        location_str = str(location_raw)
+        
+        # Handle semicolon-separated multiple locations (new format from updated scraper)
+        if ';' in location_str:
+            location_parts = [part.strip() for part in location_str.split(';')]
+            cleaned_locations = []
+            
+            for location_part in location_parts:
+                cleaned_location = clean_single_location(location_part)
+                if cleaned_location != 'TBD':
+                    cleaned_locations.append(cleaned_location)
+            
+            return '; '.join(cleaned_locations) if cleaned_locations else 'TBD'
+        # Handle comma-separated locations (e.g., "Frasch Hall 422, Internet Class WWW..., Hall 422")
+        elif ',' in location_str:
+            location_parts = [part.strip() for part in location_str.split(',')]
+            cleaned_locations = []
+            
+            for location_part in location_parts:
+                cleaned_location = clean_single_location(location_part)
+                if cleaned_location != 'TBD':
+                    # Check for redundant room numbers (e.g., "Hall 422" when we already have "Frasch Hall 422")
+                    is_redundant = False
+                    for existing in cleaned_locations:
+                        if (cleaned_location in existing or 
+                            (cleaned_location.startswith('Hall ') and cleaned_location.split()[-1] in existing)):
+                            is_redundant = True
+                            break
+                    
+                    if not is_redundant and cleaned_location not in cleaned_locations:
+                        cleaned_locations.append(cleaned_location)
+            
+            return '; '.join(cleaned_locations) if cleaned_locations else 'TBD'
+        else:
+            # Handle single location (legacy format or single section)
+            return clean_single_location(location_str)
+    
+    def clean_single_location(location_str):
+        """Clean up a single location entry"""
+        import re
+        
+        # Priority 1: Check if this is already a clean room/building reference
+        # Look for patterns like "Frasch Hall 422", "Building Room" first
+        clean_room_match = re.search(r'^([A-Za-z]+\s+Hall\s+\d+)$', location_str.strip())
+        if clean_room_match:
+            return clean_room_match.group(1)
+        
+        # Priority 2: Extract room/building from longer strings
+        building_patterns = [
+            r'(Frasch\s+Hall\s+\d+)',
+            r'([A-Za-z]+\s+Hall\s+\d+)',
+            r'([A-Za-z]+\s+Building\s+\d+)',
+            r'(Room\s+\d+)',
+            r'(Classroom\s+\d+)'
+        ]
+        
+        for pattern in building_patterns:
+            match = re.search(pattern, location_str, re.IGNORECASE)
+            if match:
+                return match.group(1)
+        
+        # Priority 3: Handle Internet/Online classes
+        if 'Internet Class' in location_str:
+            # Check if it's a blended class with specific meeting info
+            if 'Blended' in location_str or 'LEC' in location_str:
+                # Try to extract specific meeting location/info
+                lec_match = re.search(r'LEC\s+([A-Z])\s+(\d{1,2}:\d{2}\s*[AP]M\s*-\s*\d{1,2}:\d{2}\s*[AP]M)', location_str, re.IGNORECASE)
+                if lec_match:
+                    day_letter = lec_match.group(1)
+                    time_info = lec_match.group(2)
+                    day_name = {'M': 'Mon', 'T': 'Tue', 'W': 'Wed', 'R': 'Thu', 'F': 'Fri'}.get(day_letter, day_letter)
+                    return f"Blended (Online + {day_name} in-person)"
+                else:
+                    return "Blended (Online + In-person)"
+            else:
+                return "Online"
+        
+        # Priority 4: Clean up other location strings
+        # Remove teaching mode information at the end
+        location_str = re.sub(r'(Hybrid|Online|Face-to-Face|Face to Face|Blended).*$', '', location_str, flags=re.IGNORECASE)
+        
+        # Remove TBD and date ranges
+        location_str = re.sub(r'TBD', '', location_str)
+        location_str = re.sub(r'\d{1,2}/\d{1,2}/\d{4}\s*-\s*\d{1,2}/\d{1,2}/\d{4}', '', location_str)
+        
+        # Remove "Downtown" since it's always there
+        location_str = re.sub(r'Downtown,?\s*', '', location_str, flags=re.IGNORECASE)
+        
+        # Look for just building names without room numbers
+        building_match = re.search(r'([A-Za-z]+\s+Hall)', location_str, re.IGNORECASE)
+        if building_match:
+            return building_match.group(1)
+        
+        # Fix spacing for hall/room numbers (e.g., "Hall417" -> "Hall 417")
+        location_str = re.sub(r'([a-zA-Z])(\d)', r'\1 \2', location_str)
+        
+        # Clean up commas and spaces
+        location_str = re.sub(r',+', ', ', location_str)
+        location_str = re.sub(r'\s+', ' ', location_str)
+        location_str = location_str.strip().strip(',')
+        
+        # If the result is empty or too short, return TBD
+        if not location_str or len(location_str.strip()) < 3:
+            return 'TBD'
+        
+        return location_str
+    
+    def extract_teaching_mode(location_raw):
+        """Extract teaching mode from the location data"""
+        if pd.isna(location_raw) or location_raw == 'TBD':
+            return 'TBD'
+        
+        import re
+        location_str = str(location_raw)
+        
+        # Handle semicolon-separated multiple modes (new format from updated scraper)
+        if ';' in location_str:
+            location_parts = [part.strip() for part in location_str.split(';')]
+            extracted_modes = []
+            
+            for location_part in location_parts:
+                mode = extract_single_mode(location_part)
+                if mode != 'TBD':
+                    extracted_modes.append(mode)
+            
+            # Remove duplicates while preserving order
+            unique_modes = []
+            for mode in extracted_modes:
+                if mode not in unique_modes:
+                    unique_modes.append(mode)
+            
+            return '; '.join(unique_modes) if unique_modes else 'TBD'
+        else:
+            # Handle single mode (legacy format or single section)
+            return extract_single_mode(location_str)
+    
+    def extract_single_mode(location_str):
+        """Extract teaching mode from a single location entry"""
+        import re
+        
+        # Handle Internet/Online classes with specific patterns
+        if 'Internet Class' in location_str:
+            if 'Blended' in location_str:
+                return 'Blended'
+            else:
+                return 'Online'
+        
+        # Look for teaching mode patterns
+        mode_patterns = [
+            r'(Hybrid - Face to Face)',
+            r'(Face-to-Face)',
+            r'(Face to Face)', 
+            r'(Blended[^,]*)',
+            r'(Hybrid[^,]*)',
+            r'(Online)'
+        ]
+        
+        for pattern in mode_patterns:
+            match = re.search(pattern, location_str, re.IGNORECASE)
+            if match:
+                return match.group(1)
+        
+        return 'Face-to-Face'  # Default for FF sections
+    
+    # Create HTML table with improved formatting
     html_rows = []
     
-    for _, row in df.iterrows():
-        first_term_class = "first-term" if row['First_Term'] == 'Yes' else ""
-        status_class = f"enrollment {row['Enrollment_Status'].lower()}"
+    # Group sections by course code
+    grouped_courses = df.groupby('Course_Code_Clean')
+    
+    for course_code, course_sections in grouped_courses:
+        # Get basic course info from first section
+        first_section = course_sections.iloc[0]
         
-        # Format enrollment data - only Enrolled and Total (no Available column)
-        enrolled_display = str(int(row['Enrolled_Seats']))
-        total_display = str(int(row['Total_Seats']))
+        # Combine information from all sections
+        all_sections = list(course_sections['Session_Code_Clean'])
+        all_times = []
+        all_locations = []
+        all_modes = []
+        all_dates = []
         
-        # Add first term indicator badge
-        first_term_indicator = '<span class="first-term-badge">First Term</span>' if row['First_Term'] == 'Yes' else ''
+        # Collect all times, locations, modes, and dates
+        for _, section in course_sections.iterrows():
+            # Format schedule time
+            formatted_time = format_schedule_time(section['Weekdays_Clean'], section['Class_Times_Clean'])
+            all_times.append(formatted_time)
+            
+            # Clean location
+            location = clean_location(section['Locations_Clean'])
+            all_locations.append(location)
+            
+            # Extract teaching mode
+            mode = extract_teaching_mode(section['Locations_Clean'])
+            all_modes.append(mode)
+            
+            # Format dates
+            import re
+            start_date = section['Start_Date'] if pd.notna(section['Start_Date']) else 'TBD'
+            end_date = section['End_Date'] if pd.notna(section['End_Date']) else 'TBD'
+            
+            if start_date != 'TBD':
+                date_match = re.search(r'(\d{1,2}/\d{1,2}/\d{4})', str(start_date))
+                start_date = date_match.group(1) if date_match else 'TBD'
+            
+            if end_date != 'TBD':
+                date_match = re.search(r'(\d{1,2}/\d{1,2}/\d{4})', str(end_date))
+                end_date = date_match.group(1) if date_match else 'TBD'
+            
+            date_range = f"{start_date} - {end_date}" if start_date != 'TBD' and end_date != 'TBD' else 'TBD'
+            all_dates.append(date_range)
         
-        # Clean up display data
-        weekdays = row['Weekdays_Clean'] if pd.notna(row['Weekdays_Clean']) else 'TBD'
-        times = row['Class_Times_Clean'] if pd.notna(row['Class_Times_Clean']) else 'TBD'
-        location = row['Locations_Clean'] if pd.notna(row['Locations_Clean']) else 'TBD'
-        instructor = row['Instructors_Clean'] if pd.notna(row['Instructors_Clean']) else 'TBD'
+        # Remove duplicates while preserving order
+        def remove_duplicates(lst):
+            seen = set()
+            result = []
+            for item in lst:
+                if item not in seen:
+                    seen.add(item)
+                    result.append(item)
+            return result
         
-        # Format dates
-        import re
-        start_date = row['Start_Date'] if pd.notna(row['Start_Date']) else 'TBD'
-        end_date = row['End_Date'] if pd.notna(row['End_Date']) else 'TBD'
+        all_times = remove_duplicates(all_times)
+        all_locations = remove_duplicates(all_locations)
+        all_modes = remove_duplicates(all_modes)
+        all_dates = remove_duplicates(all_dates)
         
-        # Clean up date formatting
-        if start_date != 'TBD':
-            date_match = re.search(r'(\d{1,2}/\d{1,2}/\d{4})', str(start_date))
-            start_date = date_match.group(1) if date_match else 'TBD'
+        # Join with semicolons
+        combined_sections = '; '.join(all_sections)
+        combined_times = '; '.join(all_times)
+        combined_locations = '; '.join(all_locations)
+        combined_modes = '; '.join(all_modes)
+        combined_dates = '; '.join(all_dates)
         
-        if end_date != 'TBD':
-            date_match = re.search(r'(\d{1,2}/\d{1,2}/\d{4})', str(end_date))
-            end_date = date_match.group(1) if date_match else 'TBD'
+        # Calculate total enrollment and capacity
+        total_enrolled = course_sections['Enrolled_Seats'].sum()
+        total_capacity = course_sections['Total_Seats'].sum()
         
-        date_range = f"{start_date} - {end_date}" if start_date != 'TBD' and end_date != 'TBD' else 'TBD'
+        # Determine status based on total availability
+        total_available = total_capacity - total_enrolled
+        if total_available > 5:
+            status_class = "enrollment available"
+        elif total_available > 0:
+            status_class = "enrollment limited"
+        else:
+            status_class = "enrollment full"
+        
+        # First term indicator
+        first_term_class = "first-term" if first_section['First_Term'] == 'Yes' else ""
+        first_term_indicator = '<span class="first-term-badge">First Term</span>' if first_section['First_Term'] == 'Yes' else ''
+        
+        # Get instructor info (use first non-TBD instructor)
+        instructor = 'TBD'
+        for _, section in course_sections.iterrows():
+            section_instructor = section['Instructors_Clean'] if pd.notna(section['Instructors_Clean']) else 'TBD'
+            if section_instructor != 'TBD':
+                instructor = section_instructor
+                break
         
         html_row = f"""
         <tr class="{first_term_class}">
-            <td><strong>{row['Course_Display']}</strong> {first_term_indicator}</td>
-            <td>{row['Session_Code_Clean']}</td>
-            <td>{row['Course_Name_Clean']}</td>
-            <td>{row['Credits']}</td>
-            <td class="{status_class}">{enrolled_display}</td>
-            <td class="{status_class}">{total_display}</td>
-            <td>{weekdays}</td>
-            <td>{times}</td>
-            <td>{location}</td>
+            <td><strong>{first_section['Course_Display']}</strong> {first_term_indicator}</td>
+            <td>{combined_sections}</td>
+            <td>{first_section['Course_Name_Clean']}</td>
+            <td>{first_section['Credits']}</td>
+            <td class="{status_class}">{total_enrolled}</td>
+            <td class="{status_class}">{total_capacity}</td>
+            <td>{combined_times}</td>
+            <td>{combined_locations}</td>
+            <td>{combined_modes}</td>
             <td>{instructor}</td>
-            <td>{date_range}</td>
+            <td>{combined_dates}</td>
         </tr>"""
         html_rows.append(html_row)
     
-    # Create table header (removed Available column)
+    # Create table header (removed Days column, kept Times and Dates separate)
     table_html = f"""
     <div class="course-table">
         <table>
@@ -268,9 +722,9 @@ if len(df) > 0:
                     <th>Credits</th>
                     <th>Enrolled</th>
                     <th>Capacity</th>
-                    <th>Days</th>
                     <th>Times</th>
                     <th>Location</th>
+                    <th>Mode</th>
                     <th>Instructor</th>
                     <th>Dates</th>
                 </tr>
