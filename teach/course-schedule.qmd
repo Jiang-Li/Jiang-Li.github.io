@@ -1,5 +1,5 @@
 ---
-title: "Course Schedule - Fall 2025"
+title: "On-campus Course Schedule - Fall 2025"
 date-format: none
 format:
   html:
@@ -704,7 +704,6 @@ if len(df) > 0:
             <td class="{status_class}">{total_capacity}</td>
             <td>{combined_times}</td>
             <td>{combined_locations}</td>
-            <td>{combined_modes}</td>
             <td>{instructor}</td>
             <td>{combined_dates}</td>
         </tr>"""
@@ -724,7 +723,6 @@ if len(df) > 0:
                     <th>Capacity</th>
                     <th>Times</th>
                     <th>Location</th>
-                    <th>Mode</th>
                     <th>Instructor</th>
                     <th>Dates</th>
                 </tr>

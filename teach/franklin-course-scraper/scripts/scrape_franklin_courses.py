@@ -709,28 +709,68 @@ class FranklinCourseScraper:
                     time_info['times'] = matches
                     break
             
-            # Look for weekday patterns - enhanced
-            weekday_patterns = [
-                r'\b(T/Th)\b',  # Specific pattern for T/Th (highest priority)
-                r'\b(M/W/F|M/W|W/F|T/Th|Th/F)\b',  # Common slash-separated patterns
-                r'\b(Th)\b',  # Specific pattern for Thursday 
-                r'\b([MTWRFSU]{1,5})\b',  # Compact format like MW, TR
-                r'\b(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\b',
-                r'\b(Mon|Tue|Wed|Thu|Fri|Sat|Sun)\b'
-            ]
+            # Enhanced extraction for weekday+time pairs (like "T 6:00 PM", "Th 10:00 AM")
+            weekday_time_pairs = []
             
-            for pattern in weekday_patterns:
-                matches = re.findall(pattern, all_text, re.IGNORECASE)
-                if matches:
-                    # Convert matches to standard weekdays
-                    weekdays = []
-                    for match in matches:
-                        parsed = self.parse_weekdays(match)
-                        weekdays.extend(parsed)
-                    
-                    if weekdays and weekdays != [DEFAULT_WEEKDAY]:
-                        time_info['weekdays'] = list(set(weekdays))  # Remove duplicates
-                        break
+            # Look for individual weekday+time patterns - preserve original text order
+            # Combined pattern to find all weekday+time pairs in order
+            combined_pattern = r'\b(Th|T|M|W|F|S|U|Mon|Tue|Wed|Thu|Fri|Sat|Sun|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\s+(\d{1,2}:\d{2}\s*[AP]M\s*-\s*\d{1,2}:\d{2}\s*[AP]M)'
+            
+            all_weekdays = []
+            all_times = []
+            
+            # Find all matches in order of appearance in text
+            matches = re.finditer(combined_pattern, all_text, re.IGNORECASE)
+            for match in matches:
+                weekday_abbrev = match.group(1)
+                time_range = match.group(2)
+                
+                # Special handling for T vs Th distinction
+                if weekday_abbrev.upper() == 'T':
+                    # Check if this T is actually part of Th by looking at the next character
+                    start_pos = match.start(1)
+                    if (start_pos + 1 < len(all_text) and 
+                        all_text[start_pos:start_pos+2].upper() == 'TH'):
+                        continue  # Skip this T as it's part of Th
+                    parsed_weekdays = ['Tuesday']
+                elif weekday_abbrev.upper() == 'TH':
+                    parsed_weekdays = ['Thursday']
+                else:
+                    parsed_weekdays = self.parse_weekdays(weekday_abbrev)
+                
+                if parsed_weekdays and parsed_weekdays != [DEFAULT_WEEKDAY]:
+                    all_weekdays.extend(parsed_weekdays)
+                    all_times.append(time_range.strip())
+                    weekday_time_pairs.append((parsed_weekdays[0], time_range.strip()))
+            
+            # If we found weekday+time pairs, use them
+            if weekday_time_pairs:
+                time_info['weekdays'] = all_weekdays
+                time_info['times'] = all_times
+            else:
+                # Fallback to original method for bulk patterns (with/without slash)
+                weekday_patterns = [
+                    r'\b(T/Th)\b',  # Specific pattern for T/Th (highest priority)
+                    r'\b(M/W/F|M/W|W/F|T/Th)\b',  # Common slash-separated patterns (removed Th/F)
+                    r'\b(Th)\b',  # Specific pattern for Thursday (higher priority than T)
+                    r'\b(T)\b',   # Specific pattern for Tuesday  
+                    r'\b([MTWFSU]{1,5})\b',  # Compact format like MW (removed R)
+                    r'\b(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\b',
+                    r'\b(Mon|Tue|Wed|Thu|Fri|Sat|Sun)\b'
+                ]
+                
+                for pattern in weekday_patterns:
+                    matches = re.findall(pattern, all_text, re.IGNORECASE)
+                    if matches:
+                        # Convert matches to standard weekdays
+                        weekdays = []
+                        for match in matches:
+                            parsed = self.parse_weekdays(match)
+                            weekdays.extend(parsed)
+                        
+                        if weekdays and weekdays != [DEFAULT_WEEKDAY]:
+                            time_info['weekdays'] = list(set(weekdays))  # Remove duplicates
+                            break
             
             # Alternative: Look in individual cells (original method as fallback)
             if time_info['times'] == [DEFAULT_TIME]:
@@ -758,9 +798,9 @@ class FranklinCourseScraper:
         weekdays = []
         text = text.strip()
         
-        # Enhanced weekday mapping
+        # Enhanced weekday mapping with T vs Th distinction (no R for Thursday - Franklin uses Th)
         weekday_mapping = {
-            'M': 'Monday', 'T': 'Tuesday', 'W': 'Wednesday', 'R': 'Thursday', 'TH': 'Thursday',
+            'M': 'Monday', 'T': 'Tuesday', 'W': 'Wednesday', 'TH': 'Thursday',
             'F': 'Friday', 'S': 'Saturday', 'U': 'Sunday',
             'MON': 'Monday', 'TUE': 'Tuesday', 'WED': 'Wednesday', 'THU': 'Thursday',
             'FRI': 'Friday', 'SAT': 'Saturday', 'SUN': 'Sunday',
@@ -768,22 +808,32 @@ class FranklinCourseScraper:
             'THURSDAY': 'Thursday', 'FRIDAY': 'Friday', 'SATURDAY': 'Saturday', 'SUNDAY': 'Sunday'
         }
         
-        # Handle direct mapping
+        # Handle direct mapping with special case for T vs Th
         text_upper = text.upper()
-        if text_upper in weekday_mapping:
+        
+        # Special handling for T vs Th
+        if text_upper == 'TH':
+            return ['Thursday']
+        elif text_upper == 'T':
+            return ['Tuesday']
+        elif text_upper in weekday_mapping:
             return [weekday_mapping[text_upper]]
         
-        # Handle compact format like "MW", "TR", "MTh", etc.
-        if len(text) <= 5 and all(c in 'MTWRFSHUT' for c in text.upper()):
+        # Handle compact format like "MW", "MTh", etc. (no R - Franklin uses Th for Thursday)
+        if len(text) <= 5 and all(c in 'MTWFSHUT' for c in text.upper()):
             text_upper = text.upper()
             i = 0
             while i < len(text_upper):
-                # Check for "TH" first (two characters)
+                # Check for "TH" first (two characters) - highest priority
                 if i < len(text_upper) - 1 and text_upper[i:i+2] == 'TH':
                     weekdays.append('Thursday')
                     i += 2
-                # Check for single character weekdays
-                elif text_upper[i] in weekday_mapping:
+                # Check for single "T" (Tuesday) - make sure it's not part of "TH"
+                elif text_upper[i] == 'T' and (i == len(text_upper) - 1 or text_upper[i+1] != 'H'):
+                    weekdays.append('Tuesday')
+                    i += 1
+                # Check for other single character weekdays
+                elif text_upper[i] in weekday_mapping and text_upper[i] != 'T':
                     weekdays.append(weekday_mapping[text_upper[i]])
                     i += 1
                 else:
