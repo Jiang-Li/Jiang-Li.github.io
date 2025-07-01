@@ -285,6 +285,45 @@ ul.task-list li input[type="checkbox"] {
   font-size: 0.75rem;
   font-weight: 600;
 }
+
+/* Export button styles */
+.export-section {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #1e40af;
+}
+
+.export-btn {
+  background: #1e40af;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  margin-right: 10px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.2s ease;
+}
+
+.export-btn:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  color: white;
+  text-decoration: none;
+}
+
+.export-btn.secondary {
+  background: #059669;
+}
+
+.export-btn.secondary:hover {
+  background: #047857;
+}
 </style>
 <script>
 function adjustColumnWidths() {
@@ -316,7 +355,7 @@ if (document.readyState === 'loading') {
 // Run again after any dynamic content changes
 window.addEventListener('resize', adjustColumnWidths);
 </script>
-<div id="b68d7e7f" class="cell" data-execution_count="1">
+<div id="a6f5cffd" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display">
 
     <div style="margin-bottom: 1.5rem; font-size: 1rem;">
@@ -328,9 +367,94 @@ window.addEventListener('resize', adjustColumnWidths);
     
 </div>
 </div>
-<div id="b498fa52" class="cell" data-execution_count="2">
+<div id="cc7b9bf6" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
-<div class="course-table">
+<script>
+    function exportTableToCSV(filename) {
+        var csv = [];
+        // Find the table more reliably - it's inside a div but may not have the exact class we expect
+        var table = document.querySelector('table');
+        if (!table) {
+            alert('Table not found for export');
+            return;
+        }
+        
+        console.log('Table found:', table);
+        var rows = table.querySelectorAll('tr');
+        console.log('Number of rows:', rows.length);
+        
+        for (var i = 0; i < rows.length; i++) {
+            var row = [], cols = rows[i].querySelectorAll('td, th');
+            var currentRow = rows[i];
+            
+            // Process all existing columns normally
+            for (var j = 0; j < cols.length; j++) {
+                var cellText = cols[j].innerText || cols[j].textContent || '';
+                // Remove extra whitespace and newlines
+                cellText = cellText.trim().replace(/\s+/g, ' ');
+                
+                // Escape quotes and wrap in quotes if contains commas, quotes, or newlines
+                if (cellText.includes(',') || cellText.includes('"') || cellText.includes('\n')) {
+                    cellText = '"' + cellText.replace(/"/g, '""') + '"';
+                }
+                row.push(cellText);
+            }
+            
+            // Add First Term column
+            if (i === 0) {
+                // Header row - add column header
+                row.push('First Term');
+            } else {
+                // Data row - check if this is a first term course
+                var isFirstTerm = false;
+                
+                // Check multiple ways to detect first term courses
+                var firstTermBadge = currentRow.querySelector('.first-term-badge');
+                var hasFirstTermClass = currentRow.classList.contains('first-term');
+                var containsFirstTermText = currentRow.textContent.includes('First Term');
+                
+                console.log('Row', i, 'first term checks:');
+                console.log('  - Badge found:', firstTermBadge);
+                console.log('  - Has first-term class:', hasFirstTermClass);
+                console.log('  - Contains First Term text:', containsFirstTermText);
+                
+                if (firstTermBadge || hasFirstTermClass || containsFirstTermText) {
+                    isFirstTerm = true;
+                }
+                
+                // Add Yes/No to the last column
+                row.push(isFirstTerm ? 'Yes' : 'No');
+                console.log('  - Final result:', isFirstTerm ? 'Yes' : 'No');
+            }
+            
+            csv.push(row.join(','));
+        }
+        
+        console.log('Generated CSV:', csv.join('\n'));
+        
+        // Create CSV file and trigger download
+        var csvFile = new Blob([csv.join('\n')], { type: 'text/csv' });
+        var downloadLink = document.createElement('a');
+        downloadLink.download = filename + '.csv';
+        downloadLink.href = window.URL.createObjectURL(csvFile);
+        downloadLink.style.display = 'none';
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+        
+        // Show success message
+        var btn = document.getElementById('exportTableBtn');
+        var originalText = btn.innerHTML;
+        btn.innerHTML = '✅ Downloaded!';
+        btn.disabled = true;
+        setTimeout(function() {
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        }, 2000);
+    }
+    </script>
+    
+    <div class="course-table">
         
 <table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
@@ -520,6 +644,19 @@ window.addEventListener('resize', adjustColumnWidths);
 </table>
 
     </div>
+</div>
+<div class="cell-output cell-output-display">
+
+    <div class="export-section" style="margin-top: 1.5rem;">
+        <h4 style="margin: 0 0 0.5rem 0; color: #1e40af; font-size: 1.1rem;" class="anchored">📥 Export Data</h4>
+        <button id="exportTableBtn" onclick="exportTableToCSV('course-schedule')" class="export-btn">
+            📊 Export Table as CSV
+        </button>
+        <p style="margin: 0.5rem 0 0 0; font-size: 0.85rem; color: #6b7280;">
+            Downloads the formatted course schedule as shown above, including first term indicators
+        </p>
+    </div>
+    
 </div>
 </div>
 <hr>
