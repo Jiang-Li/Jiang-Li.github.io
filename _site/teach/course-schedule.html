@@ -355,19 +355,19 @@ if (document.readyState === 'loading') {
 // Run again after any dynamic content changes
 window.addEventListener('resize', adjustColumnWidths);
 </script>
-<div id="a6f5cffd" class="cell" data-execution_count="1">
+<div id="aabc37a5" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display">
 
     <div style="margin-bottom: 1.5rem; font-size: 1rem;">
-        <p><strong>Data Updated:</strong> July 01, 2025 at 02:39 PM EST</p>
-        <p><strong>Total Sections:</strong> 14</p>
-        <p><strong>Courses Offered:</strong> 14</p>
-        <p><strong>Students Enrolled:</strong> 52/329</p>
+        <p><strong>Data Updated:</strong> July 01, 2025 at 04:04 PM EST</p>
+        <p><strong>Total Sections:</strong> 12</p>
+        <p><strong>Courses Offered:</strong> 12</p>
+        <p><strong>Students Enrolled:</strong> 46/285</p>
     </div>
     
 </div>
 </div>
-<div id="cc7b9bf6" class="cell" data-execution_count="2">
+<div id="f08ad347" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <script>
     function exportTableToCSV(filename) {
@@ -379,13 +379,10 @@ window.addEventListener('resize', adjustColumnWidths);
             return;
         }
         
-        console.log('Table found:', table);
         var rows = table.querySelectorAll('tr');
-        console.log('Number of rows:', rows.length);
         
         for (var i = 0; i < rows.length; i++) {
             var row = [], cols = rows[i].querySelectorAll('td, th');
-            var currentRow = rows[i];
             
             // Process all existing columns normally
             for (var j = 0; j < cols.length; j++) {
@@ -400,37 +397,8 @@ window.addEventListener('resize', adjustColumnWidths);
                 row.push(cellText);
             }
             
-            // Add First Term column
-            if (i === 0) {
-                // Header row - add column header
-                row.push('First Term');
-            } else {
-                // Data row - check if this is a first term course
-                var isFirstTerm = false;
-                
-                // Check multiple ways to detect first term courses
-                var firstTermBadge = currentRow.querySelector('.first-term-badge');
-                var hasFirstTermClass = currentRow.classList.contains('first-term');
-                var containsFirstTermText = currentRow.textContent.includes('First Term');
-                
-                console.log('Row', i, 'first term checks:');
-                console.log('  - Badge found:', firstTermBadge);
-                console.log('  - Has first-term class:', hasFirstTermClass);
-                console.log('  - Contains First Term text:', containsFirstTermText);
-                
-                if (firstTermBadge || hasFirstTermClass || containsFirstTermText) {
-                    isFirstTerm = true;
-                }
-                
-                // Add Yes/No to the last column
-                row.push(isFirstTerm ? 'Yes' : 'No');
-                console.log('  - Final result:', isFirstTerm ? 'Yes' : 'No');
-            }
-            
             csv.push(row.join(','));
         }
-        
-        console.log('Generated CSV:', csv.join('\n'));
         
         // Create CSV file and trigger download
         var csvFile = new Blob([csv.join('\n')], { type: 'text/csv' });
@@ -551,24 +519,12 @@ window.addEventListener('resize', adjustColumnWidths);
 <td>4</td>
 <td class="enrollment available">11</td>
 <td class="enrollment available">22</td>
-<td>Tue 6:00 PM - 9:40 PM</td>
+<td>Wed 10:00 AM - 12:00 PM</td>
 <td>TBD</td>
 <td>TBD</td>
 <td>9/29/2025 - 12/20/2025</td>
 </tr>
-<tr class="even">
-<td><strong>DATA 610</strong></td>
-<td>U1FF</td>
-<td>DATA-610 Big Data Analytics/Data Mining</td>
-<td>4</td>
-<td class="enrollment available">4</td>
-<td class="enrollment available">22</td>
-<td>Mon 1:00 PM - 3:00 PM; Wed 10:00 AM - 12:00 PM</td>
-<td>Frasch Hall 422; Blended (Online + Wed in-person)</td>
-<td>TBD</td>
-<td>8/18/2025 - 11/8/2025</td>
-</tr>
-<tr class="first-term odd">
+<tr class="first-term even">
 <td><strong>DATA 630</strong> <span class="first-term-badge">First Term</span></td>
 <td>U1FF</td>
 <td>DATA-630 Applied Database Management</td>
@@ -580,7 +536,7 @@ window.addEventListener('resize', adjustColumnWidths);
 <td>TBD</td>
 <td>8/18/2025 - 11/8/2025</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><strong>ITEC 640</strong></td>
 <td>Q1FF</td>
 <td>ITEC-640 Project Management</td>
@@ -592,7 +548,7 @@ window.addEventListener('resize', adjustColumnWidths);
 <td>TBD</td>
 <td>9/30/2025 - 12/18/2025</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><strong>ITEC 660</strong></td>
 <td>Q1FF</td>
 <td>ITEC-660 Web Development and Deployment</td>
@@ -604,7 +560,7 @@ window.addEventListener('resize', adjustColumnWidths);
 <td>TBD</td>
 <td>9/30/2025 - 12/18/2025</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><strong>ITEC 690</strong></td>
 <td>Q1FF</td>
 <td>ITEC-690 IT Strategy and Policy</td>
@@ -616,18 +572,6 @@ window.addEventListener('resize', adjustColumnWidths);
 <td>TBD</td>
 <td>9/29/2025 - 12/17/2025</td>
 </tr>
-<tr class="first-term odd">
-<td><strong>MATH 601</strong> <span class="first-term-badge">First Term</span></td>
-<td>Q1FF</td>
-<td>MATH-601 Introduction to Analytics</td>
-<td>4</td>
-<td class="enrollment available">2</td>
-<td class="enrollment available">22</td>
-<td>TBD</td>
-<td>TBD</td>
-<td>TBD</td>
-<td>9/29/2025 - 12/20/2025</td>
-</tr>
 <tr class="first-term even">
 <td><strong>PF 521</strong> <span class="first-term-badge">First Term</span></td>
 <td>E1FF</td>
@@ -635,7 +579,7 @@ window.addEventListener('resize', adjustColumnWidths);
 <td>0</td>
 <td class="enrollment available">0</td>
 <td class="enrollment available">20</td>
-<td>Thu 10:00 AM - 12:00 PM</td>
+<td>Tue 10:00 AM - 12:00 PM; Thu 10:00 AM - 12:00 PM</td>
 <td>Frasch Hall 414</td>
 <td>TBD</td>
 <td>8/19/2025 - 9/25/2025</td>

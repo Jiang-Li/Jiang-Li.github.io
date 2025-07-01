@@ -712,36 +712,55 @@ class FranklinCourseScraper:
             # Enhanced extraction for weekday+time pairs (like "T 6:00 PM", "Th 10:00 AM")
             weekday_time_pairs = []
             
-            # Look for individual weekday+time patterns - preserve original text order
-            # Combined pattern to find all weekday+time pairs in order
-            combined_pattern = r'\b(Th|T|M|W|F|S|U|Mon|Tue|Wed|Thu|Fri|Sat|Sun|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\s+(\d{1,2}:\d{2}\s*[AP]M\s*-\s*\d{1,2}:\d{2}\s*[AP]M)'
+            # First, check for slash-separated weekdays with single time (like "T/Th 10:00 AM - 12:00 PM")
+            slash_pattern = r'\b(T/Th|M/W|W/F|M/W/F)\s+(\d{1,2}:\d{2}\s*[AP]M\s*-\s*\d{1,2}:\d{2}\s*[AP]M)'
+            slash_matches = re.finditer(slash_pattern, all_text, re.IGNORECASE)
             
             all_weekdays = []
             all_times = []
             
-            # Find all matches in order of appearance in text
-            matches = re.finditer(combined_pattern, all_text, re.IGNORECASE)
-            for match in matches:
-                weekday_abbrev = match.group(1)
-                time_range = match.group(2)
+            for match in slash_matches:
+                weekday_pattern = match.group(1)
+                time_range = match.group(2).strip()
                 
-                # Special handling for T vs Th distinction
-                if weekday_abbrev.upper() == 'T':
-                    # Check if this T is actually part of Th by looking at the next character
-                    start_pos = match.start(1)
-                    if (start_pos + 1 < len(all_text) and 
-                        all_text[start_pos:start_pos+2].upper() == 'TH'):
-                        continue  # Skip this T as it's part of Th
-                    parsed_weekdays = ['Tuesday']
-                elif weekday_abbrev.upper() == 'TH':
-                    parsed_weekdays = ['Thursday']
-                else:
-                    parsed_weekdays = self.parse_weekdays(weekday_abbrev)
+                # Parse the slash-separated weekdays
+                parsed_weekdays = self.parse_weekdays(weekday_pattern)
                 
                 if parsed_weekdays and parsed_weekdays != [DEFAULT_WEEKDAY]:
                     all_weekdays.extend(parsed_weekdays)
-                    all_times.append(time_range.strip())
-                    weekday_time_pairs.append((parsed_weekdays[0], time_range.strip()))
+                    # Duplicate the time for each weekday
+                    for weekday in parsed_weekdays:
+                        all_times.append(time_range)
+                        weekday_time_pairs.append((weekday, time_range))
+            
+            # If no slash patterns found, look for individual weekday+time patterns
+            if not weekday_time_pairs:
+                # Combined pattern to find all weekday+time pairs in order
+                combined_pattern = r'\b(Th|T|M|W|F|S|U|Mon|Tue|Wed|Thu|Fri|Sat|Sun|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\s+(\d{1,2}:\d{2}\s*[AP]M\s*-\s*\d{1,2}:\d{2}\s*[AP]M)'
+                
+                # Find all matches in order of appearance in text
+                matches = re.finditer(combined_pattern, all_text, re.IGNORECASE)
+                for match in matches:
+                    weekday_abbrev = match.group(1)
+                    time_range = match.group(2)
+                    
+                    # Special handling for T vs Th distinction
+                    if weekday_abbrev.upper() == 'T':
+                        # Check if this T is actually part of Th by looking at the next character
+                        start_pos = match.start(1)
+                        if (start_pos + 1 < len(all_text) and 
+                            all_text[start_pos:start_pos+2].upper() == 'TH'):
+                            continue  # Skip this T as it's part of Th
+                        parsed_weekdays = ['Tuesday']
+                    elif weekday_abbrev.upper() == 'TH':
+                        parsed_weekdays = ['Thursday']
+                    else:
+                        parsed_weekdays = self.parse_weekdays(weekday_abbrev)
+                    
+                    if parsed_weekdays and parsed_weekdays != [DEFAULT_WEEKDAY]:
+                        all_weekdays.extend(parsed_weekdays)
+                        all_times.append(time_range.strip())
+                        weekday_time_pairs.append((parsed_weekdays[0], time_range.strip()))
             
             # If we found weekday+time pairs, use them
             if weekday_time_pairs:
@@ -770,6 +789,11 @@ class FranklinCourseScraper:
                         
                         if weekdays and weekdays != [DEFAULT_WEEKDAY]:
                             time_info['weekdays'] = list(set(weekdays))  # Remove duplicates
+                            # For fallback patterns with slash separation, duplicate times
+                            if time_info['times'] != [DEFAULT_TIME] and '/' in matches[0]:
+                                # Duplicate the times for each weekday
+                                original_times = time_info['times'][:]
+                                time_info['times'] = original_times * len(weekdays)
                             break
             
             # Alternative: Look in individual cells (original method as fallback)
@@ -849,6 +873,8 @@ class FranklinCourseScraper:
                         # Handle "TH" specifically for Thursday
                         if day == 'TH':
                             weekdays.append('Thursday')
+                        elif day == 'T':
+                            weekdays.append('Tuesday')
                         elif day in weekday_mapping:
                             weekdays.append(weekday_mapping[day])
                     break

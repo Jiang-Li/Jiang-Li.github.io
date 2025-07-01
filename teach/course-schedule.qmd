@@ -760,13 +760,10 @@ if len(df) > 0:
             return;
         }}
         
-        console.log('Table found:', table);
         var rows = table.querySelectorAll('tr');
-        console.log('Number of rows:', rows.length);
         
         for (var i = 0; i < rows.length; i++) {{
             var row = [], cols = rows[i].querySelectorAll('td, th');
-            var currentRow = rows[i];
             
             // Process all existing columns normally
             for (var j = 0; j < cols.length; j++) {{
@@ -781,37 +778,8 @@ if len(df) > 0:
                 row.push(cellText);
             }}
             
-            // Add First Term column
-            if (i === 0) {{
-                // Header row - add column header
-                row.push('First Term');
-            }} else {{
-                // Data row - check if this is a first term course
-                var isFirstTerm = false;
-                
-                // Check multiple ways to detect first term courses
-                var firstTermBadge = currentRow.querySelector('.first-term-badge');
-                var hasFirstTermClass = currentRow.classList.contains('first-term');
-                var containsFirstTermText = currentRow.textContent.includes('First Term');
-                
-                console.log('Row', i, 'first term checks:');
-                console.log('  - Badge found:', firstTermBadge);
-                console.log('  - Has first-term class:', hasFirstTermClass);
-                console.log('  - Contains First Term text:', containsFirstTermText);
-                
-                if (firstTermBadge || hasFirstTermClass || containsFirstTermText) {{
-                    isFirstTerm = true;
-                }}
-                
-                // Add Yes/No to the last column
-                row.push(isFirstTerm ? 'Yes' : 'No');
-                console.log('  - Final result:', isFirstTerm ? 'Yes' : 'No');
-            }}
-            
             csv.push(row.join(','));
         }}
-        
-        console.log('Generated CSV:', csv.join('\\n'));
         
         // Create CSV file and trigger download
         var csvFile = new Blob([csv.join('\\n')], {{ type: 'text/csv' }});
