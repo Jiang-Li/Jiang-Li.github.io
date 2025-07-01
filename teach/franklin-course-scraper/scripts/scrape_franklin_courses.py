@@ -51,7 +51,7 @@ DEFAULT_TIME = 'TBD'
 DEFAULT_WEEKDAY = 'TBD'
 
 # Browser settings
-BROWSER_WAIT_TIMEOUT = 4.0  # Faster wait for headless mode
+BROWSER_WAIT_TIMEOUT = 10.0  # Increased timeout to handle slow-loading courses
 INTER_COURSE_DELAY = 1  # Seconds between course scraping
 
 @dataclass
