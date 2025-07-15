@@ -447,12 +447,13 @@ class FranklinCourseScraper:
                 print(f"   {i+1}. '{h.get_text(strip=True)}'")
             
             # Filter to only the specified term during extraction (not search)
+            print(f"🔍 Term parameter received: '{term}'")
             if term:
                 original_count = len(term_headers)
                 term_headers = [h for h in term_headers if term in h.get_text(strip=True)]
-                print(f"🔍 Filtered from {original_count} to {len(term_headers)} headers for {term}")
+                print(f"🔍 Filtered from {original_count} to {len(term_headers)} headers for '{term}'")
             else:
-                print(f"🔍 Using all {len(term_headers)} term headers")
+                print(f"🔍 Using all {len(term_headers)} term headers (term parameter is empty)")
             
             for term_header in term_headers:
                 term_text = term_header.get_text(strip=True)
@@ -1010,11 +1011,32 @@ class FranklinCourseScraper:
         return locations
 
     def extract_instructor_info(self, table):
-        """Extract instructor information"""
+        """Extract instructor information using reference scraper approach"""
         instructors = [DEFAULT_INSTRUCTOR]
         
         try:
-            # Look for instructor names in multiple ways
+            # Method 1: Use reference scraper approach - look for specific CSS classes
+            instructor_cells = table.find_all('td', class_='search-sectioninstructormethods')
+            
+            found_instructors = []
+            for cell in instructor_cells:
+                # Extract instructor names using aria-label approach
+                instructor_spans = cell.find_all('span', attrs={'aria-label': lambda x: x and 'Faculty Office Hours' in x})
+                
+                for span in instructor_spans:
+                    instructor_name = span.get_text(strip=True)
+                    if instructor_name and instructor_name not in found_instructors:
+                        found_instructors.append(instructor_name)
+                        print(f"   👨‍🏫 Found instructor via CSS: {instructor_name}")
+            
+            # If found instructors using CSS approach, use them
+            if found_instructors:
+                instructors = found_instructors
+                return instructors
+            
+            print(f"   ⚠️  No instructors found via CSS approach, trying fallback...")
+            
+            # Method 2: Fallback - improved version of original approach
             cells = table.find_all(['td', 'th'])
             candidate_instructors = []
             
@@ -1022,19 +1044,28 @@ class FranklinCourseScraper:
                 text = cell.get_text(strip=True)
                 
                 # Skip if text is too short or contains excluded keywords
+                # Note: Removed 'blended', 'online', 'hybrid' from exclusions to fix the original issue
                 if (len(text) < 4 or
                     any(keyword in text.lower() for keyword in [
                         'room', 'time', 'pm', 'am', 'seats', 'enrolled', 'available', 
                         'total', 'waitlist', 'downtown', 'building', 'hall', 'campus',
                         'monday', 'tuesday', 'wednesday', 'thursday', 'friday',
-                        'saturday', 'sunday', 'face-to-face', 'hybrid', 'online',
+                        'saturday', 'sunday', 'face-to-face',  # Removed 'hybrid', 'online', 'blended'
                         DEFAULT_INSTRUCTOR.lower(), 'course', 'section', 'credit',
                         'start', 'end', 'date', 'week', 'class', 'meeting'
                     ])):
                     continue
                 
-                # Look for instructor patterns
-                # Pattern 1: Names with space and alphabetic characters
+                # Pattern 1: Look for "Name (Mode)" format
+                name_mode_match = re.search(r'^([A-Za-z\s]+)\s*\([^)]*(?:blended|online|hybrid|face-to-face)[^)]*\)', text, re.IGNORECASE)
+                if name_mode_match:
+                    candidate_name = name_mode_match.group(1).strip()
+                    if len(candidate_name) > 3 and any(c.isupper() for c in candidate_name):
+                        candidate_instructors.append(candidate_name)
+                        print(f"   👨‍🏫 Found instructor via pattern: {candidate_name}")
+                        continue
+                
+                # Pattern 2: Names with space and alphabetic characters
                 if (' ' in text and 
                     any(c.isalpha() for c in text) and 
                     not text.replace(' ', '').replace(',', '').replace('.', '').isdigit()):
@@ -1043,7 +1074,7 @@ class FranklinCourseScraper:
                     if any(c.isupper() for c in text):
                         candidate_instructors.append(text)
                 
-                # Pattern 2: Names with comma (Last, First format)
+                # Pattern 3: Names with comma (Last, First format)
                 elif (',' in text and 
                       any(c.isalpha() for c in text) and 
                       len(text.split(',')) == 2):
@@ -1056,13 +1087,15 @@ class FranklinCourseScraper:
                     # Skip if it looks like a course code or contains numbers prominently
                     if not re.search(r'\d{3,}', candidate):  # No 3+ digit numbers
                         instructors = [candidate]
+                        print(f"   ✅ Selected instructor: {candidate}")
                         break
                 else:
                     # Fall back to first candidate if none look ideal
                     instructors = [candidate_instructors[0]]
+                    print(f"   ✅ Fallback instructor: {candidate_instructors[0]}")
                     
         except Exception as e:
-            print(f"Debug: Instructor extraction error: {e}")
+            print(f"   ❌ Instructor extraction error: {e}")
             pass
         
         return instructors

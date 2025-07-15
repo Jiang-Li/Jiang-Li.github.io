@@ -212,6 +212,7 @@ import os
 # Read data from the Franklin course scraper project
 data_path = "franklin-course-scraper/data/franklin_courses.csv"
 
+# Force refresh - updated Jul 15, 2025
 if os.path.exists(data_path):
     df = pd.read_csv(data_path)
     
