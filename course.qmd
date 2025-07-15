@@ -1,16 +1,26 @@
 ---
-title: "Supervise/Teach the Following Courses"
+title: "Course Offerings in Analytics Programs"
 format:
   html:
     toc: true
     toc-location: left
-    toc-depth: 3
+    toc-depth: 4
+    toc-expand: true
     number-sections: false
 ---
 
-***
+<style>
+.toc-title {
+  display: none !important;
+}
+</style>
 
-### DATA 250: Analytics Programming
+## 🎓 Undergraduate Courses
+
+### Dr. Li as Lead Faculty
+
+
+#### **DATA 250: Analytics Programming**
 
 This course introduces the essential general programming concepts and techniques to analytics students. The goal is to equip the students with the necessary programming skill in analytics problem-solving. Topics include boolean, numbers, loops, function, debugging, Python's specifics (such as NumPy, Pandas, Jupyter notebook), R's specifics (such as list, data frame, factor, apply, RMarkdown), the process of data retrieving, cleaning, integrating, transforming, and enriching to support analytics.
 
@@ -34,10 +44,9 @@ There is a proctored midterm exam in Week 7 and a proctored final exam in Week 1
 **Tools**  
 Python (NumPy, Pandas), R (tidyverse), EdStem
 
+---
 
-***
-
-### DATA 300: Introduction to Analytics
+#### **DATA 300: Introduction to Analytics**
 
 This course introduces the fundamentals of Business and Data Analytics. Students will learn the fundamentals of business problem framing, data wrangling, descriptive and inferential statistics, data visualization, and data storytelling in analytics. Not open to students with credit for INFA 300.
 
@@ -61,9 +70,9 @@ This course introduces the fundamentals of Business and Data Analytics. Students
 
 **Tools:** Excel, R
 
-***
+---
 
-### DATA 400: Principles of Machine Learning
+#### **DATA 400: Principles of Machine Learning**
 
 Students will learn the basic concepts behind major machine learning algorithms, the essential steps for creating a typical machine learning model, the strengths and weaknesses of different algorithms, and the model evaluation using different performance metrics. Eventually students will be able to build a prediction model by machine learning algorithm using Python language. The differences between Java and Python will be reviewed. The common problems in practical machine learning exercises and their solutions also will be discussed.
 
@@ -87,48 +96,90 @@ There is a final exam and final project in Week 12.
 **Tools**  
 Python (scikit-learn, pandas), Jupyter Notebook, EdStem
 
-***
+---
 
-### DATA 430: Data Engineering Technologies
+#### **DATA 430: Data Engineering Technologies**
 
 This course covers fundamental methods and widely-used technologies in data engineering. Topics include application programming interface (API), web scraping, Extract Transform Load (ETL), and analytics at-scale using PySpark.
 
+---
 
-***
-
-### DATA 450: Advanced Topics in Analytics
+#### **DATA 450: Advanced Topics in Analytics**
 
 This course covers advanced analytics topics, including big-data analytics using popular platforms, model interpretation strategies, simulations, optimizations, and analytics reporting and presentation methods. A discussion of ethical considerations for model evaluation is also included.
 
-***
+---
 
-### DATA 600: Modern Tools for Stat Analysis
+#### **BUSA 250: SQL for Business**
 
-This course offers an in-depth exploration of modern statistical analysis tools, focusing on the integration of modern analytics tools enhanced by artificial intelligence techniques. The goal is to equip students with advanced skills in using these contemporary analytics tools for statistical descriptive data analysis and effective problem-solving across various analytical contexts.
+This course introduces data analytics using Structured Query Language (SQL). Students will learn how to apply SQL in data exploration analysis and business problem-solving.
 
 **Weekly Topics**  
-Week 1 – Excel Analytics Essentials  
-Week 2 – Python Basics  
-Week 3 – Python Packages: NumPy and Pandas  
-Week 4 – Data Preparation by Python  
-Week 5 – Data Wrangling and Visualization by Python  
-Week 6 – Data Aggregation by Python  
-Week 7 – R Basics and Data Visualization and Midterm Exam  
-Week 8 – Data Transformation by R  
-Week 9 – Data Tidying in R  
-Week 10 – Data Import and Workflow in R  
-Week 11 – AI-Augmented Analytics  
-Week 12 – Final Exam  
+Week 1 – Basics of SQL for Analytics  
+Week 2 – SQL for Data Preparation  
+Week 3 – Aggregate Functions for Data Analysis  
+Week 4 – Window Functions for Data Analysis  
+Week 5 – Analytics Using Complex Data Types and Performant SQL  
+Week 6 – Final Project  
 
 **Exams**  
-There is a midterm exam in Week 7 and a final exam in Week 12.
+There is no midterm or final exam, but students complete a major final project in Week 6.
 
 **Tools**  
-Excel, Python (NumPy, Pandas), R (tidyverse), AI
+SQL, EdStem
 
-***
+---
 
-### DATA 610: Big Data Analytics and Data Mining 
+#### **BUSA 350: Principles Analytics Modeling**
+
+This course introduces the principles of analytics modeling. Students will learn exploratory data analytics, regression, classification, clustering, model interpretation, and model evaluation. Not open to students with credit for INFA 420.
+
+**Weekly Topics**  
+Week 1 – Advanced Regression Analysis  
+Week 2 – Introduction to Data Mining  
+Week 3 – Supervised Data Mining: KNN & Naïve Bayes  
+Week 4 – Supervised Data Mining: Decision Trees  
+Week 5 – Unsupervised Data Mining  
+Week 6 – Forecasting with Time Series Data  
+
+**Exams**  
+There is no midterm or final exam, but students complete a major final project.
+
+**Tools**  
+R
+
+---
+
+### Other Key Offerings
+
+#### **BUSA 200: Database Fundamentals**
+
+This introductory course focuses on applying information technology to business strategies using databases. The student will gain a working knowledge of current database technology, including relational database concepts, database design, data extraction, and data warehousing while working with database applications.
+
+**Weekly Topics**
+
+- Week 1 – Introduction to Databases
+- Week 2 – Relational Databases
+- Week 3 – Database Design
+- Week 4 – Structured Query Language (SQL)
+- Week 5 – Database Architecture
+- Week 6 – Final Exam
+
+**Exams**
+
+There is a proctored final exam.
+
+**Tools**
+
+SQL
+
+---
+
+## 🎯 Graduate Courses
+
+### Dr. Li as Lead Faculty
+
+#### **DATA 610: Big Data Analytics and Data Mining**
 
 This course explores data mining methods and tools, examines the issues in the analytical analysis of massive datasets, and unstructured data. Students will learn the concepts and techniques to discover the patterns in large datasets, which support organizational decision making.
 
@@ -152,36 +203,9 @@ There is a proctored midterm exam in Week 6 and a proctored final exam in Week 1
 **Tools**  
 Python (NumPy, Pandas), Jupyter Notebook, EdStem
 
-***
+---
 
-### DATA 611: Applied Machine Learning
-
-This course explores two main areas of machine learning: supervised and unsupervised. Topics include linear and logistic regression, probabilistic inference, Support Vector Machines, Artificial Neural Networks, clustering, dimensionality reduction, and programming.
-
-**Weekly Topics**  
-Week 1 – Python Programming Language and Python in Data Science  
-Week 2 – Introduction to Machine Learning Concepts  
-Week 3 – Anatomy of a Classification Algorithm  
-Week 4 – Classification by scikit-learn  
-Week 5 – Data Processing  
-Week 6 – Dimension Reduction  
-Week 7 – Model Evaluation  
-Week 8 – Regression  
-Week 9 – Clustering  
-Week 10 – Natural Language Processing  
-Week 11 – Neural Network  
-Week 12 – Final Project Presentation  
-
-**Exams**  
-There is no midterm or final exam, but students complete a major final project and presentation in Week 12.
-
-**Tools**  
-Python, scikit-learn, Google Colab
-
-***
-
-
-### DATA 630: Applied Database Management 
+#### **DATA 630: Applied Database Management**
 
 This course teaches data management from an applied perspective. The topics include fundamentals of database management systems, structured query language (SQL) for data analytics, relational database design, and data warehousing.
 
@@ -205,51 +229,61 @@ There is a proctored midterm exam in Week 6 and a proctored final exam in Week 1
 **Tools**  
 SQL, EdStem 
 
-***
+---
 
+#### **DATA 600: Modern Tools for Stat Analysis**
 
-### BUSA 250: SQL for Business
-
-This course introduces data analytics using Structured Query Language (SQL). Students will learn how to apply SQL in data exploration analysis and business problem-solving.
-
-**Weekly Topics**  
-Week 1 – Basics of SQL for Analytics  
-Week 2 – SQL for Data Preparation  
-Week 3 – Aggregate Functions for Data Analysis  
-Week 4 – Window Functions for Data Analysis  
-Week 5 – Analytics Using Complex Data Types and Performant SQL  
-Week 6 – Final Project  
-
-**Exams**  
-There is no midterm or final exam, but students complete a major final project in Week 6.
-
-**Tools**  
-SQL, EdStem
-
-
-***
-
-### BUSA 350:  Principles Analytics Modeling 
-
-This course introduces the principles of analytics modeling. Students will learn exploratory data analytics, regression, classification, clustering, model interpretation, and model evaluation. Not open to students with credit for INFA 420.
+This course offers an in-depth exploration of modern statistical analysis tools, focusing on the integration of modern analytics tools enhanced by artificial intelligence techniques. The goal is to equip students with advanced skills in using these contemporary analytics tools for statistical descriptive data analysis and effective problem-solving across various analytical contexts.
 
 **Weekly Topics**  
-Week 1 – Advanced Regression Analysis  
-Week 2 – Introduction to Data Mining  
-Week 3 – Supervised Data Mining: KNN & Naïve Bayes  
-Week 4 – Supervised Data Mining: Decision Trees  
-Week 5 – Unsupervised Data Mining  
-Week 6 – Forecasting with Time Series Data  
+Week 1 – Excel Analytics Essentials  
+Week 2 – Python Basics  
+Week 3 – Python Packages: NumPy and Pandas  
+Week 4 – Data Preparation by Python  
+Week 5 – Data Wrangling and Visualization by Python  
+Week 6 – Data Aggregation by Python  
+Week 7 – R Basics and Data Visualization and Midterm Exam  
+Week 8 – Data Transformation by R  
+Week 9 – Data Tidying in R  
+Week 10 – Data Import and Workflow in R  
+Week 11 – AI-Augmented Analytics  
+Week 12 – Final Exam  
 
 **Exams**  
-There is no midterm or final exam, but students complete a major final project.
+There is a midterm exam in Week 7 and a final exam in Week 12.
 
 **Tools**  
-R
+Excel, Python (NumPy, Pandas), R (tidyverse), AI
 
-***
+---
 
-### BUSA 603: Marketing Management & Analytics
+#### **DATA 611: Applied Machine Learning**
+
+This course explores two main areas of machine learning: supervised and unsupervised. Topics include linear and logistic regression, probabilistic inference, Support Vector Machines, Artificial Neural Networks, clustering, dimensionality reduction, and programming.
+
+**Weekly Topics**  
+Week 1 – Python Programming Language and Python in Data Science  
+Week 2 – Introduction to Machine Learning Concepts  
+Week 3 – Anatomy of a Classification Algorithm  
+Week 4 – Classification by scikit-learn  
+Week 5 – Data Processing  
+Week 6 – Dimension Reduction  
+Week 7 – Model Evaluation  
+Week 8 – Regression  
+Week 9 – Clustering  
+Week 10 – Natural Language Processing  
+Week 11 – Neural Network  
+Week 12 – Final Project Presentation  
+
+**Exams**  
+There is no midterm or final exam, but students complete a major final project and presentation in Week 12.
+
+**Tools**  
+Python, scikit-learn, Google Colab
+
+---
+
+#### **BUSA 603: Marketing Management & Analytics**
 
 This course covers the application of analytics tools, techniques, strategies and methods to marketing management. Students learn to analyze market data, enabling management decisions to be based on data-driven facts and customer insights. Using marketing analytics tools to model scenarios, students learn how organizations can measure returns on investment relative to their marketing efforts, drive performance and strengthen the effectiveness of its campaigns.
 
@@ -267,10 +301,9 @@ There is a proctored final exam in Week 6.
 **Tools**  
 Python, Google Analytics
 
+---
 
-***
-
-### BUSA 695: Capstone in Business Analytics
+#### **BUSA 695: Capstone in Business Analytics**
 
 Students demonstrate an integrative knowledge of analytics in this course by developing a project plan to implement analytics for an important function, unit or department of the organization chosen in the Business Analytics strategy course. Students apply analytics tools, techniques, methods and strategies to drive business outcomes for the chosen company using relevant project-based methodologies. The course allows students to develop a professional portfolio that will highlight the work completed throughout the degree program. This may serve as a relevant employability resource. 
 
@@ -287,3 +320,51 @@ There is no midterm or final exam, but students complete a major capstone projec
 
 **Tools**  
 Students select from tools covered in the program, including Excel, Tableau, Python, R, etc.
+
+---
+
+### Other Key Offerings
+
+
+#### **BUSA 604: Financial Decision Modeling**
+
+This course is built on the theory, strategy and practice of financial management, emphasizing computer-based modeling and forecasting. Students learn to model financial scenarios using analytics tools. The impact of financial decisions relative to financial statements analysis, cash budgeting, cost of capital determination, capital budgeting, and capital structure choices are covered. A variety of techniques, such as sensitivity and scenario analysis, optimization methods, Monte Carlo simulation, and regression analysis are also covered.
+
+**Weekly Topics**
+
+- Week 1 – Financial Statements and Analysis Tools
+- Week 2 – Cash Budget and Financial Statement Forecasting
+- Week 3 – Business and Financial Risk Appetite
+- Week 4 – Stock and Bond Valuation
+- Week 5 – Capital Budgeting
+- Week 6 – Analytic Modeling
+
+**Exams**  
+There is no midterm or final exam, but students complete three comprehensive projects. 
+
+**Tools**  
+Excel
+
+
+---
+
+#### **BUSA 605: Business Analytics Strategy**
+
+This course allows students to apply the fundamental analytics principles in the development of an analytics strategy for a business of choice. Given a range of options, students will research and choose the best analytics strategy under given scenarios. The course uses case studies, employing a problem and project-based approach to the development of a strategy.
+
+**Weekly Topics**
+
+- Week 1 – The Why and What of Business Analytics Strategy
+- Week 2 – Data and Decisions
+- Week 3 – Analytics Leadership and Governance
+- Week 4 – Analytics-Driven Culture
+- Week 5 – Analytics Roadmap and Lessons Learned
+- Week 6 – Report and Presentation of Analytics Strategy
+
+**Exams**  
+There is no midterm or final exam, but students complete six comprehensive projects and have a final presentation. 
+
+**Tools**  
+Selected by students if needed.
+
+---
