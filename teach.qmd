@@ -26,10 +26,6 @@ format:
 
 ### Analytics Concept Review 📚
 
-**🃏 [Interactive Flip Cards](teach/analytics_review/flashcards.html)** - 67+ analytics concepts for study practice
+**🃏 [Interactive Flip Cards](teach/analytics_review/flashcards.html)** - 60+ analytics concepts for study practice
 
 ***
-
-### EdStemPoint Transfer
-
-Coming soon. 
