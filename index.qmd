@@ -35,7 +35,6 @@ Currently, my research focuses on **[Learning Analytics](https://en.wikipedia.or
 **🎓 Current Academic Role**
 - Program Chair: M.S. Business Analytics & B.S. Analytics 
 - Lead Faculty: M.S. Data Analytics
-- Achievement: Led Business Analytics program to **#8 national ranking** (TechGuide)
 
 **🏢 Industry Experience**
 - Data Scientist in Insurance Industry
