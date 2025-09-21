@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>A Practical AI-Augmented Analyst Workflow</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-2ebc9af1e175ef133f9b37a08d69017b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<!-- Google tag (gtag.js) -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-Z48603M6WF"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-Z48603M6WF');
+</script>
+
+
+<link rel="stylesheet" href="../../style.css">
+</head>
+
+<body class="floating nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../program.html"> 
+<span class="menu-text">FAQ</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../course.html"> 
+<span class="menu-text">Courses</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../publication.html"> 
+<span class="menu-text">Research</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../post.html"> 
+<span class="menu-text">Posts</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../teach.html"> 
+<span class="menu-text">Teaching</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/jiang-li-analytics/"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="mailto:jiang.li2@franklin.edu"> <i class="bi bi-envelope" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#how-to-direct-your-ai-analyst---the-art-of-the-prompt" id="toc-how-to-direct-your-ai-analyst---the-art-of-the-prompt" class="nav-link active" data-scroll-target="#how-to-direct-your-ai-analyst---the-art-of-the-prompt"><span class="header-section-number">1</span> How to Direct Your AI Analyst - The Art of the Prompt</a></li>
+  <li><a href="#introduction-to-the-ai-chatbot" id="toc-introduction-to-the-ai-chatbot" class="nav-link" data-scroll-target="#introduction-to-the-ai-chatbot"><span class="header-section-number">2</span> Introduction to the AI Chatbot</a></li>
+  <li><a href="#introduction-to-the-analysts-lab---notebooks" id="toc-introduction-to-the-analysts-lab---notebooks" class="nav-link" data-scroll-target="#introduction-to-the-analysts-lab---notebooks"><span class="header-section-number">3</span> Introduction to the Analyst’s Lab - Notebooks</a></li>
+  <li><a href="#the-full-workflow---from-ai-chatbot-to-notebook" id="toc-the-full-workflow---from-ai-chatbot-to-notebook" class="nav-link" data-scroll-target="#the-full-workflow---from-ai-chatbot-to-notebook"><span class="header-section-number">4</span> The Full Workflow - From AI Chatbot to Notebook</a></li>
+  <li><a href="#appendix-data-and-course-resources" id="toc-appendix-data-and-course-resources" class="nav-link" data-scroll-target="#appendix-data-and-course-resources"><span class="header-section-number">5</span> Appendix: Data and Course Resources</a>
+  <ul class="collapse">
+  <li><a href="#sample-data" id="toc-sample-data" class="nav-link" data-scroll-target="#sample-data"><span class="header-section-number">5.1</span> Sample Data</a></li>
+  <li><a href="#data-dictionary" id="toc-data-dictionary" class="nav-link" data-scroll-target="#data-dictionary"><span class="header-section-number">5.2</span> Data Dictionary</a></li>
+  <li><a href="#course-structure-overview" id="toc-course-structure-overview" class="nav-link" data-scroll-target="#course-structure-overview"><span class="header-section-number">5.3</span> Course Structure Overview</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content column-page-right" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">A Practical AI-Augmented Analyst Workflow</h1>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-right">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="how-to-direct-your-ai-analyst---the-art-of-the-prompt" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="how-to-direct-your-ai-analyst---the-art-of-the-prompt"><span class="header-section-number">1</span> How to Direct Your AI Analyst - The Art of the Prompt</h2>
+<p><strong>Objective:</strong> This segment will close the “prompting gap” that many new users experience with AI. By the end of this segment, you will understand the framework for conducting a structured, effective <strong>AI dialogue</strong>, moving from simple questions to a sophisticated, iterative conversation that produces high-quality analytical insights.</p>
+<section id="part-1-the-mindset-shift---from-search-engine-to-analyst" class="level4" data-number="1.0.1">
+<h4 data-number="1.0.1" class="anchored" data-anchor-id="part-1-the-mindset-shift---from-search-engine-to-analyst"><span class="header-section-number">1.0.1</span> <strong>Part 1: The Mindset Shift - From Search Engine to Analyst</strong></h4>
+<p>The most common mistake when first using a generative AI for data analysis is to treat it like a search engine. We are used to typing a few keywords into Google and getting a list of links. This is a search for a pre-existing answer.</p>
+<p>An AI chatbot is different. It is not a library of answers; it is a reasoning engine. You are not “finding” an analysis; you are <strong>commissioning</strong> one. Your role is not to be a searcher, but a <strong>director</strong>. You must provide clear, specific instructions, just as you would to a junior data analyst on your team.</p>
+<ul>
+<li><strong>A search query is a request for information.</strong></li>
+<li><strong>A prompt is a set of instructions for a task.</strong></li>
+</ul>
+</section>
+<section id="part-2-the-anatomy-of-a-powerful-initial-prompt-the-p-c-t-f-framework" class="level4" data-number="1.0.2">
+<h4 data-number="1.0.2" class="anchored" data-anchor-id="part-2-the-anatomy-of-a-powerful-initial-prompt-the-p-c-t-f-framework"><span class="header-section-number">1.0.2</span> <strong>Part 2: The Anatomy of a Powerful Initial Prompt (The P-C-T-F Framework)</strong></h4>
+<p>A powerful initial prompt is the foundation of a successful AI dialogue. It gives the AI all the information it needs to perform the task correctly on the first try. A great way to structure your prompts is with the <strong>P-C-T-F Framework</strong>.</p>
+<ul>
+<li><p><strong>Bad Example (Too General):</strong> A prompt like <em>“Analyze my Superstore data”</em> is too vague. The AI doesn’t know your goal, who you are, or what to look for. It will likely give you a very generic summary of the file (e.g., “This file contains 21 columns including Sales and Profit…”) which is not a useful analysis.</p></li>
+<li><p><strong>Good Example (Specific &amp; Actionable):</strong> Let’s build a prompt using the P-C-T-F framework.</p>
+<ul>
+<li><strong>P</strong>ersona: “Act as a <strong>business data</strong> <strong>analyst</strong>.”</li>
+<li><strong>C</strong>ontext: “The goal is to prepare a summary for a marketing meeting to discuss regional performance.”</li>
+<li><strong>T</strong>ask: “Using the <strong><code>Orders</code> sheet</strong> from the attached <code>Superstore.xlsx</code> file, calculate the total profit for each <code>Region</code>.”</li>
+<li><strong>F</strong>ormat: “Present the result as a simple markdown table, sorted from highest to lowest profit.”</li>
+</ul></li>
+</ul>
+<p>This good prompt tells the AI its role, the business goal, the exact task to perform, and how to structure the output, leading to a much more useful and immediate result.</p>
+</section>
+<section id="part-3-the-art-of-the-follow-up---a-three-step-ai-dialogue-model" class="level4" data-number="1.0.3">
+<h4 data-number="1.0.3" class="anchored" data-anchor-id="part-3-the-art-of-the-follow-up---a-three-step-ai-dialogue-model"><span class="header-section-number">1.0.3</span> <strong>Part 3: The Art of the Follow-up - A Three-Step AI Dialogue Model</strong></h4>
+<p>A great initial prompt is just the start of the conversation. The real power of AI-augmented analysis comes from the follow-up dialogue, where you use your own critical thinking to guide the AI to deeper insights. A productive conversation follows a natural, three-step flow.</p>
+<p>Let’s assume our initial prompt was: <em>“Act as a business analyst. Using the <code>Orders</code> sheet in the attached data, what are the top 3 product categories by total profit?”</em></p>
+<p><strong>Step 1: Clarify &amp; Drill Down</strong> First, make sure you understand the initial response and get more detail on the most interesting part. This is where you move from a high-level summary to a specific area of interest.</p>
+<ul>
+<li><strong>Goal:</strong> To focus the analysis on a key finding.</li>
+<li><strong>Example Follow-up Prompt:</strong> “That’s helpful. For the ‘Technology’ category only, show me the profit by sub-category.”</li>
+</ul>
+<p><strong>Step 2: Question &amp; Hypothesize</strong> Next, use your analytical mind to ask “why?” This prompts the AI to connect different data points to suggest potential causes for a finding.</p>
+<ul>
+<li><strong>Goal:</strong> To move from observing “what” is happening to exploring “why” it might be happening.</li>
+<li><strong>Example Follow-up Prompt:</strong> “Why is ‘Furniture’ profit so low? Compare its average discount to other categories.”</li>
+</ul>
+<p><strong>Step 3: Challenge &amp; Refine</strong> Finally, act as the director. Challenge the AI’s initial approach and ask it to refine the analysis based on your own critical thinking. This is the most advanced step, where you guide the AI to a better, more robust analysis.</p>
+<ul>
+<li><strong>Goal:</strong> To improve the quality and relevance of the analysis itself.</li>
+<li><strong>Example Follow-up Prompt:</strong> “Is total profit the best metric here? Redo the analysis using profit margin (Profit / Sales) instead and tell me what changes.”</li>
+</ul>
+<p>By following this <strong>Clarify -&gt; Question -&gt; Challenge</strong> model, you can transform a simple Q&amp;A session into a powerful analytical dialogue that uncovers deep and actionable insights.</p>
+</section>
+</section>
+<section id="introduction-to-the-ai-chatbot" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="introduction-to-the-ai-chatbot"><span class="header-section-number">2</span> Introduction to the AI Chatbot</h2>
+<p><strong>Objective:</strong> This segment provides a hands-on walkthrough of the AI chatbot interface we will use for our analysis. By the end of this segment, you will know how to access the tool, upload your data, and begin a well-structured analytical dialogue using the P-C-T-F framework.</p>
+<p><strong>Tool:</strong> We will be using the <strong>free version of Google Gemini</strong> for this tutorial and for your final project.</p>
+<section id="part-1-accessing-and-setting-up-your-environment" class="level4" data-number="2.0.1">
+<h4 data-number="2.0.1" class="anchored" data-anchor-id="part-1-accessing-and-setting-up-your-environment"><span class="header-section-number">2.0.1</span> <strong>Part 1: Accessing and Setting Up Your Environment</strong></h4>
+<p>First, we need to open the tool and prepare it for our analysis.</p>
+<ul>
+<li><strong>Navigate to the Website:</strong> Open a web browser and go to the Google Gemini website: <a href="http://gemini.google.com/"><strong>gemini.google.com</strong></a></li>
+<li><strong>Sign In:</strong> If you are not already logged in, sign in with your Google account. You will be presented with the main chat interface. It’s a clean page with a text box at the bottom where you will type your prompts.</li>
+<li><strong>Start a New Chat:</strong> It’s a best practice to start a new chat for each new project or distinct analysis. This keeps your conversations organized. If you have old conversations open, you can start a new one by clicking the <strong>“+ New chat”</strong> button, usually located in the top-left corner.</li>
+</ul>
+</section>
+<section id="part-2-uploading-your-data-file" class="level4" data-number="2.0.2">
+<h4 data-number="2.0.2" class="anchored" data-anchor-id="part-2-uploading-your-data-file"><span class="header-section-number">2.0.2</span> <strong>Part 2: Uploading Your Data File</strong></h4>
+<p>Now, we need to provide the AI with the data it will analyze.</p>
+<ul>
+<li><strong>Locate the Upload Button:</strong> At the bottom of the screen, in the text box where you type your prompts, you will see several icons. Look for the <strong>paperclip icon</strong> (📎). This is the “Attach files” or “Upload” button.</li>
+<li><strong>Select the File:</strong> Click the paperclip icon. A dialog box will open, allowing you to browse your computer for a file. Navigate to where you have saved your <strong><code>Superstore.xlsx</code></strong> file and select it.</li>
+<li><strong>Confirm the Upload:</strong> After you select the file, Gemini will process it. You will see the file appear just above the text box, confirming that it is ready for analysis. The AI may also give you a brief message like, “Superstore.xlsx has been uploaded. What would you like to know about this file?”</li>
+</ul>
+<p>Your environment is now set up. You have an active chat session, and the AI has access to your dataset.</p>
+</section>
+<section id="part-3-asking-your-first-analytical-question" class="level4" data-number="2.0.3">
+<h4 data-number="2.0.3" class="anchored" data-anchor-id="part-3-asking-your-first-analytical-question"><span class="header-section-number">2.0.3</span> <strong>Part 3: Asking Your First Analytical Question</strong></h4>
+<p>This is where we put the theory from Segment 1 into practice. We will not ask a vague question. Instead, we will use the full <strong>P-C-T-F framework</strong> to commission a specific piece of analysis.</p>
+<ul>
+<li><p><strong>Construct Your Prompt:</strong> In the text box, you will now type your well-structured prompt. Let’s use the same “Good Example” from the previous segment. Type the following into the prompt box:</p>
+<blockquote class="blockquote">
+<p>Act as a business data analyst. The goal is to prepare a summary for a marketing meeting to discuss regional performance. Using the <code>Orders</code> sheet from the attached <code>Superstore.xlsx</code> file, calculate the total profit for each <code>Region</code>. Present the result as a simple markdown table, sorted from highest to lowest profit.</p>
+</blockquote></li>
+<li><p><strong>Send the Prompt:</strong> Press <strong>Enter</strong> or click the “Send” button.</p></li>
+<li><p><strong>Review the Output:</strong> Gemini will now perform the analysis and should provide an output that matches your request perfectly: a clean, sorted markdown table showing the total profit for each of the four regions.</p></li>
+</ul>
+</section>
+<section id="part-4-continuing-the-dialogue-with-follow-up-questions" class="level4" data-number="2.0.4">
+<h4 data-number="2.0.4" class="anchored" data-anchor-id="part-4-continuing-the-dialogue-with-follow-up-questions"><span class="header-section-number">2.0.4</span> <strong>Part 4: Continuing the Dialogue with Follow-up Questions</strong></h4>
+<p>A great initial answer is just the start. Now, we apply the three-step dialogue model from Segment 1 to dig deeper.</p>
+<ul>
+<li><strong>Clarify &amp; Drill Down:</strong> The initial output shows that the “West” region is the most profitable. A good analyst would immediately want to know what’s driving that success. Let’s ask a follow-up question to get more detail.
+<ul>
+<li><strong>Pro Tip: Re-anchoring Your AI:</strong> Sometimes, in a long conversation, an AI can “lose context” and forget about the file you uploaded. To prevent this, it’s a best practice to gently remind the AI of your data source in your follow-up prompts.</li>
+<li><strong>Follow-up Prompt:</strong> &gt; That’s a great start. Now, <strong>using the attached Superstore.xlsx file</strong>, show me the total profit by <code>Sub-Category</code> for the ‘West’ region only and present it as a sorted markdown table.</li>
+</ul></li>
+<li><strong>Question &amp; Hypothesize:</strong> The AI will now show you that within the West region, “Copiers” and “Binders” are highly profitable. But you might also see that “Tables” are losing money. This leads to a “why” question.
+<ul>
+<li><strong>Follow-up Prompt:</strong> &gt; Interesting. Why are ‘Tables’ so unprofitable in the West region? Compare the average <code>Discount</code> for ‘Tables’ in the West to the average discount for ‘Tables’ in other regions.</li>
+</ul></li>
+<li><strong>Challenge &amp; Refine:</strong> The AI might give you a table showing that the average discount for ‘Tables’ is around 32% and confidently state that this is the “primary driver.” This is where you, the human analyst, must apply your critical thinking and challenge the AI’s approach by maintaining the focus of your investigation.
+<ul>
+<li><strong>Follow-up Prompt:</strong> &gt; You’ve shown me the impact of discounts, but is that the only factor? Redo the analysis, but this time show me both the average <code>Discount</code> and the average <code>Shipping Cost</code> <strong>for ‘Tables’ in the West region</strong> compared to <strong>other sub-categories in the West region</strong>. This will give us a more complete picture.</li>
+<li><strong>The Analyst’s Role:</strong> This final step is the most important. The AI is excellent at finding correlations (the “what”), but your job is to use your business knowledge to question its conclusions and guide it to a more complete analysis (the “so what?”). Never blindly trust an AI’s first conclusion. Use its output as a hypothesis, and then use your own critical judgment to decide what to ask next.</li>
+</ul></li>
+</ul>
+<p>This iterative process of prompting, receiving a hypothesis, and then using your own judgment to challenge and refine the analysis is the core of effective and responsible AI-augmented analysis.</p>
+</section>
+</section>
+<section id="introduction-to-the-analysts-lab---notebooks" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="introduction-to-the-analysts-lab---notebooks"><span class="header-section-number">3</span> Introduction to the Analyst’s Lab - Notebooks</h2>
+<p><strong>Objective:</strong> In the previous segment, you used an AI chatbot to perform a quick, exploratory analysis. That process is excellent for brainstorming and getting initial ideas. However, for a formal project, you need a way to present your work that is clean, professional, and <strong>reproducible</strong>. This is where notebooks come in. By the end of this segment, you will understand what a notebook is and how to use its basic components.</p>
+<p><strong>Tool:</strong> We will be using <strong>Google Colab</strong>, a free, cloud-based notebook environment.</p>
+<section id="part-1-what-is-a-notebook-the-analysts-lab-notebook" class="level4" data-number="3.0.1">
+<h4 data-number="3.0.1" class="anchored" data-anchor-id="part-1-what-is-a-notebook-the-analysts-lab-notebook"><span class="header-section-number">3.0.1</span> <strong>Part 1: What is a Notebook? The Analyst’s Lab Notebook</strong></h4>
+<p>Think of a Google Colab notebook as a digital lab notebook for a data analyst. It’s a single, interactive document where you can combine everything related to your analysis in one place:</p>
+<ul>
+<li><strong>Your notes and narrative:</strong> Explanations of your goals, methods, and findings.</li>
+<li><strong>Your live, runnable code:</strong> The actual Python code you use to perform the analysis.</li>
+<li><strong>Your results:</strong> The outputs from your code, including tables, statistics, and data visualizations.</li>
+</ul>
+<p>This is the professional standard for data analysis because it makes your work transparent and reproducible. Anyone can open your notebook, read your thought process, run your code, and get the exact same results.</p>
+<p><strong>Getting Started:</strong></p>
+<ul>
+<li>Navigate to <a href="http://colab.research.google.com/"><strong>colab.research.google.com</strong></a>.</li>
+<li>Sign in with your Google account.</li>
+<li>An “Open notebook” dialog box will appear. This box allows you to open recent files, upload a notebook, or create a new one. For now, you can simply click the <strong>“New notebook”</strong> link at the bottom of this box to get started.</li>
+<li>If you have already closed that box, you can always create a new notebook by going to the <strong>File</strong> menu in the top-left corner and selecting <strong>New notebook</strong>.</li>
+</ul>
+</section>
+<section id="part-2-the-two-building-blocks---code-cells-and-text-cells" class="level4" data-number="3.0.2">
+<h4 data-number="3.0.2" class="anchored" data-anchor-id="part-2-the-two-building-blocks---code-cells-and-text-cells"><span class="header-section-number">3.0.2</span> <strong>Part 2: The Two Building Blocks - Code Cells and Text Cells</strong></h4>
+<p>A notebook is built from two fundamental types of cells. You can add new cells using the <strong>“+ Code”</strong> and <strong>“+ Text”</strong> buttons at the top of the page.</p>
+<p><strong>1. Code Cells</strong> This is where you write and run your Python code.</p>
+<ul>
+<li><strong>Appearance:</strong> A code cell has a light gray background and a “play” button (▶️) to its left.</li>
+<li><strong>Action:</strong> Type a simple line of Python code into the cell, like <code>print("Hello, World!")</code>.</li>
+<li><strong>Execution:</strong> Click the play button. The code will run on Google’s servers, and the output (<code>Hello, World!</code>) will appear directly below the cell.</li>
+</ul>
+<p><strong>2. Text Cells (Markdown)</strong> This is where you write your narrative, add headings, and explain your work. Text cells use a simple formatting language called <strong>Markdown</strong>.</p>
+<ul>
+<li><strong>Action:</strong> Click the <strong>“+ Text”</strong> button to add a text cell. You will see a split view: the left side is the editor where you type your Markdown, and the right side shows a live preview of the rendered text.</li>
+<li><strong>Formatting with Markdown (The Basics):</strong>
+<ul>
+<li>To create a large heading, start a line with a single hashtag (<code>#</code>). Example: <code># My Analysis Title</code></li>
+<li>To create a smaller subheading, use more hashtags. Example: <code>## Step 1: Data Cleaning</code></li>
+<li>To create a bulleted list, start each line with an asterisk (<code>*</code>). Example: <code>* First item</code></li>
+</ul></li>
+<li><strong>Viewing and Editing:</strong> When you click out of a text cell, it will show the final, beautifully rendered text. To edit it again, simply <strong>double-click</strong> on the text, and the split-screen editor will reappear.</li>
+</ul>
+</section>
+<section id="part-3-the-analysts-workflow-in-a-notebook" class="level4" data-number="3.0.3">
+<h4 data-number="3.0.3" class="anchored" data-anchor-id="part-3-the-analysts-workflow-in-a-notebook"><span class="header-section-number">3.0.3</span> <strong>Part 3: The Analyst’s Workflow in a Notebook</strong></h4>
+<p>A professional analysis notebook tells a story. The best practice is to alternate between text and code cells to guide your reader through your work.</p>
+<ul>
+<li><strong>Start with a Text Cell:</strong> Add a text cell at the top and use Markdown to give your analysis a title and a brief introduction explaining your goal.</li>
+<li><strong>Add a Code Cell:</strong> Below your introduction, add a code cell to perform the first step of your analysis (e.g., loading the data).</li>
+<li><strong>Add another Text Cell:</strong> Below the code’s output, add another text cell to explain the results or introduce the next step.</li>
+</ul>
+<p>By following this simple pattern, you can create a clean, easy-to-follow report that combines your narrative and your code in a single, powerful document. In the next segment, we will combine everything we’ve learned to demonstrate the full workflow, from AI chatbot to a finished notebook.</p>
+</section>
+</section>
+<section id="the-full-workflow---from-ai-chatbot-to-notebook" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="the-full-workflow---from-ai-chatbot-to-notebook"><span class="header-section-number">4</span> The Full Workflow - From AI Chatbot to Notebook</h2>
+<p><strong>Objective:</strong> In this segment, we will put everything together. You will see a complete, end-to-end demonstration of the AI-augmented workflow, moving from an initial question in an AI chatbot to a final, reproducible analysis in a notebook. This is the exact workflow you will use to complete your final project.</p>
+<section id="part-1-the-exploratory-dialogue-in-the-ai-chatbot" class="level4" data-number="4.0.1">
+<h4 data-number="4.0.1" class="anchored" data-anchor-id="part-1-the-exploratory-dialogue-in-the-ai-chatbot"><span class="header-section-number">4.0.1</span> <strong>Part 1: The Exploratory Dialogue (in the AI Chatbot)</strong></h4>
+<p>Our workflow begins with a conversation. The goal here is not to produce a final report, but to explore the data, test ideas, and generate the initial code.</p>
+<ul>
+<li><p><strong>Start in your AI Chatbot</strong> (e.g., Google Gemini) with the <code>Superstore.xlsx</code> file uploaded.</p></li>
+<li><p><strong>Use a Powerful Initial Prompt:</strong> Let’s use a task that should be familiar from your Module 1 homework. We will ask the AI to calculate the return rate by region.</p>
+<blockquote class="blockquote">
+<p>Act as a business data analyst. Using the <code>Orders</code> and <code>Returns</code> sheets from the attached <code>Superstore.xlsx</code> file, perform the following steps:</p>
+</blockquote>
+<ul>
+<li><blockquote class="blockquote">
+<p>Clean the <code>Returns</code> data by removing duplicate Order IDs.</p>
+</blockquote></li>
+<li><blockquote class="blockquote">
+<p>Merge the cleaned <code>Returns</code> data with the <code>Orders</code> data to identify which orders were returned.</p>
+</blockquote></li>
+<li><blockquote class="blockquote">
+<p>Calculate the return rate for each <code>Region</code>.</p>
+</blockquote></li>
+<li><blockquote class="blockquote">
+<p>Present the final return rates in a simple markdown table.</p>
+</blockquote></li>
+</ul></li>
+<li><p><strong>Critically Evaluate the AI’s Methodology:</strong> The AI will likely give you the correct answer, but it may have made an intelligent assumption without telling you. For example, it might have correctly used the count of <strong>unique <code>Order ID</code>s</strong> for the total number of sales, rather than the total number of rows (since one order can have multiple rows). A good analyst must make this transparent. This is a perfect time to use a <strong>“Challenge &amp; Refine”</strong> follow-up prompt.</p>
+<ul>
+<li><strong>Follow-up Prompt to Verify Methodology:</strong> &gt; “This looks correct, but to ensure I understand your work, please explain exactly how you calculated the denominator (the total number of sales) for the return rate. Did you use the total row count from the Orders sheet, or the count of unique Order IDs? Explain why you chose that method.” This step is crucial. It forces the AI to reveal its logic, making your analysis transparent and confirming that the business logic is sound.</li>
+</ul></li>
+</ul>
+</section>
+<section id="part-2-the-hand-off---from-dialogue-to-code" class="level4" data-number="4.0.2">
+<h4 data-number="4.0.2" class="anchored" data-anchor-id="part-2-the-hand-off---from-dialogue-to-code"><span class="header-section-number">4.0.2</span> <strong>Part 2: The Hand-off - From Dialogue to Code</strong></h4>
+<p>Once your exploratory dialogue has produced a correct and well-understood analysis, it’s time to make it reproducible.</p>
+<ul>
+<li><p><strong>Ask for the Code:</strong> The final step in your AI dialogue is to ask for the complete, clean code that produced the final result.</p>
+<blockquote class="blockquote">
+<p>This is perfect. Now, show me the complete, single block of Python code you used to perform this entire analysis, from loading the files to calculating the final return rates based on unique Order IDs.</p>
+</blockquote></li>
+<li><p><strong>Copy the Code:</strong> The AI will generate a block of Python code. Copy this entire block to your clipboard.</p></li>
+</ul>
+</section>
+<section id="part-3-the-formal-report-in-the-notebook" class="level4" data-number="4.0.3">
+<h4 data-number="4.0.3" class="anchored" data-anchor-id="part-3-the-formal-report-in-the-notebook"><span class="header-section-number">4.0.3</span> <strong>Part 3: The Formal Report (in the Notebook)</strong></h4>
+<p>Now, we move from the exploratory environment of the chatbot to the formal, professional environment of a notebook (e.g., Google Colab).</p>
+<ul>
+<li><strong>Create a New Notebook:</strong> Open Google Colab and create a new notebook. Give it a descriptive name like “Return Rate Analysis”.</li>
+<li><strong>Start with a Narrative:</strong> The first step in a professional report is to explain what you are doing.
+<ul>
+<li><p>Add a <strong>Text (Markdown) cell</strong> at the top.</p></li>
+<li><p>Write a clear title and a brief introduction. For example:</p>
+<p># Analysis of Return Rates by Region This analysis investigates the product return rates across different sales regions for the Global Superstore. The goal is to identify which region has the highest rate of returns.</p></li>
+</ul></li>
+<li><strong>Upload Your Data to the Notebook:</strong> Your notebook needs access to the data file.
+<ul>
+<li>On the left side of your Colab screen, click the <strong>folder icon</strong> to open the file browser.</li>
+<li>Click the <strong>“Upload to session storage”</strong> button (it looks like a page with an arrow pointing up).</li>
+<li>Select the <code>Superstore.xlsx</code> file from your computer. You will see it appear in the file browser.</li>
+</ul></li>
+<li><strong>Build Your Analysis Step-by-Step:</strong>
+<ul>
+<li>Instead of pasting the entire script into one cell, it is a best practice to break it into logical chunks in separate code cells. This makes your analysis easier to read, document, and debug.</li>
+<li><strong>Step 1: Imports and Data Loading:</strong> In the first code cell, paste only the lines for importing libraries and loading the data. Run it to make sure the data loads correctly.</li>
+<li><strong>Step 2: Document Your Process:</strong> In a new <strong>text cell</strong>, explain the next step. For example: <em>“Now that the data is loaded, the next step is to clean the <code>Returns</code> data by removing any duplicate Order IDs.”</em></li>
+<li><strong>Step 3: Add More Code:</strong> In a new <strong>code cell</strong>, paste the line of code that performs the data cleaning. Run it.</li>
+<li><strong>Continue this pattern:</strong> Continue breaking the AI-generated script into logical steps. After each code cell, you should add a text cell to explain what you did, interpret the results, or introduce the next step in your analysis. This creates a clear, professional narrative.</li>
+</ul></li>
+<li><strong>Troubleshooting and Debugging:</strong>
+<ul>
+<li><strong>What if you get an error?</strong> This is a normal part of the process! By breaking the code into cells, you know exactly which step failed.</li>
+<li><strong>The Debugging Workflow:</strong> If a cell produces an error, copy both the code from that cell and the full error message. Paste them back into your AI chatbot and ask: <em>“I ran this code and got the following error. Can you explain what went wrong and help me fix it?”</em> This teaches you to use the AI not just for creating code, but for fixing it as well.</li>
+</ul></li>
+</ul>
+<p><strong>Key Takeaway:</strong> You have now successfully completed the full AI-augmented workflow. You used the AI chatbot for its speed and brainstorming capabilities, but you used your own critical thinking to verify its methods. You then used the notebook to create a final, documented, and reproducible report, applying debugging skills to ensure the code works perfectly. This process—<strong>Dialogue → Verification → Code → Debug → Documented Notebook</strong>—is a powerful and professional way to conduct data analysis!</p>
+<hr>
+</section>
+</section>
+<section id="appendix-data-and-course-resources" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="appendix-data-and-course-resources"><span class="header-section-number">5</span> Appendix: Data and Course Resources</h2>
+<section id="sample-data" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="sample-data"><span class="header-section-number">5.1</span> Sample Data</h3>
+<p>The tutorial uses the <strong>Superstore dataset</strong>, a sample dataset commonly used for learning data analysis:</p>
+<p><strong>📊 <a href="Superstore.xlsx">Download Superstore.xlsx</a></strong> - Sample retail dataset for practice</p>
+<p><strong>Citation:</strong> Tableau Software. (2021). Sample - Superstore.xls. Retrieved from https://www.tableau.com</p>
+</section>
+<section id="data-dictionary" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="data-dictionary"><span class="header-section-number">5.2</span> Data Dictionary</h3>
+<table class="caption-top table">
+<caption>Complete field descriptions for the Superstore dataset used in this tutorial.</caption>
+<colgroup>
+<col style="width: 38%">
+<col style="width: 19%">
+<col style="width: 41%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Field Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Order ID</td>
+<td>Categorical</td>
+<td>Unique identifier for each customer order (e.g., CA-2016-152156)</td>
+</tr>
+<tr class="even">
+<td>Order Date</td>
+<td>Categorical</td>
+<td>Calendar date the order was placed</td>
+</tr>
+<tr class="odd">
+<td>Ship Mode</td>
+<td>Categorical</td>
+<td>Shipping method (e.g., First Class, Standard Class)</td>
+</tr>
+<tr class="even">
+<td>Customer ID</td>
+<td>Categorical</td>
+<td>Unique ID for each customer</td>
+</tr>
+<tr class="odd">
+<td>Customer Name</td>
+<td>Categorical</td>
+<td>Full name of the customer</td>
+</tr>
+<tr class="even">
+<td>Segment</td>
+<td>Categorical</td>
+<td>Market segment: Consumer, Corporate, or Home Office</td>
+</tr>
+<tr class="odd">
+<td>City</td>
+<td>Categorical</td>
+<td>City where the order was delivered</td>
+</tr>
+<tr class="even">
+<td>State</td>
+<td>Categorical</td>
+<td>U.S. state of delivery</td>
+</tr>
+<tr class="odd">
+<td>Region</td>
+<td>Categorical</td>
+<td>One of four U.S. regions: East, West, Central, South</td>
+</tr>
+<tr class="even">
+<td>Category</td>
+<td>Categorical</td>
+<td>Main product category: Furniture, Office Supplies, Technology</td>
+</tr>
+<tr class="odd">
+<td>Sub-Category</td>
+<td>Categorical</td>
+<td>More specific product type (e.g., Binders, Phones)</td>
+</tr>
+<tr class="even">
+<td>Product Name</td>
+<td>Categorical</td>
+<td>Full name of the product</td>
+</tr>
+<tr class="odd">
+<td>Sales</td>
+<td>Numerical (Continuous)</td>
+<td>Total sales amount for the line item</td>
+</tr>
+<tr class="even">
+<td>Quantity</td>
+<td>Numerical (Continuous)</td>
+<td>Number of units sold</td>
+</tr>
+<tr class="odd">
+<td>Discount</td>
+<td>Numerical (Continuous)</td>
+<td>Discount applied to the line item (0 to 1)</td>
+</tr>
+<tr class="even">
+<td>Profit</td>
+<td>Numerical (Continuous)</td>
+<td>Profit earned on the line item (can be negative)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="course-structure-overview" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="course-structure-overview"><span class="header-section-number">5.3</span> Course Structure Overview</h3>
+<table class="caption-top table">
+<caption>Course structure showing the progression from basic Excel skills to advanced data manipulation techniques.</caption>
+<colgroup>
+<col style="width: 18%">
+<col style="width: 12%">
+<col style="width: 36%">
+<col style="width: 32%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Segment</th>
+<th>Time</th>
+<th>What Students Do</th>
+<th>Why It Matters</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>1. Excel Setup &amp; Basics</strong></td>
+<td>10 min</td>
+<td>Navigate ribbon, format as Table, use Sort &amp; Filter</td>
+<td>Lowers tech friction &amp; enables basic data exploration</td>
+</tr>
+<tr class="even">
+<td><strong>2. Data Cleaning</strong></td>
+<td>10 min</td>
+<td>Identify <strong>missing values</strong> (blanks), remove duplicates</td>
+<td>Ensures data integrity</td>
+</tr>
+<tr class="odd">
+<td><strong>3. Exploring Relationships</strong></td>
+<td>15 min</td>
+<td>Create a <strong>Scatter Plot</strong> to investigate Sales vs.&nbsp;Profit</td>
+<td>Checks for correlation between two numeric variables</td>
+</tr>
+<tr class="even">
+<td><strong>4. Numeric Summaries</strong></td>
+<td>10 min</td>
+<td>Compute descriptive stats (Mean, Median, SD)</td>
+<td>Builds numeracy with foundational metrics</td>
+</tr>
+<tr class="odd">
+<td><strong>5. Visualizing Distributions</strong></td>
+<td>10 min</td>
+<td>Create a <strong>Histogram &amp; Box Plot</strong> to see data shape</td>
+<td>To visually understand a variable’s shape, central tendency, and outliers</td>
+</tr>
+<tr class="even">
+<td><strong>6. Aggregating Data</strong></td>
+<td>15 min</td>
+<td>Build a <strong>PivotTable</strong> to summarize sales by category</td>
+<td>The most powerful tool for data aggregation</td>
+</tr>
+<tr class="odd">
+<td><strong>7. Visualizing Aggregates</strong></td>
+<td>10 min</td>
+<td>Create a <strong>Bar/Column Chart</strong> from the PivotTable</td>
+<td>The most common way to visually compare summarized categories</td>
+</tr>
+<tr class="even">
+<td><strong>8. Enriching Data</strong></td>
+<td>10 min</td>
+<td>Use <strong>XLOOKUP</strong> to merge data from another sheet</td>
+<td>A fundamental skill for combining data sources</td>
+</tr>
+</tbody>
+</table>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/jiang-li\.github\.io");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Dr.&nbsp;Jiang Li | Franklin University</p>
+</div>   
+    <div class="nav-footer-center">
+<p><a href="mailto:jiang.li2@franklin.edu">📧 jiang.li2@franklin.edu</a> | <a href="https://outlook.office.com/bookwithme/user/1b87d6117e28448bbaa0cb30b44c1f47@franklin.edu?anonymous&amp;ep=bwmEmailSignature">📅 Book Meeting</a></p>
+</div>
+    <div class="nav-footer-right">
+<p>© 2025 July | Powered by <a href="https://quarto.org">Quarto</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

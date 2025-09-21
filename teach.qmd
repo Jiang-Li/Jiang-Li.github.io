@@ -10,12 +10,17 @@ format:
 
 ***
 
+### AI-Augmented Analytics Workflow 🤖
+
+**📋 [Practical AI Workflow Guide](teach/ai-workflow/)** - Step-by-step methodology for integrating AI tools into analytical practice
+
+***
+
 ### Analytics Teaching Hub
 
 [Franklin Analytics Teaching Hub](https://franklinu-my.sharepoint.com/:o:/g/personal/jiang_li2_franklin_edu/EtAx9PJlPq5BgCQ5XtIBV68BFMXf8d5VGp7r8wUbh9NGfA?e=dDlnJK) is a collection of documents to assist instructors in teaching, including teaching management and FAQs about EdStem. The access requires a Franklin account.
 
 ***
-
 
 ### On-Campus Course Schedule
 

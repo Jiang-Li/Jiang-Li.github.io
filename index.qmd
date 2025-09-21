@@ -30,21 +30,6 @@ Currently, my research focuses on **[Learning Analytics](https://en.wikipedia.or
 
 ::: {.container .content-section}
 
-## Professional Background
-
-**🎓 Current Academic Role**
-- Program Chair: M.S. Business Analytics & B.S. Analytics 
-- Lead Faculty: M.S. Data Analytics
-
-**🏢 Industry Experience**
-- Data Scientist in Insurance Industry
-- Real-world analytics modeling and implementation
-- Expertise in Excel, SQL, Python, R, and Tableau
-
-**🔬 Research Foundation**
-- Physics research at Ohio State University
-- Published in Nature journal
-- Current focus: Learning Analytics and educational data science
 
 ## Teaching Philosophy
 
