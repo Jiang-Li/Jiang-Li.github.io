@@ -1,5 +1,5 @@
 ---
-title: "A Practical AI-Augmented Analyst Workflow"
+title: "A Practical AI-Augmented Analytics Workflow"
 format:
   html:
     toc: true
