@@ -10,9 +10,9 @@ format:
 
 ***
 
-### AI-Augmented Analytics Workflow 🤖
+### AI-Augmented Analytics Guide 🤖
 
-**📋 [Practical AI Workflow Guide](teach/ai-workflow/)** - Step-by-step methodology for integrating AI tools into analytical practice
+**📋 [Guide](teach/ai-workflow/)** - Step-by-step methodology for integrating AI tools into analytical practice
 
 ***
 

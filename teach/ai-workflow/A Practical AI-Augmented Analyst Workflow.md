@@ -1,4 +1,4 @@
-# A Practical AI-Augmented Analyst Workflow
+# A AI-Augmented Analytics Guide
 
 ## Segment 1: How to Direct Your AI Analyst - The Art of the Prompt
 
