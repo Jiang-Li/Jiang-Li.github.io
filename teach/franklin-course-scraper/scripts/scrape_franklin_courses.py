@@ -133,8 +133,9 @@ class FranklinCourseScraper:
             with open(filename, 'r', encoding='utf-8') as f:
                 content = f.read()
             
-            # Parse configuration
-            config_match = re.search(r'## Current Configuration\s*```\n(.*?)\n```', content, re.DOTALL)
+            # Parse configuration - match text between ## Current Configuration and closing ```
+            # Skip past the Example section by looking for the configuration that comes AFTER it
+            config_match = re.search(r'## Current Configuration\s*\n\s*```[^\n]*\n(.*?)\n```', content, re.DOTALL)
             if not config_match:
                 return CourseRequest("", [("DATA 610", False)])
             
