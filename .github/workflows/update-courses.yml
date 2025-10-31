@@ -84,7 +84,7 @@ jobs:
         echo "🎯 Franklin Course Report Update - Starting Data Collection"
         echo "============================================================"
         cd teach/franklin-course-scraper
-        timeout 300 python scripts/scrape_franklin_courses.py || echo "⚠️ Course scraping failed or timed out, continuing with existing data..."
+        python scripts/scrape_franklin_courses.py || echo "⚠️ Course scraping failed, continuing with existing data..."
         
         # Check if fresh data was created
         if [ -f "data/franklin_courses.csv" ]; then
@@ -121,13 +121,16 @@ jobs:
         echo "📄 Verifying CSV file exists with fresh data:"
         ls -lh teach/franklin-course-scraper/data/franklin_courses.csv || echo "⚠️ CSV not found!"
         if [ -f "teach/franklin-course-scraper/data/franklin_courses.csv" ]; then
-          echo "📊 CSV timestamp:"
-          tail -1 teach/franklin-course-scraper/data/franklin_courses.csv | cut -d',' -f17 || echo "Could not read timestamp"
+          echo "📊 CSV info:"
+          echo "  - File size: $(du -h teach/franklin-course-scraper/data/franklin_courses.csv | cut -f1)"
+          echo "  - Row count: $(($(wc -l < teach/franklin-course-scraper/data/franklin_courses.csv) - 1))"
+          echo "  - Last timestamp: $(tail -1 teach/franklin-course-scraper/data/franklin_courses.csv | cut -d',' -f17 || echo 'N/A')"
         fi
-        quarto render teach/course-schedule.qmd
+        echo "🔄 Rendering course schedule (path detection will find CSV automatically)..."
+        quarto render teach/course-schedule.qmd || (echo "❌ Render failed!" && exit 1)
         echo "✅ Course schedule rendered successfully"
         echo "📊 Verifying output:"
-        ls -lh _site/teach/course-schedule.html || echo "⚠️ Output file not found!"
+        ls -lh _site/teach/course-schedule.html || (echo "⚠️ Output file not found!" && exit 1)
 
     - name: Render full website (if needed)
       if: steps.check-rebuild.outputs.rebuild == 'true'
