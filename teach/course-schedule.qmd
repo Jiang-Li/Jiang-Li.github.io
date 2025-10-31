@@ -1,5 +1,5 @@
 ---
-title: "On-campus Course Schedule - Fall 2025"
+title: "On-campus Course Schedule - Spring 2026"
 date-format: none
 format:
   html:
@@ -252,7 +252,7 @@ if os.path.exists(data_path):
     
     # Count total requested courses from course_request.md (not just successfully scraped)
     try:
-        # Read the course request file to get total requested courses
+        # Read the course request file to get total requested courses across all terms
         import re
         course_request_path = 'teach/franklin-course-scraper/course_request.md'
         
@@ -262,6 +262,8 @@ if os.path.exists(data_path):
         # Extract courses from the markdown file
         # Look for the course list section
         course_section = re.search(r'```\s*Term:\s*Fall\s*2025(.*?)```', content, re.DOTALL)
+        if not course_section:
+            course_section = re.search(r'```\s*Term:\s*Spring\s*2026(.*?)```', content, re.DOTALL)
         if course_section:
             course_text = course_section.group(1)
             # Count lines that look like course codes (with or without asterisk)
@@ -269,16 +271,13 @@ if os.path.exists(data_path):
                           if line.strip() and not line.strip().startswith('#') 
                           and not line.strip().startswith('Term:')]
             total_requested_courses = len(course_lines)
-        else:
-            # Fallback to counting from successfully scraped data
-            total_requested_courses = df['Course_Code_Clean'].nunique()
     except:
         # Fallback to counting from successfully scraped data if file reading fails
-        total_requested_courses = df['Course_Code_Clean'].nunique()
+        total_requested_courses = df['Course_Code_Clean'].nunique() if len(df) > 0 else 0
     
     total_courses = total_requested_courses
-    total_enrolled = df['Enrolled_Seats'].sum()
-    total_capacity = df['Total_Seats'].sum()
+    total_enrolled = df['Enrolled_Seats'].sum() if len(df) > 0 else 0
+    total_capacity = df['Total_Seats'].sum() if len(df) > 0 else 0
     
     # Format the datetime - now saved directly in EST from scraper
     if len(df) > 0:

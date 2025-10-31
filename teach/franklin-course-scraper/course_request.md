@@ -8,6 +8,7 @@ Specify **one term** and a **list of courses** for that term. Add an asterisk (*
 
 Example:
 ```
+Term: Fall 2025
 *DATA 630   # This is a first term course
 COMP 611    # This is not a first term course
 ```
@@ -15,7 +16,7 @@ COMP 611    # This is not a first term course
 ## Current Configuration
 
 ```
-Term: Fall 2025
+Term: Spring 2026
 *PF 521
 DATA 610
 *DATA 630
