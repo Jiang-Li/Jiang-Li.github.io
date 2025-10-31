@@ -22,7 +22,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
+from webdriver_manager.chrome import ChromeDriverManager
 from bs4 import BeautifulSoup
 from pathlib import Path
 import pandas as pd
@@ -103,7 +105,9 @@ class FranklinCourseScraper:
         chrome_options.add_argument("--user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
         
         try:
-            self.driver = webdriver.Chrome(options=chrome_options)
+            # Use webdriver-manager to automatically download and manage ChromeDriver
+            service = Service(ChromeDriverManager().install())
+            self.driver = webdriver.Chrome(service=service, options=chrome_options)
             if self.headless:
                 # Hide automation markers
                 self.driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
