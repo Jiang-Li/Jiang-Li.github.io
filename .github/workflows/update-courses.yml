@@ -112,6 +112,23 @@ jobs:
           echo "🔄 Push/Manual run: Full site rebuild"
         fi
 
+    # Always render course schedule if scraping occurred (to use fresh data)
+    - name: Render course schedule (after scraping)
+      if: steps.changes.outputs.scrape == 'true'
+      run: |
+        echo "📊 Rendering course schedule with fresh scraped data..."
+        echo "📁 Current directory: $(pwd)"
+        echo "📄 Verifying CSV file exists with fresh data:"
+        ls -lh teach/franklin-course-scraper/data/franklin_courses.csv || echo "⚠️ CSV not found!"
+        if [ -f "teach/franklin-course-scraper/data/franklin_courses.csv" ]; then
+          echo "📊 CSV timestamp:"
+          tail -1 teach/franklin-course-scraper/data/franklin_courses.csv | cut -d',' -f17 || echo "Could not read timestamp"
+        fi
+        quarto render teach/course-schedule.qmd
+        echo "✅ Course schedule rendered successfully"
+        echo "📊 Verifying output:"
+        ls -lh _site/teach/course-schedule.html || echo "⚠️ Output file not found!"
+
     - name: Render full website (if needed)
       if: steps.check-rebuild.outputs.rebuild == 'true'
       run: |
@@ -119,26 +136,22 @@ jobs:
         quarto render
         echo "✅ Full website rendered successfully"
 
-    # For scheduled runs: explicitly render course schedule after scraper updates
-    - name: Render course schedule (scheduled runs)
-      if: steps.check-rebuild.outputs.rebuild == 'false' && steps.changes.outputs.scrape == 'true'
-      run: |
-        echo "📊 Rendering course schedule with fresh data..."
-        quarto render teach/course-schedule.qmd
-        echo "✅ Course schedule rendered successfully"
-
     - name: Ensure site directory exists
       run: |
-        # For scheduled runs that didn't rebuild, ensure we have the course schedule rendered
-        if [ "${{ github.event_name }}" = "schedule" ] && [ "${{ steps.changes.outputs.scrape }}" = "true" ]; then
-          echo "📊 Verifying course schedule was rendered..."
-          if [ ! -f "_site/teach/course-schedule.html" ]; then
-            echo "⚠️ Course schedule not found, rendering now..."
+        # If we scraped but didn't rebuild, we already rendered course schedule
+        # Just ensure _site directory exists
+        if [ "${{ steps.changes.outputs.scrape }}" = "true" ] && [ "${{ steps.check-rebuild.outputs.rebuild }}" = "false" ]; then
+          echo "📊 Scheduled run: Course schedule already rendered, verifying _site..."
+          if [ ! -d "_site" ]; then
+            echo "⚠️ _site directory missing, rendering course schedule..."
             quarto render teach/course-schedule.qmd
           fi
+        elif [ "${{ steps.check-rebuild.outputs.rebuild }}" = "false" ]; then
+          echo "🌐 No scraping and no rebuild: Rendering full site..."
+          quarto render
+        else
+          echo "✅ Site directory should already exist from previous steps"
         fi
-        # Quarto render always creates _site directory
-        quarto render
 
     - name: Setup Pages
       uses: actions/configure-pages@v4
