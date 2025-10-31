@@ -210,11 +210,21 @@ import pytz
 import os
 
 # Read data from the Franklin course scraper project
-# Path is relative to repo root (where Quarto runs in GitHub Actions)
-data_path = "teach/franklin-course-scraper/data/franklin_courses.csv"
+# Try multiple paths to work from both repo root (GitHub Actions) and teach/ directory (local)
+data_paths = [
+    "teach/franklin-course-scraper/data/franklin_courses.csv",  # From repo root (GitHub Actions)
+    "franklin-course-scraper/data/franklin_courses.csv",        # From teach/ directory (local)
+    "../franklin-course-scraper/data/franklin_courses.csv"      # Alternative relative path
+]
+
+data_path = None
+for path in data_paths:
+    if os.path.exists(path):
+        data_path = path
+        break
 
 # Force refresh - updated Jul 15, 2025
-if os.path.exists(data_path):
+if data_path and os.path.exists(data_path):
     df = pd.read_csv(data_path)
     
     # Clean and prepare data
