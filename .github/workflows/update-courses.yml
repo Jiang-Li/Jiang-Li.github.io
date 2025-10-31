@@ -119,8 +119,24 @@ jobs:
         quarto render
         echo "✅ Full website rendered successfully"
 
+    # For scheduled runs: explicitly render course schedule after scraper updates
+    - name: Render course schedule (scheduled runs)
+      if: steps.check-rebuild.outputs.rebuild == 'false' && steps.changes.outputs.scrape == 'true'
+      run: |
+        echo "📊 Rendering course schedule with fresh data..."
+        quarto render teach/course-schedule.qmd
+        echo "✅ Course schedule rendered successfully"
+
     - name: Ensure site directory exists
       run: |
+        # For scheduled runs that didn't rebuild, ensure we have the course schedule rendered
+        if [ "${{ github.event_name }}" = "schedule" ] && [ "${{ steps.changes.outputs.scrape }}" = "true" ]; then
+          echo "📊 Verifying course schedule was rendered..."
+          if [ ! -f "_site/teach/course-schedule.html" ]; then
+            echo "⚠️ Course schedule not found, rendering now..."
+            quarto render teach/course-schedule.qmd
+          fi
+        fi
         # Quarto render always creates _site directory
         quarto render
 
