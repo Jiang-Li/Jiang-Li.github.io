@@ -1,5 +1,5 @@
 ---
-title: "On-campus Course Schedule - Spring 2026"
+title: "On-campus Course Schedule - Fall 2025"
 date-format: none
 format:
   html:
