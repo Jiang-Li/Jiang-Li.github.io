@@ -16,7 +16,7 @@ COMP 611    # This is not a first term course
 ## Current Configuration
 
 ```
-Term: Fall 2025
+Term: Spring 2026
 *PF 521
 DATA 610
 *DATA 630
@@ -25,7 +25,7 @@ BUSA 603
 BUSA 695
 *COMP 511
 COMP 620
-COMP 630
+*COMP 630
 COMP 691
 *COMP 611
 ITEC 640
