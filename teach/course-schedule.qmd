@@ -1,5 +1,5 @@
 ---
-title: "On-campus Course Schedule - Fall 2025"
+title: "On-campus Course Schedule - Spring 2026"
 date-format: none
 format:
   html:
@@ -271,10 +271,10 @@ if data_path and os.path.exists(data_path):
             content = f.read()
         
         # Extract courses from the markdown file
-        # Look for the course list section
-        course_section = re.search(r'```\s*Term:\s*Fall\s*2025(.*?)```', content, re.DOTALL)
+        # Look for the course list section (check Spring 2026 first, then Fall 2025 as fallback)
+        course_section = re.search(r'```\s*Term:\s*Spring\s*2026(.*?)```', content, re.DOTALL)
         if not course_section:
-            course_section = re.search(r'```\s*Term:\s*Spring\s*2026(.*?)```', content, re.DOTALL)
+            course_section = re.search(r'```\s*Term:\s*Fall\s*2025(.*?)```', content, re.DOTALL)
         if course_section:
             course_text = course_section.group(1)
             # Count lines that look like course codes (with or without asterisk)

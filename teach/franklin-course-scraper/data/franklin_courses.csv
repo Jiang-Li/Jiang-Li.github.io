@@ -1,15 +1,12 @@
 Course_Code,Session_Code,Course_Name,Credits,Term,Enrolled_Seats,Total_Seats,Waitlist,Weekdays,Class_Times,Locations,Instructors,Teaching_Mode,Start_Date,End_Date,First_Term,Scraped_DateTime
-PF-521*Advanced,PF*521-F1FF; PF*521-F2FF; PF*521-F3FF; PF*521-F4FF; PF*521-F5FF,PF-521 Advanced Learning Strategies,0,Spring 2026,1,100,0,TBD,TBD,"Downtown,TBDFace-To-Face",TBD,Face-to-Face,2/16/2026,3/28/2026,Yes,2025-10-30T20:41:04.931894-05:00
-DATA-610*Big,DATA*610-Q1FF,DATA-610 Big Data Analytics/Data Mining,4,Spring 2026,6,22,0,TBD,TBD,"Downtown,TBDFace-To-Face",TBD,Face-to-Face,2/16/2026,5/9/2026,No,2025-10-30T20:41:04.931894-05:00
-DATA-630*Applied,DATA*630-Q1FF; DATA*630-Q2FF,DATA-630 Applied Database Management,4,Spring 2026,2,44,0,TBD,TBD,"Downtown,TBDFace-To-Face",TBD,Face-to-Face,2/16/2026,5/9/2026,Yes,2025-10-30T20:41:04.931894-05:00
-MATH-601*Introduction,MATH*601-Q1FF,MATH-601 Introduction to Analytics,4,Spring 2026,6,22,0,TBD,TBD,"Downtown,TBDHybrid - Face to Face",TBD,Hybrid,2/16/2026,5/9/2026,Yes,2025-10-30T20:41:04.931894-05:00
-BUSA-603*Marketing,BUSA*603-F1FF,BUSA-603 Marketing Mgmt & Analytics,4,Spring 2026,0,22,0,TBD,TBD,"Downtown,TBDFace-To-Face",TBD,Face-to-Face,2/16/2026,3/28/2026,No,2025-10-30T20:41:04.931894-05:00
-BUSA-695*Capstone,BUSA*695-H1FF,BUSA-695 Capstone in Business Analytics,4,Spring 2026,5,22,0,TBD,TBD,"Downtown,TBDFace-To-Face",TBD,Face-to-Face,3/30/2026,5/9/2026,No,2025-10-30T20:41:04.931894-05:00
-COMP-511*Foundation,COMP*511-U1FF,COMP-511 Foundation Data Struc & Obj Or,4,Spring 2026,4,22,0,TBD,TBD,"Downtown,TBDHybrid - Face to Face",TBD,Hybrid,1/5/2026,3/28/2026,Yes,2025-10-30T20:41:04.931894-05:00
-COMP-620*Analysis,COMP*620-R1FF,COMP-620 Analysis of Algorithms,4,Spring 2026,8,22,0,Monday,6:00 PM - 9:40 PM,Frasch Hall 412,TBD,Face-to-Face,1/26/2026,4/18/2026,No,2025-10-30T20:41:04.931894-05:00
-COMP-630*Issues/Database,COMP*630-U1FF,COMP-630 Issues/Database Management,4,Spring 2026,3,22,0,TBD,TBD,"Downtown,TBDHybrid - Face to Face",TBD,Hybrid,1/5/2026,3/28/2026,Yes,2025-10-30T20:41:04.931894-05:00
-COMP-691*Capstone,COMP*691-Q1FF,COMP-691 Capstone,4,Spring 2026,2,22,0,TBD,TBD,"Downtown,TBDHybrid - Face to Face",TBD,Hybrid,2/16/2026,5/9/2026,No,2025-10-30T20:41:04.931894-05:00
-COMP-611*Adv,COMP*611-U1FF,COMP-611 Adv Data Structure and Program,4,Spring 2026,0,22,0,Wednesday,6:00 PM - 9:40 PM,"Downtown,TBDHybrid - Face to Face",TBD,Hybrid,1/5/2026,3/28/2026,Yes,2025-10-30T20:41:04.931894-05:00
-ITEC-640*Project,ITEC*640-Q1FF,ITEC-640 Project Management,4,Spring 2026,0,22,0,TBD,TBD,"Downtown,TBDFace-To-Face",TBD,Face-to-Face,2/16/2026,5/9/2026,No,2025-10-30T20:41:04.931894-05:00
-ITEC-660*Web,ITEC*660-Q1FF,ITEC-660 Web Development and Deployment,4,Spring 2026,1,22,0,TBD,TBD,"Downtown,TBDFace-To-Face",TBD,Face-to-Face,2/16/2026,5/9/2026,No,2025-10-30T20:41:04.931894-05:00
-ITEC-690*IT,ITEC*690-Q1FF,ITEC-690 IT Strategy and Policy,4,Spring 2026,1,22,0,TBD,TBD,"Downtown,TBDFace-To-Face",TBD,Face-to-Face,2/16/2026,5/9/2026,No,2025-10-30T20:41:04.931894-05:00
+PF-521*Advanced,PF*521-F1FF; PF*521-F2FF; PF*521-F3FF; PF*521-F4FF; PF*521-F5FF,PF-521 Advanced Learning Strategies,0,Spring 2026,1,100,0,TBD,TBD,"Downtown,TBDFace-To-Face",TBD,Face-to-Face,2/16/2026,3/28/2026,Yes,2025-11-03T08:27:15.409273-05:00
+DATA-610*Big,DATA*610-Q1FF,DATA-610 Big Data Analytics/Data Mining,4,Spring 2026,6,22,0,TBD,TBD,"Downtown,TBDFace-To-Face",TBD,Face-to-Face,2/16/2026,5/9/2026,No,2025-11-03T08:27:15.409273-05:00
+DATA-630*Applied,DATA*630-Q1FF; DATA*630-Q2FF,DATA-630 Applied Database Management,4,Spring 2026,2,44,0,TBD,TBD,"Downtown,TBDFace-To-Face",TBD,Face-to-Face,2/16/2026,5/9/2026,Yes,2025-11-03T08:27:15.409273-05:00
+MATH-601*Introduction,MATH*601-Q1FF,MATH-601 Introduction to Analytics,4,Spring 2026,6,22,0,TBD,TBD,"Downtown,TBDHybrid - Face to Face",TBD,Hybrid,2/16/2026,5/9/2026,Yes,2025-11-03T08:27:15.409273-05:00
+BUSA-603*Marketing,BUSA*603-F1FF,BUSA-603 Marketing Mgmt & Analytics,4,Spring 2026,0,22,0,TBD,TBD,"Downtown,TBDFace-To-Face",TBD,Face-to-Face,2/16/2026,3/28/2026,No,2025-11-03T08:27:15.409273-05:00
+BUSA-695*Capstone,BUSA*695-H1FF,BUSA-695 Capstone in Business Analytics,4,Spring 2026,5,22,0,TBD,TBD,"Downtown,TBDFace-To-Face",TBD,Face-to-Face,3/30/2026,5/9/2026,No,2025-11-03T08:27:15.409273-05:00
+COMP-620*Analysis,COMP*620-R1FF,COMP-620 Analysis of Algorithms,4,Spring 2026,9,22,0,Monday,6:00 PM - 9:40 PM,Frasch Hall 412,TBD,Face-to-Face,1/26/2026,4/18/2026,No,2025-11-03T08:27:15.409273-05:00
+COMP-691*Capstone,COMP*691-Q1FF,COMP-691 Capstone,4,Spring 2026,2,22,0,TBD,TBD,"Downtown,TBDHybrid - Face to Face",TBD,Hybrid,2/16/2026,5/9/2026,No,2025-11-03T08:27:15.409273-05:00
+ITEC-640*Project,ITEC*640-Q1FF,ITEC-640 Project Management,4,Spring 2026,0,22,0,TBD,TBD,TBD,TBD,Face-to-Face,2/16/2026,5/9/2026,No,2025-11-03T08:27:15.409273-05:00
+ITEC-660*Web,ITEC*660-Q1FF,ITEC-660 Web Development and Deployment,4,Spring 2026,1,22,0,TBD,TBD,"Downtown,TBDFace-To-Face",TBD,Face-to-Face,2/16/2026,5/9/2026,No,2025-11-03T08:27:15.409273-05:00
+ITEC-690*IT,ITEC*690-Q1FF,ITEC-690 IT Strategy and Policy,4,Spring 2026,1,22,0,TBD,TBD,"Downtown,TBDFace-To-Face",TBD,Face-to-Face,2/16/2026,5/9/2026,No,2025-11-03T08:27:15.409273-05:00

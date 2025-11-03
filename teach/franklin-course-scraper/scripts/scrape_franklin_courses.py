@@ -532,7 +532,8 @@ class FranklinCourseScraper:
             
             for term_header in term_headers:
                 term_text = term_header.get_text(strip=True)
-                term_sections = self.extract_sections_for_term(soup, term_header, term_text, course_info, course_code)
+                # Pass both term_text (for logging) and term (requested term for labeling)
+                term_sections = self.extract_sections_for_term(soup, term_header, term_text, course_info, course_code, requested_term=term)
                 sections.extend(term_sections)
             
             # Simplified filtering: Only keep FF (face-to-face) sections
@@ -598,9 +599,12 @@ class FranklinCourseScraper:
         
         return course_info
 
-    def extract_sections_for_term(self, soup, term_header, term_text, course_info, course_name):
+    def extract_sections_for_term(self, soup, term_header, term_text, course_info, course_name, requested_term=None):
         """Extract all sections for a specific term using the proven working method"""
         sections = []
+        
+        # Use requested_term if provided, otherwise fall back to term_text (for backward compatibility)
+        term_to_use = requested_term if requested_term else term_text
         
         print(f"🔍 Looking for sections under '{term_text}' header...")
         
@@ -643,7 +647,7 @@ class FranklinCourseScraper:
                     
                     if is_section_link:
                         print(f"   ✅ Processing section link: {link_text}")
-                        section = self.extract_section_details(link, soup, term_text, course_info)
+                        section = self.extract_section_details(link, soup, term_to_use, course_info)
                         if section:
                             sections.append(section)
                             print(f"   ✅ Successfully extracted section: {section.session_code}")
