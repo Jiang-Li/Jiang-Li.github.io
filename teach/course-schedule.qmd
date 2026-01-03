@@ -228,11 +228,11 @@ if data_path and os.path.exists(data_path):
     df = pd.read_csv(data_path)
     
     # Clean and prepare data
-    # Fix Course_Code: Extract proper course code from mangled data
-    df['Course_Code_Clean'] = df['Session_Code'].str.extract(r'([A-Z]+\*[0-9]+)')
+    # Extract course code from Session_Code (format: PF*521-F1FF -> PF*521)
+    df['Course_Code_Clean'] = df['Session_Code'].str.extract(r'^([A-Z]+\*\d+)')
     df['Course_Display'] = df['Course_Code_Clean'].str.replace('*', ' ')
-    
-    # Fix Session_Code: Extract just the section code
+
+    # Extract just the section code (format: PF*521-F1FF -> F1FF)
     df['Session_Code_Clean'] = df['Session_Code'].str.extract(r'-([A-Z0-9]+)$')
     
     # Note: Available_Seats column removed from CSV output in scraper
@@ -678,110 +678,64 @@ if len(df) > 0:
     
     # Create HTML table with improved formatting
     html_rows = []
-    
-    # Group sections by course code
-    grouped_courses = df.groupby('Course_Code_Clean')
-    
-    for course_code, course_sections in grouped_courses:
-        # Get basic course info from first section
-        first_section = course_sections.iloc[0]
-        
-        # Combine information from all sections
-        all_sections = list(course_sections['Session_Code_Clean'])
-        all_times = []
-        all_locations = []
-        all_modes = []
-        all_dates = []
-        
-        # Collect all times, locations, modes, and dates
-        for _, section in course_sections.iterrows():
-            # Format schedule time
-            formatted_time = format_schedule_time(section['Weekdays_Clean'], section['Class_Times_Clean'])
-            all_times.append(formatted_time)
-            
-            # Clean location
-            location = clean_location(section['Locations_Clean'])
-            all_locations.append(location)
-            
-            # Extract teaching mode
-            mode = extract_teaching_mode(section['Locations_Clean'])
-            all_modes.append(mode)
-            
-            # Format dates
-            import re
-            start_date = section['Start_Date'] if pd.notna(section['Start_Date']) else 'TBD'
-            end_date = section['End_Date'] if pd.notna(section['End_Date']) else 'TBD'
-            
-            if start_date != 'TBD':
-                date_match = re.search(r'(\d{1,2}/\d{1,2}/\d{4})', str(start_date))
-                start_date = date_match.group(1) if date_match else 'TBD'
-            
-            if end_date != 'TBD':
-                date_match = re.search(r'(\d{1,2}/\d{1,2}/\d{4})', str(end_date))
-                end_date = date_match.group(1) if date_match else 'TBD'
-            
-            date_range = f"{start_date} - {end_date}" if start_date != 'TBD' and end_date != 'TBD' else 'TBD'
-            all_dates.append(date_range)
-        
-        # Remove duplicates while preserving order
-        def remove_duplicates(lst):
-            seen = set()
-            result = []
-            for item in lst:
-                if item not in seen:
-                    seen.add(item)
-                    result.append(item)
-            return result
-        
-        all_times = remove_duplicates(all_times)
-        all_locations = remove_duplicates(all_locations)
-        all_modes = remove_duplicates(all_modes)
-        all_dates = remove_duplicates(all_dates)
-        
-        # Join with semicolons
-        combined_sections = '; '.join(all_sections)
-        combined_times = '; '.join(all_times)
-        combined_locations = '; '.join(all_locations)
-        combined_modes = '; '.join(all_modes)
-        combined_dates = '; '.join(all_dates)
-        
-        # Calculate total enrollment and capacity
-        total_enrolled = course_sections['Enrolled_Seats'].sum()
-        total_capacity = course_sections['Total_Seats'].sum()
-        
-        # Determine status based on total availability
-        total_available = total_capacity - total_enrolled
-        if total_available > 5:
+
+    # Display one row per section (no grouping)
+    for _, section in df.iterrows():
+        # Format schedule time
+        formatted_time = format_schedule_time(section['Weekdays_Clean'], section['Class_Times_Clean'])
+
+        # Clean location
+        location = clean_location(section['Locations_Clean'])
+
+        # Extract teaching mode
+        mode = extract_teaching_mode(section['Locations_Clean'])
+
+        # Format dates
+        import re
+        start_date = section['Start_Date'] if pd.notna(section['Start_Date']) else 'TBD'
+        end_date = section['End_Date'] if pd.notna(section['End_Date']) else 'TBD'
+
+        if start_date != 'TBD':
+            date_match = re.search(r'(\d{1,2}/\d{1,2}/\d{4})', str(start_date))
+            start_date = date_match.group(1) if date_match else 'TBD'
+
+        if end_date != 'TBD':
+            date_match = re.search(r'(\d{1,2}/\d{1,2}/\d{4})', str(end_date))
+            end_date = date_match.group(1) if date_match else 'TBD'
+
+        date_range = f"{start_date} - {end_date}" if start_date != 'TBD' and end_date != 'TBD' else 'TBD'
+
+        # Calculate availability
+        enrolled = section['Enrolled_Seats']
+        capacity = section['Total_Seats']
+        available = capacity - enrolled if pd.notna(capacity) and pd.notna(enrolled) else 0
+
+        if available > 5:
             status_class = "enrollment available"
-        elif total_available > 0:
+        elif available > 0:
             status_class = "enrollment limited"
         else:
             status_class = "enrollment full"
-        
+
         # First term indicator
-        first_term_class = "first-term" if first_section['First_Term'] == 'Yes' else ""
-        first_term_indicator = '<span class="first-term-badge">First Term</span>' if first_section['First_Term'] == 'Yes' else ''
-        
-        # Get instructor info (use first non-TBD instructor)
-        instructor = 'TBD'
-        for _, section in course_sections.iterrows():
-            section_instructor = section['Instructors_Clean'] if pd.notna(section['Instructors_Clean']) else 'TBD'
-            if section_instructor != 'TBD':
-                instructor = section_instructor
-                break
-        
+        first_term_class = "first-term" if section['First_Term'] == 'Yes' else ""
+        first_term_indicator = '<span class="first-term-badge">First Term</span>' if section['First_Term'] == 'Yes' else ''
+
+        # Get instructor
+        instructor = section['Instructors_Clean'] if pd.notna(section['Instructors_Clean']) else 'TBD'
+
         html_row = f"""
         <tr class="{first_term_class}">
-            <td><strong>{first_section['Course_Display']}</strong> {first_term_indicator}</td>
-            <td>{combined_sections}</td>
-            <td>{first_section['Course_Name_Clean']}</td>
-            <td>{first_section['Credits']}</td>
-            <td class="{status_class}">{total_enrolled}</td>
-            <td class="{status_class}">{total_capacity}</td>
-            <td>{combined_times}</td>
-            <td>{combined_locations}</td>
+            <td><strong>{section['Course_Display']}</strong> {first_term_indicator}</td>
+            <td>{section['Session_Code_Clean']}</td>
+            <td>{section['Course_Name_Clean']}</td>
+            <td>{section['Credits']}</td>
+            <td class="{status_class}">{enrolled}</td>
+            <td class="{status_class}">{capacity}</td>
+            <td>{formatted_time}</td>
+            <td>{location}</td>
             <td>{instructor}</td>
-            <td>{combined_dates}</td>
+            <td>{date_range}</td>
         </tr>"""
         html_rows.append(html_row)
     

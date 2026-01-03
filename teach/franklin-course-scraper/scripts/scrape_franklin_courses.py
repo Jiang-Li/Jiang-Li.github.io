@@ -30,6 +30,12 @@ from pathlib import Path
 import pandas as pd
 import sys
 
+# Fix Windows console encoding issue for emoji characters
+if sys.platform == 'win32':
+    import io
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
+
 # Compiled regex patterns for better performance
 SECTION_PATTERN = re.compile(r'[a-z]+\*\d+-[a-z0-9]{4}', re.IGNORECASE)
 COURSE_FORMAT_PATTERN = re.compile(r'^([A-Za-z]+)\s+(\d+)', re.IGNORECASE)
@@ -259,118 +265,36 @@ class FranklinCourseScraper:
             from datetime import timezone, timedelta
             est_tz = timezone(timedelta(hours=-5))  # EST is UTC-5
             scraped_datetime = datetime.now(est_tz).isoformat()
-            
-            # Group sections by course code to combine multiple sections
-            from collections import defaultdict
-            grouped_sections = defaultdict(list)
-            for section in sections:
-                # Use the base course code (without session) as grouping key
-                base_course_code = section.course_code.split('*')[0] + '*' + section.course_code.split('*')[1] if '*' in section.course_code else section.course_code
-                grouped_sections[base_course_code].append(section)
-            
+
+            # Create one row per section (no grouping/combining)
             csv_data = []
-            for course_code, course_sections in grouped_sections.items():
-                # If only one section, use simple format without semicolons
-                if len(course_sections) == 1:
-                    section = course_sections[0]
-                    # Calculate enrolled seats: Enrolled = Total - Available
-                    enrolled_seats = "N/A"
-                    try:
-                        if (section.seats_total != 'N/A' and section.seats_available != 'N/A' and 
-                            str(section.seats_total).isdigit() and str(section.seats_available).isdigit()):
-                            enrolled_seats = str(int(section.seats_total) - int(section.seats_available))
-                    except:
-                        pass
-                    
-                    row = [
-                        section.course_code, section.session_code, section.course_name,
-                        section.credits, section.term, enrolled_seats, 
-                        section.seats_total, section.seats_waitlisted,
-                        ', '.join(section.weekdays), ', '.join(section.class_times),
-                        ', '.join(section.locations), ', '.join(section.instructors),
-                        section.teaching_mode, section.start_date, section.end_date,
-                        'Yes' if section.is_first_term else 'No', scraped_datetime
-                    ]
-                    csv_data.append(row)
-                
-                else:
-                    # Multiple sections - combine with semicolons
-                    first_section = course_sections[0]
-                    
-                    # Combine session codes
-                    all_session_codes = [section.session_code for section in course_sections]
-                    combined_session_code = '; '.join(all_session_codes)
-                    
-                    # Combine and calculate total enrolled seats
-                    total_enrolled = 0
-                    total_capacity = 0
-                    total_waitlist = 0
-                    
-                    for section in course_sections:
-                        try:
-                            if (section.seats_total != 'N/A' and section.seats_available != 'N/A' and 
-                                str(section.seats_total).isdigit() and str(section.seats_available).isdigit()):
-                                enrolled = int(section.seats_total) - int(section.seats_available)
-                                total_enrolled += enrolled
-                                total_capacity += int(section.seats_total)
-                            if section.seats_waitlisted != 'N/A' and str(section.seats_waitlisted).isdigit():
-                                total_waitlist += int(section.seats_waitlisted)
-                        except:
-                            pass
-                    
-                    # Combine weekdays, times, locations, instructors with semicolons
-                    all_weekdays = []
-                    all_times = []
-                    all_locations = []
-                    all_instructors = []
-                    all_modes = []
-                    all_start_dates = []
-                    all_end_dates = []
-                    
-                    for section in course_sections:
-                        # Flatten lists and add to combined lists
-                        if section.weekdays and section.weekdays != ['TBD']:
-                            all_weekdays.extend(section.weekdays)
-                        if section.class_times and section.class_times != ['TBD']:
-                            all_times.extend(section.class_times)
-                        if section.locations:
-                            all_locations.extend(section.locations)
-                        if section.instructors:
-                            all_instructors.extend(section.instructors)
-                        if section.teaching_mode:
-                            all_modes.append(section.teaching_mode)
-                        if section.start_date and section.start_date != 'N/A':
-                            all_start_dates.append(section.start_date)
-                        if section.end_date and section.end_date != 'N/A':
-                            all_end_dates.append(section.end_date)
-                    
-                    # Join with semicolons and remove duplicates
-                    combined_weekdays = '; '.join(list(dict.fromkeys(all_weekdays))) if all_weekdays else 'TBD'
-                    combined_times = '; '.join(list(dict.fromkeys(all_times))) if all_times else 'TBD'
-                    combined_locations = '; '.join(list(dict.fromkeys(all_locations))) if all_locations else 'TBD'
-                    combined_instructors = '; '.join(list(dict.fromkeys(all_instructors))) if all_instructors else 'TBD'
-                    combined_modes = '; '.join(list(dict.fromkeys(all_modes))) if all_modes else 'TBD'
-                    combined_start_dates = '; '.join(list(dict.fromkeys(all_start_dates))) if all_start_dates else 'N/A'
-                    combined_end_dates = '; '.join(list(dict.fromkeys(all_end_dates))) if all_end_dates else 'N/A'
-                    
-                    row = [
-                        first_section.course_code, combined_session_code, first_section.course_name,
-                        first_section.credits, first_section.term, 
-                        str(total_enrolled) if total_enrolled > 0 else "N/A",
-                        str(total_capacity) if total_capacity > 0 else "N/A", 
-                        str(total_waitlist) if total_waitlist > 0 else "0",
-                        combined_weekdays, combined_times, combined_locations, combined_instructors,
-                        combined_modes, combined_start_dates, combined_end_dates,
-                        'Yes' if first_section.is_first_term else 'No', scraped_datetime
-                    ]
-                    csv_data.append(row)
+            for section in sections:
+                # Calculate enrolled seats: Enrolled = Total - Available
+                enrolled_seats = "N/A"
+                try:
+                    if (section.seats_total != 'N/A' and section.seats_available != 'N/A' and
+                        str(section.seats_total).isdigit() and str(section.seats_available).isdigit()):
+                        enrolled_seats = str(int(section.seats_total) - int(section.seats_available))
+                except:
+                    pass
+
+                row = [
+                    section.course_code, section.session_code, section.course_name,
+                    section.credits, section.term, enrolled_seats,
+                    section.seats_total, section.seats_waitlisted,
+                    ', '.join(section.weekdays), ', '.join(section.class_times),
+                    ', '.join(section.locations), ', '.join(section.instructors),
+                    section.teaching_mode, section.start_date, section.end_date,
+                    'Yes' if section.is_first_term else 'No', scraped_datetime
+                ]
+                csv_data.append(row)
             
             with open(filename, 'w', newline='', encoding='utf-8') as csvfile:
                 writer = csv.writer(csvfile)
                 writer.writerow(headers)
                 writer.writerows(csv_data)
             
-            print(f"✅ Saved {len(csv_data)} courses (from {len(sections)} sections) to {filename}")
+            print(f"✅ Saved {len(csv_data)} sections to {filename}")
             
         except Exception as e:
             print(f"❌ Failed to save CSV: {e}")

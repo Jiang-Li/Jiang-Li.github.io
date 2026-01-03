@@ -10,7 +10,7 @@ website:
   title: ""
   description: "Program Chair for Analytics Programs at Franklin University | Data Science Educator | Former Industry Data Scientist"
   site-url: "https://jiang-li.github.io"
-  
+
   navbar:
     background: primary
     search: true
@@ -43,7 +43,7 @@ website:
 
 format:
   html:
-    theme: 
+    theme:
       - cosmo
       - custom.scss
     css: style.css
@@ -51,4 +51,8 @@ format:
     toc: true
     toc-location: left
     code-fold: true
-    page-layout: full 
+    page-layout: full
+
+execute:
+  freeze: auto
+  python: C:/Users/Frank/AppData/Local/Programs/Python/Python312/python.exe
