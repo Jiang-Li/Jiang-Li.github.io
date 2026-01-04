@@ -171,76 +171,10 @@ class FranklinCourseScraper:
                 return CourseRequest(term, courses)
             
             return CourseRequest("", [("DATA 610", False)])
-            
+
         except Exception as e:
             print(f"❌ Failed to read {filename}: {e}")
             return CourseRequest("", [("DATA 610", False)])
-    
-    def read_multi_term_course_list(self, filename: str = "course_request.md") -> List[CourseRequest]:
-        """Read multiple term configurations from a single file"""
-        try:
-            # Handle path from scripts/ directory or project root
-            if not os.path.exists(filename):
-                parent_path = os.path.join("..", filename)
-                if os.path.exists(parent_path):
-                    filename = parent_path
-                else:
-                    print(f"⚠️  {filename} not found, using default")
-                    return [CourseRequest("", [("DATA 610", False)])]
-            
-            with open(filename, 'r', encoding='utf-8') as f:
-                content = f.read()
-            
-            # Parse configuration
-            config_match = re.search(r'## Current Configuration\s*```\n(.*?)\n```', content, re.DOTALL)
-            if not config_match:
-                return [CourseRequest("", [("DATA 610", False)])]
-            
-            config_block = config_match.group(1)
-            lines = [line.strip() for line in config_block.split('\n') if line.strip()]
-            
-            course_requests = []
-            current_term = ""
-            current_courses = []
-            
-            for line in lines:
-                if line.startswith('#') or line.startswith('//'):
-                    continue
-                if line.startswith('---'):
-                    # Separator: save current term and start new one
-                    if current_term and current_courses:
-                        course_requests.append(CourseRequest(current_term, current_courses))
-                        print(f"📋 Found {len(current_courses)} courses for term: {current_term}")
-                    current_term = ""
-                    current_courses = []
-                    continue
-                if line.startswith('Term:'):
-                    # Save previous term if exists
-                    if current_term and current_courses:
-                        course_requests.append(CourseRequest(current_term, current_courses))
-                        print(f"📋 Found {len(current_courses)} courses for term: {current_term}")
-                    current_term = line.replace('Term:', '').strip()
-                    current_courses = []
-                    continue
-                if re.match(r'^[*]?[A-Za-z]+\s+\d+', line):
-                    line = line.split('#')[0].strip()
-                    is_first_term = line.startswith('*')
-                    course_code = line[1:].strip() if is_first_term else line.strip()
-                    current_courses.append((course_code, is_first_term))
-            
-            # Save the last term
-            if current_term and current_courses:
-                course_requests.append(CourseRequest(current_term, current_courses))
-                print(f"📋 Found {len(current_courses)} courses for term: {current_term}")
-            
-            if not course_requests:
-                return [CourseRequest("", [("DATA 610", False)])]
-            
-            return course_requests
-            
-        except Exception as e:
-            print(f"❌ Failed to read {filename}: {e}")
-            return [CourseRequest("", [("DATA 610", False)])]
 
     def save_to_csv(self, sections: List[CourseSection], filename: str = None):
         try:

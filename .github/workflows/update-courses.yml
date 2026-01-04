@@ -51,6 +51,7 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: '3.9'
+        cache: 'pip' # Cache pip dependencies
 
     - name: Install basic Python dependencies
       run: |
@@ -63,6 +64,17 @@ jobs:
       run: |
         pip install beautifulsoup4 selenium
 
+    - name: Cache Chrome installation
+      if: steps.changes.outputs.scrape == 'true'
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.cache/google-chrome
+          /usr/bin/google-chrome-stable
+        key: ${{ runner.os }}-chrome-${{ hashFiles('**/chrome-version') }}
+        restore-keys: |
+          ${{ runner.os }}-chrome-
+
     - name: Install Chrome and ChromeDriver
       if: steps.changes.outputs.scrape == 'true'
       run: |
@@ -71,10 +83,10 @@ jobs:
         echo "deb [arch=amd64 signed-by=/usr/share/keyrings/google-chrome-keyring.gpg] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
         sudo apt-get update
         sudo apt-get install -y google-chrome-stable
-        
+
         # Install ChromeDriver using webdriver-manager approach
         pip install webdriver-manager
-        
+
         # Verify Chrome installation
         google-chrome --version
 
@@ -141,19 +153,12 @@ jobs:
 
     - name: Ensure site directory exists
       run: |
-        # If we scraped but didn't rebuild, we already rendered course schedule
-        # Just ensure _site directory exists
-        if [ "${{ steps.changes.outputs.scrape }}" = "true" ] && [ "${{ steps.check-rebuild.outputs.rebuild }}" = "false" ]; then
-          echo "📊 Scheduled run: Course schedule already rendered, verifying _site..."
-          if [ ! -d "_site" ]; then
-            echo "⚠️ _site directory missing, rendering course schedule..."
-            quarto render teach/course-schedule.qmd
-          fi
-        elif [ "${{ steps.check-rebuild.outputs.rebuild }}" = "false" ]; then
-          echo "🌐 No scraping and no rebuild: Rendering full site..."
+        # Ensure _site directory exists for deployment
+        if [ ! -d "_site" ]; then
+          echo "📁 _site directory missing, rendering full site..."
           quarto render
         else
-          echo "✅ Site directory should already exist from previous steps"
+          echo "✅ _site directory exists from previous steps"
         fi
 
     - name: Setup Pages
