@@ -55,4 +55,3 @@ format:
 
 execute:
   freeze: auto
-  python: C:/Users/Frank/AppData/Local/Programs/Python/Python312/python.exe
