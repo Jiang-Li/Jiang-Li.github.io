@@ -1,6 +1,19 @@
+# R
 .Rproj.user
 .Rhistory
 .RData
 .Ruserdata
-.DS_Store
+
+# Quarto
 /.quarto/
+
+# Generated site (deploy via GitHub Actions, not committed)
+_site/
+
+# Python
+teach/franklin-course-scraper/venv/
+__pycache__/
+*.pyc
+
+# OS
+.DS_Store
