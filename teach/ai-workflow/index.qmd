@@ -121,6 +121,11 @@ Objective: Help me identify which regions are most profitable so I can recommend
 
 The AI will likely also offer unsolicited recommendations — this is common. Notice that these recommendations are surface-level and based only on the numbers it just calculated. This is exactly where the **R** in COR comes in: you'll learn to Refine the AI's output into deeper, more useful insights.
 
+::: {.callout-note}
+## Your Results May Look Different — That's OK
+AI tools evolve quickly, and no two conversations are identical. Your output may differ from what this guide describes — different wording, different level of detail, or additional analysis you didn't ask for. The core numbers (e.g., West region being most profitable) should be the same since they come from the same dataset, but everything else may vary. **Focus on learning the framework, not on matching this guide's examples exactly.** The skills transfer across any AI tool.
+:::
+
 ::: {.callout-tip}
 ## Note on Labels
 The "Context:" and "Objective:" labels help you learn the framework structure. When using prompts with AI, you can keep the labels or remove them—either way works fine. The labels are teaching tools, not requirements.
