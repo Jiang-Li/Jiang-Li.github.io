@@ -1,0 +1,10 @@
+pre,
+pre code,
+.callout pre,
+.callout pre code,
+.callout-body-container pre,
+.callout-body-container pre code {
+  white-space: pre-wrap !important;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+}
