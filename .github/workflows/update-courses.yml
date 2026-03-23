@@ -151,14 +151,14 @@ jobs:
         quarto render
         echo "✅ Full website rendered successfully"
 
-    - name: Ensure site directory exists
+    - name: Ensure full site is built
       run: |
-        # Ensure _site directory exists for deployment
-        if [ ! -d "_site" ]; then
-          echo "📁 _site directory missing, rendering full site..."
+        # Check for index.html (not just _site/) since partial renders may create _site/ without full content
+        if [ ! -f "_site/index.html" ]; then
+          echo "📁 Full site not built yet, rendering complete website..."
           quarto render
         else
-          echo "✅ _site directory exists from previous steps"
+          echo "✅ Full site already built from previous steps"
         fi
 
     - name: Setup Pages
