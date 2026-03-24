@@ -112,54 +112,20 @@ jobs:
     - name: Set up Quarto
       uses: quarto-dev/quarto-actions/setup@v2
 
-    # Smart rebuild logic based on trigger type and file changes
-    - name: Check if full rebuild needed
-      id: check-rebuild
-      run: |
-        if [ "${{ github.event_name }}" = "schedule" ]; then
-          echo "rebuild=false" >> $GITHUB_OUTPUT
-          echo "📄 Scheduled run: Only course schedule updated"
-        else
-          echo "rebuild=true" >> $GITHUB_OUTPUT  
-          echo "🔄 Push/Manual run: Full site rebuild"
-        fi
-
-    # Always render course schedule if scraping occurred (to use fresh data)
-    - name: Render course schedule (after scraping)
-      if: steps.changes.outputs.scrape == 'true'
-      run: |
-        echo "📊 Rendering course schedule with fresh scraped data..."
-        echo "📁 Current directory: $(pwd)"
-        echo "📄 Verifying CSV file exists with fresh data:"
-        ls -lh teach/franklin-course-scraper/data/franklin_courses.csv || echo "⚠️ CSV not found!"
-        if [ -f "teach/franklin-course-scraper/data/franklin_courses.csv" ]; then
-          echo "📊 CSV info:"
-          echo "  - File size: $(du -h teach/franklin-course-scraper/data/franklin_courses.csv | cut -f1)"
-          echo "  - Row count: $(($(wc -l < teach/franklin-course-scraper/data/franklin_courses.csv) - 1))"
-          echo "  - Last timestamp: $(tail -1 teach/franklin-course-scraper/data/franklin_courses.csv | cut -d',' -f17 || echo 'N/A')"
-        fi
-        echo "🔄 Rendering course schedule (path detection will find CSV automatically)..."
-        quarto render teach/course-schedule.qmd || (echo "❌ Render failed!" && exit 1)
-        echo "✅ Course schedule rendered successfully"
-        echo "📊 Verifying output:"
-        ls -lh _site/teach/course-schedule.html || (echo "⚠️ Output file not found!" && exit 1)
-
-    - name: Render full website (if needed)
-      if: steps.check-rebuild.outputs.rebuild == 'true'
+    # Render the full website (always — partial renders break the site)
+    - name: Render full website
       run: |
         echo "🌐 Rendering complete website..."
         quarto render
         echo "✅ Full website rendered successfully"
-
-    - name: Ensure full site is built
-      run: |
-        # Check for index.html (not just _site/) since partial renders may create _site/ without full content
-        if [ ! -f "_site/index.html" ]; then
-          echo "📁 Full site not built yet, rendering complete website..."
-          quarto render
-        else
-          echo "✅ Full site already built from previous steps"
-        fi
+        echo "📊 Verifying key pages exist:"
+        for page in index.html course.html teach/course-schedule.html; do
+          if [ -f "_site/$page" ]; then
+            echo "  ✅ $page ($(du -h _site/$page | cut -f1))"
+          else
+            echo "  ❌ $page MISSING" && exit 1
+          fi
+        done
 
     - name: Setup Pages
       uses: actions/configure-pages@v4
