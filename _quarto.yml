@@ -5,6 +5,7 @@ project:
     - "*.qmd"
   resources:
     - "posts/**"
+    - "teach/analytics_review/**"
 
 website:
   title: ""

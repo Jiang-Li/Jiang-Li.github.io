@@ -22,12 +22,6 @@ format:
 
 ***
 
-### Analytics Teaching Hub
-
-[Franklin Analytics Teaching Hub](https://franklinu-my.sharepoint.com/:o:/g/personal/jiang_li2_franklin_edu/EtAx9PJlPq5BgCQ5XtIBV68BFMXf8d5VGp7r8wUbh9NGfA?e=dDlnJK) is a collection of documents to assist instructors in teaching, including teaching management and FAQs about EdStem. The access requires a Franklin account.
-
-***
-
 ### Analytics Concept Review 📚
 
 **🃏 [Interactive Flip Cards](teach/analytics_review/flashcards.html)** - 60+ analytics concepts for study practice
