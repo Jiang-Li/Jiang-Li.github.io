@@ -16,6 +16,12 @@ format:
 
 ***
 
+### Getting a U.S. Census Bureau API Key 🔑
+
+**📋 [Tutorial](teach/census-api-key/)** - Step-by-step guide to requesting and activating a Census Data API key for student projects
+
+***
+
 ### Analytics Teaching Hub
 
 [Franklin Analytics Teaching Hub](https://franklinu-my.sharepoint.com/:o:/g/personal/jiang_li2_franklin_edu/EtAx9PJlPq5BgCQ5XtIBV68BFMXf8d5VGp7r8wUbh9NGfA?e=dDlnJK) is a collection of documents to assist instructors in teaching, including teaching management and FAQs about EdStem. The access requires a Franklin account.
