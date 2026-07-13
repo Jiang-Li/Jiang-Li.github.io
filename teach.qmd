@@ -22,6 +22,12 @@ format:
 
 ***
 
+### Pulling ZIP-Level Census Data in Python 🐍
+
+**📋 [Tutorial](teach/census-zip-data/)** - Query ACS data by ZIP code and compare percentages between ZIP codes (e.g., Spanish speakers, Medicaid coverage)
+
+***
+
 ### Analytics Concept Review 📚
 
 **🃏 [Interactive Flip Cards](teach/analytics_review/flashcards.html)** - 60+ analytics concepts for study practice
