@@ -1,0 +1,128 @@
+---
+title: "Getting Started with Claude"
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-depth: 2
+    number-sections: false
+---
+
+Read once, then work through it at the app.
+
+---
+
+## 1. Two things to do first
+
+**Claude 101** — https://academy.claude.com/courses/claude-101 (free, about an hour)
+
+**My AI-Augmented Analytics Guide** — [../ai-workflow/](../ai-workflow/)
+
+If you've already done the second one, just re-read the framework. Everything below assumes it:
+
+- **COR** — give **Context** (who you are, what you're working on), state your **Objective** (what you want *and why*), then **Refine**.
+- **Four follow-ups** — Clarify (*what?*), Explore (*what else?*), Validate (*why?*), Challenge (*why not?*).
+
+The tool changes; that framework doesn't. Claude is a different assistant than Gemini, but you direct it the same way.
+
+---
+
+## 2. Install the desktop app
+
+Download from **https://claude.com/download**, sign in. Three tabs:
+
+| Tab | What it does |
+|---|---|
+| **Chat** | Conversation. No access to your local files. Same as the website. |
+| **Cowork** | Point it at a folder; it works through multi-step tasks on its own and saves results back to that folder. |
+| **Code** | Works directly with files on your computer. Shows you what changed and can undo it. |
+
+### Setup problems are your first exercise
+
+You will hit something — a missing dependency, a permission dialog, an error you don't recognize. **Don't search for it. Ask Claude.** Paste the exact error, or describe what you clicked and what happened.
+
+> *"I'm on Windows. I opened the Code tab, selected a folder, and got this: [paste error]. Walk me through the fix one step at a time."*
+
+Getting unstuck is something Claude is genuinely good at, and you'll use it far more than you'll use it to write essays. Better to find that out on day one.
+
+---
+
+## 3. Exercise A — Connect Google Drive, interrogate the shared folder
+
+**Goal:** run a full COR investigation on real data, on a new tool.
+
+### Setup
+
+Go to **Customize → Connectors**, find **Google Drive**, click **Connect**, approve. Then in a chat, click **+** → **Add from Google Drive**.
+
+Two different things can block you:
+
+- **Drive doesn't appear at all** → message me. It's a setting on my end.
+- **"Access blocked: your institution's admin needs to review Claude for Google Drive"** → that's the *university's* Google admin, not me. Tell me and I'll help you file the request.
+
+Note: Claude reads text from Drive files. It does not see images inside documents.
+
+### What to do
+
+The folder holds the data and the work from the previous stage of this project. Understand it well enough to explain it to someone else.
+
+Start with orientation:
+
+> *"What files are here, and what does each one contain? Flag anything you're unsure about."*
+
+Then run one real investigation, using all four follow-up types, exactly like the Bookcase example in the guide. Write a COR prompt to open it, then Clarify → Explore → Validate → **Challenge**.
+
+Don't stop at Validate. That's where most people stop, and it's where the interesting part starts.
+
+### Bring back
+
+1. Your Challenge prompt, and what it turned up.
+2. One thing Claude stated confidently that turned out to be wrong or overstated — and how you caught it.
+
+The second is worth more than the first.
+
+---
+
+## 4. Exercise B — Publish a personal page
+
+**Goal:** ship something public. Unlike an analysis, a webpage either loads or it doesn't — so you can judge your own progress without me.
+
+Useful side effect: you'll have a page to put on your résumé.
+
+### What to do
+
+You are not expected to know HTML, git, or GitHub. You will not be asked to read the code. The skill here is **directing work you couldn't do yourself, and checking the result.**
+
+Make an empty folder. Open the **Code** tab → **Local** → **Select folder**. Then:
+
+> *"I'm a business analytics student. I want a simple personal webpage published on GitHub Pages — my name, a short bio, and a few projects. I've never used git or GitHub. Before we start, explain in plain English what we're about to do and what I'll need to do myself in a browser."*
+
+From there, just keep talking to it. Useful moves:
+
+- *"Do that."* / *"Wait — explain that step before you run it."*
+- *"I don't know what a repository is. Explain it, then continue."*
+- *"Make the projects section shorter and the heading bigger."*
+- When it breaks: *"[paste the error]. What went wrong, and what should I check?"*
+
+Two habits worth practicing here:
+
+- **Ask for the plan first.** Switch the selector next to the send button to **Plan** mode. Claude proposes an approach without touching anything. Read it. This is Clarify, applied to a build instead of an analysis.
+- **Check the output, not the code.** Open the page in a browser. Is your name spelled right? Do the links work? That's your verification step.
+
+### Bring back
+
+1. The URL of your live page.
+2. One thing that broke, and how you got past it.
+
+---
+
+## 5. Next
+
+Once you've done both, you'll notice you keep retyping the same instructions. That repetition is where we start next time. Don't skip ahead — it only makes sense after you've felt it.
+
+---
+
+- Claude 101 — https://academy.claude.com/courses/claude-101
+- AI-Augmented Analytics Guide — [../ai-workflow/](../ai-workflow/)
+- Download Claude — https://claude.com/download
+- Help Center — https://support.claude.com

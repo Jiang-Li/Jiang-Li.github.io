@@ -16,6 +16,12 @@ format:
 
 ***
 
+### Getting Started with Claude 🎓
+
+**📋 [Guide](teach/claude-onboarding/)** - Onboarding walkthrough for student project teams, from setup through two hands-on exercises
+
+***
+
 ### Getting a U.S. Census Bureau API Key 🔑
 
 **📋 [Tutorial](teach/census-api-key/)** - Step-by-step guide to requesting and activating a Census Data API key for student projects
