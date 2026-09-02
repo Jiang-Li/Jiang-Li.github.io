@@ -2,6 +2,8 @@
 
 Academic website for Dr. Jiang Li (Analytics Program Chair, Franklin University), built with Quarto.
 
+> **Long-term direction (under evaluation, not started)**: migrating this site from Quarto to Astro, to support richer/interactive Program pages, a career-connectedness (skill → job role → salary) data page, and better SEO. Do not start this on your own initiative — it's tracked as `P_Personal_Website_Redesign` in the private Obsidian vault (`Jiang-Li/obsidian_research`). Until that migration happens, keep working within the current Quarto setup below.
+
 ## Quick Reference
 
 - **Framework**: Quarto static site generator
