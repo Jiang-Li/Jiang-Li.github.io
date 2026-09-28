@@ -10,7 +10,7 @@ jobs:
     permissions:
       contents: read
       pages: write
-      id-token: write
+id-token: <redacted>
 
     environment:
       name: github-pages
@@ -19,31 +19,25 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    # Needed because teach/course-schedule.qmd still contains Python code cells
-    - name: Set up Python
-      uses: actions/setup-python@v5
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
       with:
-        python-version: '3.9'
-        cache: 'pip'
+        node-version: '22'
+        cache: 'npm'
 
-    - name: Install Python dependencies
+    - name: Install dependencies
+      run: npm ci
+
+    # Build the Astro site (includes pagefind search index)
+    - name: Build site
       run: |
-        python -m pip install --upgrade pip
-        pip install pandas numpy jupyter nbclient nbconvert ipykernel
-
-    - name: Set up Quarto
-      uses: quarto-dev/quarto-actions/setup@v2
-
-    # Render the full website (always — partial renders break the site)
-    - name: Render full website
-      run: |
-        echo "🌐 Rendering complete website..."
-        quarto render
-        echo "✅ Full website rendered successfully"
+        echo "🌐 Building Astro website..."
+        npm run build
+        echo "✅ Site built successfully"
         echo "📊 Verifying key pages exist:"
-        for page in index.html course.html; do
-          if [ -f "_site/$page" ]; then
-            echo "  ✅ $page ($(du -h _site/$page | cut -f1))"
+        for page in index.html course.html teach/ai-workflow/index.html; do
+          if [ -f "dist/$page" ]; then
+            echo "  ✅ $page ($(du -h dist/$page | cut -f1))"
           else
             echo "  ❌ $page MISSING" && exit 1
           fi
@@ -55,7 +49,7 @@ jobs:
     - name: Upload site
       uses: actions/upload-pages-artifact@v3
       with:
-        path: _site
+        path: dist
 
     - name: Deploy to GitHub Pages
       id: deployment

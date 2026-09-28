@@ -1,0 +1,604 @@
+---
+layout: ../../../layouts/Layout.astro
+title: "AI-Augmented Analytics Guide"
+---
+
+<h2 id="sec-before-start">Welcome: Before You Start</h2>
+
+### What You'll Learn
+
+This guide teaches you the practical workflow for using AI as an analytical assistant. You will learn to:
+
+- **Direct AI effectively** using the COR prompting framework
+- **Conduct analytical dialogues** that go beyond simple Q&A
+- **Turn exploratory AI chats** into reproducible notebook reports
+
+### What You Need
+
+- A **free Google account** for Google Gemini
+- A **free Google account** for Google Colab
+- The **Superstore.xlsx** sample dataset — **[download here](Superstore.xlsx)**
+
+### How This Guide Works
+
+This is a **hands-on guide** broken into 4 sections. Follow along in your browser as you read.
+
+<div class="callout-note">
+<div class="callout-title">A Note on Tool Choices</div>
+This guide uses **Google Gemini** as the AI assistant and **Google Colab** as the notebook environment — both are free and require no setup. The COR framework and the workflow apply equally to other AI tools (ChatGPT, Claude, Microsoft Copilot) and other notebook environments (Kaggle Notebooks, Anaconda). We use Google tools here for consistency and accessibility.
+</div>
+
+```
+Total Time: ~60 minutes
+
+Section 1: Quick Start (15 min) → Your first AI analysis
+Section 2: The Dialogue Model (20 min) → Deepening insights
+Section 3: From Chat to Notebook (20 min) → Reproducible reports
+Section 4: Putting It All Together (5 min) → Summary and next steps
+```
+
+---
+
+<h2 id="sec-quick-start">Section 1: Quick Start - Your First AI Analysis</h2>
+
+**Time: 15 minutes**
+
+> **Goal:** By the end of this section, you will have run your first analytical prompt and received a useful result from AI.
+
+### The Mindset Shift
+
+A common mistake is treating AI like a search engine. You type a few keywords, expect a single answer, and move on. AI is different. You are not "finding" an analysis — you are **directing** one. Your role is not a searcher, but a **director** providing clear instructions, just as you would to an analyst on your team. This guide teaches you a framework for doing that effectively.
+
+<h3 id="sec-access-gemini">Part 1: Accessing Gemini and Uploading Data</h3>
+
+Open a web browser and navigate to [**gemini.google.com**](http://gemini.google.com/) (or your preferred AI assistant).
+
+**Sign in** with your Google account. You will see the main chat interface with a text box at the bottom.
+
+**Start a new chat** by clicking the **"+ New chat"** button in the top-left corner. This keeps your work organized.
+
+**Upload your data:**
+
+1. Click the **"+ Add file"** button at the bottom of the screen
+2. Browse to select your **`Superstore.xlsx`** file
+3. Wait for the file to appear above the text box, confirming it's ready
+
+<div class="callout-tip">
+<div class="callout-title">Pro Tip</div>
+Always start a new chat for each new project. This keeps your conversations organized and prevents the AI from getting confused by previous context. For this guide, **keep using the same chat** through Sections 1 and 2 — each step builds on the previous one.
+</div>
+
+**Get to know your data.** Before analyzing anything, ask the AI what you're working with:
+
+> *"What sheets and columns are in this file? Give me a brief summary."*
+
+Review the response so you understand the structure — sheet names, column names, and what they represent.
+
+---
+
+<h3 id="sec-cor-prompt">Part 2: Your First COR Prompt</h3>
+
+Now we'll use the **COR Framework** to direct a specific piece of analysis.
+
+**What is COR?**
+
+| Element | What It Means | Example |
+|---------|---------------|---------|
+| **C**ontext | Who you are, your situation, relevant background | "I'm a business analyst preparing for a marketing meeting to discuss regional performance" |
+| **O**bjective | What you want to achieve AND WHY | "Help me identify which regions are most profitable so I can recommend where to focus our marketing budget" |
+| **R**efine | Follow up to deepen, challenge, or improve the AI's output (Section 2 teaches a structured approach to this) | "Can you break down the West region by Sub-Category to see what's driving that profit?" |
+
+Think of COR as your core prompting strategy: provide **Context** about your situation, state your **Objective** with the "why" behind it, then **Refine** through follow-up questions.
+
+**Copy and paste this prompt into your AI assistant:**
+
+<div class="callout-note">
+<div class="callout-title">Prompt Template 1: Initial Analysis</div>
+
+```
+Context: I'm a business analyst preparing for a marketing meeting to discuss regional performance.
+
+Objective: Help me identify which regions are most profitable so I can recommend where to focus our marketing budget. Calculate the total profit for each `Region` and present as a table sorted from highest to lowest profit.
+```
+</div>
+
+**Submit the prompt** and review the output. You should see a table showing profit by region, with the **West region on top**. That's your first AI-generated insight — and you didn't need to write code or use Excel formulas to get it. You provided clear instructions, and AI did the analytical work.
+
+The AI will likely also offer unsolicited recommendations — this is common. Notice that these recommendations are surface-level and based only on the numbers it just calculated. This is exactly where the **R** in COR comes in: you'll learn to Refine the AI's output into deeper, more useful insights.
+
+<div class="callout-note">
+<div class="callout-title">Your Results May Look Different — That's OK</div>
+AI tools evolve quickly, and no two conversations are identical. Your output may differ from what this guide describes — different wording, different level of detail, or additional analysis you didn't ask for. The core numbers (e.g., West region being most profitable) should be the same since they come from the same dataset, but everything else may vary. **Focus on learning the framework, not on matching this guide's examples exactly.** The skills transfer across any AI tool.
+</div>
+
+<div class="callout-tip">
+<div class="callout-title">Note on Labels</div>
+The "Context:" and "Objective:" labels help you learn the framework structure. When using prompts with AI, you can keep the labels or remove them—either way works fine. The labels are teaching tools, not requirements.
+</div>
+
+---
+
+<h3 id="sec-practice-1">Practice Exercise 1</h3>
+
+**Time: 5 minutes**
+
+Now try it on your own. Write a COR prompt to answer this question:
+
+> *"Which product category has the highest total sales?"*
+
+**Fill in the blanks:**
+
+| Element | Your Answer |
+|---------|-------------|
+| **C**ontext | I'm a \_\_\_\_\_\_\_\_\_\_\_ preparing for / working on \_\_\_\_\_\_\_\_\_\_\_ |
+| **O**bjective | Help me \_\_\_\_\_\_\_\_\_\_\_ so I can \_\_\_\_\_\_\_\_\_\_\_ |
+
+<button onclick="toggleSolution('solution1')">Show Suggestions</button>
+
+<div id="solution1" style="display: none; margin-top: 10px; padding: 10px; background-color: #f0f0f0; border-left: 4px solid #4CAF50;">
+
+**Sample Prompt:**
+
+```
+Context: I'm a business analyst working on a quarterly product review to evaluate category performance.
+
+Objective: Help me determine which product category has the highest total sales so I can recommend where to allocate resources. Calculate the total sales for each `Category` and present as a table sorted from highest to lowest sales.
+```
+
+**Expected Result:** Technology should be the highest (approximately $836,154), followed by Furniture and Office Supplies.
+
+</div>
+
+---
+
+<h2 id="sec-dialogue-model">Section 2: The Dialogue Model - Deepening Insights</h2>
+
+**Time: 20 minutes**
+
+> **Goal:** Learn to conduct a structured analytical dialogue that moves from surface observations to deep insights.
+
+In Section 1, you learned the COR framework: Context, Objective, Refine. You've practiced C and O — now we focus entirely on the **R**.
+
+<h3 id="sec-follow-up-types">Four Types of Follow-Up</h3>
+
+A great initial prompt is just the start. The real power of AI-augmented analysis comes from **follow-up dialogue**. Here are four common ways to Refine your AI's output:
+
+```
+Clarify   → "What?"      I don't understand something
+Explore   → "What else?" Show me more data
+Validate  → "Why?"       I'm not convinced — explain this to me
+Challenge → "Why not?"   You're missing something
+```
+
+We'll walk through each type using the regional profit analysis you ran in Section 1, building one continuous investigation.
+
+---
+
+<h3 id="sec-clarify">Clarify</h3>
+
+When something in the AI's output isn't clear, ask it to explain before moving forward.
+
+In our Section 1 analysis, the results were straightforward — a simple profit-by-region table with familiar terms. You probably didn't need to ask "what does profit mean?" In practice, that won't always be the case. As your analyses grow more complex, AI responses will include terms, metrics, or methods you haven't seen before. When that happens, **stop and ask** before moving on — a misunderstood metric can send your entire analysis in the wrong direction.
+
+Here's a simple example using our dataset. When you explored the data in Part 1, you saw columns like `Sales` and `Profit`. These might seem similar — but they mean different things. Rather than guessing, ask:
+
+**Copy and paste this follow-up prompt:**
+
+<div class="callout-note">
+<div class="callout-title">Prompt Template 2: Clarify</div>
+
+```
+How is `Profit` calculated in this dataset? What's the difference between `Sales` and `Profit`?
+```
+</div>
+
+**Review the results.** Simply put: `Sales` is what you charge, `Profit` is what you keep after costs.
+
+This example is intentionally simple. In real projects, Clarify becomes essential when the AI uses terms like "profit margin," "year-over-year growth," or "statistical significance" — terms that have precise meanings you need to understand before trusting the results.
+
+Clarify is useful whenever:
+
+- A term or concept is unfamiliar
+- You're not sure what a column or metric means
+- The AI's explanation uses jargon you don't know
+
+---
+
+<h3 id="sec-explore">Explore</h3>
+
+Now let's build on our Section 1 finding. You know the West region is most profitable — but that's a surface-level observation. **Explore** means drilling into the details to understand *what's driving* the result.
+
+**Copy and paste this follow-up prompt:**
+
+<div class="callout-note">
+<div class="callout-title">Prompt Template 3: Explore</div>
+
+```
+Show me the total profit by `Sub-Category` for the 'West' region only. Present it as a sorted table.
+```
+</div>
+
+**Review the results.** Within the West region, you'll see that some sub-categories like "Copiers" are highly profitable, while others like "Bookcases" are actually losing money. Even the most profitable region has trouble spots. That's a surprising finding — but why is it happening?
+
+---
+
+<h3 id="sec-validate">Validate</h3>
+
+When a result surprises you, don't just accept it — ask the AI to explain. **Validate** means asking *"why?"* when something doesn't add up.
+
+The Explore step showed you that Bookcases are losing money in the West — the most profitable region overall. That's unexpected. Rather than guessing, ask the AI to explain what's driving the loss.
+
+**Copy and paste this follow-up prompt:**
+
+<div class="callout-note">
+<div class="callout-title">Prompt Template 4: Validate</div>
+
+```
+Why are 'Bookcases' losing money in the West region? This is the most profitable region overall, so something specific must be driving these losses. Explain what's happening.
+```
+</div>
+
+**Review the results.** The AI will dig into the data and identify the root cause. You'll likely learn that a group of orders with extremely heavy discounts (around 70%) is responsible for nearly all the losses — and that Bookcase orders at normal discount levels are actually profitable. The AI may also offer recommendations, such as capping or eliminating these deep discounts.
+
+Read the response carefully. The explanation is useful, but notice how quickly the AI jumps from diagnosis to recommendation. It identified *what* is happening (heavy discounts cause losses) and immediately suggests *what to do* (reduce discounts). But it hasn't considered *who* is getting those discounts or *why* — and that matters.
+
+---
+
+<h3 id="sec-challenge">Challenge</h3>
+
+When the AI's recommendation seems to skip a step, push back. **Never blindly trust AI's first conclusion.**
+
+The Validate step gave you a solid explanation: deep discounts are destroying Bookcase profitability. The AI may have recommended reducing or eliminating those discounts. That sounds reasonable — but it skips a critical question: *who* is getting these discounts, and *why*?
+
+Discounts are strategic decisions. Corporate clients may negotiate volume pricing. Consumer purchases may not be discounted at all. A blanket recommendation to "stop discounting" could mean losing an important customer segment. The AI doesn't know your business context — but you do.
+
+**Copy and paste this follow-up prompt:**
+
+<div class="callout-note">
+<div class="callout-title">Prompt Template 5: Challenge</div>
+
+```
+Before recommending discount changes, I need to understand why the discounting is happening. Break down Bookcase orders in the West by `Segment` (Consumer, Corporate, Home Office) and show me the average discount and profit for each. I want to know if one customer segment is driving these losses.
+```
+</div>
+
+**Review the results.** The data may surprise you. You might have expected Corporate clients to be driving the losses through negotiated volume discounts — but it's actually the **Consumer** segment that accounts for nearly all the losses, with 49 orders and the highest average discount. Home Office, with the lowest discounts, is the only profitable segment.
+
+This is an important lesson: **Challenge isn't about being right — it's about asking the question before acting.** If you had accepted the AI's initial recommendation to "cap discounts," you'd be applying the same fix to all three segments. Now you know the problem is concentrated in Consumer, which leads to a much more targeted conversation: *Why are Consumer Bookcase orders being discounted so heavily? Is it a promotion? A pricing error? A competitive response?* These are business questions that go beyond the data — and exactly the kind of questions an analyst should be asking.
+
+**The Analyst's Role:** AI excels at finding patterns (the "what") and will often jump straight to recommendations. Your job is to question those recommendations (the "why not?") before acting on them.
+
+<div class="callout-tip">
+<div class="callout-title">Validate vs. Challenge</div>
+You may notice that Validate and Challenge can feel similar — both involve questioning the AI. The difference is in your stance: **Validate** asks *"explain this to me"* (you're trying to understand), while **Challenge** says *"you're missing something"* (you're pushing back with your own knowledge). In practice, they often flow together — a Validate answer reveals a gap that leads you to Challenge.
+</div>
+
+---
+
+<h3 id="sec-practice-2">Practice Exercise 2</h3>
+
+**Time: 5 minutes**
+
+In the investigation above, you used all four follow-up types to go from a surface finding (West is most profitable) to a specific, actionable insight (Consumer Bookcase discounting is the problem). Now practice applying this yourself.
+
+**Step 1:** Start a new line of investigation in the same chat. Ask the AI:
+
+> *"Calculate the total profit for each `Category` across all regions."*
+
+You should find that **Furniture** has noticeably lower profit than the other categories.
+
+**Step 2:** Write **three follow-up prompts** — one for each type below. Each prompt should build on the previous answer, just like the Bookcase investigation did.
+
+| Your Prompt | Follow-Up Type | What You're Doing |
+|---|---|---|
+| Prompt A | **Explore** ("What else?") | Drill into Furniture to find where the losses are |
+| Prompt B | **Validate** ("Why?") | Ask the AI to explain the finding that surprises you most |
+| Prompt C | **Challenge** ("Why not?") | Push back on the AI's recommendation |
+
+<button onclick="toggleSolution('solution2')">Show Suggestions</button>
+
+<div id="solution2" style="display: none; margin-top: 10px; padding: 10px; background-color: #f0f0f0; border-left: 4px solid #4CAF50;">
+
+**Prompt A (Explore):**
+
+```
+Break down Furniture profit by Sub-Category. Show me the order count, total sales, average discount, and total profit for each.
+```
+
+**Prompt B (Validate):**
+
+Pick the sub-category that surprises you most and ask why. For example:
+
+```
+Tables has over $200K in sales but is losing the most money of any Furniture sub-category. Why? What's driving the losses?
+```
+
+**Prompt C (Challenge):**
+
+Read the AI's explanation and push back on something it assumed or skipped. For example:
+
+```
+Are the Table losses spread evenly across all regions, or is one region driving most of the problem? Break it down by Region before recommending a company-wide change.
+```
+
+Other good Challenge angles: Is one customer segment driving the losses? Are specific products responsible? Is the AI citing evidence that's actually in the data? Any prompt that asks "what are you assuming?" is a valid Challenge.
+
+</div>
+
+---
+
+<h2 id="sec-notebook">Section 3: From Chat to Notebook</h2>
+
+**Time: 20 minutes**
+
+> **Goal:** Turn an exploratory AI conversation into a reproducible notebook report.
+
+<h3 id="sec-why-notebook">Why Move to a Notebook?</h3>
+
+In Sections 1 and 2, you used AI to explore data and build insights through dialogue. That conversation was valuable — but it's trapped in a chat window. You can't re-run it with updated data. You can't share it with a colleague and have them verify your work. If someone asks "how did you get that number?", you'd have to scroll through a long conversation to find the answer.
+
+A **notebook** solves these problems:
+
+- **Reproducible** — anyone can re-run it and get the same results
+- **Editable** — you can tweak a filter or add a chart without re-prompting from scratch
+- **Shareable** — you can send it to a colleague or submit it as part of a report
+
+The workflow is simple: explore in the chatbot, then move the final analysis into a notebook.
+
+---
+
+<h3 id="sec-get-code">Part 1: Get the Code</h3>
+
+Go back to your **Section 2 Gemini conversation** — the one where you investigated Bookcase profitability in the West region. You've already done the hard work of exploring, validating, and challenging. Now you need the code behind it.
+
+**Look for the code first.** Many AI tools show the code they used during the conversation — for example, Gemini has a "Show code" link you can expand. If you see it, copy it directly.
+
+**If the code isn't visible**, ask for it:
+
+<div class="callout-note">
+<div class="callout-title">Prompt Template 6: Request Code</div>
+
+```
+Give me the complete Python code for this analysis as a single script. It should:
+1. Load the data
+2. Calculate total profit by Region
+3. Break down the West region by Sub-Category
+4. Analyze why Bookcases are losing money (discount patterns)
+5. Break down Bookcase orders by Segment with average discount and profit
+
+Include comments explaining each step.
+```
+</div>
+
+**Copy the code** to your clipboard.
+
+<div class="callout-tip">
+<div class="callout-title">Verify Before You Move On</div>
+Before copying, quickly scan the code or ask the AI to walk you through it. Does it match the analysis you did in the conversation? This is a good habit — AI sometimes generates code that doesn't quite match the dialogue, especially in long conversations.
+</div>
+
+---
+
+<h3 id="sec-colab-setup">Part 2: Set Up Google Colab</h3>
+
+Navigate to [**colab.research.google.com**](http://colab.research.google.com/) and sign in (or your preferred notebook environment — see Appendix for alternatives).
+
+**Create a new notebook:**
+
+- Click **"New notebook"** (in the popup) or go to **File → New notebook**
+
+**Upload your data:**
+
+- Click the **folder icon** on the left side to open the file browser
+- Click **"Upload to session storage"** (page with arrow pointing up)
+- Select `Superstore.xlsx`
+- After uploading, you should see the file appear in the file browser under `/content/`
+
+<div class="callout-note">
+<div class="callout-title">Adapting AI Code for Colab</div>
+The code from your AI chatbot likely won't run as-is in Colab. This is normal — here are the two most common fixes:
+
+**File path:** Colab stores uploaded files at `/content/Superstore.xlsx`. If the code uses a different path, update it.
+
+**File format:** AI chatbots often convert your Excel file into CSVs internally, so the code may use `pd.read_csv('Superstore.xlsx - Orders.csv')`. In Colab, you have the original Excel file, so you'll need to use `pd.read_excel()` instead:
+
+```python
+orders_df = pd.read_excel('/content/Superstore.xlsx', sheet_name='Orders')
+```
+
+If you're unsure how to make these changes, paste the AI's code into your chatbot and ask: *"I need to run this in Google Colab where the data is a single Excel file at `/content/Superstore.xlsx`. Update the code for me."*
+</div>
+
+<div class="callout-tip">
+<div class="callout-title">Shortcut: Gemini in Colab</div>
+Google Colab has Gemini built in — you can ask it questions and generate code directly in your notebook without switching back to the chatbot. This can simplify the workflow since Colab's Gemini already knows your file paths and environment. Note that other notebook environments may not have a built-in AI assistant.
+</div>
+
+---
+
+<h3 id="sec-build-analysis">Part 3: Build Your Notebook Step-by-Step</h3>
+
+Don't paste all the code into one cell. A good notebook tells a story — break it into logical steps with explanations in between.
+
+Here's the structure for our Bookcase investigation:
+
+**Text Cell** — click **"+ Text"** and write:
+
+> *# West Region Bookcase Investigation*
+>
+> *This analysis investigates why Bookcases are unprofitable in the West region despite it being the most profitable region overall.*
+
+**Code Cell 1: Load the data**
+
+Paste the import and data loading lines. Click the **play button** to run.
+
+**Text Cell:**
+
+> *First, let's see which regions are most profitable overall.*
+
+**Code Cell 2: Profit by Region**
+
+Paste the code that calculates profit by region. Run it.
+
+**Text Cell:**
+
+> *The West region is most profitable. Let's drill into its sub-categories to see if there are problem areas.*
+
+**Code Cell 3: West region by Sub-Category**
+
+Paste the code for the sub-category breakdown. Run it.
+
+**Continue this pattern** for the remaining steps (order-level detail, segment breakdown). Each code cell should do one thing, and each text cell should explain what you just learned or what you're about to do next.
+
+<div class="callout-tip">
+<div class="callout-title">How to Split the Code</div>
+The AI likely gave you one long script. To split it into cells, look for natural breakpoints: wherever a new question is being answered or a new calculation starts, that's a new cell. You don't need to understand every line — just identify where one step ends and the next begins.
+</div>
+
+---
+
+<h3 id="sec-debugging">Part 4: Debug When Things Break</h3>
+
+When you paste AI-generated code into a notebook, errors are common. File paths may differ, a library might not be installed, or the code may reference a variable from an earlier step that you split into a different cell. **This is normal.**
+
+By building your notebook one cell at a time, you know exactly which step failed.
+
+**The Debugging Workflow:**
+
+1. **Copy both the code cell and the full error message**
+2. **Paste them into your AI chatbot**
+3. **Ask:**
+   > *"I ran this code in Google Colab and got the following error. Can you explain what went wrong and give me the corrected code?"*
+
+The AI will explain the error and provide a fix. Paste the corrected code back into your notebook and run it again.
+
+---
+
+<h3 id="sec-practice-3">Practice Exercise 3</h3>
+
+**Time: 10 minutes**
+
+**Your task:** Create a notebook for the Furniture investigation you did in Practice Exercise 2.
+
+**Steps:**
+
+1. Go back to your Exercise 2 Gemini conversation
+2. Ask the AI for the complete Python code
+3. Create a new Colab notebook and upload the data
+4. Build the notebook step-by-step: one code cell per analysis step, with text cells explaining your findings
+
+If you run into errors, use the debugging workflow from Part 4.
+
+---
+
+<h2 id="sec-workflow">Section 4: Putting It All Together</h2>
+
+**Time: 5 minutes**
+
+### What You Learned
+
+You started with a simple question — *which region is most profitable?* — and through a series of follow-up questions, uncovered that Consumer Bookcase orders with 70% discounts were destroying profitability in the West region. Then you turned that investigation into a reproducible notebook.
+
+That's the AI-augmented analytics workflow:
+
+```
+Dialogue (COR) → Document in a notebook
+```
+
+### The Skills
+
+**COR Framework** — Give the AI **Context** (who you are, what you're working on), state your **Objective** (what you want and why), then **Refine** through follow-up.
+
+**Four types of follow-up:**
+
+| Type | Your instinct | What you ask |
+|------|--------------|--------------|
+| **Clarify** | "What?" | I don't understand something — explain it |
+| **Explore** | "What else?" | Show me more data — drill deeper |
+| **Validate** | "Why?" | That's surprising — explain why |
+| **Challenge** | "Why not?" | You're missing something — what about this angle? |
+
+**Chat to notebook** — Get the code from your AI conversation, split it into logical cells in Colab, and add text explaining your findings and reasoning.
+
+### Applying This to Your Own Work
+
+The Superstore dataset was a training example. When you apply this workflow to your own data:
+
+1. **Start with a question** — not "analyze this data" but a specific business question with context and purpose (COR)
+2. **Follow up** — your first result is a starting point, not an answer. Use Clarify, Explore, Validate, and Challenge to dig deeper
+3. **Preserve your work** — move the final analysis into a notebook so it's reproducible, editable, and shareable
+
+<div class="callout-tip">
+<div class="callout-title">Other Tools</div>
+This guide used Google Gemini and Google Colab, but the workflow is tool-agnostic. The COR framework and follow-up types work equally well with ChatGPT, Claude, or Microsoft Copilot. For notebooks, Kaggle Notebooks and Anaconda are alternatives to Colab (though other environments may not have a built-in AI assistant). See the Appendix for links.
+</div>
+
+---
+
+<h2 id="sec-appendix">Appendix: Resources</h2>
+
+### Sample Data
+
+**Download:** [Superstore.xlsx](Superstore.xlsx)
+
+**Citation:** Tableau Software. (2021). Sample - Superstore.xls. Retrieved from https://www.tableau.com
+
+---
+
+<h3 id="sec-templates">All Prompt Templates</h3>
+
+**Quick Reference for Copy-Pasting**
+
+| Template | Use Case |
+|----------|----------|
+| **Template 1** | Initial analysis request (COR) |
+| **Template 2** | Clarify: ask AI to explain something you don't understand |
+| **Template 3** | Explore: drill down into more detail |
+| **Template 4** | Validate: ask AI to explain a surprising finding |
+| **Template 5** | Challenge: push back using your own knowledge |
+| **Template 6** | Request complete Python code for notebook |
+
+---
+
+<h3 id="sec-notebook-environments">Notebook Environments</h3>
+
+| Environment | Type | Best For |
+|---|---|---|
+| [**Google Colab**](https://colab.research.google.com) | Cloud | Beginners; no setup required |
+| [**Kaggle Notebooks**](https://www.kaggle.com/code) | Cloud | Free GPU; public datasets |
+| [**Anaconda**](https://www.anaconda.com) | Local | Working offline; full control |
+
+---
+
+<h3 id="sec-optional-reading">Optional Reading</h3>
+
+**Anthropic AI Fluency: Framework & Foundations**
+[anthropic.skilljar.com/ai-fluency-framework-foundations](https://anthropic.skilljar.com/ai-fluency-framework-foundations)
+
+The broader conceptual framework behind effective AI interaction. COR is designed as a practical prompting tool for analytics work; this course provides the fuller AI literacy context, including the Diligence dimension (ethics, bias, and responsible use) not explicitly covered in this guide.
+
+---
+
+<h3 id="sec-data-dictionary">Data Dictionary</h3>
+
+| Field Name | Type | Description |
+|------------|------|-------------|
+| Order ID | Categorical | Unique identifier for each customer order |
+| Order Date | Categorical | Calendar date the order was placed |
+| Ship Mode | Categorical | Shipping method (First Class, Standard Class, etc.) |
+| Customer ID | Categorical | Unique ID for each customer |
+| Customer Name | Categorical | Full name of the customer |
+| Segment | Categorical | Consumer, Corporate, or Home Office |
+| City | Categorical | City where order was delivered |
+| State | Categorical | U.S. state of delivery |
+| Region | Categorical | East, West, Central, or South |
+| Category | Categorical | Furniture, Office Supplies, or Technology |
+| Sub-Category | Categorical | Specific product type (Binders, Phones, etc.) |
+| Product Name | Categorical | Full name of the product |
+| Sales | Numerical | Total sales amount for the line item |
+| Quantity | Numerical | Number of units sold |
+| Discount | Numerical | Discount applied (0 to 1) |
+| Profit | Numerical | Profit earned (can be negative) |
+
+---
+
