@@ -35,7 +35,7 @@ const pageSections = Array.isArray(sections) ? sections : [];
 // ---- SEO ----
 // Every page needs its own description: eleven pages sharing one string is a
 // duplicate-description problem, and search engines tend to discard them.
-const SITE_NAME = "Dr. Jiang 'John' Li";
+const SITE_NAME = 'Dr. Jiang Li';
 const DEFAULT_DESCRIPTION =
   'Program Chair for Analytics Programs at Franklin University | Data Science Educator | Former Industry Data Scientist';
 const metaDescription = description ?? DEFAULT_DESCRIPTION;
@@ -49,7 +49,11 @@ const pageTitle = title ?? SITE_NAME;
 const personSchema = {
   '@context': 'https://schema.org',
   '@type': 'Person',
-  name: "Jiang 'John' Li",
+  name: 'Jiang Li',
+  // Kept so anyone who knows him as "John" still finds the right person; it is
+  // metadata only and never rendered. Dropped from display 2026-10-06 because
+  // there is now another John on the team.
+  alternateName: "Jiang 'John' Li",
   honorificPrefix: 'Dr.',
   jobTitle: 'Program Chair, Analytics Programs',
   worksFor: { '@type': 'CollegeOrUniversity', name: 'Franklin University' },
@@ -115,7 +119,7 @@ const navLinks = [
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={metaDescription} />
-    <meta name="author" content="Jiang 'John' Li" />
+    <meta name="author" content="Jiang Li" />
     <link rel="canonical" href={canonical} />
     <title>{pageTitle}</title>
 
