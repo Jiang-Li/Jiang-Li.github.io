@@ -1,0 +1,441 @@
+---
+/**
+ * Docs-style layout for the four /teach/ guides.
+ *
+ * It does NOT fork Layout.astro — it renders Layout with `variant="guide"` so
+ * <head>, Google Analytics, favicon, navbar, Pagefind search and footer all
+ * stay in one place. Everything added here goes through Layout's `sidebar`,
+ * `content-top` and `content-bottom` slots.
+ */
+import Layout from './Layout.astro';
+import { findGuide, guideNeighbours, guideSections, guides } from '../data/guides';
+
+const { frontmatter, headings = [], file } = Astro.props;
+const title = frontmatter?.title ?? Astro.props.title;
+
+const guide = findGuide(file, Astro.url.pathname);
+if (!guide) {
+  throw new Error(
+    `GuideLayout was used by a page that is not in src/data/guides.ts (file: ${file ?? Astro.url.pathname}). ` +
+      'Add it to the manifest or use Layout.astro instead.',
+  );
+}
+
+const sections = guideSections(guide.slug, headings);
+const { prev, next } = guideNeighbours(guide.slug);
+---
+
+<Layout frontmatter={frontmatter} title={title} variant="guide">
+  <Fragment slot="sidebar">
+    <div class="guide-sidebar" data-pagefind-ignore>
+      <button
+        type="button"
+        class="guide-nav-toggle"
+        aria-expanded="false"
+        aria-controls="guide-nav"
+      >
+        <span class="guide-nav-current">{sections[0]?.text ?? guide.title}</span>
+        <span class="guide-nav-caret" aria-hidden="true">▾</span>
+      </button>
+      <nav id="guide-nav" class="guide-nav" aria-label="Guide contents">
+        <p class="guide-nav-heading">Teaching Guides</p>
+        <ul class="guide-nav-list">
+          {
+            guides.map((g) => (
+              <li class:list={['guide-nav-item', g.slug === guide.slug && 'is-current']}>
+                <a
+                  class="guide-nav-link"
+                  href={g.href}
+                  aria-current={g.slug === guide.slug ? 'page' : undefined}
+                >
+                  {g.shortTitle}
+                </a>
+                {g.slug === guide.slug && sections.length > 0 && (
+                  <ul class="guide-section-list">
+                    {sections.map((s) => (
+                      <li>
+                        <a class="guide-section-link" href={`#${s.slug}`} data-target={s.slug}>
+                          <span class="guide-section-dot" aria-hidden="true" />
+                          <span class="guide-section-text">{s.text}</span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            ))
+          }
+        </ul>
+        {/* The flashcards app is a self-contained page under public/, not a
+            guide, so it is not in the manifest. It still has to be reachable
+            from inside a guide — without this block the only route to it is
+            scrolling to the bottom of /teach.html. */}
+        <p class="guide-nav-heading guide-nav-heading-extra">Also in Teaching</p>
+        <ul class="guide-nav-list">
+          <li class="guide-nav-item">
+            <a class="guide-nav-link" href="/teach/analytics_review/flashcards.html">
+              Concept Flashcards
+            </a>
+          </li>
+          <li class="guide-nav-item">
+            <a class="guide-nav-link" href="/teach.html">All teaching materials</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </Fragment>
+
+  <Fragment slot="content-top">
+    {/* Filled in by the progress script when localStorage has a position to offer.
+        Stays empty — and invisible — when storage is empty, blocked or throwing. */}
+    <div class="guide-resume-slot" data-pagefind-ignore></div>
+  </Fragment>
+
+  <slot />
+
+  <Fragment slot="content-bottom">
+    {
+      (prev || next) && (
+        <nav class="guide-pager" aria-label="Guide navigation" data-pagefind-ignore>
+          {prev ? (
+            <a class="guide-pager-link guide-pager-prev" href={prev.href} rel="prev">
+              <span class="guide-pager-dir">← Previous</span>
+              <span class="guide-pager-title">{prev.title}</span>
+            </a>
+          ) : (
+            <span />
+          )}
+          {next ? (
+            <a class="guide-pager-link guide-pager-next" href={next.href} rel="next">
+              <span class="guide-pager-dir">Next →</span>
+              <span class="guide-pager-title">{next.title}</span>
+            </a>
+          ) : (
+            <span />
+          )}
+        </nav>
+      )
+    }
+    <script is:inline define:vars={{ guideSlug: guide.slug }}>
+  (function () {
+    var shell = document.querySelector('.guide-shell');
+    if (!shell) return;
+
+    var nav = document.getElementById('guide-nav');
+    var navbar = document.querySelector('.site-navbar');
+    var main = document.getElementById('guide-main');
+    var toggle = document.querySelector('.guide-nav-toggle');
+    var currentLabel = document.querySelector('.guide-nav-current');
+    var links = nav ? Array.prototype.slice.call(nav.querySelectorAll('.guide-section-link')) : [];
+
+    function navH() {
+      return navbar ? navbar.getBoundingClientRect().height : 0;
+    }
+    /* Below 1024px the guide bar sticks under the navbar and covers the top of
+       the content, so both the scroll-spy line and the jump offset have to
+       clear it too — otherwise a section goes "active" while its heading is
+       still hidden behind the bar. On desktop the bar is display:none and this
+       is just navH(). */
+    function stickyH() {
+      var h = navH();
+      if (toggle && getComputedStyle(toggle).display !== 'none') {
+        h += toggle.getBoundingClientRect().height;
+      }
+      return h;
+    }
+    function reduced() {
+      try {
+        return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      } catch (e) {
+        return false;
+      }
+    }
+
+    /* Hand the sticky offsets the real navbar height. */
+    function syncNavHeight() {
+      var root = document.documentElement;
+      root.style.setProperty('--guide-navbar-h', navH() + 'px');
+      root.style.setProperty('--guide-sticky-h', stickyH() + 'px');
+    }
+    syncNavHeight();
+    window.addEventListener('resize', syncNavHeight);
+
+    /* ---------- Mobile: the sticky bar expands into the full list ---------- */
+    function closeMobileNav() {
+      if (!nav || !toggle) return;
+      nav.classList.remove('is-open');
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+    if (toggle && nav) {
+      toggle.addEventListener('click', function () {
+        var open = nav.classList.toggle('is-open');
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    }
+
+    /* ---------- Progress memory (localStorage, best effort) ---------- */
+    var STORE_KEY = 'teach-guide-progress:' + guideSlug;
+    function readStore() {
+      try {
+        var raw = window.localStorage.getItem(STORE_KEY);
+        if (!raw) return {};
+        var parsed = JSON.parse(raw);
+        return parsed && typeof parsed === 'object' ? parsed : {};
+      } catch (e) {
+        return {};
+      }
+    }
+    function writeStore(value) {
+      try {
+        window.localStorage.setItem(STORE_KEY, JSON.stringify(value));
+      } catch (e) {
+        /* private mode, blocked storage, quota — the page works without it */
+      }
+    }
+
+    var store = readStore();
+    var seen = store && typeof store.seen === 'object' && store.seen ? store.seen : {};
+    /* Snapshot the saved position before scroll-spy runs: the first sync()
+       records the section at the top of the page, which would otherwise
+       overwrite the very position the resume affordance is meant to offer. */
+    var initialLast = store.last;
+    var initialDismissed = store.dismissed;
+
+    function markVisited() {
+      for (var i = 0; i < links.length; i++) {
+        if (seen[links[i].getAttribute('data-target')]) links[i].classList.add('is-visited');
+      }
+    }
+    markVisited();
+
+    function remember(id) {
+      if (!id) return;
+      seen[id] = 1;
+      store.seen = seen;
+      store.last = id;
+      writeStore(store);
+    }
+
+    /* ---------- Scroll-spy ---------- */
+    var targets = links.map(function (a) {
+      return document.getElementById(a.getAttribute('data-target'));
+    });
+    var active = -1;
+    var locked = false;
+    var lockTimer = null;
+
+    function apply(index) {
+      if (index === active || index < 0 || index >= links.length) return;
+      active = index;
+      for (var i = 0; i < links.length; i++) {
+        if (i === index) {
+          links[i].classList.add('is-active');
+          links[i].setAttribute('aria-current', 'true');
+        } else {
+          links[i].classList.remove('is-active');
+          links[i].removeAttribute('aria-current');
+        }
+      }
+      links[index].classList.add('is-visited');
+      if (currentLabel) currentLabel.textContent = links[index].textContent.trim();
+      remember(links[index].getAttribute('data-target'));
+    }
+
+    function computeIndex() {
+      var line = stickyH() + 24;
+      var idx = 0;
+      for (var i = 0; i < targets.length; i++) {
+        if (targets[i] && targets[i].getBoundingClientRect().top - line <= 0) idx = i;
+        else break;
+      }
+      /* The last heading of a short page can never reach that line — there is
+         not enough document left to scroll. Once the page is scrolled to its
+         end, take the last heading that is actually on screen instead, so the
+         final section is reachable at all. */
+      var doc = document.documentElement;
+      if (window.innerHeight + window.pageYOffset >= doc.scrollHeight - 2) {
+        for (var j = targets.length - 1; j > idx; j--) {
+          if (targets[j] && targets[j].getBoundingClientRect().top < window.innerHeight) {
+            idx = j;
+            break;
+          }
+        }
+      }
+      return idx;
+    }
+    function sync() {
+      if (locked) return;
+      apply(computeIndex());
+    }
+
+    if (links.length && 'IntersectionObserver' in window) {
+      var observer = new IntersectionObserver(sync, {
+        rootMargin: '-' + (stickyH() + 24) + 'px 0px 0px 0px',
+        threshold: 0,
+      });
+      for (var t = 0; t < targets.length; t++) if (targets[t]) observer.observe(targets[t]);
+    }
+    /* The observer catches every heading crossing; this rAF-throttled passive
+       listener covers the one case it cannot — reaching the end of the
+       document, where nothing crosses the line any more. */
+    var ticking = false;
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(function () {
+        ticking = false;
+        sync();
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    sync();
+    window.addEventListener('resize', function () {
+      syncNavHeight();
+      sync();
+    });
+    window.addEventListener('hashchange', function () {
+      locked = false;
+      sync();
+    });
+
+    /* Clicking a sidebar link jumps and highlights at once — no flicker while
+       the smooth scroll is still travelling past intermediate headings. */
+    function goTo(id, index) {
+      var el = document.getElementById(id);
+      if (!el) return false;
+      locked = true;
+      if (lockTimer) clearTimeout(lockTimer);
+      if (typeof index === 'number') apply(index);
+      var top = el.getBoundingClientRect().top + window.pageYOffset - stickyH() - 12;
+      try {
+        window.scrollTo({ top: top, behavior: reduced() ? 'auto' : 'smooth' });
+      } catch (e) {
+        window.scrollTo(0, top);
+      }
+      try {
+        history.replaceState(null, '', '#' + id);
+      } catch (e) {
+        /* file:// and some embedded browsers reject replaceState */
+      }
+      lockTimer = setTimeout(
+        function () {
+          locked = false;
+          sync();
+        },
+        reduced() ? 150 : 700,
+      );
+      return true;
+    }
+
+    if (nav) {
+      nav.addEventListener('click', function (event) {
+        var a = event.target.closest ? event.target.closest('.guide-section-link') : null;
+        if (!a) return;
+        var id = a.getAttribute('data-target');
+        if (goTo(id, links.indexOf(a))) {
+          event.preventDefault();
+          closeMobileNav();
+        }
+      });
+    }
+
+    /* ---------- Resume affordance ---------- */
+    (function resume() {
+      var slot = document.querySelector('.guide-resume-slot');
+      if (!slot || !links.length) return;
+      var last = initialLast;
+      if (!last || last === links[0].getAttribute('data-target')) return;
+      if (initialDismissed === last) return;
+      if (window.location.hash) return; // the reader already asked for a position
+      var index = -1;
+      for (var i = 0; i < links.length; i++) {
+        if (links[i].getAttribute('data-target') === last) index = i;
+      }
+      if (index < 0) return;
+
+      var box = document.createElement('div');
+      box.className = 'guide-resume';
+      box.setAttribute('role', 'status');
+
+      var link = document.createElement('a');
+      link.className = 'guide-resume-link';
+      link.href = '#' + last;
+      link.textContent = 'Resume at ' + links[index].textContent.trim();
+      link.addEventListener('click', function (event) {
+        if (goTo(last, index)) event.preventDefault();
+        box.remove();
+      });
+
+      var close = document.createElement('button');
+      close.type = 'button';
+      close.className = 'guide-resume-dismiss';
+      close.setAttribute('aria-label', 'Dismiss resume reminder');
+      close.textContent = '×';
+      close.addEventListener('click', function () {
+        store.dismissed = last;
+        writeStore(store);
+        box.remove();
+      });
+
+      box.appendChild(link);
+      box.appendChild(close);
+      slot.appendChild(box);
+    })();
+
+    /* ---------- Copy buttons on code blocks ---------- */
+    (function copyButtons() {
+      var canCopy = false;
+      try {
+        canCopy = !!(navigator.clipboard && navigator.clipboard.writeText);
+      } catch (e) {
+        canCopy = false;
+      }
+      if (!canCopy || !main) return; // degrade silently — no broken button
+
+      var blocks = Array.prototype.slice.call(main.querySelectorAll('pre'));
+      blocks.forEach(function (pre) {
+        var wrap = document.createElement('div');
+        wrap.className = 'guide-pre';
+        pre.parentNode.insertBefore(wrap, pre);
+        wrap.appendChild(pre);
+
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'guide-copy';
+        btn.textContent = 'Copy';
+        btn.setAttribute('aria-label', 'Copy code to clipboard');
+        wrap.appendChild(btn);
+
+        var revert = null;
+        btn.addEventListener('click', function () {
+          // Copy the code only: drop visually-hidden labels and the button itself.
+          var clone = pre.cloneNode(true);
+          Array.prototype.slice
+            .call(clone.querySelectorAll('.screen-reader-only, button, .guide-copy'))
+            .forEach(function (n) {
+              n.remove();
+            });
+          var text = clone.textContent || '';
+          navigator.clipboard.writeText(text).then(
+            function () {
+              btn.textContent = 'Copied';
+              btn.setAttribute('aria-label', 'Code copied to clipboard');
+              btn.classList.add('is-done');
+              if (revert) clearTimeout(revert);
+              revert = setTimeout(function () {
+                btn.textContent = 'Copy';
+                btn.setAttribute('aria-label', 'Copy code to clipboard');
+                btn.classList.remove('is-done');
+              }, 1500);
+            },
+            function () {
+              /* permission denied at click time — leave the button as-is */
+            },
+          );
+        });
+      });
+    })();
+  })();
+    </script>
+  </Fragment>
+</Layout>

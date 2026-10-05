@@ -1,10 +1,12 @@
 ---
-layout: ../../../layouts/Layout.astro
+layout: ../../../layouts/GuideLayout.astro
 title: "Pulling ZIP-Level Census Data in Python"
+description: >-
+  Pull American Community Survey data by ZIP code in Python and compare percentages between ZIP codes, such as Spanish speakers and Medicaid coverage.
 ---
 
 <div class="callout-note">
-<div class="callout-title">Prerequisite</div>
+<div class="callout-title"><span class="screen-reader-only" data-pagefind-ignore>Note</span>Prerequisite</div>
 This guide assumes you already have an activated Census API key. If not, start with **[How to Get a U.S. Census Bureau API Key](../census-api-key/)** first.
 </div>
 
@@ -24,7 +26,7 @@ pip install censusdis pandas matplotlib
 ```
 
 <details class="callout callout-tip">
-<summary class="callout-title">No Package? A Raw-API Alternative (click to expand)</summary>
+<summary class="callout-title"><span class="screen-reader-only" data-pagefind-ignore>Tip</span>No Package? A Raw-API Alternative (click to expand)</summary>
 
 If `censusdis` won't install in your environment (its dependency chain — geopandas, Fiona, contextily — can sometimes conflict with other packages in a shared environment like Kaggle), you can hit the Census API directly with `requests` instead. It's more code, since you're doing by hand what the package normally does for you: building the query URL, parsing the raw JSON response, and converting every column from text to numbers.
 
@@ -84,7 +86,7 @@ variables = {
 ```
 
 <div class="callout-warning">
-<div class="callout-title">Double-Check Language Codes Before You Reuse Them</div>
+<div class="callout-title"><span class="screen-reader-only" data-pagefind-ignore>Warning</span>Double-Check Language Codes Before You Reuse Them</div>
 Table `C16001` is easy to get wrong: `C16001_002E` is **"Speak only English"** — the exact opposite of what you want. The Spanish-speaker count is `C16001_003E`. Always verify a variable's label at `api.census.gov/data/2024/acs/acs5/variables/<CODE>.json` before trusting it, especially for tables with many similar-looking rows.
 </div>
 
@@ -139,14 +141,14 @@ print(result.to_string(index=False))
 ```
 
 <div class="callout-important">
-<div class="callout-title">Read the count directly — don't rebuild it from a percentage</div>
+<div class="callout-title"><span class="screen-reader-only" data-pagefind-ignore>Important</span>Read the count directly — don't rebuild it from a percentage</div>
 `n_medicaid` and `n_spanish` are **counts read straight from the report** — the six `C27007` cells summed, and `C16001_003E` as-is. Report the count; then divide by total population if you want a rate. Never do the reverse: multiplying a rounded percentage back by a population to *reconstruct* a count adds rounding error, and if that population differs from the percentage's own base, it adds bias too. **Counts in, percentages out.**
 
 We divide every metric by **total population** so the percentages are all a comparable "% of all residents." Some tables have a narrower native universe — `C16001` covers only the population 5 and over, and `C27007` covers the civilian non-institutionalized population — so if you ever need the exact within-universe rate, divide by that table's own `_001E` total instead. For a single comparable base across metrics, total population is the simplest honest choice.
 </div>
 
 <div class="callout-tip">
-<div class="callout-title">A Simpler Alternative for Medicaid</div>
+<div class="callout-title"><span class="screen-reader-only" data-pagefind-ignore>Tip</span>A Simpler Alternative for Medicaid</div>
 Summing six age/sex cells from table `C27007` is the most precise way to isolate Medicaid specifically. If you just need a general "public coverage" percentage (Medicaid + Medicare + VA + other public programs combined) and don't need the Medicaid-only breakdown, the Data Profile variable **`DP03_0098PE`** gives you a pre-computed percentage directly — no summing or division required. Trade precision for simplicity depending on what your analysis needs.
 </div>
 
@@ -183,7 +185,10 @@ ax.legend()
 plt.show()
 ```
 
+<figure class="figure">
 <img src="/teach/census-zip-data/results-chart.png" alt="Comparison of Spanish-speaking and public/Medicaid insurance percentages between two ZIP codes" class="step-screenshot" />
+<figcaption>Comparison of Spanish-speaking and public/Medicaid insurance percentages between two ZIP codes</figcaption>
+</figure>
 
 If your numbers don't match: confirm you're pulling the same `vintage` (2024) — ACS estimates shift slightly with each annual data release.
 

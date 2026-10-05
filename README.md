@@ -42,7 +42,6 @@ npm run build
 │   ├── posts/               # Self-contained HTML posts (regularization, job_application, ...)
 │   ├── teach/               # Flashcards app, tutorial images, datasets
 │   └── img/                 # Images
-├── teach/franklin-course-scraper/  # Legacy course scraper (not wired to any page)
 └── .github/workflows/       # Build & deploy to GitHub Pages
 ```
 

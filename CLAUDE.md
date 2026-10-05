@@ -37,7 +37,6 @@ npm run build
 | `src/styles/global.css` | Global styles |
 | `public/posts/` | Self-contained HTML posts linked from `post.mdx` |
 | `public/teach/analytics_review/flashcards.html` | Flashcards app |
-| `teach/franklin-course-scraper/` | Legacy scraper (not wired to any page) |
 
 ## Conventions
 

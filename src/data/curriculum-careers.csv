@@ -1,0 +1,19 @@
+program,level,course,skills,roles
+M.S. in Business Analytics,MS,MATH 601 – Introduction to Analytics,"Statistics, inference, regression, data ethics; statistical software",Business / Data Analyst (foundation)
+M.S. in Business Analytics,MS,DATA 630 – Applied Database Management,"SQL, relational database design, data warehousing","Data Analyst, BI Analyst, Business Systems Analyst"
+M.S. in Business Analytics,MS,DATA 605 – Data Visualization & Reporting,"Tableau, dashboards, data storytelling","BI Analyst, Data Visualization Analyst"
+M.S. in Business Analytics,MS,DATA 610 – Big Data Analytics & Data Mining,"Python, data mining, machine learning, big / unstructured data","Data Scientist, Data Analyst, Analytics Specialist"
+M.S. in Business Analytics,MS,BUSA 603 – Marketing Management & Analytics,"AI-based marketing analytics tools, Google Analytics, campaign / ROI analytics",Market Research / Marketing Analytics Specialist
+M.S. in Business Analytics,MS,BUSA 604 – Financial Decision Modeling,"Excel, financial modeling, forecasting, Monte Carlo, regression","Financial Analyst, Budget Analyst, FP&A"
+M.S. in Business Analytics,MS,BUSA 605 – Business Analytics Strategy,"AI-driven strategic framing, analytics strategy, case studies","Analytics Consultant, Management Analyst"
+M.S. in Business Analytics,MS,BUSA 695 – Capstone in Business Analytics,"Excel, Tableau, Python; applied AI project + portfolio","Management Analyst, Analytics Consultant"
+B.S. in Analytics,BS,BUSA 250 – SQL for Business,SQL; data querying and exploration for business problem-solving,"Data Analyst, BI Analyst, Business Systems Analyst"
+B.S. in Analytics,BS,COMP 101 – Problem Solving With Computing,"Structured/algorithmic thinking; programming foundations (variables, functions, arrays)",Foundation for all analyst roles
+B.S. in Analytics,BS,DATA 300 – Introduction to Analytics,"Business problem framing, data wrangling, descriptive & inferential statistics, data visualization, data storytelling; AI-Augmented Analytics framework","Business Analyst, Data Analyst"
+B.S. in Analytics,BS,DATA 310 – Data Visualization,"Tableau / Power BI, dashboards, data storytelling","BI Analyst, Data Visualization Analyst"
+B.S. in Analytics,BS,BUSA 350 – Principles of Analytics Modeling,"AI literacy and AI communication, machine-learning fundamentals, model interpretation, analytics framing; Dataiku — no programming required","Data Analyst, Analytics Specialist"
+B.S. in Analytics,BS,DATA 400 – Principles of Machine Learning,"Python; machine-learning algorithms, prediction models, performance metrics","Data Scientist, ML-focused Analyst"
+B.S. in Analytics,BS,DATA 450 – Advanced Topics in Analytics,"Big-data platforms, model interpretation, simulation, optimization, analytics reporting","Data Scientist, Analytics Specialist"
+B.S. in Analytics,BS,DATA 495 – Analytics Capstone,End-to-end applied project — problem framing through model interpretation — plus portfolio,"Management Analyst, Analytics Consultant"
+B.S. in Analytics,BS,MATH 254 – Mathematics for Data Analytics,"Calculus, linear algebra, probability distributions for modeling","Statistician, Data Scientist (foundation)"
+B.S. in Analytics,BS,CYSC 250 – Cybersecurity for the Professions,"Data security, governance, risk management, privacy & ethics",Data-governance / risk-aware analyst roles

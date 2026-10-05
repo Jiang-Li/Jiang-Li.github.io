@@ -5,13 +5,165 @@
    SCSS variable defaults were Bootstrap-only; rules use hex values.
    ============================================================ */
 
+/* ============================================================
+   Element-level base layer.
+
+   Bootstrap (Quarto's cosmo theme) used to supply all of this; the
+   migration to Tailwind 4 dropped it and Tailwind's preflight actively
+   resets most of it. Every value below is the live site's computed
+   value (https://jiang-li.github.io/), measured in headless Chrome.
+
+   SPECIFICITY CONTRACT — read before editing:
+   these rules use bare type selectors (0-0-1) and sit ABOVE every
+   class rule in this file, so any `.foo` rule (0-1-0) later in the
+   file wins both on specificity and on source order. Do NOT rewrite
+   them as `.page-main a`, `.page-main h2`, … (0-1-1) — that would
+   silently override .btn-professional, .hero-right a, .callout-title
+   and friends. The rules are unlayered, which beats Tailwind's
+   `@layer base` preflight regardless of order.
+   ============================================================ */
+
+:root {
+  /* Bootstrap's --bs-root-font-size on the live site. Every `rem` in
+     this file is calibrated against it. */
+  font-size: 17px;
+}
+
 body {
   font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: var(--fr-text);
+  background-color: #fff;
+  line-height: 1.5;
+}
+
+/* ---------- Body links ---------- */
+/* Tailwind preflight sets a{color:inherit;text-decoration:inherit}. */
+a {
+  color: var(--fr-blue);
+  text-decoration: underline;
+}
+a:hover {
+  color: #002B54;
+}
+
+/* ---------- Headings ---------- */
+/* Preflight flattens these to h1,…,h6{font-size:inherit;font-weight:inherit}. */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  line-height: 1.2;
+  color: inherit;
+}
+h1,
+h2 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+h2 {
+  font-size: 1.65rem;
+  border-bottom: 1px solid #dee2e6;
+  padding-bottom: 0.5rem;
+}
+h3 {
+  font-size: 1.45rem;
+}
+h3,
+h4 {
+  opacity: 0.9;
+  margin-top: 1.5rem;
+}
+h4 {
+  font-size: 1.25rem;
+}
+h5 {
+  font-size: 1.1rem;
+}
+h6 {
+  font-size: 1rem;
+}
+
+/* ---------- Paragraphs ---------- */
+/* Preflight zeroes every margin via `*{margin:0}`. */
+p {
+  margin-bottom: 1rem;
+}
+
+/* ---------- Lists ---------- */
+/* Preflight sets ol,ul,menu{list-style:none;margin:0;padding:0}; without
+   this the numbered tutorial steps lose their numbers entirely. */
+ul,
+ol {
+  padding-left: 2rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+ul {
+  list-style-type: disc;
+}
+ol {
+  list-style-type: decimal;
+}
+
+/* ---------- Tables ---------- */
+table {
+  border-top: 1px solid #d6d8d9;
+  border-bottom: 1px solid #d6d8d9;
+}
+thead {
+  border-bottom: 1px solid #9a9da0;
+}
+th,
+td {
+  padding: 0.5rem;
+}
+th {
+  border-bottom: 1px solid #9a9da0;
+  vertical-align: bottom;
+  text-align: left;
+}
+td {
+  border-bottom: 1px solid #d6d8d9;
+  vertical-align: top;
+}
+
+/* ---------- Inline code ---------- */
+/* `:not(pre) > code` is (0,0,2) and structurally excludes highlighted
+   code blocks, matching Bootstrap/Quarto's `code:not(.sourceCode)`. */
+:not(pre) > code {
+  font-size: 0.875em;
+  color: var(--fr-navy);
+  background-color: rgba(233, 236, 239, 0.65);
+  padding: 0.175rem;
+  border-radius: 0.2rem;
+  word-wrap: break-word;
+}
+
+/* ---------- Rules ---------- */
+hr {
+  margin: 1rem 0;
+  color: inherit;
+  border: 0;
+  border-top: 1px solid;
+  opacity: 0.25;
+}
+
+/* ---------- Blockquotes ---------- */
+blockquote {
+  margin: 0 0 1rem;
+  padding: 0.625rem 1.5rem 0.625rem 1rem;
+  border-left: 0.25rem solid #e9ecef;
+  color: var(--fr-muted);
 }
 
 /* ---------- Navbar ---------- */
 .site-navbar {
-  background: #1f4e79;
+  background: #002B54;
   color: white;
   position: sticky;
   top: 0;
@@ -51,6 +203,8 @@ body {
 .nav-icon-btn {
   background: transparent;
   border: none;
+  /* guards the <a class="nav-icon-btn"> icons against the base `a` rule */
+  text-decoration: none;
   color: rgba(255, 255, 255, 0.9);
   cursor: pointer;
   padding: 0.45rem;
@@ -99,7 +253,15 @@ body {
 .search-panel.open {
   display: block;
 }
-.search-panel .pagefind-ui {
+/* Pagefind's component UI emits `.pf-searchbox`, never `.pagefind-ui` —
+   the old selector matched nothing, so the box sat left-aligned at 480px.
+   Its own rule is `:is(*,#\#):is(*,#\#):is(*,#\#) .pf-searchbox` (3-1-0),
+   unbeatable by a sane selector, but it reads a custom property for the
+   width. So: cap + centre the custom-element host, and hand the inner box
+   the matching width through the variable. */
+.search-panel pagefind-searchbox {
+  --pf-searchbox-max-width: 720px;
+  display: block;
   max-width: 720px;
   margin: 0 auto;
 }
@@ -110,14 +272,57 @@ body {
   margin: 0 auto;
   padding: 1.5rem 1rem 2rem;
 }
-.page-main img {
+/* Default for plain content images. Scoped with :not([class]) on purpose:
+   the previous `.page-main img` (0-1-1) outranked .step-screenshot and
+   .profile-photo (0-1-0) and silently defeated both. */
+.page-main img:not([class]) {
   max-width: 100%;
   height: auto;
+}
+/* The live census-api-key page scoped `img{width:200px;display:block;
+   margin:0 auto}` to itself; its one plain figure image is the only
+   unclassed <img> on the site. */
+.page-main figure.figure > img:not([class]) {
+  width: 200px;
+  display: block;
+  margin: 0 auto;
+}
+
+/* ---------- Page title block (parity with Quarto's #title-block-header) ---------- */
+.page-main > h1.title {
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+.page-main > p.subtitle {
+  margin-top: 0.25em;
+  margin-bottom: 0.5em;
+}
+.page-main > p.subtitle.lead,
+.page-main .lead {
+  font-size: 1.25rem;
+  font-weight: 400;
+}
+.page-main > h1.title + p.subtitle {
+  margin-bottom: 1rem;
+}
+
+/* ---------- Figures with captions (parity with Quarto's figure.figure) ---------- */
+.page-main figure.figure {
+  display: block;
+  margin: 0 0 1rem;
+}
+.page-main figure.figure > figcaption {
+  font-size: 0.9rem;
+  color: hsl(210, 10.3%, 47.7%);
+  margin-top: 0.25rem;
 }
 
 /* ---------- Footer ---------- */
 .page-footer {
-  background: #343a40;
+  background: #002B54;
   color: white;
   padding: 2rem 0;
   margin-top: 2rem;
@@ -133,7 +338,7 @@ body {
   align-items: center;
 }
 .page-footer a {
-  color: #adb5bd;
+  color: var(--fr-blue-light);
   text-decoration: none;
 }
 .page-footer a:hover {
@@ -147,6 +352,19 @@ body {
   text-align: right;
 }
 
+/* ---------- Accessibility helpers ---------- */
+/* Visually hidden, still read by screen readers (Quarto's callout type labels). */
+.screen-reader-only {
+  position: absolute;
+  clip: rect(0 0 0 0);
+  border: 0;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  width: 1px;
+}
+
 /* ---------- Quarto callouts ---------- */
 .callout-note,
 .callout-tip,
@@ -154,11 +372,11 @@ body {
 .callout-important,
 .callout-caution {
   border: 1px solid #dee2e6;
-  border-left: 4px solid #1f4e79;
+  border-left: 4px solid var(--fr-blue);
   border-radius: 6px;
   padding: 1rem 1.25rem;
   margin: 1.25rem 0;
-  background: #f8f9fa;
+  background: var(--fr-surface);
 }
 .callout-tip {
   border-left-color: #28a745;
@@ -173,7 +391,7 @@ body {
 .callout-title {
   font-weight: 700;
   margin-bottom: 0.5rem;
-  color: #1f4e79;
+  color: var(--fr-blue);
 }
 
 /* ---------- Page-specific styles (from inline <style> blocks) ---------- */
@@ -183,6 +401,10 @@ body {
 .step-screenshot {
   width: 100% !important;
   max-width: 700px;
+  height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* ============================================================
@@ -191,7 +413,7 @@ body {
 
 /* Hero section styling */
 .hero-section {
-  background: linear-gradient(135deg, #1f4e79 0%, #2c5aa0 100%);
+  background: linear-gradient(135deg, var(--fr-blue) 0%, var(--fr-navy) 100%);
   color: white;
   padding: 2rem 0;
   margin-bottom: 2rem;
@@ -238,7 +460,7 @@ body {
   font-weight: 600;
 }
 .hero-right a {
-  color: #87ceeb;
+  color: var(--fr-blue-light);
   text-decoration: underline;
 }
 .hero-right a:hover {
@@ -307,7 +529,7 @@ body {
   padding: 1.8rem;
   margin-bottom: 1.5rem;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-  border-left: 4px solid #1f4e79;
+  border-left: 4px solid var(--fr-blue);
   transition: transform 0.2s ease-in-out;
   height: 100%;
 }
@@ -318,17 +540,17 @@ body {
 .achievement-card h3 {
   font-size: 1.3rem;
   margin-bottom: 1rem;
-  color: #1f4e79;
+  color: var(--fr-blue);
 }
 .achievement-icon {
   font-size: 2rem;
-  color: #1f4e79;
+  color: var(--fr-blue);
   margin-bottom: 0.8rem;
 }
 
 /* Professional buttons */
 .btn-professional {
-  background: #1f4e79;
+  background: var(--fr-blue);
   border: none;
   color: white;
   padding: 10px 24px;
@@ -341,7 +563,7 @@ body {
   transition: all 0.3s ease;
 }
 .btn-professional:hover {
-  background: #2c5aa0;
+  background: var(--fr-navy);
   color: white;
   text-decoration: none;
   transform: translateY(-1px);
@@ -349,8 +571,8 @@ body {
 }
 .btn-outline-professional {
   background: transparent;
-  border: 2px solid #1f4e79;
-  color: #1f4e79;
+  border: 2px solid var(--fr-blue);
+  color: var(--fr-blue);
   padding: 8px 22px;
   border-radius: 5px;
   font-weight: 600;
@@ -361,7 +583,7 @@ body {
   transition: all 0.3s ease;
 }
 .btn-outline-professional:hover {
-  background: #1f4e79;
+  background: var(--fr-blue);
   color: white;
   text-decoration: none;
 }
@@ -373,20 +595,20 @@ body {
 .section-title {
   font-size: 2rem;
   font-weight: 700;
-  color: #1f4e79;
+  color: var(--fr-blue);
   margin-bottom: 1rem;
   text-align: center;
 }
 .section-subtitle {
   font-size: 1.1rem;
-  color: #6c757d;
+  color: var(--fr-muted);
   margin-bottom: 2.5rem;
   text-align: center;
 }
 
 /* Stats section */
 .stats-section {
-  background: #f8f9fa;
+  background: var(--fr-surface);
   padding: 2.5rem 0;
   margin: 2rem 0;
 }
@@ -397,12 +619,12 @@ body {
 .stat-number {
   font-size: 2.2rem;
   font-weight: 700;
-  color: #1f4e79;
+  color: var(--fr-blue);
   display: block;
 }
 .stat-label {
   font-size: 0.9rem;
-  color: #6c757d;
+  color: var(--fr-muted);
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-top: 0.5rem;
@@ -410,7 +632,7 @@ body {
 
 /* Contact section */
 .contact-section {
-  background: #1f4e79;
+  background: var(--fr-blue);
   color: white;
   padding: 2.5rem 0;
   margin-top: 2rem;
@@ -419,7 +641,7 @@ body {
 /* Professional experience styling */
 .content-section h3 {
   font-size: 1.4rem;
-  color: #1f4e79;
+  color: var(--fr-blue);
   margin-bottom: 0.8rem;
   margin-top: 1.5rem;
 }
@@ -510,10 +732,1138 @@ body {
   overflow-wrap: break-word !important;
   max-width: 100% !important;
 }
+/* Shiki writes its theme background straight onto the <pre> as an inline
+   style, which no selector can outrank — hence !important. The target is
+   the live site's code container: rgba(233,236,239,.65) + a 1px border. */
 .page-main pre {
-  background: #f6f8fa;
+  background: rgba(233, 236, 239, 0.65) !important;
   border: 1px solid #dee2e6;
   border-radius: 6px;
   padding: 1rem;
   font-size: 0.85rem;
+}
+
+/* ============================================================
+   DOCS LAYOUT — /teach/ guides only.
+
+   Everything below is reached only through GuideLayout.astro
+   (`.guide-shell`, `.guide-main`, `.guide-*`). No selector here matches
+   anything on Home, FAQ, Courses, Research, Posts or the /teach.html hub:
+   those keep `.page-main`'s 1100px column untouched.
+
+   Palette is the site's own: var(--fr-blue) primary, var(--fr-surface) surface,
+   #dee2e6 rule, var(--fr-muted) muted. No new visual language.
+   ============================================================ */
+
+:root {
+  /* Overwritten at runtime with the real sticky-navbar height. */
+  --guide-navbar-h: 56px;
+  --guide-sticky-h: 56px;
+}
+
+/* 248 sidebar + 2rem gap + 800 content — sized so the pair centres with no
+   dead space on the right. */
+.guide-shell {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+/* Narrower, more readable measure than the 1100px personal-homepage column. */
+.guide-main {
+  max-width: 800px;
+  min-width: 0;
+  flex: 1 1 auto;
+  margin: 0;
+}
+
+/* Clear the sticky navbar when an anchor is jumped to directly. */
+/* --guide-sticky-h is the navbar plus, below 1024px, the guide bar under it. */
+.guide-main h2,
+.guide-main h3 {
+  scroll-margin-top: calc(var(--guide-sticky-h, var(--guide-navbar-h)) + 1rem);
+}
+
+/* ---------- Sidebar ---------- */
+.guide-sidebar {
+  flex: 0 0 248px;
+  width: 248px;
+  position: sticky;
+  top: var(--guide-navbar-h);
+  max-height: calc(100vh - var(--guide-navbar-h));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 1.5rem 0 2rem 1rem;
+  font-size: 0.9rem;
+}
+
+.guide-nav-heading {
+  margin: 0 0 0.75rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fr-muted);
+}
+
+.guide-nav-list,
+.guide-section-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.guide-nav-item + .guide-nav-item {
+  margin-top: 0.1rem;
+}
+
+.guide-nav-link {
+  display: block;
+  padding: 0.35rem 0.6rem;
+  border-radius: 4px;
+  color: var(--fr-text);
+  text-decoration: none;
+  font-weight: 500;
+  line-height: 1.35;
+}
+.guide-nav-link:hover {
+  background: #f1f3f5;
+  color: var(--fr-blue);
+  text-decoration: none;
+}
+.guide-nav-item.is-current > .guide-nav-link {
+  color: var(--fr-blue);
+  font-weight: 700;
+}
+
+.guide-section-list {
+  margin: 0.25rem 0 0.9rem;
+  border-left: 1px solid #dee2e6;
+  padding-left: 0;
+}
+
+.guide-section-link {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  padding: 0.3rem 0.5rem 0.3rem 0.75rem;
+  margin-left: -1px;
+  border-left: 2px solid transparent;
+  color: var(--fr-text);
+  text-decoration: none;
+  font-size: 0.85rem;
+  line-height: 1.35;
+}
+.guide-section-link:hover {
+  color: var(--fr-blue);
+  text-decoration: none;
+}
+.guide-section-link.is-active {
+  color: var(--fr-blue);
+  font-weight: 600;
+  border-left-color: var(--fr-blue);
+  background: var(--fr-surface);
+}
+
+/* The ● marker: a quiet dot for a section already read, solid for the one
+   in view. Progress memory is a convenience, so it must read as a hint. */
+.guide-section-dot {
+  flex: 0 0 auto;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: transparent;
+  transform: translateY(-1px);
+}
+.guide-section-link.is-visited .guide-section-dot {
+  background: var(--fr-blue-light);
+}
+.guide-section-link.is-active .guide-section-dot {
+  background: var(--fr-blue);
+}
+
+.guide-section-text {
+  min-width: 0;
+}
+
+/* ---------- Mobile sticky bar (the "where am I" indicator) ---------- */
+.guide-nav-toggle {
+  display: none;
+}
+
+/* ---------- Resume affordance ---------- */
+.guide-resume {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0 0 1.25rem;
+  padding: 0.55rem 0.85rem;
+  background: var(--fr-surface);
+  border: 1px solid #dee2e6;
+  border-left: 4px solid var(--fr-blue);
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+.guide-resume-link {
+  flex: 1 1 auto;
+  color: var(--fr-blue);
+  font-weight: 600;
+}
+.guide-resume-dismiss {
+  flex: 0 0 auto;
+  background: transparent;
+  border: 0;
+  color: var(--fr-muted);
+  font-size: 1.1rem;
+  line-height: 1;
+  padding: 0.2rem 0.35rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.guide-resume-dismiss:hover {
+  color: var(--fr-text);
+  background: #e9ecef;
+}
+
+/* ---------- Copy-to-clipboard on code blocks ---------- */
+/* The wrapper is created by script, so a no-JS / no-clipboard browser never
+   gets the extra padding or an invisible button. */
+.guide-pre {
+  position: relative;
+}
+.guide-pre > pre {
+  padding-right: 4.75rem;
+}
+.guide-copy {
+  position: absolute;
+  top: 0.45rem;
+  right: 0.45rem;
+  padding: 0.2rem 0.55rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--fr-blue);
+  background: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s ease-in-out;
+}
+.guide-pre:hover .guide-copy,
+.guide-pre:focus-within .guide-copy,
+.guide-copy:focus,
+.guide-copy.is-done {
+  opacity: 1;
+}
+.guide-copy:hover {
+  background: var(--fr-blue);
+  color: #fff;
+  border-color: var(--fr-blue);
+}
+.guide-copy.is-done {
+  color: #28a745;
+  border-color: #28a745;
+}
+
+/* ---------- Prev/next guide pager ---------- */
+.guide-pager {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-top: 2.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid #dee2e6;
+}
+.guide-pager-link {
+  flex: 0 1 48%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  text-decoration: none;
+  color: var(--fr-blue);
+  transition: border-color 0.15s ease-in-out, background 0.15s ease-in-out;
+}
+.guide-pager-link:hover {
+  border-color: var(--fr-blue);
+  background: var(--fr-surface);
+  text-decoration: none;
+}
+.guide-pager-next {
+  text-align: right;
+  margin-left: auto;
+}
+.guide-pager-dir {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--fr-muted);
+}
+.guide-pager-title {
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+/* ---------- Section cards (ai-workflow "How This Guide Works") ---------- */
+.guide-cards-total {
+  margin: 1.25rem 0 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--fr-muted);
+}
+.guide-cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.85rem;
+  margin: 0 0 1.5rem;
+}
+.guide-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.9rem 0.95rem 1rem;
+  background: var(--fr-surface);
+  border: 1px solid #dee2e6;
+  border-top: 3px solid var(--fr-blue);
+  border-radius: 6px;
+  color: var(--fr-text);
+  text-decoration: none;
+  transition: transform 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.guide-card:hover {
+  color: var(--fr-text);
+  text-decoration: none;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(47, 90, 124, 0.15);
+}
+.guide-card-num {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fr-blue);
+}
+.guide-card-name {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+.guide-card-time {
+  font-size: 0.8rem;
+  color: var(--fr-muted);
+}
+.guide-card-desc {
+  margin-top: auto;
+  padding-top: 0.35rem;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: var(--fr-text);
+}
+
+/* ---------- Below 1024px: panel collapses into a sticky bar ---------- */
+@media (max-width: 1023px) {
+  .guide-shell {
+    display: block;
+    max-width: none;
+  }
+  .guide-main {
+    max-width: 1100px;
+  }
+  .guide-sidebar {
+    position: sticky;
+    top: var(--guide-navbar-h);
+    z-index: 90;
+    width: auto;
+    max-height: none;
+    overflow: visible;
+    padding: 0;
+    background: #fff;
+    border-bottom: 1px solid #dee2e6;
+  }
+  .guide-nav-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.6rem 1rem;
+    background: var(--fr-surface);
+    border: 0;
+    border-bottom: 1px solid #dee2e6;
+    color: var(--fr-blue);
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+  }
+  .guide-nav-current {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .guide-nav-caret {
+    flex: 0 0 auto;
+  }
+  .guide-nav {
+    display: none;
+    max-height: 65vh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 0.9rem 1rem 1rem;
+    background: #fff;
+    border-bottom: 1px solid #dee2e6;
+  }
+  .guide-nav.is-open {
+    display: block;
+  }
+  .guide-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .guide-pager {
+    flex-direction: column;
+  }
+  .guide-pager-link {
+    flex: 1 1 auto;
+  }
+  .guide-pager-next {
+    text-align: left;
+  }
+}
+
+@media (max-width: 599px) {
+  .guide-cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* The copy button has no hover state on touch, so keep it visible there. */
+@media (hover: none) {
+  .guide-copy {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .guide-card,
+  .guide-copy,
+  .guide-pager-link {
+    transition: none;
+  }
+  .guide-card:hover {
+    transform: none;
+  }
+}
+
+/* ============================================================
+   /careers.html — curriculum-to-careers crosswalk
+   ------------------------------------------------------------
+   Layout and controls only. The two tables deliberately inherit the
+   element-level `table / thead / th / td` rules at the top of this file,
+   so they look like every other table on the site; nothing below
+   restates a border, a colour or a padding those rules already set.
+   ============================================================ */
+
+/* A wide table scrolls inside its own box rather than pushing the page
+   sideways. `tabindex` + `role=region` make the scroller keyboard-reachable,
+   which is what a focusable scroll container needs to be announced. */
+.table-scroll {
+  overflow-x: auto;
+  max-width: 100%;
+  margin-bottom: 1rem;
+}
+.table-scroll:focus-visible {
+  outline: 2px solid var(--fr-blue);
+  outline-offset: 2px;
+}
+.careers-table {
+  width: 100%;
+}
+/* Three prose columns; below this they turn into word-per-line mush, so hand
+   the overflow to .table-scroll instead of wrapping further. */
+#crosswalk-table {
+  min-width: 40rem;
+}
+/* Table B is a role name and two short numbers — it fits a phone, so it keeps
+   its .table-scroll wrapper (for a future longer column) but no floor. */
+
+/* ---------- Filter / sort controls ---------- */
+.careers-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.75rem 1rem;
+  margin: 1rem 0;
+}
+.careers-control {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+.careers-control > label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--fr-muted);
+}
+.careers-control > select,
+.careers-control > input {
+  font: inherit;
+  font-size: 0.95rem;
+  color: var(--fr-text);
+  background: #fff;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  padding: 0.35rem 0.5rem;
+  max-width: 100%;
+}
+.careers-control > select:focus-visible,
+.careers-control > input:focus-visible,
+.careers-clear:focus-visible,
+.careers-sort:focus-visible,
+.careers-rolelink:focus-visible {
+  outline: 2px solid var(--fr-blue);
+  outline-offset: 1px;
+}
+.careers-clear {
+  font: inherit;
+  font-size: 0.95rem;
+  color: var(--fr-blue);
+  background: #fff;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  padding: 0.35rem 0.75rem;
+  cursor: pointer;
+}
+.careers-clear:hover {
+  background: #f1f3f5;
+}
+
+/* Sortable column header: a real <button>, drawn as the header text. */
+.careers-sort {
+  font: inherit;
+  font-weight: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  text-align: left;
+}
+.careers-sort:hover {
+  color: var(--fr-blue);
+}
+.careers-sort-icon {
+  font-size: 0.75em;
+}
+
+/* Table B job role that filters Table A — reads as a link, acts as a button. */
+.careers-rolelink {
+  font: inherit;
+  font-weight: inherit;
+  color: var(--fr-blue);
+  text-decoration: underline;
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  text-align: left;
+}
+.careers-rolelink:hover {
+  color: #002B54;
+}
+
+/* ---------- Supporting copy ---------- */
+.careers-count,
+.careers-note,
+.careers-source {
+  font-size: 0.9rem;
+  color: var(--fr-muted);
+}
+.careers-count {
+  margin-bottom: 0.5rem;
+}
+
+/* Filtered-out rows. Spelled out because the page sets the `hidden`
+   attribute and Tailwind's preflight does not guarantee the UA default. */
+#crosswalk-table tbody tr[hidden] {
+  display: none;
+}
+
+@media (max-width: 575px) {
+  .careers-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .careers-control > select,
+  .careers-control > input {
+    width: 100%;
+  }
+}
+
+/* ------------------------------------------------------------
+   /careers.html — "What employers ask for" (Tables C, D, E)
+   Appended; adds rules only. These tables reuse .table-scroll,
+   .careers-table, .careers-controls and .careers-sort above, so all
+   that is left is a width floor per table and the hidden-row rule
+   the filter needs.
+   ------------------------------------------------------------ */
+
+/* Six columns, two of them prose-ish — below this it wraps to mush, so the
+   overflow goes to .table-scroll instead. */
+#skills-table {
+  min-width: 46rem;
+}
+/* Long qualification names next to one short number. */
+#qualifications-table {
+  min-width: 30rem;
+}
+/* Five columns, four of them short numbers. */
+#job-titles-table {
+  min-width: 36rem;
+}
+
+/* Same reason as the crosswalk table: the script sets the `hidden`
+   attribute and Tailwind's preflight does not guarantee the UA default. */
+#skills-table tbody tr[hidden] {
+  display: none;
+}
+
+/* ============================================================
+   NARROW-SCREEN OVERFLOW — appended 2026-10-04.
+
+   Rules only; nothing above this line is changed or removed.
+
+   Two pre-existing problems (the Quarto site had both, and so did the
+   first Astro build): content tables wider than a phone pushed the whole
+   document sideways, and long unbreakable URLs in body text did the same.
+   The fix reuses what careers.astro already proved out — a `.table-scroll`
+   container that owns the horizontal overflow — and adds wrapping to body
+   prose only.
+   ------------------------------------------------------------ */
+
+/* Markdown/MDX tables are wrapped at build time by
+   src/plugins/rehype-table-scroll.mjs. `.md-table-scroll` marks those
+   wrappers so they can be tuned without touching the five hand-written
+   `.table-scroll` containers on the careers page.
+
+   The container inherits `overflow-x: auto; max-width: 100%` from
+   `.table-scroll` above. `margin-bottom: 0` keeps the vertical rhythm of
+   the four guides exactly as it was — the wrapper is new, the gap under
+   the table should not be. */
+.md-table-scroll {
+  margin-bottom: 0;
+}
+
+/* A `.table-scroll` in a flex/grid column needs an explicit zero floor or
+   it can be sized by its content instead of its container, which would put
+   the overflow back on the page. `.guide-main` already sets this; state it
+   on the container too so a future layout change cannot undo the fix. */
+.table-scroll {
+  min-width: 0;
+}
+
+/* ---------- Long unbreakable strings in body prose ----------
+   Body copy on the guides quotes full URLs
+   (https://academy.claude.com/courses/claude-101) and long identifiers.
+   A single token longer than the column used to stretch the page.
+   `anywhere` rather than `break-word` because only `anywhere` also shrinks
+   the element's min-content size, which is what the page width is computed
+   from. `word-break: break-word` first as a fallback for engines without
+   `anywhere`.
+
+   Deliberately scoped to prose elements, NOT to:
+   - `pre` / `code` blocks: wrapped code is wrong code, so a code block
+     keeps whatever wrapping it already had and is not broken further;
+   - `th` / `td`: `anywhere` on a cell changes how auto table layout
+     distributes column widths, i.e. it would change how every table on the
+     site looks on a desktop. The tables are handled by `.table-scroll`
+     instead.
+   `overflow-wrap` is inherited, so links, `<strong>` and inline `<code>`
+   inside a paragraph or list item are covered without naming them. */
+.page-main p,
+.page-main li,
+.page-main dt,
+.page-main dd,
+.page-main blockquote,
+.page-main figcaption,
+.page-main h1,
+.page-main h2,
+.page-main h3,
+.page-main h4,
+.page-main h5,
+.page-main h6 {
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+/* ------------------------------------------------------------
+   /careers.html — a second program on the page. Appended 2026-10-04.
+   Rules only; nothing above this line is changed or removed.
+
+   Table A, Table B and the new focus-area table all reuse .table-scroll,
+   .careers-table, .careers-controls and .careers-sort already defined
+   above, so what is left is a width floor per new/widened table and the
+   hidden-row rule Table B's program filter needs.
+   ------------------------------------------------------------ */
+
+/* Table B went from four columns to six: Program and Source were added so a
+   reader can tell the master's rows from the bachelor's ones without
+   counting. Same reasoning as #crosswalk-table — below this floor the
+   columns wrap to mush, so the overflow goes to .table-scroll instead of
+   the page. */
+#salary-table {
+  min-width: 48rem;
+}
+
+/* Focus areas: a short label, a long course list, a role list. */
+#focus-areas-table {
+  min-width: 40rem;
+}
+
+/* Table B now filters. Spelled out for the same reason the other two are:
+   the script sets the `hidden` attribute and Tailwind's preflight does not
+   guarantee the UA default. */
+#salary-table tbody tr[hidden] {
+  display: none;
+}
+
+/* Program and Source are labels, not prose. Breaking "M.S. in Business
+   Analytics" across three lines would make the two groups harder to scan,
+   which is the one thing these columns exist to do; the table already has
+   .table-scroll to absorb the width. */
+.careers-program {
+  white-space: nowrap;
+}
+
+/* ============================================================
+   PROGRAMS PAGE — appended 2026-10-04.
+   FAQ disclosure items and the recruiting-video placeholders on
+   /program.html. Colours and radii match the callout family above
+   so the page reads as one system; nothing here is restyling
+   existing rules.
+   ============================================================ */
+
+/* FAQ disclosures. Deliberately plainer than .callout-* — a question
+   is not a note, and a page of coloured left-borders would shout. */
+.page-main details.faq-item {
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  margin: 0.75rem 0;
+  background: #fff;
+}
+.page-main details.faq-item > summary {
+  cursor: pointer;
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+  color: var(--fr-blue);
+  list-style-position: outside;
+}
+.page-main details.faq-item > summary:hover {
+  background: var(--fr-surface);
+}
+.page-main details.faq-item[open] > summary {
+  border-bottom: 1px solid #dee2e6;
+}
+/* Padding lives on the children so the summary stays flush. */
+.page-main details.faq-item > *:not(summary) {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.page-main details.faq-item > *:last-child {
+  margin-bottom: 1rem;
+}
+
+/* Video slot. Dashed, muted and obviously unfinished — it should read
+   as "something is coming here", never as a broken embed. */
+.page-main .video-placeholder {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  border: 1px dashed var(--fr-blue-light);
+  border-radius: 6px;
+  padding: 1rem 1.25rem;
+  margin: 1.25rem 0;
+  background: var(--fr-surface);
+  color: var(--fr-muted);
+}
+.page-main .video-placeholder strong {
+  color: var(--fr-blue);
+}
+
+/* ============================================================
+   PROGRAMS PAGE — chooser and careers call-to-action.
+   Appended 2026-10-05 after the owner reported that moving
+   between the two programs was hard and that Careers was not
+   prominent enough.
+   ============================================================ */
+
+.page-main .program-chooser {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+.page-main .program-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  border: 1px solid #dee2e6;
+  border-left: 4px solid var(--fr-blue);
+  border-radius: 6px;
+  padding: 1rem 1.25rem;
+  background: var(--fr-surface);
+  text-decoration: none;
+  color: inherit;
+}
+.page-main .program-card:hover {
+  background: var(--fr-surface);
+}
+.page-main .program-card strong {
+  color: var(--fr-blue);
+  font-size: 1.1rem;
+}
+.page-main .program-card span {
+  color: var(--fr-muted);
+  font-size: 0.95rem;
+}
+
+/* The careers link is the one thing most visitors are actually after,
+   so it gets the solid treatment rather than sitting in a bullet list. */
+.page-main .program-careers-cta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  border-radius: 6px;
+  padding: 1.1rem 1.35rem;
+  margin: 1.5rem 0;
+  background: var(--fr-blue);
+  color: #fff;
+  text-decoration: none;
+}
+.page-main .program-careers-cta:hover {
+  background: #002B54;
+  color: #fff;
+}
+.page-main .program-careers-cta strong {
+  font-size: 1.1rem;
+  color: #fff;
+}
+.page-main .program-careers-cta span {
+  color: var(--fr-blue-light);
+  font-size: 0.95rem;
+}
+
+/* Second heading inside the guide sidebar ("Also in Teaching"). */
+.guide-nav-heading-extra {
+  margin-top: 1.5rem;
+}
+
+/* Transfer-credit block on /program.html. Franklin's students are
+   transfer-heavy, so this is a headline fact, not a footnote. */
+.page-main .program-transfer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  border: 1px solid #dee2e6;
+  border-left: 4px solid var(--fr-lime);
+  border-radius: 6px;
+  padding: 1rem 1.25rem;
+  margin: 1.25rem 0;
+  background: var(--fr-surface);
+}
+.page-main .program-transfer strong {
+  color: var(--fr-blue);
+  font-size: 1.1rem;
+}
+
+/* The comparison table's header cells double as the jump links into each
+   program section, so they need to read as clickable headings rather than
+   as ordinary body links sitting inside a th. */
+.page-main #compare-programs th a {
+  color: var(--fr-blue);
+  text-decoration: none;
+  border-bottom: 2px solid var(--fr-blue);
+  white-space: nowrap;
+}
+.page-main #compare-programs th a:hover {
+  color: #002B54;
+  border-bottom-color: #002B54;
+}
+
+/* ============================================================
+   FRANKLIN PALETTE + MEASURE — appended 2026-10-05.
+   Colours sampled from franklin.edu: var(--fr-blue) primary blue,
+   #002B54 deep navy (navbar/footer), #AFBC22 the lime accent
+   Franklin uses on its own call-to-action buttons.
+   ============================================================ */
+
+:root {
+  --fr-blue: #2F5A7C;
+  --fr-navy: #002B54;
+  --fr-lime: #AFBC22;
+  --fr-lime-dark: #93A01A;
+  /* Franklin's light blue-grey; the only tint used on dark blue grounds. */
+  --fr-blue-light: #B8C7D9;
+  --fr-text: #4A4A4A;
+  --fr-muted: #6D7A86;
+  --fr-surface: #F2F2F2;
+}
+
+/* Reading measure. Long-form text caps at ~72 characters; tables,
+   cards and other block components keep the full column so they are
+   not squeezed. Prose at 1065px wide was running 110+ characters a
+   line, which is roughly half again the comfortable range. */
+.page-main > p,
+.page-main > ul,
+.page-main > ol,
+.page-main > blockquote,
+.page-main > h1,
+.page-main > h2,
+.page-main > h3,
+.page-main > h4,
+.page-main > h5,
+.page-main > h6,
+.page-main > details.faq-item {
+  max-width: 72ch;
+}
+/* Headings keep their full-width rule even though the text is capped,
+   otherwise the h2 underline stops short of the content it introduces. */
+.page-main > h2 {
+  max-width: none;
+}
+.page-main > h2 > span.h2-measure {
+  display: inline-block;
+  max-width: 72ch;
+}
+
+/* The lime accent, used only where we want the eye to land first. */
+.page-main .program-careers-cta {
+  background: var(--fr-blue);
+}
+.page-main .program-careers-cta:hover {
+  background: var(--fr-navy);
+}
+.page-main .program-careers-cta strong::after {
+  content: "";
+  display: block;
+  width: 3rem;
+  height: 3px;
+  margin-top: 0.4rem;
+  background: var(--fr-lime);
+}
+
+/* ---------- Home: entry points ----------
+   The homepage used to run About Me → Teaching Philosophy → Connect,
+   with no route to the two degrees or the careers data. These three
+   cards are the first thing below the hero. */
+.home-entry {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+  gap: 1rem;
+  margin: 0 0 2.5rem;
+}
+.home-entry-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.25rem 1.35rem;
+  border: 1px solid #dee2e6;
+  border-top: 4px solid var(--fr-blue);
+  border-radius: 6px;
+  background: #fff;
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+.home-entry-card:hover {
+  box-shadow: 0 6px 18px rgba(0, 43, 84, 0.12);
+  transform: translateY(-2px);
+}
+.home-entry-card.is-accent {
+  border-top-color: var(--fr-lime);
+}
+.home-entry-card strong {
+  color: var(--fr-navy);
+  font-size: 1.15rem;
+}
+.home-entry-card span {
+  color: #4a4a4a;
+  font-size: 0.95rem;
+  flex: 1;
+}
+.home-entry-card em {
+  color: var(--fr-blue);
+  font-style: normal;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-entry-card { transition: none; }
+  .home-entry-card:hover { transform: none; }
+}
+
+/* ---------- Teaching hub: card grid ----------
+   Five materials in one view instead of a vertical list that had to be
+   scrolled; the flashcards in particular were invisible at the bottom. */
+.teach-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: 1rem;
+  margin: 1.75rem 0;
+}
+.teach-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  padding: 1.25rem 1.35rem;
+  border: 1px solid #dee2e6;
+  border-top: 4px solid var(--fr-blue);
+  border-radius: 6px;
+  background: #fff;
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+.teach-card:hover {
+  box-shadow: 0 6px 18px rgba(0, 43, 84, 0.12);
+  transform: translateY(-2px);
+}
+.teach-card.is-accent {
+  border-top-color: var(--fr-lime);
+}
+.teach-kind {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--fr-muted);
+}
+.teach-card strong {
+  color: var(--fr-navy);
+  font-size: 1.1rem;
+  line-height: 1.3;
+}
+.teach-desc {
+  color: #4a4a4a;
+  font-size: 0.95rem;
+  flex: 1;
+}
+.teach-card em {
+  color: var(--fr-blue);
+  font-style: normal;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+@media (prefers-reduced-motion: reduce) {
+  .teach-card { transition: none; }
+  .teach-card:hover { transform: none; }
+}
+
+/* ---------- In-page section nav ----------
+   Programs and Careers are long single-column pages; the four guides have a
+   sidebar but these had nothing, so you lost your place halfway down. A
+   sticky chip row is cheaper than a second sidebar and survives narrow
+   screens by scrolling sideways inside itself. */
+.page-toc {
+  position: sticky;
+  top: var(--toc-sticky-top, 56px);
+  z-index: 20;
+  margin: 0 0 1.75rem;
+  padding: 0.5rem 0;
+  background: #fff;
+  border-bottom: 1px solid #dee2e6;
+  max-width: none;
+}
+.page-toc ul {
+  display: flex;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+.page-toc li {
+  margin: 0;
+  flex: 0 0 auto;
+}
+.page-toc a {
+  display: block;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid #dee2e6;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #4a4a4a;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.page-toc a:hover {
+  border-color: var(--fr-blue);
+  color: var(--fr-blue);
+}
+.page-toc a.is-active {
+  background: var(--fr-blue);
+  border-color: var(--fr-blue);
+  color: #fff;
+}
+/* Keep a jumped-to heading clear of the navbar and the chip row. */
+.page-main [id] {
+  scroll-margin-top: calc(var(--page-toc-offset, 110px) + 0.5rem);
+}
+
+/* Inline icons replace the emoji that used to sit in buttons, the navbar and
+   the footer. Emoji depend on a font the viewer's OS may not have — they
+   rendered as empty boxes on Linux — and they cannot inherit colour. */
+.icon {
+  vertical-align: -0.17em;
+  margin-right: 0.3em;
+}
+.nav-icon-btn svg,
+.nav-toggle svg {
+  vertical-align: middle;
+}
+
+/* The hero used to be followed by a ~75px void before the next section. */
+.page-main .hero-section {
+  margin-bottom: 1.75rem;
+}
+
+/* Footer links carry an inline icon; without this the icon wraps onto its own
+   line when the centre column gets narrow, which looked like a layout bug. */
+.page-footer .footer-center a {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+.page-footer .footer-center .icon {
+  margin-right: 0.35em;
+}
+@media (max-width: 768px) {
+  .page-footer .footer-center a {
+    white-space: normal;
+  }
+}
+
+/* Buttons carry an inline icon; without this the icon and the label stack onto
+   two lines whenever the button is narrower than the text wants. Same cause as
+   the footer links above. */
+.btn-professional,
+.btn-outline-professional {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
 }

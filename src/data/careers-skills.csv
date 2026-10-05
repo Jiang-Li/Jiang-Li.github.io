@@ -1,0 +1,28 @@
+category,skill,postings,pct_of_postings,projected_growth,growth_vs_market
+Specialized,Data Analysis,13382,41%,+25.8%,Rapidly Growing
+Specialized,Computer Science,11789,36%,+26.8%,Rapidly Growing
+Specialized,Statistics,11270,35%,+22.7%,Rapidly Growing
+Specialized,Data Science,10996,34%,+17.4%,Growing
+Specialized,Artificial Intelligence,8891,27%,+12.4%,Growing
+Specialized,Machine Learning,8480,26%,+19.9%,Rapidly Growing
+Specialized,Project Management,7035,22%,+19.8%,Rapidly Growing
+Software,SQL (Programming Language),11984,37%,+6.4%,Stable
+Software,Python (Programming Language),11923,37%,+24.5%,Rapidly Growing
+Software,R (Programming Language),7016,22%,+20.3%,Rapidly Growing
+Software,Tableau (Business Intelligence Software),6711,21%,+20.8%,Rapidly Growing
+Software,Dashboard,6663,20%,+25.3%,Rapidly Growing
+Software,Power BI,6165,19%,+20.4%,Rapidly Growing
+Software,Microsoft Excel,5336,16%,+17.7%,Growing
+Software,Microsoft PowerPoint,3552,11%,+26.1%,Rapidly Growing
+Software,SAS (Software),3409,10%,+12.4%,Growing
+Software,Amazon Web Services,3001,9%,+24.0%,Rapidly Growing
+Common,Communication,19605,60%,+3.6%,Lagging
+Common,Leadership,14202,44%,+8.5%,Stable
+Common,Management,10271,32%,+5.3%,Stable
+Common,Problem Solving,9190,28%,+11.3%,Growing
+Common,Research,9116,28%,+17.2%,Growing
+Common,Operations,9035,28%,+8.1%,Stable
+Common,Innovation,8000,25%,+25.8%,Rapidly Growing
+Common,Presentations,7501,23%,+23.0%,Rapidly Growing
+Common,Decision Making,7319,22%,+13.5%,Growing
+Common,Mathematics,7308,22%,+20.2%,Rapidly Growing

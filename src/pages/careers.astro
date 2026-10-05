@@ -1,0 +1,793 @@
+---
+/**
+ * /careers.html — the curriculum-to-careers crosswalk.
+ *
+ * Every row on this page comes from the CSVs in src/data/ (see careers.ts).
+ * To add, remove or correct a row, edit the CSV. Nothing here needs touching.
+ *
+ * Two tables on purpose: salary belongs to a job role, and several courses
+ * point at the same role. One flat table would read as "take this course, earn
+ * this salary", which the data does not say.
+ *
+ * Two programs since 2026-10-04 — M.S. in Business Analytics and B.S. in
+ * Analytics — measured by two different Lightcast reports. Both tables carry
+ * a program filter; Table B shows the program and the report on every row,
+ * because five occupations appear in both reports with the same median and
+ * different growth, and a reader has to be able to see which is which.
+ *
+ * Not in the navbar — that decision is still open elsewhere.
+ */
+import Layout from '../layouts/Layout.astro';
+import {
+  crosswalk,
+  salaries,
+  salaryPrograms,
+  roleOptions,
+  programs,
+  salaryForToken,
+  courseCountFor,
+  roleFilterValueFor,
+  focusAreas,
+  skills,
+  skillCategories,
+  qualifications,
+  jobTitles,
+  UNIQUE_POSTINGS,
+  TOTAL_POSTINGS,
+} from '../data/careers';
+
+const title = 'Curriculum to Careers';
+// On as soon as the CSV holds a second program, which it now does. Kept as a
+// condition rather than deleted: with one program the control would be a
+// dropdown with a single option, and that is still the right behaviour.
+const showProgramFilter = programs.length > 1;
+---
+
+<Layout
+  title={title}
+  description="Every course in Franklin University's analytics degrees mapped to the skills it teaches and the job roles it supports, with Lightcast salary and growth figures and the skills employers request in job postings."
+  sections={[
+    { id: 'crosswalk', text: 'Curriculum-to-careers' },
+    { id: 'focus-areas', text: 'B.S. focus areas' },
+    { id: 'salaries', text: 'Salary outlook' },
+    { id: 'demand', text: 'What employers ask for' },
+  ]}
+>
+  <p>
+    Salaries here attach to job roles. One course can lead to several roles, and several courses
+    can lead to the same role, so no single salary belongs to a course. The medians, growth rates
+    and job counts are national Lightcast figures for the occupations two Franklin analytics
+    programs feed — the M.S. in Business Analytics and the B.S. in Analytics — not outcomes
+    measured on Franklin graduates. Both tables start with every row from both programs showing;
+    the Program filter narrows either one to a single program. A few roles the curriculum names —
+    the finance-side master's ones in particular — are outside their own program's occupation set,
+    so they appear in the first table as plain text with no salary row to link to.
+  </p>
+
+  <h2 id="crosswalk">Curriculum-to-careers crosswalk</h2>
+
+  <div class="careers-controls">
+    {
+      showProgramFilter && (
+        <div class="careers-control">
+          <label for="filter-program">Program</label>
+          <select id="filter-program">
+            <option value="">All programs</option>
+            {programs.map((p) => (
+              <option value={p}>{p}</option>
+            ))}
+          </select>
+        </div>
+      )
+    }
+    <div class="careers-control">
+      <label for="filter-role">Job role</label>
+      <select id="filter-role">
+        <option value="">All job roles</option>
+        {roleOptions.map((o) => <option value={o.value}>{o.label}</option>)}
+      </select>
+    </div>
+    <div class="careers-control">
+      <label for="filter-skill">Skill or tool</label>
+      <input id="filter-skill" type="search" placeholder="e.g. Tableau" autocomplete="off" />
+    </div>
+    <div class="careers-control">
+      <button type="button" id="clear-filters" class="careers-clear">Clear filters</button>
+    </div>
+  </div>
+
+  <p id="crosswalk-count" class="careers-count" role="status" aria-live="polite">
+    Showing {crosswalk.length} of {crosswalk.length} courses
+  </p>
+
+  <div class="table-scroll" tabindex="0" role="region" aria-label="Curriculum-to-careers crosswalk">
+    <table id="crosswalk-table" class="careers-table">
+      <thead>
+        <tr>
+          <th scope="col" aria-sort="none" id="course-header">
+            <button type="button" id="sort-course" class="careers-sort">
+              Course<span class="careers-sort-icon" aria-hidden="true"></span>
+            </button>
+          </th>
+          <th scope="col">Skills &amp; tools you'll gain</th>
+          <th scope="col">Job roles it supports</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          crosswalk.map((row, i) => (
+            <tr
+              data-index={String(i)}
+              data-course={row.course}
+              data-program={row.program}
+              data-level={row.level}
+              data-skills={row.skills.toLowerCase()}
+              data-roles={row.roleTokens.map((t) => t.toLowerCase()).join('|')}
+            >
+              <th scope="row">{row.course}</th>
+              <td>{row.skills}</td>
+              <td>
+                {row.roleTokens.map((token, j) => {
+                  const salary = salaryForToken(row.program, token);
+                  return (
+                    <>
+                      {j > 0 && ', '}
+                      {salary ? (
+                        <a
+                          href={`#${salary.anchor}`}
+                          title={`${salary.role} (${salary.program}) — median ${salary.medianSalary}`}
+                        >
+                          {token}
+                        </a>
+                      ) : (
+                        token
+                      )}
+                    </>
+                  );
+                })}
+              </td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <h3 id="focus-areas">B.S. in Analytics focus areas</h3>
+
+  <p class="careers-note">
+    The ten B.S. courses in the table above are the analytics backbone every B.S. student completes
+    whichever focus area they choose; the focus courses below are additional to it, and they are
+    what tilts the same backbone toward one career track rather than another.
+  </p>
+
+  <div class="table-scroll" tabindex="0" role="region" aria-label="B.S. in Analytics focus areas">
+    <table id="focus-areas-table" class="careers-table">
+      <thead>
+        <tr>
+          <th scope="col">Focus area</th>
+          <th scope="col">Representative focus courses</th>
+          <th scope="col">Job roles</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          focusAreas.map((f) => (
+            <tr data-program={f.program}>
+              <th scope="row">{f.focusArea}</th>
+              <td>{f.focusCourses}</td>
+              <td>{f.roles}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <h2 id="salaries">Careers &amp; salary outlook</h2>
+
+  <p class="careers-note">
+    Sorted by median salary, highest first. Roles that a course in the table above names are
+    buttons: pick one to filter that table down to the courses supporting it, in the same program.
+    The Median salary and Growth headers sort the table; click a header again to reverse it, and a
+    third time to return to salary order.
+  </p>
+
+  <p>
+    Five occupations appear twice here, once per program, and that is not a duplicate row. The two
+    programs were measured by two different Lightcast reports: the master's figures come from the
+    Q1 2026 data set filtered to a Master's degree over postings from January to March 2026, the
+    bachelor's figures from the Q2 2026 data set filtered to a Bachelor's degree over postings from
+    March 2025 to March 2026. Because each report counts a different slice of the workforce, the
+    same occupation legitimately carries two different growth rates and two different 2026 job
+    counts. The national median earnings are identical in both &mdash; those come from the
+    occupation, not from the education filter. Neither figure is wrong and neither supersedes the
+    other, so both are shown with the program and the report they came from.
+  </p>
+
+  <div class="careers-controls">
+    <div class="careers-control">
+      <label for="filter-salary-program">Program</label>
+      <select id="filter-salary-program">
+        <option value="">All programs</option>
+        {salaryPrograms.map((p) => <option value={p}>{p}</option>)}
+      </select>
+    </div>
+    <div class="careers-control">
+      <button type="button" id="clear-salary-filters" class="careers-clear">Clear filter</button>
+    </div>
+  </div>
+
+  <p id="salary-count" class="careers-count" role="status" aria-live="polite">
+    Showing {salaries.length} of {salaries.length} occupation rows
+  </p>
+
+  <div class="table-scroll" tabindex="0" role="region" aria-label="Careers and salary outlook">
+    <table id="salary-table" class="careers-table">
+      <thead>
+        <tr>
+          <th scope="col">Job role</th>
+          <th scope="col">Program</th>
+          <th scope="col" aria-sort="none" id="salary-median-header">
+            <button type="button" class="careers-sort" data-sort-key="salary">
+              Median salary<span class="careers-sort-icon" aria-hidden="true"></span>
+            </button>
+          </th>
+          <th scope="col" aria-sort="none" id="salary-growth-header">
+            <button type="button" class="careers-sort" data-sort-key="growth">
+              Growth 2026&ndash;2036<span class="careers-sort-icon" aria-hidden="true"></span>
+            </button>
+          </th>
+          <th scope="col">Jobs (2026)</th>
+          <th scope="col">Source</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          salaries.map((s, i) => (
+            <tr
+              id={s.anchor}
+              data-index={String(i)}
+              data-program={s.program}
+              data-salary={String(s.salaryValue)}
+              data-growth={String(s.growthValue)}
+            >
+              <th scope="row">
+                {courseCountFor(s.role, s.program) > 0 ? (
+                  <button
+                    type="button"
+                    class="careers-rolelink"
+                    data-role-filter={roleFilterValueFor(s.role)}
+                    data-program-filter={s.program}
+                  >
+                    {s.role}
+                  </button>
+                ) : (
+                  s.role
+                )}
+              </th>
+              <td class="careers-program">{s.program}</td>
+              <td>{s.medianSalary}</td>
+              <td>{s.projectedGrowth}</td>
+              <td>{s.jobs2026}</td>
+              <td class="careers-program">{s.source}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <p class="careers-source">
+    Source for the master's rows: Lightcast Q1 2026 Data Set (April 2026), Program Overview for CIP
+    30.7102 Business Analytics, United States, with the occupation set filtered to Master's degree.
+    These five are the report's complete set of target occupations &mdash; none has been dropped.
+    Median salaries are annualized from the report's hourly medians at 2,080 hours per year; growth
+    and job counts are the report's national figures for the occupation, not Franklin graduate
+    outcomes.
+  </p>
+
+  <p class="careers-source">
+    Source for the bachelor's rows: Lightcast Q2 2026 Data Set (June 2026), Program Overview for
+    CIPs 30.7101 Data Analytics General, 30.7102 Business Analytics, 30.7103 Data Visualization,
+    30.7104 Financial Analytics and 30.7199 Data Analytics Other, United States, with the
+    occupation set filtered to Bachelor's degree, a 2026&ndash;2036 jobs timeframe and a job-postings
+    timeframe of March 2025 to March 2026. These ten are that report's complete set of target
+    occupations &mdash; none has been dropped either: Computer Programmers is projected to decline
+    by 1.74% and is still here. Median salaries are annualized from the report's hourly medians at
+    2,080 hours per year, the same way; growth and job counts are the report's national figures for
+    the occupation, not Franklin graduate outcomes. Taken as one set, the report puts the median
+    for these ten occupations at $46.87 per hour &mdash; $97,500 a year at 2,080 hours &mdash; with
+    +10.4% projected growth.
+  </p>
+
+  <h2 id="demand">What employers ask for</h2>
+
+  <p>
+    The two tables above say which roles a course points at and what those roles pay. They do not
+    show whether employers asked for the skills those courses teach. These three do: the skills and
+    tools named in job postings, the qualifications those postings requested, and the titles the
+    jobs were posted under, over the same three months.
+  </p>
+
+  <p>
+    These three tables are master's data only: every figure in them comes from the Lightcast Q1
+    2026 report behind the M.S. rows of the salary table, so none of it describes the B.S. in
+    Analytics occupation set or its posting window.
+  </p>
+
+  <h3 id="skills-demand">Skills and tools in job postings</h3>
+
+  <p class="careers-note">
+    Specialized skills are the subject-matter ones, Software covers named tools, and Common skills
+    are the general workplace ones. Percentages are the share of all {UNIQUE_POSTINGS} unique
+    postings; a posting usually names several skills, so they do not add to 100%.
+  </p>
+
+  <div class="careers-controls">
+    <div class="careers-control">
+      <label for="filter-skill-category">Skill category</label>
+      <select id="filter-skill-category">
+        <option value="">All categories</option>
+        {skillCategories.map((c) => <option value={c}>{c}</option>)}
+      </select>
+    </div>
+    <div class="careers-control">
+      <button type="button" id="clear-skill-filters" class="careers-clear">Clear filter</button>
+    </div>
+  </div>
+
+  <p id="skills-count" class="careers-count" role="status" aria-live="polite">
+    Showing {skills.length} of {skills.length} skills
+  </p>
+
+  <div class="table-scroll" tabindex="0" role="region" aria-label="Skills and tools in job postings">
+    <table id="skills-table" class="careers-table">
+      <thead>
+        <tr>
+          <th scope="col">Skill or tool</th>
+          <th scope="col">Category</th>
+          <th scope="col" aria-sort="none" id="skills-postings-header">
+            <button type="button" class="careers-sort" data-sort-key="postings">
+              Postings<span class="careers-sort-icon" aria-hidden="true"></span>
+            </button>
+          </th>
+          <th scope="col" aria-sort="none" id="skills-pct-header">
+            <button type="button" class="careers-sort" data-sort-key="pct">
+              % of postings<span class="careers-sort-icon" aria-hidden="true"></span>
+            </button>
+          </th>
+          <th scope="col">Projected growth</th>
+          <th scope="col">Growth vs. market</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          skills.map((s, i) => (
+            <tr
+              data-index={String(i)}
+              data-category={s.category}
+              data-postings={String(s.postings)}
+              data-pct={String(s.pctValue)}
+            >
+              <th scope="row">{s.skill}</th>
+              <td>{s.category}</td>
+              <td>{s.postingsLabel}</td>
+              <td>{s.pct}</td>
+              <td>{s.projectedGrowth}</td>
+              <td>{s.growthVsMarket}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <h3 id="qualifications">Qualifications requested</h3>
+
+  <p class="careers-note">
+    All ten the report lists, postings descending. Four are security clearances and one is a
+    driver's license: those come from the federal and defense employers inside this occupation set,
+    not from anything the program teaches.
+  </p>
+
+  <div class="table-scroll" tabindex="0" role="region" aria-label="Qualifications requested in job postings">
+    <table id="qualifications-table" class="careers-table">
+      <thead>
+        <tr>
+          <th scope="col">Qualification</th>
+          <th scope="col">Postings</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          qualifications.map((q) => (
+            <tr>
+              <th scope="row">{q.qualification}</th>
+              <td>{q.postingsLabel}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <p class="careers-note">
+    BUSA 604 &ndash; Financial Decision Modeling is the one master's course above whose job roles
+    have no salary row to link to; Microsoft Excel (5,336 postings) in the skills table and
+    Chartered Financial Analyst (340 postings) in this one are where it meets this labor-market
+    data.
+  </p>
+
+  <h3 id="job-titles">Top posted job titles</h3>
+
+  <p class="careers-note">
+    Data Analyst, Business Analyst and Business Systems Analyst are role names the first table uses
+    that have no Lightcast occupation row, so the salary table cannot price them. Employers posted
+    for all three by name. Posting intensity is total postings per unique posting. &ldquo;Home
+    Shopping Personal Shoppers&rdquo; is a classifier artifact rather than an analytics job; it is
+    left in because dropping rows would misstate the source.
+  </p>
+
+  <div class="table-scroll" tabindex="0" role="region" aria-label="Top posted job titles">
+    <table id="job-titles-table" class="careers-table">
+      <thead>
+        <tr>
+          <th scope="col">Job title</th>
+          <th scope="col">Total postings</th>
+          <th scope="col">Unique postings</th>
+          <th scope="col">Posting intensity</th>
+          <th scope="col">Median posting duration</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          jobTitles.map((j) => (
+            <tr>
+              <th scope="row">{j.jobTitle}</th>
+              <td>{j.totalLabel}</td>
+              <td>{j.uniqueLabel}</td>
+              <td>{j.postingIntensity}</td>
+              <td>{j.medianPostingDays} days</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <p class="careers-source">
+    Source for the three tables above: Lightcast Q1 2026 Data Set (April 2026), Program Overview for
+    CIP 30.7102 Business Analytics, United States, with the occupation set filtered to Master's
+    degree &mdash; the same report and vintage as the salary table's master's rows, and not the Q2
+    2026 report behind its bachelor's rows. The figures cover {
+      UNIQUE_POSTINGS
+    } unique job postings from January to March 2026 ({TOTAL_POSTINGS} total), and every percentage
+    is a share of those {UNIQUE_POSTINGS}. SQL, Python and R appear in both the report's specialized-skills
+    list and its software list, with identical postings, percentages and growth rates; they are
+    listed once here, under Software, because they are tools. No row has been dropped from any of
+    the three tables.
+  </p>
+
+  <p class="careers-source">
+    Employment and salary figures are provided by Lightcast and represent U.S. labor-market trends.
+    They are not specific to Franklin University graduates or any particular degree level. Franklin
+    University cannot guarantee employment placement, salary level, or career advancement.
+  </p>
+</Layout>
+
+<script is:inline>
+  (function () {
+    var table = document.getElementById('crosswalk-table');
+    if (!table) return;
+    var tbody = table.tBodies[0];
+    var rows = Array.prototype.slice.call(tbody.rows);
+    var header = document.getElementById('course-header');
+    var sortBtn = document.getElementById('sort-course');
+    var roleSelect = document.getElementById('filter-role');
+    var skillInput = document.getElementById('filter-skill');
+    // Rendered only when the data holds more than one program — guarded below.
+    var programSelect = document.getElementById('filter-program');
+    var countEl = document.getElementById('crosswalk-count');
+    var clearBtn = document.getElementById('clear-filters');
+
+    // none -> ascending -> descending -> none (source order).
+    var SORTS = ['none', 'ascending', 'descending'];
+    var ICONS = { none: '', ascending: ' ▲', descending: ' ▼' };
+    var sortIndex = 0;
+
+    function applyFilters() {
+      var roleValue = roleSelect.value;
+      var wanted = roleValue ? roleValue.toLowerCase().split('|') : [];
+      var skill = skillInput.value.trim().toLowerCase();
+      var program = programSelect ? programSelect.value : '';
+      var shown = 0;
+
+      rows.forEach(function (row) {
+        var keep = true;
+        if (wanted.length) {
+          var have = (row.getAttribute('data-roles') || '').split('|');
+          keep = wanted.some(function (w) {
+            return have.indexOf(w) !== -1;
+          });
+        }
+        if (keep && skill) {
+          keep = (row.getAttribute('data-skills') || '').indexOf(skill) !== -1;
+        }
+        if (keep && program) {
+          keep = row.getAttribute('data-program') === program;
+        }
+        if (keep) {
+          row.removeAttribute('hidden');
+          shown += 1;
+        } else {
+          row.setAttribute('hidden', '');
+        }
+      });
+
+      countEl.textContent =
+        'Showing ' + shown + ' of ' + rows.length + (rows.length === 1 ? ' course' : ' courses');
+    }
+
+    function applySort() {
+      var state = SORTS[sortIndex];
+      var ordered = rows.slice();
+      if (state === 'ascending' || state === 'descending') {
+        ordered.sort(function (a, b) {
+          var cmp = (a.getAttribute('data-course') || '').localeCompare(
+            b.getAttribute('data-course') || '',
+          );
+          return state === 'ascending' ? cmp : -cmp;
+        });
+      } else {
+        ordered.sort(function (a, b) {
+          return Number(a.getAttribute('data-index')) - Number(b.getAttribute('data-index'));
+        });
+      }
+      ordered.forEach(function (row) {
+        tbody.appendChild(row);
+      });
+      header.setAttribute('aria-sort', state);
+      sortBtn.querySelector('.careers-sort-icon').textContent = ICONS[state];
+    }
+
+    sortBtn.addEventListener('click', function () {
+      sortIndex = (sortIndex + 1) % SORTS.length;
+      applySort();
+    });
+
+    roleSelect.addEventListener('change', applyFilters);
+    skillInput.addEventListener('input', applyFilters);
+    if (programSelect) programSelect.addEventListener('change', applyFilters);
+
+    clearBtn.addEventListener('click', function () {
+      roleSelect.value = '';
+      skillInput.value = '';
+      if (programSelect) programSelect.value = '';
+      applyFilters();
+    });
+
+    // A Table B role button narrows Table A to that role *in that row's own
+    // program*. Each Table B row belongs to one program's report, so sending
+    // the reader to both programs' courses would answer a question they did
+    // not ask.
+    Array.prototype.forEach.call(
+      document.querySelectorAll('#salary-table [data-role-filter]'),
+      function (btn) {
+        btn.addEventListener('click', function () {
+          roleSelect.value = btn.getAttribute('data-role-filter');
+          skillInput.value = '';
+          if (programSelect) programSelect.value = btn.getAttribute('data-program-filter') || '';
+          applyFilters();
+          table.scrollIntoView({ block: 'start' });
+        });
+      },
+    );
+
+    applyFilters();
+  })();
+</script>
+
+<script is:inline>
+  // Table B — a program filter and two sortable numeric columns. Same control
+  // grammar as the other two tables: one filter, a clear button, a live count,
+  // and headers that cycle none -> ascending -> descending -> source order.
+  //
+  // "Source order" here is salary descending, which is what the build emits,
+  // and it is the order that puts each occupation's master's and bachelor's
+  // rows next to each other.
+  //
+  // The growth column sorts on `data-growth`, a signed number written by the
+  // build. The cell itself reads "−1.74%" with a real U+2212; sorting the
+  // rendered text, or stripping its non-digits, would file Computer
+  // Programmers under +1.74 and bury the one declining occupation in the
+  // middle of the table.
+  (function () {
+    var table = document.getElementById('salary-table');
+    if (!table) return;
+    var tbody = table.tBodies[0];
+    var rows = Array.prototype.slice.call(tbody.rows);
+    var programSelect = document.getElementById('filter-salary-program');
+    var countEl = document.getElementById('salary-count');
+    var clearBtn = document.getElementById('clear-salary-filters');
+    if (!programSelect || !countEl || !clearBtn) return;
+
+    var SORTS = ['none', 'ascending', 'descending'];
+    var ICONS = { none: '', ascending: ' ▲', descending: ' ▼' };
+    var HEADERS = {
+      salary: document.getElementById('salary-median-header'),
+      growth: document.getElementById('salary-growth-header'),
+    };
+    var sortKey = null;
+    var sortIndex = 0;
+
+    function applyFilters() {
+      var program = programSelect.value;
+      var shown = 0;
+      rows.forEach(function (row) {
+        var keep = !program || row.getAttribute('data-program') === program;
+        if (keep) {
+          row.removeAttribute('hidden');
+          shown += 1;
+        } else {
+          row.setAttribute('hidden', '');
+        }
+      });
+      countEl.textContent =
+        'Showing ' +
+        shown +
+        ' of ' +
+        rows.length +
+        (rows.length === 1 ? ' occupation row' : ' occupation rows');
+    }
+
+    function applySort() {
+      var state = sortKey ? SORTS[sortIndex] : 'none';
+      var ordered = rows.slice();
+      if (sortKey && state !== 'none') {
+        ordered.sort(function (a, b) {
+          var cmp =
+            Number(a.getAttribute('data-' + sortKey)) - Number(b.getAttribute('data-' + sortKey));
+          // Equal values keep source order, i.e. master's row above bachelor's.
+          if (cmp === 0) {
+            return Number(a.getAttribute('data-index')) - Number(b.getAttribute('data-index'));
+          }
+          return state === 'ascending' ? cmp : -cmp;
+        });
+      } else {
+        ordered.sort(function (a, b) {
+          return Number(a.getAttribute('data-index')) - Number(b.getAttribute('data-index'));
+        });
+      }
+      ordered.forEach(function (row) {
+        tbody.appendChild(row);
+      });
+      Object.keys(HEADERS).forEach(function (key) {
+        var header = HEADERS[key];
+        if (!header) return;
+        var active = key === sortKey ? state : 'none';
+        header.setAttribute('aria-sort', active);
+        header.querySelector('.careers-sort-icon').textContent = ICONS[active];
+      });
+    }
+
+    Array.prototype.forEach.call(table.querySelectorAll('[data-sort-key]'), function (btn) {
+      btn.addEventListener('click', function () {
+        var key = btn.getAttribute('data-sort-key');
+        // Switching columns starts that column's cycle at ascending.
+        if (key !== sortKey) {
+          sortKey = key;
+          sortIndex = 1;
+        } else {
+          sortIndex = (sortIndex + 1) % SORTS.length;
+          if (SORTS[sortIndex] === 'none') sortKey = null;
+        }
+        applySort();
+      });
+    });
+
+    programSelect.addEventListener('change', applyFilters);
+    clearBtn.addEventListener('click', function () {
+      programSelect.value = '';
+      applyFilters();
+    });
+
+    applyFilters();
+  })();
+</script>
+
+<script is:inline>
+  // Table C — same control grammar as the crosswalk table above: one filter,
+  // a clear button, a live count, and headers that cycle none -> ascending ->
+  // descending -> source order. Kept in its own IIFE so the two tables share
+  // no state.
+  (function () {
+    var table = document.getElementById('skills-table');
+    if (!table) return;
+    var tbody = table.tBodies[0];
+    var rows = Array.prototype.slice.call(tbody.rows);
+    var categorySelect = document.getElementById('filter-skill-category');
+    var countEl = document.getElementById('skills-count');
+    var clearBtn = document.getElementById('clear-skill-filters');
+
+    var SORTS = ['none', 'ascending', 'descending'];
+    var ICONS = { none: '', ascending: ' ▲', descending: ' ▼' };
+    // Both sortable columns are numeric; `null` means source order.
+    var HEADERS = {
+      postings: document.getElementById('skills-postings-header'),
+      pct: document.getElementById('skills-pct-header'),
+    };
+    var sortKey = null;
+    var sortIndex = 0;
+
+    function applyFilters() {
+      var category = categorySelect.value;
+      var shown = 0;
+      rows.forEach(function (row) {
+        var keep = !category || row.getAttribute('data-category') === category;
+        if (keep) {
+          row.removeAttribute('hidden');
+          shown += 1;
+        } else {
+          row.setAttribute('hidden', '');
+        }
+      });
+      countEl.textContent =
+        'Showing ' + shown + ' of ' + rows.length + (rows.length === 1 ? ' skill' : ' skills');
+    }
+
+    function applySort() {
+      var state = sortKey ? SORTS[sortIndex] : 'none';
+      var ordered = rows.slice();
+      if (sortKey && state !== 'none') {
+        ordered.sort(function (a, b) {
+          var cmp =
+            Number(a.getAttribute('data-' + sortKey)) - Number(b.getAttribute('data-' + sortKey));
+          // Equal percentages keep source order, which is postings descending.
+          if (cmp === 0) {
+            cmp = Number(a.getAttribute('data-index')) - Number(b.getAttribute('data-index'));
+            return state === 'ascending' ? -cmp : cmp;
+          }
+          return state === 'ascending' ? cmp : -cmp;
+        });
+      } else {
+        ordered.sort(function (a, b) {
+          return Number(a.getAttribute('data-index')) - Number(b.getAttribute('data-index'));
+        });
+      }
+      ordered.forEach(function (row) {
+        tbody.appendChild(row);
+      });
+      Object.keys(HEADERS).forEach(function (key) {
+        var header = HEADERS[key];
+        if (!header) return;
+        var active = key === sortKey ? state : 'none';
+        header.setAttribute('aria-sort', active);
+        header.querySelector('.careers-sort-icon').textContent = ICONS[active];
+      });
+    }
+
+    Array.prototype.forEach.call(table.querySelectorAll('[data-sort-key]'), function (btn) {
+      btn.addEventListener('click', function () {
+        var key = btn.getAttribute('data-sort-key');
+        // Switching columns starts that column's cycle at ascending.
+        if (key !== sortKey) {
+          sortKey = key;
+          sortIndex = 1;
+        } else {
+          sortIndex = (sortIndex + 1) % SORTS.length;
+          if (SORTS[sortIndex] === 'none') sortKey = null;
+        }
+        applySort();
+      });
+    });
+
+    categorySelect.addEventListener('change', applyFilters);
+    clearBtn.addEventListener('click', function () {
+      categorySelect.value = '';
+      applyFilters();
+    });
+
+    applyFilters();
+  })();
+</script>

@@ -3,8 +3,7 @@ node_modules/
 dist/
 .astro/
 
-# Python (legacy scraper)
-teach/franklin-course-scraper/venv/
+# Python
 __pycache__/
 *.pyc
 

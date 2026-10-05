@@ -1,6 +1,8 @@
 ---
-layout: ../../../layouts/Layout.astro
+layout: ../../../layouts/GuideLayout.astro
 title: "AI-Augmented Analytics Guide"
+description: >-
+  A practical four-section guide to using AI in analysis: the COR prompting framework, the dialogue model, and moving from chat to a reproducible notebook. About 60 minutes.
 ---
 
 <h2 id="sec-before-start">Welcome: Before You Start</h2>
@@ -24,18 +26,23 @@ This guide teaches you the practical workflow for using AI as an analytical assi
 This is a **hands-on guide** broken into 4 sections. Follow along in your browser as you read.
 
 <div class="callout-note">
-<div class="callout-title">A Note on Tool Choices</div>
+<div class="callout-title"><span class="screen-reader-only" data-pagefind-ignore>Note</span>A Note on Tool Choices</div>
 This guide uses **Google Gemini** as the AI assistant and **Google Colab** as the notebook environment — both are free and require no setup. The COR framework and the workflow apply equally to other AI tools (ChatGPT, Claude, Microsoft Copilot) and other notebook environments (Kaggle Notebooks, Anaconda). We use Google tools here for consistency and accessibility.
 </div>
 
-```
-Total Time: ~60 minutes
+{/* Presentation only: the same four lines that used to sit in a plain code
+    block, now as cards that jump to each section's existing sec-* anchor.
+    Every word is from that block — no new copy, and the <h2> headings below
+    are untouched. */}
 
-Section 1: Quick Start (15 min) → Your first AI analysis
-Section 2: The Dialogue Model (20 min) → Deepening insights
-Section 3: From Chat to Notebook (20 min) → Reproducible reports
-Section 4: Putting It All Together (5 min) → Summary and next steps
-```
+<p class="guide-cards-total">Total Time: ~60 minutes</p>
+
+<div class="guide-cards">
+<a class="guide-card" href="#sec-quick-start"><span class="guide-card-num">Section 1</span><span class="guide-card-name">Quick Start</span><span class="guide-card-time">15 min</span><span class="guide-card-desc">Your first AI analysis</span></a>
+<a class="guide-card" href="#sec-dialogue-model"><span class="guide-card-num">Section 2</span><span class="guide-card-name">The Dialogue Model</span><span class="guide-card-time">20 min</span><span class="guide-card-desc">Deepening insights</span></a>
+<a class="guide-card" href="#sec-notebook"><span class="guide-card-num">Section 3</span><span class="guide-card-name">From Chat to Notebook</span><span class="guide-card-time">20 min</span><span class="guide-card-desc">Reproducible reports</span></a>
+<a class="guide-card" href="#sec-workflow"><span class="guide-card-num">Section 4</span><span class="guide-card-name">Putting It All Together</span><span class="guide-card-time">5 min</span><span class="guide-card-desc">Summary and next steps</span></a>
+</div>
 
 ---
 
@@ -64,7 +71,7 @@ Open a web browser and navigate to [**gemini.google.com**](http://gemini.google.
 3. Wait for the file to appear above the text box, confirming it's ready
 
 <div class="callout-tip">
-<div class="callout-title">Pro Tip</div>
+<div class="callout-title"><span class="screen-reader-only" data-pagefind-ignore>Tip</span>Pro Tip</div>
 Always start a new chat for each new project. This keeps your conversations organized and prevents the AI from getting confused by previous context. For this guide, **keep using the same chat** through Sections 1 and 2 — each step builds on the previous one.
 </div>
 
@@ -93,7 +100,7 @@ Think of COR as your core prompting strategy: provide **Context** about your sit
 **Copy and paste this prompt into your AI assistant:**
 
 <div class="callout-note">
-<div class="callout-title">Prompt Template 1: Initial Analysis</div>
+<div class="callout-title"><span class="screen-reader-only" data-pagefind-ignore>Note</span>Prompt Template 1: Initial Analysis</div>
 
 ```
 Context: I'm a business analyst preparing for a marketing meeting to discuss regional performance.
@@ -107,12 +114,12 @@ Objective: Help me identify which regions are most profitable so I can recommend
 The AI will likely also offer unsolicited recommendations — this is common. Notice that these recommendations are surface-level and based only on the numbers it just calculated. This is exactly where the **R** in COR comes in: you'll learn to Refine the AI's output into deeper, more useful insights.
 
 <div class="callout-note">
-<div class="callout-title">Your Results May Look Different — That's OK</div>
+<div class="callout-title"><span class="screen-reader-only" data-pagefind-ignore>Note</span>Your Results May Look Different — That's OK</div>
 AI tools evolve quickly, and no two conversations are identical. Your output may differ from what this guide describes — different wording, different level of detail, or additional analysis you didn't ask for. The core numbers (e.g., West region being most profitable) should be the same since they come from the same dataset, but everything else may vary. **Focus on learning the framework, not on matching this guide's examples exactly.** The skills transfer across any AI tool.
 </div>
 
 <div class="callout-tip">
-<div class="callout-title">Note on Labels</div>
+<div class="callout-title"><span class="screen-reader-only" data-pagefind-ignore>Tip</span>Note on Labels</div>
 The "Context:" and "Objective:" labels help you learn the framework structure. When using prompts with AI, you can keep the labels or remove them—either way works fine. The labels are teaching tools, not requirements.
 </div>
 
@@ -185,7 +192,7 @@ Here's a simple example using our dataset. When you explored the data in Part 1,
 **Copy and paste this follow-up prompt:**
 
 <div class="callout-note">
-<div class="callout-title">Prompt Template 2: Clarify</div>
+<div class="callout-title"><span class="screen-reader-only" data-pagefind-ignore>Note</span>Prompt Template 2: Clarify</div>
 
 ```
 How is `Profit` calculated in this dataset? What's the difference between `Sales` and `Profit`?
@@ -211,7 +218,7 @@ Now let's build on our Section 1 finding. You know the West region is most profi
 **Copy and paste this follow-up prompt:**
 
 <div class="callout-note">
-<div class="callout-title">Prompt Template 3: Explore</div>
+<div class="callout-title"><span class="screen-reader-only" data-pagefind-ignore>Note</span>Prompt Template 3: Explore</div>
 
 ```
 Show me the total profit by `Sub-Category` for the 'West' region only. Present it as a sorted table.
@@ -231,7 +238,7 @@ The Explore step showed you that Bookcases are losing money in the West — the 
 **Copy and paste this follow-up prompt:**
 
 <div class="callout-note">
-<div class="callout-title">Prompt Template 4: Validate</div>
+<div class="callout-title"><span class="screen-reader-only" data-pagefind-ignore>Note</span>Prompt Template 4: Validate</div>
 
 ```
 Why are 'Bookcases' losing money in the West region? This is the most profitable region overall, so something specific must be driving these losses. Explain what's happening.
@@ -255,7 +262,7 @@ Discounts are strategic decisions. Corporate clients may negotiate volume pricin
 **Copy and paste this follow-up prompt:**
 
 <div class="callout-note">
-<div class="callout-title">Prompt Template 5: Challenge</div>
+<div class="callout-title"><span class="screen-reader-only" data-pagefind-ignore>Note</span>Prompt Template 5: Challenge</div>
 
 ```
 Before recommending discount changes, I need to understand why the discounting is happening. Break down Bookcase orders in the West by `Segment` (Consumer, Corporate, Home Office) and show me the average discount and profit for each. I want to know if one customer segment is driving these losses.
@@ -269,7 +276,7 @@ This is an important lesson: **Challenge isn't about being right — it's about 
 **The Analyst's Role:** AI excels at finding patterns (the "what") and will often jump straight to recommendations. Your job is to question those recommendations (the "why not?") before acting on them.
 
 <div class="callout-tip">
-<div class="callout-title">Validate vs. Challenge</div>
+<div class="callout-title"><span class="screen-reader-only" data-pagefind-ignore>Tip</span>Validate vs. Challenge</div>
 You may notice that Validate and Challenge can feel similar — both involve questioning the AI. The difference is in your stance: **Validate** asks *"explain this to me"* (you're trying to understand), while **Challenge** says *"you're missing something"* (you're pushing back with your own knowledge). In practice, they often flow together — a Validate answer reveals a gap that leads you to Challenge.
 </div>
 
@@ -356,7 +363,7 @@ Go back to your **Section 2 Gemini conversation** — the one where you investig
 **If the code isn't visible**, ask for it:
 
 <div class="callout-note">
-<div class="callout-title">Prompt Template 6: Request Code</div>
+<div class="callout-title"><span class="screen-reader-only" data-pagefind-ignore>Note</span>Prompt Template 6: Request Code</div>
 
 ```
 Give me the complete Python code for this analysis as a single script. It should:
@@ -373,7 +380,7 @@ Include comments explaining each step.
 **Copy the code** to your clipboard.
 
 <div class="callout-tip">
-<div class="callout-title">Verify Before You Move On</div>
+<div class="callout-title"><span class="screen-reader-only" data-pagefind-ignore>Tip</span>Verify Before You Move On</div>
 Before copying, quickly scan the code or ask the AI to walk you through it. Does it match the analysis you did in the conversation? This is a good habit — AI sometimes generates code that doesn't quite match the dialogue, especially in long conversations.
 </div>
 
@@ -395,7 +402,7 @@ Navigate to [**colab.research.google.com**](http://colab.research.google.com/) a
 - After uploading, you should see the file appear in the file browser under `/content/`
 
 <div class="callout-note">
-<div class="callout-title">Adapting AI Code for Colab</div>
+<div class="callout-title"><span class="screen-reader-only" data-pagefind-ignore>Note</span>Adapting AI Code for Colab</div>
 The code from your AI chatbot likely won't run as-is in Colab. This is normal — here are the two most common fixes:
 
 **File path:** Colab stores uploaded files at `/content/Superstore.xlsx`. If the code uses a different path, update it.
@@ -410,7 +417,7 @@ If you're unsure how to make these changes, paste the AI's code into your chatbo
 </div>
 
 <div class="callout-tip">
-<div class="callout-title">Shortcut: Gemini in Colab</div>
+<div class="callout-title"><span class="screen-reader-only" data-pagefind-ignore>Tip</span>Shortcut: Gemini in Colab</div>
 Google Colab has Gemini built in — you can ask it questions and generate code directly in your notebook without switching back to the chatbot. This can simplify the workflow since Colab's Gemini already knows your file paths and environment. Note that other notebook environments may not have a built-in AI assistant.
 </div>
 
@@ -451,7 +458,7 @@ Paste the code for the sub-category breakdown. Run it.
 **Continue this pattern** for the remaining steps (order-level detail, segment breakdown). Each code cell should do one thing, and each text cell should explain what you just learned or what you're about to do next.
 
 <div class="callout-tip">
-<div class="callout-title">How to Split the Code</div>
+<div class="callout-title"><span class="screen-reader-only" data-pagefind-ignore>Tip</span>How to Split the Code</div>
 The AI likely gave you one long script. To split it into cells, look for natural breakpoints: wherever a new question is being answered or a new calculation starts, that's a new cell. You don't need to understand every line — just identify where one step ends and the next begins.
 </div>
 
@@ -529,7 +536,7 @@ The Superstore dataset was a training example. When you apply this workflow to y
 3. **Preserve your work** — move the final analysis into a notebook so it's reproducible, editable, and shareable
 
 <div class="callout-tip">
-<div class="callout-title">Other Tools</div>
+<div class="callout-title"><span class="screen-reader-only" data-pagefind-ignore>Tip</span>Other Tools</div>
 This guide used Google Gemini and Google Colab, but the workflow is tool-agnostic. The COR framework and follow-up types work equally well with ChatGPT, Claude, or Microsoft Copilot. For notebooks, Kaggle Notebooks and Anaconda are alternatives to Colab (though other environments may not have a built-in AI assistant). See the Appendix for links.
 </div>
 

@@ -1,10 +1,12 @@
 ---
-layout: ../../../layouts/Layout.astro
+layout: ../../../layouts/GuideLayout.astro
 title: "How to Get a U.S. Census Bureau API Key"
+description: >-
+  Step-by-step walkthrough of requesting and activating a U.S. Census Bureau Data API key, with a screenshot of each step.
 ---
 
 <div class="callout-note">
-<div class="callout-title">Why This Matters Now</div>
+<div class="callout-title"><span class="screen-reader-only" data-pagefind-ignore>Note</span>Why This Matters Now</div>
 As of **May 2026**, the Census Bureau requires an API key for *every* Census Data API request — previously a key was only needed for high-volume use. If you're working with Census data for a class project this term, you now need a key before you can pull anything.
 </div>
 
@@ -21,18 +23,24 @@ Visit **[api.census.gov/data/key_signup.html](https://api.census.gov/data/key_si
 
 You'll immediately see a confirmation page:
 
+<figure class="figure">
 <img src="/teach/census-api-key/request-submitted.png" alt="Request submitted" class="step-screenshot" />
+<figcaption>Request submitted</figcaption>
+</figure>
 
 ## Step 2: Check Your Email
 
 Within a few minutes, you'll receive an email from the Census Data API Service with the subject line **"Census Data API Key Request"**. It contains your 40-character key and an activation link.
 
+<figure class="figure">
 <img src="/teach/census-api-key/email-confirmation-redacted.png" alt="Confirmation email with API key (redacted) and activation link" class="step-screenshot" />
+<figcaption>Confirmation email with API key (redacted) and activation link</figcaption>
+</figure>
 
 **Your key does nothing until you click that activation link.**
 
 <div class="callout-warning">
-<div class="callout-title">If You're Using a School Email</div>
+<div class="callout-title"><span class="screen-reader-only" data-pagefind-ignore>Warning</span>If You're Using a School Email</div>
 If you check this email through an institutional inbox (Office 365, Proofpoint, Mimecast, etc.), the security scanner sometimes **rewrites the activation link**, which can throw an "unknown key" error when clicked. If that happens:
 
 1. Right-click the activation link → **Copy Link Address**
@@ -47,7 +55,10 @@ This is the single most common snag students run into — a personal Gmail or ot
 
 Click the activation link (or the extracted original URL). You should land on a confirmation page:
 
+<figure class="figure">
 <img src="/teach/census-api-key/key-activated-confirmation.png" alt="Key activated confirmation" class="step-screenshot" />
+<figcaption>Key activated confirmation</figcaption>
+</figure>
 
 ## Step 4: Test the Key
 
@@ -59,7 +70,10 @@ https://api.census.gov/data/2020/dec/dp?get=NAME,DP1_0001C&for=state:*&key=YOUR_
 
 You should get back state-by-state population data, starting with Alabama:
 
-![Test query returning real Census data](/teach/census-api-key/test-query-result.png)
+<figure class="figure">
+<img src="/teach/census-api-key/test-query-result.png" alt="Test query returning real Census data" />
+<figcaption>Test query returning real Census data</figcaption>
+</figure>
 
 If it doesn't work right away, wait a few minutes — activation can take a moment to fully propagate. If it's still failing after that, request a new key with a different email address rather than troubleshooting the same one indefinitely.
 
