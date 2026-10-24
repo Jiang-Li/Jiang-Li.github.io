@@ -1851,6 +1851,10 @@ blockquote {
 .page-footer .footer-center .icon {
   margin-right: 0.35em;
 }
+/* Astro's HTML compression strips the spaces around the separator. */
+.page-footer .footer-sep {
+  margin: 0 0.6em;
+}
 @media (max-width: 768px) {
   .page-footer .footer-center a {
     white-space: normal;

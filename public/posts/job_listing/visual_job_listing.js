@@ -9,8 +9,10 @@
         .select("body")
         .append("svg")
         .attr("id", "line_chart")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
+        .attr("viewBox", "0 0 " + (width + margin.left + margin.right) + " " + (height + margin.top + margin.bottom))
+        .attr("width", "100%")
+        .style("max-width", (width + margin.left + margin.right) + "px")
+        .style("height", "auto")
         .append("g")
         .attr("id", "container")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
